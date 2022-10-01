@@ -1,7 +1,10 @@
-import React from "react";
-import styles from "../components/Login.module.css";
+import { useState } from "react";
+import styles from "./Login.module.css";
 import loginImage from "../assets/image/loginImage.jpg";
-function login() {
+import Register from "./Register";
+function Login() {
+   const [overlay, setOverlay] = useState(false);
+
    return (
       <section className={styles.container}>
          {/* Left */}
@@ -68,13 +71,15 @@ function login() {
                         type="submit"
                         value="Đăng ký"
                         className={styles.createNewBtn}
+                        onClick={() => setOverlay(true)}
                      />
                   </div>
                </div>
             </div>
          </div>
+         {overlay ? <Register setOverlay={setOverlay} /> : ""}
       </section>
    );
 }
 
-export default login;
+export default Login;
