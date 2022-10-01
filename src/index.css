@@ -1,13 +1,56 @@
+* {
+   box-sizing: border-box;
+}
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+   margin: 0;
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+      "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", sans-serif;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+      monospace;
+}
+
+:root {
+   --primary-border-color: #e3e1e1;
+   --primary-border-color-focus: #918943;
+   --gray-color: #bbbbbb;
+}
+
+::placeholder {
+   color: #bbbbbb;
+}
+
+.btnSubmit {
+   width: 100%;
+   height: 40px;
+   font-size: 15px;
+   border-radius: 12px;
+   border: none;
+   padding: 10px;
+   background-color: #049466;
+   margin-top: 30px;
+   line-height: 15px;
+   cursor: pointer;
+   color: white;
+}
+
+.btnSubmit:hover {
+   filter: brightness(110%);
+}
+
+.iconAuth {
+   position: absolute;
+   left: 0;
+   color: var(--primary-border-color);
+   font-size: 22px;
+   transform: translate(60%, 45%);
+}
+
+input:focus + .iconAuth {
+   color: var(--primary-border-color-focus);
 }
