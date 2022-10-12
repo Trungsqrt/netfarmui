@@ -65,6 +65,30 @@
    border-color: var(--primary-border-color-focus);
 }
 
+input.inputError,
+select.inputError {
+   font-size: 15px;
+   width: 100%;
+   height: 25px;
+   border-radius: 12px;
+   border: 2px solid #fc8181;
+   padding: 20px 40px;
+}
+
+.inputError:focus {
+   outline: none;
+   border-color: #fc8181;
+}
+
+.error {
+   color: #fc8181;
+   font-size: 0.75rem;
+   text-align: left;
+   margin-top: 0.25rem;
+   margin-bottom: 0.25rem;
+   font-weight: bold;
+}
+
 .titleDesc {
    color: #bbbbbb;
 }

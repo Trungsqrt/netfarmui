@@ -1,9 +1,39 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from "react";
 import styles from "./Login.module.css";
-import loginImage from "../assets/image/loginImage.jpg";
-import Register from "./Register";
+import loginImage from "../../assets/image/loginImage.jpg";
+import Register from "../register/Register";
+import Forgot from "../forgot/Forgot";
+import isEmpty from "validator/lib/isEmpty";
+
 function Login() {
    const [overlay, setOverlay] = useState(false);
+   const [overlay2, setOverlay2] = useState(false);
+   const [uname, setUname] = useState("");
+   const [pass, setPass] = useState("");
+   const [validationMsg, setValidationMsg] = useState({});
+
+   const validateAll = () => {
+      const msg = {};
+      if (isEmpty(uname)) {
+         msg.uname = "Hãy nhập số điện thoại!";
+      }
+      if (isEmpty(pass)) {
+         msg.pass = "Hãy nhập mật khẩu!";
+      }
+
+      setValidationMsg(msg);
+      if (Object.keys(msg).length > 0) return false;
+      return true;
+   };
+
+   const handleSubmit = (e) => {
+      e.preventDefault();
+      const isValid = validateAll();
+      if (!isValid) return;
+      console.log("asdsadsa");
+      //call api login
+   };
 
    return (
       <section className={styles.container}>
@@ -22,45 +52,56 @@ function Login() {
                   </p>
                </div>
                {/* Form */}
-               <form>
-                  {/* usn */}
+               <form autoComplete="off">
+                  {/* NOTE: usn */}
+
                   <div className={styles.inputContainer}>
                      <input
-                        type="text"
+                        id="uname"
+                        type="number"
                         name="uname"
-                        required
-                        minLength={6}
                         placeholder="Tài khoản / Số điện thoại"
                         className={styles.inputField}
+                        value={uname}
+                        onChange={(e) => setUname(e.target.value)}
                      />
-                     <i class="iconAuth fa-solid fa-user"></i>
+                     <i className="iconAuth fa-solid fa-user"></i>
+                     <p className={styles.error}>{validationMsg.uname}</p>
                   </div>
+
                   {/* psw */}
                   <div className={styles.inputContainer}>
                      <input
+                        id="pass"
                         type="password"
                         name="pass"
-                        required
-                        minLength={6}
                         placeholder="Mật khẩu"
                         className={styles.inputField}
+                        value={pass}
+                        onChange={(e) => setPass(e.target.value)}
                      />
-                     <i class="iconAuth fa-solid fa-lock"></i>
+                     <i className="iconAuth fa-solid fa-lock"></i>
                   </div>
+                  <p className={styles.error}>{validationMsg.pass}</p>
                   {/* forgot password */}
                   <div className={styles.forgotSection}>
-                     <a href="#" className={styles.forgot}>
+                     <a
+                        href="#"
+                        className={styles.forgot}
+                        onClick={() => setOverlay2(true)}
+                     >
                         Quên mật khẩu
                      </a>
                   </div>
+                  {overlay2 ? <Forgot setOverlay2={setOverlay2} /> : ""}
                   {/* btn */}
-                  <div>
-                     <input
-                        type="submit"
-                        className="btnSubmit"
-                        value="Đăng nhập"
-                     />
-                  </div>
+                  <button
+                     type="submit"
+                     className="btnSubmit"
+                     onClick={handleSubmit}
+                  >
+                     Đăng nhập
+                  </button>
                </form>
 
                <div className={styles.line}></div>
