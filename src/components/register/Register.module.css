@@ -28,6 +28,7 @@
    height: 570px;
    background: white;
    border-radius: 5px;
+   overflow: scroll;
 }
 
 .registerContainer2 {

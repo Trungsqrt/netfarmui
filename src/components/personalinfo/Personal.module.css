@@ -1,0 +1,151 @@
+.body {
+   background-color: #bbbbbb;
+   width: 100%;
+   height: 100vh;
+   overflow: hidden;
+}
+
+.container {
+   margin-left: 100px;
+   margin-right: 100px;
+}
+
+.title {
+   font-weight: bold;
+   font-size: 30px;
+   margin-top: 30px;
+   margin-bottom: 30px;
+}
+
+.infoImage {
+   margin-left: 50px;
+   display: flex;
+   align-items: flex-start;
+}
+
+.bodyContainer {
+   height: 70vh;
+   width: 100%;
+   background-color: white;
+   border: 1px solid black;
+}
+
+.formContainer {
+   margin: 20px;
+}
+
+.bodyContainer {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.formContainer {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.inputForm {
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+}
+
+.formElement input {
+   font-size: 15px;
+   height: 30px;
+   border-radius: 12px;
+   border: 2px solid var(--primary-border-color);
+   padding: 16px 10px;
+   margin: 0 10px;
+   margin-bottom: 6px;
+}
+
+.formElement {
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+}
+
+.formGender {
+   display: flex;
+   justify-content: flex-start;
+   width: 100%;
+   box-sizing: border-box;
+   padding: 0 30px;
+}
+
+.titleContent {
+   display: block;
+   width: 100px;
+   height: 27px;
+}
+
+.radioBtn {
+   height: 25px;
+   border-radius: 12px;
+   border: 2px solid var(--primary-border-color);
+   padding: 18px 18px;
+   display: flex;
+   align-items: center;
+   font-weight: 600;
+   margin-right: 12px;
+   margin-left: -8px;
+}
+
+.radioBtn label {
+   padding-bottom: 1px;
+}
+
+.radioBtn input {
+   cursor: pointer;
+   margin-top: 8px;
+}
+
+.btnSubmit {
+   width: 120px;
+   height: 40px;
+   font-size: 15px;
+   border-radius: 12px;
+   border: none;
+   background-color: #049466;
+   margin-left: 41px;
+   line-height: 15px;
+   cursor: pointer;
+   color: white;
+   border: none !important;
+   line-height: 1px;
+}
+
+.btnSubmit:hover {
+   filter: brightness(110%);
+}
+
+.btnSub {
+   display: flex;
+   justify-content: end;
+   margin-bottom: -20px;
+}
+
+.backButton {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 25px;
+}
+
+.back {
+   width: 120px;
+   height: 40px;
+   font-size: 15px;
+   border-radius: 12px;
+   border: none;
+   background-color: #049466;
+   cursor: pointer;
+   color: white;
+}
+
+.back:hover {
+   filter: brightness(110%);
+}
