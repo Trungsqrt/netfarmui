@@ -9,14 +9,12 @@ import Editor from "./components/editor/Editor";
 function App() {
    return (
       <div className="App">
-         <Navbar />
          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/personal" element={<Personal />} />
             <Route path="/editor" element={<Editor />} />
          </Routes>
-         <Footer />
       </div>
    );
 }
