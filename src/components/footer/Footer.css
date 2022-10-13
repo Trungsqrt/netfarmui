@@ -1,0 +1,16 @@
+.footer-part{
+    background-color: #464545;
+    padding: 15px;
+}
+/* .line-cutting{
+    margin: 15px  0;
+    margin-left: 10%;
+    width: 80%;
+    height: 1px;
+    background-color: white;
+} */
+footer p{
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
