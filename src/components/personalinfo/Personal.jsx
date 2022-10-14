@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Personal.module.css";
+import { useNavigate } from "react-router-dom";
 
 function Personal() {
    const [fname, setFname] = useState("");
@@ -12,6 +13,8 @@ function Personal() {
    const [year, setYear] = useState("");
    const [gender, setGender] = useState(true);
    const [accept, setAccept] = useState("");
+
+   const navigate = useNavigate();
    return (
       <div>
          <div className={styles.body}>
@@ -212,7 +215,14 @@ function Personal() {
                   </section>
                </section>
                <section className={styles.backButton}>
-                  <button className={styles.back}>Trở lại</button>
+                  <button
+                     className={styles.back}
+                     onClick={() => {
+                        navigate("/");
+                     }}
+                  >
+                     Trở lại
+                  </button>
                </section>
             </div>
          </div>
