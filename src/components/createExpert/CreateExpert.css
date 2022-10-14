@@ -1,0 +1,66 @@
+.container-create{
+   width: 100%;
+   background-color: #eeeeee;
+   padding: 15px 0;
+   display: flex;
+}
+.content-left{
+   width: 50%;
+}
+h2{
+   font-size: 30px;
+   font-weight: bold;
+   margin: 15px 0;
+   text-align: center;
+}
+.createImage{
+   width: 75%;
+   height: 500px;
+   display: block;
+   margin: 0 auto;
+}
+/* -------------------------------- */
+.content-right{
+   width: 50%;
+}
+.create-note{
+   text-align: center;
+   color: #484545;
+}
+.form-create{
+   margin-left: 140px;
+   margin-top: 50px;
+}
+tr, td{
+   width: 120px;
+   height: 40px;
+
+}
+.input-field{
+   width: 100%;
+   height: 40px;
+   margin-bottom: 30px;
+   border-radius: 5px;
+}
+.name-field{
+   font-size: 20px;
+   font-weight: bold;
+}
+select{
+   width: 30%;
+   height: 40px;
+   margin-bottom: 30px;
+   border-radius: 5px;
+   margin-left: 30px;
+}
+.btn-create{
+   display: block;
+   margin: 0 auto;
+   height: 50px;
+   width: 250px;
+   color: white;
+   font-size: 20px;
+   font-weight: bold;
+   background-color: green;
+   border-radius: 5px;
+}

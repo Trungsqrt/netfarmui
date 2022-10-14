@@ -4,7 +4,7 @@ import "./Navbar.css";
 import navbarImage from "../../assets/image/logonetfarm.png";
 function Navbar() {
    return <div>
-      <div>
+      <div className="container-navbar">
          <div className="info-header">
             Welcome to NetFarm Web Service
             <div className="info">

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.css";
 function Footer() {
-    return <div>\
+    return <div>
         <div className="footer-part">
             {/* <div className="line-cutting"></div> */}
             <footer>
