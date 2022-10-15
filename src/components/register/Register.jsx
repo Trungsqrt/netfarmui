@@ -26,7 +26,6 @@ function Register({ setOverlay }) {
       else setAccept("");
    };
 
-   console.log(accept);
    const validateAll = () => {
       const msg = {};
       if (isEmpty(fname)) {
@@ -70,6 +69,12 @@ function Register({ setOverlay }) {
       e.preventDefault();
       const isValid = validateAll();
       if (!isValid) return;
+      // const newUser = {
+      //    firstname: fname,
+      //    lastname:lname,
+      //    numberphone: uname,
+      //    password: pass,
+      // }
    };
    return (
       <div>

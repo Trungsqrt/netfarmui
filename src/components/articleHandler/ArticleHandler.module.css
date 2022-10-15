@@ -1,0 +1,20 @@
+.container {
+   height: 100vh;
+}
+
+.label {
+   font-weight: bold;
+   font-size: 30px;
+   text-align: center;
+}
+
+strong {
+   font-weight: bold !important;
+}
+
+em {
+   font-style: italic !important;
+}
+.textContainer {
+   margin: 20px 30px;
+}
