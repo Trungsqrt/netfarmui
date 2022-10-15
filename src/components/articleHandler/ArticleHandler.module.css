@@ -1,0 +1,69 @@
+.container {
+   height: 100vh;
+   background-color: gainsboro;
+   padding-top: 16px;
+   margin-top: 16px;
+}
+
+.label {
+   font-weight: bold;
+   font-size: 30px;
+   text-align: center;
+}
+
+strong {
+   font-weight: bold !important;
+}
+
+em {
+   font-style: italic !important;
+}
+.textContainer {
+   margin: 20px 30px;
+}
+
+.combobox {
+   margin: 0;
+   width: 300px;
+   border-radius: 12px;
+   margin-top: 5px;
+   text-align: center;
+   font-weight: bold;
+}
+
+.comboboxContainer {
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 16px;
+}
+
+.input {
+   font-size: 15px;
+   width: 100%;
+   height: 25px;
+   border-radius: 12px;
+   border: 2px solid var(--primary-border-color);
+   padding: 20px 40px;
+   margin-bottom: 16px;
+}
+
+.input:focus {
+   outline: none;
+   border-color: var(--primary-border-color-focus);
+}
+
+.button {
+   border: none;
+   padding: 10px;
+   background-color: #049466;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   line-height: 15px;
+   cursor: pointer;
+   color: white;
+   border-radius: 12px;
+   padding: 12px;
+   float: right;
+   padding-left: 20px;
+   padding-right: 20px;
+}

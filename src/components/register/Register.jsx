@@ -26,7 +26,6 @@ function Register({ setOverlay }) {
       else setAccept("");
    };
 
-   console.log(accept);
    const validateAll = () => {
       const msg = {};
       if (isEmpty(fname)) {
@@ -70,6 +69,12 @@ function Register({ setOverlay }) {
       e.preventDefault();
       const isValid = validateAll();
       if (!isValid) return;
+      // const newUser = {
+      //    firstname: fname,
+      //    lastname:lname,
+      //    numberphone: uname,
+      //    password: pass,
+      // }
    };
    return (
       <div>
@@ -216,8 +221,8 @@ function Register({ setOverlay }) {
                         />
                         <p>
                            Tôi đồng ý với các{" "}
-                           <a href="#">điều kiện điều khoản</a> và{" "}
-                           <a href="#">chính sách bảo mật</a>
+                           <a href="/#">điều kiện điều khoản</a> và{" "}
+                           <a href="/#">chính sách bảo mật</a>
                         </p>
                      </section>
                      <section className={styles.error2}>

@@ -5,6 +5,10 @@ import loginImage from "../../assets/image/loginImage.jpg";
 import Register from "../register/Register";
 import Forgot from "../forgot/Forgot";
 import isEmpty from "validator/lib/isEmpty";
+// import axios from "../../api/axios";
+import { loginUser } from "../../redux/apiRequest";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
    const [overlay, setOverlay] = useState(false);
@@ -12,6 +16,9 @@ function Login() {
    const [uname, setUname] = useState("");
    const [pass, setPass] = useState("");
    const [validationMsg, setValidationMsg] = useState({});
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   // const [users, setUsers] = useState();
 
    const validateAll = () => {
       const msg = {};
@@ -31,8 +38,12 @@ function Login() {
       e.preventDefault();
       const isValid = validateAll();
       if (!isValid) return;
-      console.log("asdsadsa");
-      //call api login
+
+      const newUser = {
+         username: uname,
+         password: pass,
+      };
+      loginUser(newUser, dispatch, navigate);
    };
 
    return (
@@ -86,7 +97,7 @@ function Login() {
                   {/* forgot password */}
                   <div className={styles.forgotSection}>
                      <a
-                        href="#"
+                        href="/#"
                         className={styles.forgot}
                         onClick={() => setOverlay2(true)}
                      >
