@@ -1,8 +1,8 @@
 .container {
-   height: 100vh;
    background-color: gainsboro;
    padding-top: 16px;
    margin-top: 16px;
+   overflow: hidden;
 }
 
 .label {
@@ -24,11 +24,15 @@ em {
 
 .combobox {
    margin: 0;
-   width: 300px;
    border-radius: 12px;
    margin-top: 5px;
    text-align: center;
    font-weight: bold;
+   font-size: 1.6rem;
+   padding-bottom: 3px;
+   padding-top: 3px;
+   border: solid 1px var(--primary-border-color-focus);
+   outline: none;
 }
 
 .comboboxContainer {
@@ -66,4 +70,13 @@ em {
    float: right;
    padding-left: 20px;
    padding-right: 20px;
+}
+
+.cateBox {
+   margin: 0;
+   width: 300px;
+   border-radius: 12px;
+   margin-top: 5px;
+   text-align: center;
+   font-weight: bold;
 }

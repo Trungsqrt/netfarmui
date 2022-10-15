@@ -2,11 +2,12 @@ import Login from "./components/login/Login";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/home/Homepage";
 import Personal from "./components/personalinfo/Personal";
-import Navbar from "./components/navbar/Navbar";
-import Footer from "./components/footer/Footer";
+// import Navbar from "./components/navbar/Navbar";
+// import Footer from "./components/footer/Footer";
 import ArticleHandler from "./components/articleHandler/ArticleHandler";
 
 import CreateExpert from "./components/createExpert/CreateExpert";
+import CalendarHandler from "./components/calendarHandler/CalendarHandler";
 
 function App() {
    return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/personal" element={<Personal />} />
             <Route path="/createexpert" element={<CreateExpert />} />
             <Route path="/articlehandler" element={<ArticleHandler />} />
+            <Route path="/calendarhandler" element={<CalendarHandler />} />
          </Routes>
       </div>
    );

@@ -22,21 +22,21 @@ function Navbar() {
                </div>
             </div>
             <nav className="navbar">
-               <a href="#">
+               <a href="/#">
                   <img className="logo" src={navbarImage} alt="logo"></img>
                </a>
                <ul className="navbarTask">
                   <li>
-                     <a href="#">Home</a>
+                     <a href="/#">Home</a>
                   </li>
                   <li>
-                     <a href="#">About</a>
+                     <a href="/#">About</a>
                   </li>
                   <li>
-                     <a href="#">Blog</a>
+                     <a href="/#">Blog</a>
                   </li>
                   <li>
-                     <a href="#">Buying</a>
+                     <a href="/#">Buying</a>
                   </li>
                </ul>
                <form className="form-search">
@@ -53,9 +53,8 @@ function Navbar() {
                <div className="calling-info">
                   <i className="fa-solid fa-phone-volume phone"></i>
                   <div className="calling">
-                     <span className="info-detail">Call Anytime</span>
-                     <br />
-                     <span className="info-detail">02 123 888 000</span>
+                     <p className="info-detail">Call Anytime</p>
+                     <p className="info-detail">02 123 888 000</p>
                   </div>
                </div>
                <div className="setting-group">

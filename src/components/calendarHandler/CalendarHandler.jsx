@@ -1,21 +1,22 @@
 import React, { useRef, useState } from "react";
+import styles from "./CalendarHandler.module.css";
 import Navbar from "../navbar/Navbar";
-import styles from "./ArticleHandler.module.css";
-import "./app.css";
 import { Editor } from "@tinymce/tinymce-react";
 
-function ArticleHandler() {
-   const editorRef = useRef();
-   const [title, setTitle] = useState("");
+function CalendarHandler() {
+   const [start, setStart] = useState("");
+   const [end, setEnd] = useState("");
    const [category, setCategory] = useState(0);
-   const [isPublic, setIsPublic] = useState("");
-   console.log(isPublic);
+   const [title, setTitle] = useState("");
+
+   const editorRef = useRef();
    const onClickHandler = () => {
       console.log({
-         title: title,
+         start: start,
+         end: end,
          category: category,
-         isPublic: isPublic,
          content: editorRef.current.getContent(),
+         title: title,
       });
    };
 
@@ -27,23 +28,44 @@ function ArticleHandler() {
             <div className={styles.textContainer}>
                <p>Tiêu đề</p>
                <input
-                  value={title}
                   placeholder="Nhập tiêu đề..."
                   className={styles.input}
                   onChange={(e) => setTitle(e.target.value)}
+                  value={title}
                ></input>
                <div className={styles.comboboxContainer}>
                   <div>
-                     <p>Danh mục</p>
+                     <p>Bắt đầu</p>
+                     <input
+                        type="date"
+                        id="start"
+                        className={styles.combobox}
+                        onChange={(e) => setStart(e.target.value)}
+                        value={start}
+                     ></input>
+                  </div>
+
+                  <div>
+                     <p>Kết thúc</p>
+                     <input
+                        type="date"
+                        id="start"
+                        className={styles.combobox}
+                        onChange={(e) => setEnd(e.target.value)}
+                        value={end}
+                     ></input>
+                  </div>
+                  <div>
+                     <p>Loại sản phẩm</p>
                      <select
                         name="category"
                         id="category"
-                        className={styles.combobox}
+                        className={styles.cateBox}
                         onChange={(e) => setCategory(Number(e.target.value))}
                         value={category}
                      >
-                        <option value="0">Chung</option>
-                        <option value="1">Thông báo</option>
+                        <option value="0">Nông sản</option>
+                        <option value="1">Vật nuôi</option>
                      </select>
                   </div>
                   <button
@@ -53,19 +75,6 @@ function ArticleHandler() {
                   >
                      Đăng
                   </button>
-                  <div>
-                     <p>Công khai</p>
-                     <select
-                        name="category"
-                        id="category"
-                        className={styles.combobox}
-                        onChange={(e) => setIsPublic(Number(e.target.value))}
-                        value={isPublic}
-                     >
-                        <option value="0">Công khai</option>
-                        <option value="1">Không</option>
-                     </select>
-                  </div>
                </div>
                <Editor
                   onInit={(evt, editor) => (editorRef.current = editor)}
@@ -88,4 +97,4 @@ function ArticleHandler() {
    );
 }
 
-export default ArticleHandler;
+export default CalendarHandler;

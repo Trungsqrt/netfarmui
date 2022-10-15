@@ -221,8 +221,8 @@ function Register({ setOverlay }) {
                         />
                         <p>
                            Tôi đồng ý với các{" "}
-                           <a href="#">điều kiện điều khoản</a> và{" "}
-                           <a href="#">chính sách bảo mật</a>
+                           <a href="/#">điều kiện điều khoản</a> và{" "}
+                           <a href="/#">chính sách bảo mật</a>
                         </p>
                      </section>
                      <section className={styles.error2}>
