@@ -9,11 +9,14 @@ function CalendarHandler() {
    const [category, setCategory] = useState(0);
    const [title, setTitle] = useState("");
 
+   const dayStart = new Date(start).toISOString();
+   const dayEnd = new Date(end).toISOString();
+   console.log(dayEnd);
    const editorRef = useRef();
    const onClickHandler = () => {
       console.log({
-         start: start,
-         end: end,
+         start: dayStart,
+         end: dayEnd,
          category: category,
          content: editorRef.current.getContent(),
          title: title,

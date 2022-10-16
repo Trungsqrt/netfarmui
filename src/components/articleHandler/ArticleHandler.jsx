@@ -3,19 +3,29 @@ import Navbar from "../navbar/Navbar";
 import styles from "./ArticleHandler.module.css";
 import "./app.css";
 import { Editor } from "@tinymce/tinymce-react";
+import axios from "axios";
 
 function ArticleHandler() {
    const editorRef = useRef();
    const [title, setTitle] = useState("");
    const [category, setCategory] = useState(0);
    const [isPublic, setIsPublic] = useState("");
-   console.log(isPublic);
+
    const onClickHandler = () => {
       console.log({
          title: title,
          category: category,
          isPublic: isPublic,
          content: editorRef.current.getContent(),
+      });
+      const content = editorRef.current.getContent();
+      var current = new Date(Date.now()).toISOString();
+      const postNew = { title, category, isPublic, current, content };
+
+      const url = "";
+
+      axios.post(url, postNew).then(() => {
+         console.log("article added");
       });
    };
 

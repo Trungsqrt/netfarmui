@@ -110,7 +110,8 @@
    border-radius: 12px;
    border: none;
    background-color: #049466;
-   margin-left: 41px;
+   margin-left: 35px;
+   margin-right: 10px;
    line-height: 15px;
    cursor: pointer;
    color: white;

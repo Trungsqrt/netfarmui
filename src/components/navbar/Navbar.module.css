@@ -1,0 +1,7 @@
+.iconWeather {
+   width: 20px;
+   height: 20px;
+   object-fit: cover;
+   border: 1px solid black;
+   background-color: gray;
+}

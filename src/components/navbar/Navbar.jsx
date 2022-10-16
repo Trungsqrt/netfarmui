@@ -1,16 +1,43 @@
-import React from "react";
-// import styles from "./Navbar.module.css";
+import React, { useEffect, useState } from "react";
+import styles from "./Navbar.module.css";
 import "./Navbar.css";
 import navbarImage from "../../assets/image/logonetfarm.png";
+import axios from "axios";
 function Navbar() {
+   const url =
+      "https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3";
+
+   const [data, setData] = useState(null);
+   const [error, setError] = useState("");
+   const [loaded, setLoaded] = useState(false);
+   const [iconState, setIconState] = useState("");
+   const [timee, setTimee] = useState();
+   let icon;
+   useEffect(() => {
+      axios.get(url).then((response) => {
+         const res = response.data;
+
+         const result = res.main.temp - 273.15;
+         setData(Math.round(result));
+         icon = [...res.weather];
+         icon = icon[0].icon;
+         setIconState(icon);
+      });
+   }, []);
+
    return (
       <div>
          <div className="container-navbar">
             <div className="info-header">
                Welcome to NetFarm Web Service
                <div className="info">
-                  <i className="fa-solid fa-sun"></i>
-                  <span>Da Nang, Da Nang 30°C</span>
+                  {/* <i className="fa-solid fa-sun"></i> */}
+                  <img
+                     src={`http://openweathermap.org/img/wn/${iconState}@2x.png`}
+                     alt=""
+                     className={styles.iconWeather}
+                  />
+                  <span>Da Nang, {data}°C</span>
                </div>
                <div className="info">
                   <i className="fa-solid fa-envelope"></i>
@@ -18,7 +45,7 @@ function Navbar() {
                </div>
                <div className="info">
                   <i className="fa-solid fa-clock"></i>
-                  <span>Mon - Sat 8:00 - 6:30, Sunday</span>
+                  <span>Mon - Sat 8:00 - 18:30, Sunday</span>
                </div>
             </div>
             <nav className="navbar">

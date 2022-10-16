@@ -16,7 +16,7 @@ function Register({ setOverlay }) {
    const [day, setDay] = useState("");
    const [month, setMonth] = useState("");
    const [year, setYear] = useState("");
-   const [gender, setGender] = useState(true);
+   const [gender, setGender] = useState(0);
    const [accept, setAccept] = useState("");
    const [validationMsg, setValidationMsg] = useState({});
 
@@ -69,12 +69,20 @@ function Register({ setOverlay }) {
       e.preventDefault();
       const isValid = validateAll();
       if (!isValid) return;
-      // const newUser = {
-      //    firstname: fname,
-      //    lastname:lname,
-      //    numberphone: uname,
-      //    password: pass,
-      // }
+      const dob = new Date(
+         Number(year),
+         Number(month) - 1,
+         Number(day) + 1
+      ).toISOString();
+      const newUser = {
+         firstname: fname,
+         lastname: lname,
+         numberphone: uname,
+         password: pass,
+         gender: gender,
+         dayOfBirth: dob,
+      };
+      console.log(newUser);
    };
    return (
       <div>
@@ -168,6 +176,8 @@ function Register({ setOverlay }) {
                            onChange={(e) => setDay(e.target.value)}
                            placeholder="Ngày sinh"
                            className={styles.inputField}
+                           min="1"
+                           max="31"
                         />
                         <input
                            type="number"
@@ -176,6 +186,8 @@ function Register({ setOverlay }) {
                            onChange={(e) => setMonth(e.target.value)}
                            placeholder="Tháng sinh"
                            className={styles.inputField}
+                           min="1"
+                           max="12"
                         />
 
                         <input
@@ -185,6 +197,7 @@ function Register({ setOverlay }) {
                            onChange={(e) => setYear(e.target.value)}
                            placeholder="Năm sinh"
                            className={styles.inputField}
+                           min="1900"
                         />
                      </section>
 
@@ -196,7 +209,7 @@ function Register({ setOverlay }) {
                               type="radio"
                               name="gender"
                               value="male"
-                              onChange={(e) => setGender(true)}
+                              onChange={(e) => setGender(0)}
                               defaultChecked
                            />
                         </section>
@@ -208,7 +221,7 @@ function Register({ setOverlay }) {
                               type="radio"
                               name="gender"
                               value="female"
-                              onChange={(e) => setGender(false)}
+                              onChange={(e) => setGender(1)}
                            />
                         </section>
                      </section>

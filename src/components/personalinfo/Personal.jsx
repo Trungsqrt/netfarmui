@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Personal.module.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../navbar/Navbar";
 
 function Personal() {
    const [fname, setFname] = useState("");
@@ -14,12 +15,16 @@ function Personal() {
    const [gender, setGender] = useState(true);
    const [accept, setAccept] = useState("");
 
+   const fullName = fname + " " + lname;
    const navigate = useNavigate();
    return (
       <div>
+         <Navbar />
          <div className={styles.body}>
             <div className={styles.container}>
-               <section className={styles.title}>Thông tin người dùng</section>
+               <section className={styles.title}>
+                  Cập nhật thông tin cá nhân
+               </section>
                <section className={styles.bodyContainer}>
                   <section>
                      <section className={styles.formContainer}>
@@ -189,17 +194,6 @@ function Personal() {
                                        </section>
                                     </section>
                                  </div>
-                              </section>
-
-                              <section className={styles.infoImage}>
-                                 {/* <img src="" alt="" /> */}
-                                 <div
-                                    style={{
-                                       width: "100px",
-                                       height: "100px",
-                                       backgroundColor: "blue",
-                                    }}
-                                 ></div>
                               </section>
                            </section>
 
