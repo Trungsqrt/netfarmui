@@ -8,6 +8,7 @@
 .container {
    margin-left: 100px;
    margin-right: 100px;
+   height: 300px;
 }
 
 .tabList {
@@ -48,7 +49,7 @@
 
 .bodyContainer {
    background-color: white;
-   height: 80vh;
+   height: 90vh;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -69,4 +70,12 @@ table {
    font-family: arial, sans-serif;
    border-collapse: collapse;
    width: 80%;
+}
+
+.bodyContainer {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   position: relative;
 }

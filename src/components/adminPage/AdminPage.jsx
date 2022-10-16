@@ -85,6 +85,25 @@ function AdminPage() {
                   </ul>
                </nav>
                <section className={styles.bodyContainer}>
+                  <form
+                     className="form-search"
+                     style={{
+                        alignSelf: "end",
+                        marginRight: "105px",
+                        marginBottom: "10px",
+                        marginTop: "-10px",
+                     }}
+                  >
+                     <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Search"
+                        name="search"
+                     ></input>
+                     <button className="btn-search">
+                        <i className="fa-solid fa-magnifying-glass icon-search"></i>
+                     </button>
+                  </form>
                   <table>
                      <tbody>
                         <tr>
