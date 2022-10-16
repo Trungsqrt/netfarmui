@@ -26,7 +26,7 @@ function Navbar() {
    }, []);
 
    return (
-      <div>
+      <div style={{backgroundColor: 'white'}}>
          <div className="container-navbar">
             <div className="info-header">
                Welcome to NetFarm Web Service

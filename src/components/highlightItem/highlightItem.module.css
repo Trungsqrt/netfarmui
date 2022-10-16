@@ -1,0 +1,33 @@
+.highlightItem_component {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  justify-content: space-between;
+  background-color: #fff;
+}
+
+.title {
+  background-color: #7687DF;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FC0934;
+  font-weight: bold;
+  padding: 0 20px;
+}
+
+.date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #7687DF;
+  padding: 0 50px;
+}
