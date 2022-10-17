@@ -17,10 +17,10 @@ export const loginUser = async (user, dispatch, navigate) => {
    if (res.data.data.accessToken) {
       dispatch(loginSuccess(res.data));
       localStorage.setItem("user", JSON.stringify(res.data));
-      navigate("/");
+      navigate("/home");
    } else {
       dispatch(loginFailed());
-      navigate("/login");
+      navigate("/");
    }
 };
 

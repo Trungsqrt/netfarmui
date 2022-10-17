@@ -5,28 +5,30 @@ import "./app.css";
 import { Editor } from "@tinymce/tinymce-react";
 import axios from "axios";
 
+const url = "https://localhost:44303/api/Article";
+
 function ArticleHandler() {
    const editorRef = useRef();
    const [title, setTitle] = useState("");
-   const [category, setCategory] = useState(0);
-   const [isPublic, setIsPublic] = useState("");
+   const [category, setCategory] = useState(1);
+   const [isPublic, setIsPublic] = useState(true);
 
    const onClickHandler = () => {
-      console.log({
+      const postNew = {
          title: title,
-         category: category,
-         isPublic: isPublic,
+         aCategoryId: category,
+         status: isPublic,
          content: editorRef.current.getContent(),
-      });
-      const content = editorRef.current.getContent();
-      var current = new Date(Date.now()).toISOString();
-      const postNew = { title, category, isPublic, current, content };
+         cmtStatus: false,
+         datePost: new Date().toISOString(),
+         dateUpdate: null,
+      };
 
-      const url = "";
-
-      axios.post(url, postNew).then(() => {
-         console.log("article added");
-      });
+      try {
+         axios.post(url, postNew);
+      } catch (err) {
+         console.warn(err.response);
+      }
    };
 
    return (
@@ -52,8 +54,8 @@ function ArticleHandler() {
                         onChange={(e) => setCategory(Number(e.target.value))}
                         value={category}
                      >
-                        <option value="0">Chung</option>
-                        <option value="1">Thông báo</option>
+                        <option value="1">Chung</option>
+                        <option value="2">Thông báo</option>
                      </select>
                   </div>
                   <button
@@ -69,11 +71,11 @@ function ArticleHandler() {
                         name="category"
                         id="category"
                         className={styles.combobox}
-                        onChange={(e) => setIsPublic(Number(e.target.value))}
+                        onChange={(e) => setIsPublic(Boolean(e.target.value))}
                         value={isPublic}
                      >
-                        <option value="0">Công khai</option>
-                        <option value="1">Không</option>
+                        <option value="1">Công khai</option>
+                        <option value="0">Không</option>
                      </select>
                   </div>
                </div>

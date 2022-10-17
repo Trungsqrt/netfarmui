@@ -2,22 +2,42 @@ import React, { useRef, useState } from "react";
 import styles from "./CalendarHandler.module.css";
 import Navbar from "../navbar/Navbar";
 import { Editor } from "@tinymce/tinymce-react";
+import axios from "axios";
+import { useEffect } from "react";
+
+const url = "https://localhost:44303/api/Schedule";
 
 function CalendarHandler() {
    const [start, setStart] = useState("");
    const [end, setEnd] = useState("");
    const [category, setCategory] = useState(0);
    const [title, setTitle] = useState("");
+   const [scheduleId, setScheduledId] = useState([]);
+   const [scheduleName, setScheduledName] = useState([]);
+   useEffect(() => {
+      axios.get(url).then((response) => {
+         const data = response.data;
+         data.forEach((item) => {
+            setScheduledId((prevStateId) => [...prevStateId, item.id]);
+            setScheduledName((prevStateName) => [...prevStateName, item.name]);
+         });
+      });
+   }, []);
 
    const editorRef = useRef();
    const onClickHandler = () => {
-      console.log({
+      const scheduleNew = {
          start: new Date(start).toISOString(),
          end: new Date(end).toISOString(),
          category: category,
          content: editorRef.current.getContent(),
          title: title,
-      });
+      };
+      try {
+         axios.post(url, scheduleNew);
+      } catch (err) {
+         console.warn(err.response);
+      }
    };
 
    return (
@@ -64,8 +84,12 @@ function CalendarHandler() {
                         onChange={(e) => setCategory(Number(e.target.value))}
                         value={category}
                      >
-                        <option value="0">Nông sản</option>
-                        <option value="1">Vật nuôi</option>
+                        {scheduleId.map((item, index) => (
+                           <option value={item}>{scheduleName[index]}</option>
+                        ))}
+
+                        {/* <option value="0">Nông sản</option>
+                        <option value="1">Vật nuôi</option> */}
                      </select>
                   </div>
                   <button
