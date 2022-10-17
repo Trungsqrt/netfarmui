@@ -10,15 +10,16 @@ function AdminPage() {
    useEffect(() => {
       async function getData() {
          const Dataset = await axios.get(
-            "https://jsonplaceholder.typicode.com/users"
+            // "https://jsonplaceholder.typicode.com/users"
+            "https://localhost:44303/api/Users"
          );
 
          Dataset.data.forEach((item) => {
             const value = {
                id: item.id,
-               name: item.name,
-               user: item.username,
-               email: item.email,
+               name: item.fullName,
+               phone: item.phone,
+               cccd: item.identifyCard,
             };
             setData((prevData) => [...prevData, value]);
          });
@@ -30,16 +31,14 @@ function AdminPage() {
    const UserHandler = () => {
       async function getData() {
          setData([]);
-         const Dataset = await axios.get(
-            "https://jsonplaceholder.typicode.com/users"
-         );
+         const Dataset = await axios.get("https://localhost:44303/api/Users");
 
          Dataset.data.forEach((item) => {
             const value = {
                id: item.id,
-               name: item.name,
-               user: item.username,
-               email: item.email,
+               name: item.fullName,
+               phone: item.phone,
+               cccd: item.identifyCard,
             };
             setData((prevData) => [...prevData, value]);
          });
@@ -109,9 +108,9 @@ function AdminPage() {
                         <tr>
                            <th className={styles.th1}>Id</th>
                            <th className={styles.th1}>Name</th>
-                           <th className={styles.th1}>Username</th>
+                           <th className={styles.th1}>Phone</th>
                            <th className={styles.th1}>Email</th>
-                           <th className={styles.th1}></th>
+                           <th className={styles.th1}>CCCD</th>
                         </tr>
                         {data.map((item, index) => (
                            <tr key={index}>

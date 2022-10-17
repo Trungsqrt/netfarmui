@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+//#region import
 import { useState } from "react";
 import styles from "./Login.module.css";
 import loginImage from "../../assets/image/loginImage.jpg";
@@ -10,14 +10,21 @@ import { loginUser } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+//#endregion
+
 function Login() {
+   //overlay register
    const [overlay, setOverlay] = useState(false);
    const [overlay2, setOverlay2] = useState(false);
+   //username & password & login components
    const [uname, setUname] = useState("");
    const [pass, setPass] = useState("");
-   const [validationMsg, setValidationMsg] = useState({});
    const dispatch = useDispatch();
    const navigate = useNavigate();
+
+   //#region validation
+   //validation
+   const [validationMsg, setValidationMsg] = useState({});
    // const [users, setUsers] = useState();
 
    const validateAll = () => {
@@ -33,6 +40,7 @@ function Login() {
       if (Object.keys(msg).length > 0) return false;
       return true;
    };
+   //#endregion
 
    const handleSubmit = (e) => {
       e.preventDefault();
@@ -40,11 +48,13 @@ function Login() {
       if (!isValid) return;
 
       const newUser = {
-         username: uname,
-         password: pass,
+         phone: uname,
+         passWord: pass,
       };
       loginUser(newUser, dispatch, navigate);
    };
+
+   //#region jsx
 
    return (
       <section className={styles.container}>
@@ -132,6 +142,7 @@ function Login() {
          {overlay ? <Register setOverlay={setOverlay} /> : ""}
       </section>
    );
+   //#endregion
 }
 
 export default Login;

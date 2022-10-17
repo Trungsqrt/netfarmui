@@ -1,13 +1,18 @@
+//#region import
 import { useState } from "react";
 import styles from "../register/Register.module.css";
 import isEmpty from "validator/lib/isEmpty";
 import equals from "validator/lib/equals";
+import { registerUser } from "../../redux/apiRequest";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+//#endregion
 
 function Register({ setOverlay }) {
    const close = () => {
       setOverlay(false);
    };
-
+   //register info
    const [fname, setFname] = useState("");
    const [lname, setLname] = useState("");
    const [uname, setUname] = useState("");
@@ -18,6 +23,9 @@ function Register({ setOverlay }) {
    const [year, setYear] = useState("");
    const [gender, setGender] = useState(0);
    const [accept, setAccept] = useState("");
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   // #region validate
    const [validationMsg, setValidationMsg] = useState({});
 
    const handleChange = (e) => {
@@ -65,6 +73,8 @@ function Register({ setOverlay }) {
       if (Object.keys(msg).length > 0) return false;
       return true;
    };
+   //#endregion
+
    const handleSubmit = (e) => {
       e.preventDefault();
       const isValid = validateAll();
@@ -74,6 +84,7 @@ function Register({ setOverlay }) {
          Number(month) - 1,
          Number(day) + 1
       ).toISOString();
+
       const newUser = {
          firstname: fname,
          lastname: lname,
@@ -82,7 +93,7 @@ function Register({ setOverlay }) {
          gender: gender,
          dayOfBirth: dob,
       };
-      console.log(newUser);
+      registerUser(newUser, dispatch, navigate);
    };
    return (
       <div>
