@@ -1,33 +1,35 @@
 .highlightItem_component {
-  display: flex;
-  height: 50px;
-  width: 100%;
-  justify-content: space-between;
-  background-color: #fff;
+   display: flex;
+   height: 50px;
+   width: 100%;
+   justify-content: flex-start;
+   background-color: #fff;
 }
 
 .title {
-  background-color: #7687DF;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
+   background-color: #7687df;
+   color: #fff;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 10px 20px;
+   width: 150px;
+   max-width: 120px;
 }
 
 .content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FC0934;
-  font-weight: bold;
-  padding: 0 20px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: #fc0934;
+   font-weight: bold;
+   padding: 0 20px;
 }
 
 .date {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #7687DF;
-  padding: 0 50px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: #7687df;
+   padding: 0 50px;
 }
