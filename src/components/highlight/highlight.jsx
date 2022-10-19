@@ -1,6 +1,7 @@
 import styles from "./highlight.module.css";
 import HighLightItem from "../highlightItem/highlightItem";
 import { BsSearch } from "react-icons/bs";
+import ListCategory from '../Article/ListCategory'
 
 function HighLight() {
    return (
@@ -40,14 +41,8 @@ function HighLight() {
                   flex: 1,
                }}
             >
-               <div style={{ display: "flex", columnGap: "20px" }}>
-                  <input
-                     style={{ padding: "10px 20px", fontSize: "20px" }}
-                     type="text"
-                     placeholder="Tìm kiếm"
-                  />
-                  <BsSearch style={{ fontSize: "40px", color: "#fff" }} />
-               </div>
+               <ListCategory></ListCategory>
+               
             </div>
          </div>
       </div>

@@ -25,6 +25,23 @@ function App() {
          </Routes>
       </div>
    );
+import News from "./components/Article/News/News";
+import DetailArticle from "./components/Article/News/DetailArticle";
+function App() {
+  return (
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/personal" element={<Personal />} />
+        <Route path="/createexpert" element={<CreateExpert />} />
+        <Route path="/articlehandler" element={<ArticleHandler />} />
+        <Route path="/calendarhandler" element={<CalendarHandler />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/tintuc/:id" element={<DetailArticle />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
