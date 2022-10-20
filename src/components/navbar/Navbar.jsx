@@ -4,7 +4,7 @@ import "./Navbar.css";
 import navbarImage from "../../assets/image/logonetfarm.png";
 import axios from "axios";
 import NotificationDetail from "../detailBar/notificationDetail/NotificationDetail";
-
+import ToolbarAdmin from "../detailBar/toolbarAdmin/ToolbarAdmin";
 function Navbar() {
    const url =
       "https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3";
@@ -15,6 +15,7 @@ function Navbar() {
    const [iconState, setIconState] = useState("");
    const [timee, setTimee] = useState();
    const [notification, setNotification] = useState(false);
+   const [toolbar, setToolbar] = useState(false);
    let icon;
    useEffect(() => {
       axios.get(url).then((response) => {
@@ -36,7 +37,15 @@ function Navbar() {
       setNotification(false);
    }
 
-   console.log(notification);
+   function showToolbar() {
+      toolbar ? setToolbar(false) : setToolbar(true);
+   }
+
+   function hideToolbar() {
+      setToolbar(false);
+   }
+
+   console.log(toolbar);
    return (
       <div style={{ backgroundColor: "white" }}>
          <div className="container-navbar">
@@ -108,9 +117,14 @@ function Navbar() {
                      {notification && <NotificationDetail />}
                   </section>
                   <section>
-                     <button className="button-setting">
+                     <button
+                        className="button-setting"
+                        onClick={showToolbar}
+                        // onBlur={hideToolbar}
+                     >
                         <i className="fa-solid fa-bars settings"></i>
                      </button>
+                     {toolbar && <ToolbarAdmin />}
                   </section>
                </div>
             </nav>

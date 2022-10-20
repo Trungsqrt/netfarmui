@@ -19,7 +19,7 @@ function App() {
             <Route path="/personal" element={<Personal />} />
             <Route path="/createexpert" element={<CreateExpert />} />
             <Route path="/articlehandler" element={<ArticleHandler />} />
-            <Route path="/calendarhandler" element={<CalendarHandler />} />
+            <Route path="/calenderhandler" element={<CalendarHandler />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/articleView" element={<ArticleView />} />
          </Routes>
