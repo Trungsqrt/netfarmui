@@ -66,6 +66,10 @@ ul li a:active {
    border: solid 1px;
    padding: 2px 15px;
    display: flex;
+   user-select: none;
+   border: none;
+   position: relative;
+   bottom: -4px;
 }
 .calling {
    width: 80px;
@@ -89,9 +93,23 @@ ul li a:active {
    margin-right: 30px;
    border: none;
    background-color: white;
+   position: relative;
 }
 .setting-group {
    margin-left: 30px;
    display: flex;
    align-items: center;
+}
+
+.button-setting {
+   cursor: pointer;
+   position: relative;
+}
+
+.setting {
+   position: relative;
+}
+
+.notificationBox {
+   position: relative;
 }

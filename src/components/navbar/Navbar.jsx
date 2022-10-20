@@ -3,6 +3,8 @@ import styles from "./Navbar.module.css";
 import "./Navbar.css";
 import navbarImage from "../../assets/image/logonetfarm.png";
 import axios from "axios";
+import NotificationDetail from "../detailBar/notificationDetail/NotificationDetail";
+
 function Navbar() {
    const url =
       "https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3";
@@ -12,6 +14,7 @@ function Navbar() {
    const [loaded, setLoaded] = useState(false);
    const [iconState, setIconState] = useState("");
    const [timee, setTimee] = useState();
+   const [notification, setNotification] = useState(false);
    let icon;
    useEffect(() => {
       axios.get(url).then((response) => {
@@ -25,6 +28,15 @@ function Navbar() {
       });
    }, []);
 
+   function showNotificationHandler() {
+      notification ? setNotification(false) : setNotification(true);
+   }
+
+   function hideNotificationHandler() {
+      setNotification(false);
+   }
+
+   console.log(notification);
    return (
       <div style={{ backgroundColor: "white" }}>
          <div className="container-navbar">
@@ -85,12 +97,21 @@ function Navbar() {
                   </div>
                </div>
                <div className="setting-group">
-                  <button className="button-setting">
-                     <i className="fa-solid fa-bell settings"></i>
-                  </button>
-                  <button className="button-setting">
-                     <i className="fa-solid fa-bars settings"></i>
-                  </button>
+                  <section className={styles.notificationBox}>
+                     <button
+                        className="button-setting"
+                        onClick={showNotificationHandler}
+                        onBlur={hideNotificationHandler}
+                     >
+                        <i className="fa-solid fa-bell settings"></i>
+                     </button>
+                     {notification && <NotificationDetail />}
+                  </section>
+                  <section>
+                     <button className="button-setting">
+                        <i className="fa-solid fa-bars settings"></i>
+                     </button>
+                  </section>
                </div>
             </nav>
          </div>

@@ -9,7 +9,7 @@ import {
 } from "./authSlice";
 
 const urlLogin = "https://localhost:44303/api/Login";
-const urlRegister = "https://localhost:44303/api/Register";
+const urlRegister = "https://localhost:44303/api/Users";
 
 export const loginUser = async (user, dispatch, navigate) => {
    dispatch(loginStart());

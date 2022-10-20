@@ -4,6 +4,8 @@ import styles from "./ArticleHandler.module.css";
 import "./app.css";
 import { Editor } from "@tinymce/tinymce-react";
 import axios from "axios";
+import convertHtmlToReact from "@hedgedoc/html-to-react";
+import parse from "html-react-parser";
 
 const url = "https://localhost:44303/api/Article";
 
@@ -13,6 +15,7 @@ function ArticleHandler() {
    const [category, setCategory] = useState(1);
    const [isPublic, setIsPublic] = useState(true);
    const [clonePost, setClonePost] = useState({});
+   const [isClone, setIsClone] = useState(false);
    const onClickHandler = () => {
       const postNew = {
          title: title,
@@ -28,6 +31,7 @@ function ArticleHandler() {
          axios.post(url, postNew);
          alert("Đăng thành công!");
          setClonePost(postNew);
+         setIsClone(true);
       } catch (err) {
          alert("Có lỗi, xin vui lòng thử lại!");
       }
@@ -45,6 +49,8 @@ function ArticleHandler() {
                   placeholder="Nhập tiêu đề..."
                   className={styles.input}
                   onChange={(e) => setTitle(e.target.value)}
+                  required
+                  min={3}
                ></input>
                <div className={styles.comboboxContainer}>
                   <div>
@@ -91,6 +97,8 @@ function ArticleHandler() {
                         "link",
                         "media",
                         "codesample",
+                        "advlist",
+                        "lists",
                      ],
                      toolbar:
                         "image | link | undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | help",
@@ -107,13 +115,15 @@ function ArticleHandler() {
             </div>
          </div>
 
-         <div className={styles.abc}>
-            asdasd
-            {console.log(clonePost)}
-            <h5>{clonePost.title}</h5>
-            <p>{clonePost.content}</p>
-            <p>{clonePost.datePost}</p>
-         </div>
+         {isClone && (
+            <div className={styles.abc}>
+               Result
+               <h5>{clonePost.title}</h5>
+               {/* <p>{convertHtmlToReact(clonePost.content)}</p> */}
+               {<p>{parse(clonePost.content)}</p>}
+               <p>{clonePost.datePost}</p>
+            </div>
+         )}
       </div>
    );
 }

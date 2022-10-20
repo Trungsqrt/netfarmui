@@ -21,7 +21,7 @@ function Register({ setOverlay }) {
    const [day, setDay] = useState("");
    const [month, setMonth] = useState("");
    const [year, setYear] = useState("");
-   const [gender, setGender] = useState(0);
+   const [gender, setGender] = useState(true);
    const [accept, setAccept] = useState("");
    const dispatch = useDispatch();
    const navigate = useNavigate();
@@ -86,12 +86,12 @@ function Register({ setOverlay }) {
       ).toISOString();
 
       const newUser = {
-         firstname: fname,
-         lastname: lname,
-         numberphone: uname,
-         password: pass,
+         fullName: fname + " " + lname,
+         phone: uname,
+         passWord: pass,
          gender: gender,
          dayOfBirth: dob,
+         identifyCard: "287361782638",
       };
       registerUser(newUser, dispatch, navigate);
    };
@@ -220,7 +220,7 @@ function Register({ setOverlay }) {
                               type="radio"
                               name="gender"
                               value="male"
-                              onChange={(e) => setGender(0)}
+                              onChange={(e) => setGender(true)}
                               defaultChecked
                            />
                         </section>
@@ -232,7 +232,7 @@ function Register({ setOverlay }) {
                               type="radio"
                               name="gender"
                               value="female"
-                              onChange={(e) => setGender(1)}
+                              onChange={(e) => setGender(false)}
                            />
                         </section>
                      </section>

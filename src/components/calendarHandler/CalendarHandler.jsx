@@ -56,6 +56,8 @@ function CalendarHandler() {
                   onChange={(e) => setTitle(e.target.value)}
                   value={title}
                   type=""
+                  required
+                  min={3}
                ></input>
 
                <div className={styles.comboboxContainer} lang="vi">
@@ -116,8 +118,7 @@ function CalendarHandler() {
                         "media",
                         "codesample",
                      ],
-                     toolbar:
-                        "image | link | undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | help",
+                     toolbar: "",
                      menubar: false,
                      branding: false,
                      init_instance_callback: function (editor) {

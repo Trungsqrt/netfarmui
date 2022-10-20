@@ -7,6 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 function AdminPage() {
    const [data, setData] = useState([]);
    const navigate = useNavigate();
+   const [render, setRender] = useState(true); //true is render User, false is render Posts
    useEffect(() => {
       async function getData() {
          const Dataset = await axios.get(
@@ -29,6 +30,7 @@ function AdminPage() {
    }, []);
 
    const UserHandler = () => {
+      setRender(true);
       async function getData() {
          setData([]);
          const Dataset = await axios.get("https://localhost:44303/api/Users");
@@ -48,18 +50,17 @@ function AdminPage() {
    };
 
    const PostHandler = () => {
+      setRender(false);
       async function getData() {
          setData([]);
-         const Dataset = await axios.get(
-            "https://jsonplaceholder.typicode.com/users"
-         );
+         const Dataset = await axios.get("https://localhost:44303/api/Article");
 
          Dataset.data.forEach((item) => {
             const value = {
                id: item.id,
-               name: item.name,
-               user: item.username,
-               email: item.email,
+               title: item.title,
+               datePost: item.datePost,
+               dateUpdate: item.dateUpdate,
             };
             setData((prevData) => [...prevData, value]);
          });
@@ -104,24 +105,45 @@ function AdminPage() {
                      </button>
                   </form>
                   <table>
-                     <tbody>
-                        <tr>
-                           <th className={styles.th1}>Id</th>
-                           <th className={styles.th1}>Name</th>
-                           <th className={styles.th1}>Phone</th>
-                           <th className={styles.th1}>Email</th>
-                           <th className={styles.th1}>CCCD</th>
-                        </tr>
-                        {data.map((item, index) => (
-                           <tr key={index}>
-                              <th>{item.id}</th>
-                              <th>{item.name}</th>
-                              <th>{item.user}</th>
-                              <th>{item.email}</th>
-                              <th style={{ cursor: "pointer" }}>&times;</th>
+                     {render ? (
+                        <tbody>
+                           <tr>
+                              <th className={styles.th1}>Id</th>
+                              <th className={styles.th1}>Tên</th>
+                              <th className={styles.th1}>Số điện thoại</th>
+                              <th className={styles.th1}>Email</th>
+                              <th className={styles.th1}>CCCD</th>
                            </tr>
-                        ))}
-                     </tbody>
+                           {data.map((item, index) => (
+                              <tr key={index}>
+                                 <th>{item.id}</th>
+                                 <th>{item.name}</th>
+                                 <th>{item.user}</th>
+                                 <th>{item.email}</th>
+                                 <th>{item.cccd}</th>
+                                 <th style={{ cursor: "pointer" }}>&times;</th>
+                              </tr>
+                           ))}
+                        </tbody>
+                     ) : (
+                        <tbody>
+                           <tr>
+                              <th className={styles.th1}>Id</th>
+                              <th className={styles.th1}>Tiêu đề</th>
+                              <th className={styles.th1}>Ngày đăng</th>
+                              <th className={styles.th1}>Ngày cập nhật</th>
+                           </tr>
+                           {data.map((item, index) => (
+                              <tr key={index}>
+                                 <th>{item.id}</th>
+                                 <th>{item.title}</th>
+                                 <th>{item.datePost}</th>
+                                 <th>{item.dateUpdate}</th>
+                                 <th style={{ cursor: "pointer" }}>&times;</th>
+                              </tr>
+                           ))}
+                        </tbody>
+                     )}
                   </table>
                </section>
             </div>
