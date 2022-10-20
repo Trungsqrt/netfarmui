@@ -26,7 +26,7 @@ function Navbar() {
    }, []);
 
    return (
-      <div style={{backgroundColor: 'white'}}>
+      <div style={{ backgroundColor: "white" }}>
          <div className="container-navbar">
             <div className="info-header">
                Welcome to NetFarm Web Service
@@ -37,7 +37,7 @@ function Navbar() {
                      alt=""
                      className={styles.iconWeather}
                   />
-                  <span>Da Nang, {data}°C</span>
+                  <span className={styles.temperature}>Da Nang, {data}°C</span>
                </div>
                <div className="info">
                   <i className="fa-solid fa-envelope"></i>

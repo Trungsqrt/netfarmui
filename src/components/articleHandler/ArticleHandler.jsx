@@ -12,7 +12,7 @@ function ArticleHandler() {
    const [title, setTitle] = useState("");
    const [category, setCategory] = useState(1);
    const [isPublic, setIsPublic] = useState(true);
-
+   const [clonePost, setClonePost] = useState({});
    const onClickHandler = () => {
       const postNew = {
          title: title,
@@ -26,8 +26,10 @@ function ArticleHandler() {
 
       try {
          axios.post(url, postNew);
+         alert("Đăng thành công!");
+         setClonePost(postNew);
       } catch (err) {
-         console.warn(err.response);
+         alert("Có lỗi, xin vui lòng thử lại!");
       }
    };
 
@@ -92,9 +94,25 @@ function ArticleHandler() {
                      ],
                      toolbar:
                         "image | link | undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | help",
+                     menubar: false,
+                     branding: false,
+                     init_instance_callback: function (editor) {
+                        var freeTiny = document.querySelector(
+                           ".tox .tox-notification--in"
+                        );
+                        freeTiny.style.display = "none";
+                     },
                   }}
                />
             </div>
+         </div>
+
+         <div className={styles.abc}>
+            asdasd
+            {console.log(clonePost)}
+            <h5>{clonePost.title}</h5>
+            <p>{clonePost.content}</p>
+            <p>{clonePost.datePost}</p>
          </div>
       </div>
    );

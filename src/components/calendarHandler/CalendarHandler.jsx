@@ -10,7 +10,7 @@ const url = "https://localhost:44303/api/Schedule";
 function CalendarHandler() {
    const [start, setStart] = useState("");
    const [end, setEnd] = useState("");
-   const [category, setCategory] = useState(0);
+   const [category, setCategory] = useState(3);
    const [title, setTitle] = useState("");
    const [scheduleId, setScheduledId] = useState([]);
    const [scheduleName, setScheduledName] = useState([]);
@@ -33,11 +33,14 @@ function CalendarHandler() {
          content: editorRef.current.getContent(),
          title: title,
       };
-      try {
-         axios.post(url, scheduleNew);
-      } catch (err) {
-         console.warn(err.response);
-      }
+
+      console.log(scheduleNew);
+
+      // try {
+      //    axios.post(url, scheduleNew);
+      // } catch (err) {
+      //    console.warn(err.response);
+      // }
    };
 
    return (
@@ -52,8 +55,10 @@ function CalendarHandler() {
                   className={styles.input}
                   onChange={(e) => setTitle(e.target.value)}
                   value={title}
+                  type=""
                ></input>
-               <div className={styles.comboboxContainer}>
+
+               <div className={styles.comboboxContainer} lang="vi">
                   <div>
                      <p>Bắt đầu</p>
                      <input
@@ -62,6 +67,7 @@ function CalendarHandler() {
                         className={styles.combobox}
                         onChange={(e) => setStart(e.target.value)}
                         value={start}
+                        lang="vi"
                      ></input>
                   </div>
 
@@ -85,11 +91,10 @@ function CalendarHandler() {
                         value={category}
                      >
                         {scheduleId.map((item, index) => (
-                           <option value={item}>{scheduleName[index]}</option>
+                           <option value={item} key={index}>
+                              {scheduleName[index]}
+                           </option>
                         ))}
-
-                        {/* <option value="0">Nông sản</option>
-                        <option value="1">Vật nuôi</option> */}
                      </select>
                   </div>
                   <button
@@ -113,6 +118,14 @@ function CalendarHandler() {
                      ],
                      toolbar:
                         "image | link | undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | help",
+                     menubar: false,
+                     branding: false,
+                     init_instance_callback: function (editor) {
+                        var freeTiny = document.querySelector(
+                           ".tox .tox-notification--in"
+                        );
+                        freeTiny.style.display = "none";
+                     },
                   }}
                />
             </div>

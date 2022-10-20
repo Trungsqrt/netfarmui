@@ -1,7 +1,14 @@
 .iconWeather {
-   width: 20px;
-   height: 20px;
+   width: 18px;
+   height: 18px;
    object-fit: cover;
    border: 1px solid black;
    background-color: gray;
+   position: relative;
+   top: -1px;
+}
+
+.temperature {
+   position: relative;
+   top: -3.5px;
 }
