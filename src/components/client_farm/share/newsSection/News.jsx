@@ -3,7 +3,6 @@ import articleAPI from '../../../../apis/articleAPI';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import './News.css';
-
 function News(props) {
     const [articles, setArticles] = useState([]);
 

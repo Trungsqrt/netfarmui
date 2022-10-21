@@ -5,6 +5,8 @@ import articleAPI from '../../../../src/apis/articleAPI';
 import Header from '../share/header/Header';
 import Footer from '../share/footer/Footer';
 import Menuleft from '../share/menu/Menuleft';
+import Comment from '../comment/Comment';
+
 function DetailArticle(props) {
     const [detail, setDetail] = useState({});
     const dispatch = useDispatch();
@@ -43,6 +45,7 @@ function DetailArticle(props) {
                                 </div>
                             </div>
                         </div>
+                        <Comment />
                         <Footer></Footer>
                     </div>
                 )}
