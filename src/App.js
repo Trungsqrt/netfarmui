@@ -5,11 +5,13 @@ import ArticleHandler from './components/articleHandler/ArticleHandler';
 import AdminPage from './components/adminPage/AdminPage';
 import CreateExpert from './components/createExpert/CreateExpert';
 import CalendarHandler from './components/calendarHandler/CalendarHandler';
-import ArticleView from './components/articleView/ArticleView';
 import ClientHome from './components/client_farm/home/ClientHome';
 import DetailArticle from './components/client_farm/detail/DetailArticle';
 import InforPage from './components/client_farm/infor/InforPage';
-
+import Policy from './components/client_farm/infor/policy/Policy';
+import Manual from './components/client_farm/infor/manual/Manual';
+import News from './components/client_farm/infor/news/News';
+import Schedule from './components/client_farm/infor/schedule/Schedule';
 function App() {
     return (
         <div className="App">
@@ -20,10 +22,13 @@ function App() {
                 <Route path="/articlehandler" element={<ArticleHandler />} />
                 <Route path="/calenderhandler" element={<CalendarHandler />} />
                 <Route path="/admin" element={<AdminPage />} />
-                <Route path="/articleView" element={<ArticleView />} />
-                <Route path="/client/home" element={<ClientHome />} />
+                <Route path="/" element={<ClientHome />} />
                 <Route path="/detail/:id" element={<DetailArticle />} />
                 <Route path="/inforPage" element={<InforPage />} />
+                <Route path="/inforPage/policy" element={<Policy />} />
+                <Route path="/inforPage/manual" element={<Manual />} />
+                <Route path="/inforPage/news" element={<News />} />
+                <Route path="/inforPage/news" element={<Schedule />} />
             </Routes>
         </div>
     );

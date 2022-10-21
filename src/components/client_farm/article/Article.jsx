@@ -11,14 +11,18 @@ Article.defaultProps = {
     articles: [],
 };
 function Article(props) {
-    const { articles } = props;
+    const { article } = props;
     return (
         <div>
-            <Link className="link_article" to={`/tintuc/${article.Article_id}`}>
+            <Link className="link_article" to={`/detail/${article.Article_id}`}>
                 <div class="article_item">
-                    <img src={article.image} className="article_img" />
+                    <img src={article.img} className="article_img" />
                     <div class="article_text">
                         <div class="article_title">{article.article_title}</div>
+                        <div className="article_tag">
+                            <div className="article_category">{article.category}</div>
+                            <div className="article_category">{article.date_update}</div>
+                        </div>
                         <div class="article_content">{article.article_content}</div>
                     </div>
                 </div>
