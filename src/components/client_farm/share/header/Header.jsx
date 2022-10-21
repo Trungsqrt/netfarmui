@@ -3,6 +3,9 @@ import './Header.css';
 import navbarImage from '../../../../assets/image/logonetfarm.png';
 import axios from 'axios';
 import styles from './Header.module.css';
+import ToolbarAdmin from '../../../detailBar/toolbarAdmin/ToolbarAdmin';
+import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
+
 const Header = () => {
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3';
 
@@ -11,6 +14,8 @@ const Header = () => {
     const [loaded, setLoaded] = useState(false);
     const [iconState, setIconState] = useState('');
     const [timee, setTimee] = useState();
+    const [notification, setNotification] = useState(false);
+    const [toolbar, setToolbar] = useState(false);
     let icon;
     useEffect(() => {
         axios.get(url).then((response) => {
@@ -24,6 +29,23 @@ const Header = () => {
         });
     }, []);
 
+    function showNotificationHandler() {
+        notification ? setNotification(false) : setNotification(true);
+    }
+
+    function hideNotificationHandler() {
+        setNotification(false);
+    }
+
+    function showToolbar() {
+        toolbar ? setToolbar(false) : setToolbar(true);
+    }
+
+    function hideToolbar() {
+        setToolbar(false);
+    }
+
+    console.log(toolbar);
     return (
         <div style={{ backgroundColor: 'white' }}>
             <div className="container-navbar">
@@ -36,7 +58,7 @@ const Header = () => {
                             alt=""
                             className={styles.iconWeather}
                         />
-                        <span>Da Nang, {data}°C</span>
+                        <span className={styles.temperature}>Da Nang, {data}°C</span>
                     </div>
                     <div className="info">
                         <i className="fa-solid fa-envelope"></i>
@@ -76,12 +98,26 @@ const Header = () => {
                         </div>
                     </div>
                     <div className="setting-group">
-                        <button className="button-setting">
-                            <i className="fa-solid fa-bell settings"></i>
-                        </button>
-                        <button className="button-setting">
-                            <i className="fa-solid fa-bars settings"></i>
-                        </button>
+                        <section className={styles.notificationBox}>
+                            <button
+                                className="button-setting"
+                                onClick={showNotificationHandler}
+                                onBlur={hideNotificationHandler}
+                            >
+                                <i className="fa-solid fa-bell settings"></i>
+                            </button>
+                            {notification && <NotificationDetail />}
+                        </section>
+                        <section>
+                            <button
+                                className="button-setting"
+                                onClick={showToolbar}
+                                // onBlur={hideToolbar}
+                            >
+                                <i className="fa-solid fa-bars settings"></i>
+                            </button>
+                            {toolbar && <ToolbarAdmin />}
+                        </section>
                     </div>
                 </nav>
             </div>
