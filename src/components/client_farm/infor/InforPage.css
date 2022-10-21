@@ -1,0 +1,26 @@
+.container {
+    width: 100%;
+    padding: 0 20px;
+    display: block;
+}
+
+
+.col-2 {
+    display: flex;
+    width: 50%;
+    border: 1 solid #000;
+}
+
+.menu {
+
+}
+
+.infor_main {
+    display: flex;
+}
+
+.row {
+    min-height: 500px;
+    background-color: aqua;
+    border: 1px solid #000;
+}

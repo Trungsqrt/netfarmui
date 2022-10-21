@@ -1,0 +1,82 @@
+.news {
+    display: flex;
+    padding-top: 50px;
+}
+
+h1 {
+    font-size: 36px;
+    color: rgb(130, 22, 8);
+    line-height: 28px;
+    text-transform: uppercase;
+    padding-left: 20px;
+}
+
+.owl-item {
+    position: relative;
+    min-height: 1px;
+    float: left;
+    -webkit-backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 30%;
+}
+
+.item {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.box {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 3%), 0 2.8px 2.2px rgb(0 0 0 / 5%), 0 2.8px 2.2px rgb(0 0 0 / 6%),
+        0 2.8px 2.2px rgb(0 0 0 / 7%), 0 2.8px 2.2px rgb(0 0 0 / 1%), 0 2.8px 2.2px rgb(0 0 0 / 1%);
+    margin-left: 30%;
+    margin-top: -18%;
+    width: 70%;
+    z-index: 9990;
+    position: relative;
+    display: block;
+    height: 400px;
+}
+
+.title {
+    display: block;
+    color: #00473f;
+    font-size: 18px;
+    font-family: 'Roboto Bold', Helvetica Neue, Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+}
+
+.short-content {
+    margin: 30px 0;
+    font-size: 16px;
+    line-height: 22px;
+    text-transform: lowercase !important;
+    display: block;
+    display: -webkit-box;
+    height: 16px * 1.3 * 3;
+    font-size: 16px;
+    line-height: 1.3;
+    -webkit-line-clamp: 10; /* số dòng hiển thị */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.news_img {
+    width: 100%;
+}
+
+.news_link {
+    text-decoration: none;
+    color: black;
+}

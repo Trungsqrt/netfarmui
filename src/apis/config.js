@@ -1,10 +1,11 @@
-import axios from "axios";
-import { API_URL } from "./apis";
+import axios from 'axios';
+
+const API_URL = 'https://6351413b3e9fa1244e59b320.mockapi.io';
 
 const axiosClient = axios.create({
     baseURL: API_URL,
     headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
     },
 });
 
