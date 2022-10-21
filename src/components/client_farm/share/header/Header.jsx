@@ -109,11 +109,7 @@ const Header = () => {
                             {notification && <NotificationDetail />}
                         </section>
                         <section>
-                            <button
-                                className="button-setting"
-                                onClick={showToolbar}
-                                // onBlur={hideToolbar}
-                            >
+                            <button className="button-setting" onClick={showToolbar} onBlur={hideToolbar}>
                                 <i className="fa-solid fa-bars settings"></i>
                             </button>
                             {toolbar && <ToolbarAdmin />}

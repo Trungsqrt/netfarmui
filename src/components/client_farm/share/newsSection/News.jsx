@@ -21,7 +21,7 @@ function News(props) {
 
     return (
         <div>
-            <h1>Tin Tức</h1>
+            <h1 className="labelNews">Tin Tức</h1>
             <div className="news">
                 {articles &&
                     articles.slice(0, 3).map((value) => (
