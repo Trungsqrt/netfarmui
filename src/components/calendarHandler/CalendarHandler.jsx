@@ -42,12 +42,10 @@ function CalendarHandler() {
         console.log(scheduleNew);
         try {
             const a = await axios.post(url, scheduleNew);
-            console.log(a);
             alert('Đăng thành công!');
             window.location.reload();
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
-            console.log(err);
         }
     };
 
