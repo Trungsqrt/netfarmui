@@ -5,7 +5,6 @@ import ArticleHandler from './components/articleHandler/ArticleHandler';
 import AdminPage from './components/adminPage/AdminPage';
 import CreateExpert from './components/createExpert/CreateExpert';
 import CalendarHandler from './components/calendarHandler/CalendarHandler';
-import ArticleView from './components/articleView/ArticleView';
 import ClientHome from './components/client_farm/home/ClientHome';
 import DetailArticle from './components/client_farm/detail/DetailArticle';
 import InforPage from './components/client_farm/infor/InforPage';
