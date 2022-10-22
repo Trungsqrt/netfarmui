@@ -52,6 +52,8 @@
     font-weight: bold;
     cursor: pointer;
     flex: 1;
+    position: relative;
+    top: -3px;
 }
 
 .text {

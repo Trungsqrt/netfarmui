@@ -4,15 +4,16 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
 function AdminPage() {
+    const userUrl = 'https://localhost:44303/api/Users';
+    const articleUrl = 'https://localhost:44303/api/Article';
+    const scheduleUrl = 'https://localhost:44303/api/ScheduleTask';
+
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const [render, setRender] = useState(true); //true is render User, false is render Posts
+    const [render, setRender] = useState(1); //true is render User, false is render Posts
     useEffect(() => {
         async function getData() {
-            const Dataset = await axios.get(
-                // "https://jsonplaceholder.typicode.com/users"
-                'https://localhost:44303/api/Users',
-            );
+            const Dataset = await axios.get(userUrl);
 
             Dataset.data.forEach((item) => {
                 const value = {
@@ -29,10 +30,10 @@ function AdminPage() {
     }, []);
 
     const UserHandler = () => {
-        setRender(true);
+        setRender(1);
         async function getData() {
             setData([]);
-            const Dataset = await axios.get('https://localhost:44303/api/Users');
+            const Dataset = await axios.get(userUrl);
 
             Dataset.data.forEach((item) => {
                 const value = {
@@ -49,16 +50,16 @@ function AdminPage() {
     };
 
     const PostHandler = () => {
-        setRender(false);
+        setRender(2);
         async function getData() {
             setData([]);
-            const Dataset = await axios.get('https://localhost:44303/api/Article');
+            const Dataset = await axios.get(articleUrl);
 
             Dataset.data.forEach((item) => {
                 const value = {
                     id: item.id,
                     title: item.title,
-                    datePost: item.datePost,
+                    datePost: item.datePost.slice(0, 10),
                     dateUpdate: item.dateUpdate,
                 };
                 setData((prevData) => [...prevData, value]);
@@ -66,6 +67,50 @@ function AdminPage() {
         }
 
         getData();
+    };
+
+    const ScheduleHandler = () => {
+        setRender(3);
+        async function getData() {
+            setData([]);
+            const Dataset = await axios.get(scheduleUrl);
+
+            Dataset.data.forEach((item) => {
+                const value = {
+                    id: item.id,
+                    name: item.name,
+                    dateStart: item.dateStart.slice(0, 10),
+                    dateEnd: item.dateEnd.slice(0, 10),
+                };
+                setData((prevData) => [...prevData, value]);
+            });
+        }
+
+        getData();
+    };
+
+    const handleDeletePost = (index) => {
+        async function deleteHandler() {
+            await axios.delete(articleUrl + '/' + index);
+            PostHandler();
+        }
+        deleteHandler();
+    };
+
+    const handleDeleteUser = (index) => {
+        async function deleteHandler() {
+            await axios.delete(userUrl + '/' + index);
+            UserHandler();
+        }
+        deleteHandler();
+    };
+
+    const handleDeleteSchedule = (index) => {
+        async function deleteHandler() {
+            await axios.delete(scheduleUrl + '/' + index);
+            ScheduleHandler();
+        }
+        deleteHandler();
     };
 
     return (
@@ -79,6 +124,9 @@ function AdminPage() {
                             </li>
                             <li className={styles.itemList} onClick={PostHandler}>
                                 Posts
+                            </li>
+                            <li className={styles.itemList} onClick={ScheduleHandler}>
+                                Schedules
                             </li>
                         </ul>
                     </nav>
@@ -98,7 +146,7 @@ function AdminPage() {
                             </button>
                         </form>
                         <table>
-                            {render ? (
+                            {render == 1 && (
                                 <tbody>
                                     <tr>
                                         <th className={styles.th1}>Id</th>
@@ -114,11 +162,14 @@ function AdminPage() {
                                             <th>{item.user}</th>
                                             <th>{item.email}</th>
                                             <th>{item.cccd}</th>
-                                            <th style={{ cursor: 'pointer' }}>&times;</th>
+                                            <th style={{ cursor: 'pointer' }} onClick={() => handleDeleteUser(item.id)}>
+                                                &times;
+                                            </th>
                                         </tr>
                                     ))}
                                 </tbody>
-                            ) : (
+                            )}
+                            {render == 2 && (
                                 <tbody>
                                     <tr>
                                         <th className={styles.th1}>Id</th>
@@ -126,13 +177,40 @@ function AdminPage() {
                                         <th className={styles.th1}>Ngày đăng</th>
                                         <th className={styles.th1}>Ngày cập nhật</th>
                                     </tr>
-                                    {data.map((item, index) => (
-                                        <tr key={index}>
-                                            <th>{item.id}</th>
-                                            <th>{item.title}</th>
-                                            <th>{item.datePost}</th>
-                                            <th>{item.dateUpdate}</th>
-                                            <th style={{ cursor: 'pointer' }}>&times;</th>
+                                    {data.map((item) => (
+                                        <tr key={item.id}>
+                                            <th width="10%">{item.id}</th>
+                                            <th width="50%">{item.title}</th>
+                                            <th width="20%">{item.datePost}</th>
+                                            <th width="20%">{item.dateUpdate}</th>
+                                            <th style={{ cursor: 'pointer' }} onClick={() => handleDeletePost(item.id)}>
+                                                &times;
+                                            </th>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            )}
+
+                            {render == 3 && (
+                                <tbody>
+                                    <tr>
+                                        <th className={styles.th1}>Id</th>
+                                        <th className={styles.th1}>Tên</th>
+                                        <th className={styles.th1}>Bắt đầu</th>
+                                        <th className={styles.th1}>Kết thúc</th>
+                                    </tr>
+                                    {data.map((item) => (
+                                        <tr key={item.id}>
+                                            <th width="10%">{item.id}</th>
+                                            <th width="50%">{item.name}</th>
+                                            <th width="20%">{item.dateStart}</th>
+                                            <th width="20%">{item.dateEnd}</th>
+                                            <th
+                                                style={{ cursor: 'pointer' }}
+                                                onClick={() => handleDeleteSchedule(item.id)}
+                                            >
+                                                &times;
+                                            </th>
                                         </tr>
                                     ))}
                                 </tbody>

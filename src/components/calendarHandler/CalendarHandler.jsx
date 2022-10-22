@@ -4,42 +4,51 @@ import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-const url = 'https://localhost:44303/api/Schedule';
+const url = 'https://localhost:44303/api/ScheduleTask';
+const url2 = 'https://localhost:44303/api/Schedule';
 
 function CalendarHandler() {
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
-    const [category, setCategory] = useState(3);
+    const [category, setCategory] = useState(1);
     const [title, setTitle] = useState('');
-    const [scheduleId, setScheduledId] = useState([]);
+    const [scheduleIdcombo, setScheduledIdCombo] = useState([]);
     const [scheduleName, setScheduledName] = useState([]);
     useEffect(() => {
-        axios.get(url).then((response) => {
+        axios.get(url2).then((response) => {
             const data = response.data;
             data.forEach((item) => {
-                setScheduledId((prevStateId) => [...prevStateId, item.id]);
+                setScheduledIdCombo((prevStateId) => [...prevStateId, item.id]);
                 setScheduledName((prevStateName) => [...prevStateName, item.name]);
             });
         });
     }, []);
 
+    function getText(html) {
+        var divContainer = document.createElement('div');
+        divContainer.innerHTML = html;
+        return divContainer.textContent || divContainer.innerText || '';
+    }
+
     const editorRef = useRef();
-    const onClickHandler = () => {
+    const onClickHandler = async () => {
         const scheduleNew = {
-            start: new Date(start).toISOString(),
-            end: new Date(end).toISOString(),
-            category: category,
-            content: editorRef.current.getContent(),
-            title: title,
+            dateStart: new Date(start).toISOString(),
+            dateEnd: new Date(end).toISOString(),
+            scheduleId: category,
+            description: getText(editorRef.current.getContent()),
+            name: title,
         };
-
         console.log(scheduleNew);
-
-        // try {
-        //    axios.post(url, scheduleNew);
-        // } catch (err) {
-        //    console.warn(err.response);
-        // }
+        try {
+            const a = await axios.post(url, scheduleNew);
+            console.log(a);
+            alert('Đăng thành công!');
+            window.location.reload();
+        } catch (err) {
+            alert('Có lỗi, xin vui lòng thử lại!');
+            console.log(err);
+        }
     };
 
     return (
@@ -53,7 +62,7 @@ function CalendarHandler() {
                         className={styles.input}
                         onChange={(e) => setTitle(e.target.value)}
                         value={title}
-                        type=""
+                        type="text"
                         required
                         min={3}
                     ></input>
@@ -90,7 +99,7 @@ function CalendarHandler() {
                                 onChange={(e) => setCategory(Number(e.target.value))}
                                 value={category}
                             >
-                                {scheduleId.map((item, index) => (
+                                {scheduleIdcombo.map((item, index) => (
                                     <option value={item} key={index}>
                                         {scheduleName[index]}
                                     </option>

@@ -6,6 +6,7 @@ import Header from '../share/header/Header';
 import Footer from '../share/footer/Footer';
 import Menuleft from '../share/menu/Menuleft';
 import Comment from '../comment/Comment';
+const parse = require('html-react-parser');
 
 function DetailArticle(props) {
     const [detail, setDetail] = useState({});
@@ -23,6 +24,8 @@ function DetailArticle(props) {
         };
         fetchData();
     }, [id]);
+
+    let Content;
     return (
         <div>
             <div className="wrapper">
@@ -36,11 +39,12 @@ function DetailArticle(props) {
                             </div>
                             <div className="column-right">
                                 <div className="detail_wrapper">
-                                    <h1 className="title">{detail.article_title}</h1>
+                                    <h1 className="title">{detail.title}</h1>
                                     <div>
-                                        <img src={detail.img} className="article_img"></img>
+                                        <img src={detail.imageURL} className="article_img"></img>
                                         <div className="line"></div>
-                                        <div className="content">{detail.article_content}</div>
+                                        {/* <div className="content">{parse(detail.content)}</div> */}
+                                        {parse(String(detail.content))}
                                     </div>
                                 </div>
                             </div>

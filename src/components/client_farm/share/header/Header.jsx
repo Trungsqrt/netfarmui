@@ -44,8 +44,6 @@ const Header = () => {
     function hideToolbar() {
         setToolbar(false);
     }
-
-    console.log(toolbar);
     return (
         <div style={{ backgroundColor: 'white' }}>
             <div className="container-navbar">
@@ -109,7 +107,11 @@ const Header = () => {
                             {notification && <NotificationDetail />}
                         </section>
                         <section>
-                            <button className="button-setting" onClick={showToolbar} onBlur={hideToolbar}>
+                            <button
+                                className="button-setting"
+                                onClick={showToolbar}
+                                // onBlur={hideToolbar}
+                            >
                                 <i className="fa-solid fa-bars settings"></i>
                             </button>
                             {toolbar && <ToolbarAdmin />}

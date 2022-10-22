@@ -11,26 +11,24 @@ const url = 'https://localhost:44303/api/Article';
 function ArticleHandler() {
     const editorRef = useRef();
     const [title, setTitle] = useState('');
-    const [category, setCategory] = useState(1);
+    const [category, setCategory] = useState('Cây trồng');
     const [isPublic, setIsPublic] = useState(true);
-    const [clonePost, setClonePost] = useState({});
-    const [isClone, setIsClone] = useState(false);
+    const [thumbnail, setThumbnail] = useState('');
     const onClickHandler = () => {
         const postNew = {
             title: title,
-            aCategoryId: category,
+            aCategoryName: category,
             status: isPublic,
             content: editorRef.current.getContent(),
-            cmtStatus: false,
+            cmtStatus: true,
             datePost: new Date().toISOString(),
             dateUpdate: null,
+            imageURL: thumbnail,
         };
-
         try {
             axios.post(url, postNew);
             alert('Đăng thành công!');
-            setClonePost(postNew);
-            setIsClone(true);
+            window.location.reload();
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
@@ -57,11 +55,11 @@ function ArticleHandler() {
                                 name="category"
                                 id="category"
                                 className={styles.combobox}
-                                onChange={(e) => setCategory(Number(e.target.value))}
+                                onChange={(e) => setCategory(e.target.value)}
                                 value={category}
                             >
-                                <option value="1">Chung</option>
-                                <option value="2">Thông báo</option>
+                                <option value="Cây trồng">Cây trồng</option>
+                                <option value="Vật nuôi">Vật nuôi</option>
                             </select>
                         </div>
                         <button type="button" onClick={onClickHandler} className={styles.button}>
@@ -95,18 +93,18 @@ function ArticleHandler() {
                             },
                         }}
                     />
+                    <br />
+                    <p>Ảnh đại diện</p>
+                    <input
+                        value={thumbnail}
+                        placeholder="Nhập đường dẫn ảnh..."
+                        className={styles.input}
+                        onChange={(e) => setThumbnail(e.target.value)}
+                        required
+                        min={3}
+                    ></input>
                 </div>
             </div>
-
-            {isClone && (
-                <div className={styles.abc}>
-                    Result
-                    <h5>{clonePost.title}</h5>
-                    {/* <p>{convertHtmlToReact(clonePost.content)}</p> */}
-                    {<p>{parse(clonePost.content)}</p>}
-                    <p>{clonePost.datePost}</p>
-                </div>
-            )}
         </div>
     );
 }
