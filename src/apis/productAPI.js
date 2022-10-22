@@ -2,17 +2,21 @@ import axiosClient from './config';
 
 const resource = 'Products';
 
-const productApis = {
+const productAPI = {
+    getAPI: () => {
+        const url = '/Products';
+        return axiosClient.get(url);
+    },
+
     getAll: async () => {
         const result = await axiosClient.get(`/${resource}`);
         // const result = await axiosClient.get(`/Products`);
         return result.data;
     },
 
-    getById: async (id) => {
-        const result = await axiosClient.get(`/${resource}/${id}`);
-        // const result = await axiosClient.get(`/Products/1`);
-        return result.data;
+    getDetail: (id) => {
+        const url = `/Products/${id}`;
+        return axiosClient.get(url);
     },
 
     patch: (id, data) => {
@@ -32,4 +36,4 @@ const productApis = {
     },
 };
 
-export { API_URL, productApis };
+export default productAPI;
