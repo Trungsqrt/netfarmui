@@ -1,42 +1,21 @@
 import React from 'react';
+import logoAdmin from '../../../../assets/image/logo-admin.jpg';
 import './menu.css';
 const Menuleft = () => {
     return (
         <div>
-            <div>
-                <ul className="menulist">
-                    <li className="MenuItem">
-                        <a href="/inforPage" className="menu_link">
-                            CHUNG
-                        </a>
-                    </li>
-                    <li className="MenuItem">
-                        <a href="/inforPage/schedule" className="menu_link">
-                            LỊCH NÔNG VỤ
-                        </a>
-                    </li>
-                    <li className="MenuItem">
-                        <a href="/inforPage/news" className="menu_link">
-                            TIN TỨC
-                        </a>
-                    </li>
-                    <li className="MenuItem">
-                        <a href="/inforPage/manual" className="menu_link">
-                            HƯỚNG DẪN
-                        </a>
-                    </li>
-                    <li className="MenuItem">
-                        <a href="/inforPage/policy" className="menu_link">
-                            CHÍNH SÁCH
-                        </a>
-                    </li>
-                    <li className="MenuItem">
-                        <a href="/inforPage/DSS" className="menu_link">
-                            TƯ VẤN
-                        </a>
-                    </li>
+            <div className="container-left">
+                <ul className="menu-list">
+                    <li className="menu-item"><a href="#">CHUNG</a></li>
+                    <li className="menu-item"><a href="#">QUẢN LÝ NGƯỜI DÙNG</a></li>
+                    <li className="menu-item"><a href="#">QUẢN LÝ BÀI ĐĂNG</a></li>
+                    <li className="menu-item"><a href="#">QUẢN LÝ SẢN PHẨM</a></li>
+                    <li className="menu-item"><a href="#">QUẢN LÝ DANH MỤC HÀNG</a></li>
+                    <li className="menu-item"><a href="#">QUẢN LÝ ĐƠN HÀNG</a></li>
+                    <li className="menu-item"><a href="#">THỐNG KÊ</a></li>
+                    <li className="menu-item"><a href="#">QUẢN LÝ THÔNG TIN</a></li>
                 </ul>
-                <img className="menulist_img" src="https://bom.so/0nAKIP"></img>
+                <img className="logo-admin" src={logoAdmin} alt="admin"></img>
             </div>
         </div>
     );

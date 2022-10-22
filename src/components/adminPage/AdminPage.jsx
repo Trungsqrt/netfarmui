@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import styles from './AdminPage.module.css';
+import './AdminPage.module.css';
+import Header from '../admin_farm/share/header/Header';
+import Footer from '../admin_farm/share/footer/Footer';
+import Menuleft from '../admin_farm/share/menu/Menuleft';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -70,75 +73,17 @@ function AdminPage() {
 
     return (
         <div>
-            <div className={styles.body}>
-                <div className={styles.container}>
-                    <nav>
-                        <ul className={styles.tabList}>
-                            <li className={styles.itemList} onClick={UserHandler}>
-                                Users
-                            </li>
-                            <li className={styles.itemList} onClick={PostHandler}>
-                                Posts
-                            </li>
-                        </ul>
-                    </nav>
-                    <section className={styles.bodyContainer}>
-                        <form
-                            className="form-search"
-                            style={{
-                                alignSelf: 'end',
-                                marginRight: '105px',
-                                marginBottom: '10px',
-                                marginTop: '-10px',
-                            }}
-                        >
-                            <input type="text" className="search-input" placeholder="Search" name="search"></input>
-                            <button className="btn-search">
-                                <i className="fa-solid fa-magnifying-glass icon-search"></i>
-                            </button>
-                        </form>
-                        <table>
-                            {render ? (
-                                <tbody>
-                                    <tr>
-                                        <th className={styles.th1}>Id</th>
-                                        <th className={styles.th1}>Tên</th>
-                                        <th className={styles.th1}>Số điện thoại</th>
-                                        <th className={styles.th1}>Email</th>
-                                        <th className={styles.th1}>CCCD</th>
-                                    </tr>
-                                    {data.map((item, index) => (
-                                        <tr key={index}>
-                                            <th>{item.id}</th>
-                                            <th>{item.name}</th>
-                                            <th>{item.user}</th>
-                                            <th>{item.email}</th>
-                                            <th>{item.cccd}</th>
-                                            <th style={{ cursor: 'pointer' }}>&times;</th>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            ) : (
-                                <tbody>
-                                    <tr>
-                                        <th className={styles.th1}>Id</th>
-                                        <th className={styles.th1}>Tiêu đề</th>
-                                        <th className={styles.th1}>Ngày đăng</th>
-                                        <th className={styles.th1}>Ngày cập nhật</th>
-                                    </tr>
-                                    {data.map((item, index) => (
-                                        <tr key={index}>
-                                            <th>{item.id}</th>
-                                            <th>{item.title}</th>
-                                            <th>{item.datePost}</th>
-                                            <th>{item.dateUpdate}</th>
-                                            <th style={{ cursor: 'pointer' }}>&times;</th>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            )}
-                        </table>
-                    </section>
+            <div>
+                <Header></Header>
+                <div classNam="main">
+                    <div className="comlumn-left">
+                        <Menuleft></Menuleft>
+                    </div>
+                    <div className="comlumn-right">
+                    </div>
+                    <div className="footer">
+                        <Footer></Footer>
+                    </div>
                 </div>
             </div>
         </div>
