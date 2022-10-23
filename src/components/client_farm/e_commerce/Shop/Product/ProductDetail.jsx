@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import productAPI from '../../../../../apis/productAPI';
+import Product from './Product';
 function ProductDetail(props) {
     const [detail, setDetail] = useState({});
 
@@ -28,6 +29,7 @@ function ProductDetail(props) {
 
         setText(value);
     };
+
     //Hàm này để lấy dữ liệu chi tiết sản phẩm
     useEffect(() => {
         const fetchData = async () => {
@@ -37,6 +39,22 @@ function ProductDetail(props) {
         };
         fetchData();
     }, [id]);
+
+    //Hàm này gọi API và cắt chỉ lấy 4 sản phẩm
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await productAPI.getAPI();
+
+            const data = response.data.splice(0, 3);
+            console.log('test', data);
+            setProducts(data);
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div className="productDetail_wrapper">
             {detail && (
@@ -98,6 +116,25 @@ function ProductDetail(props) {
                             <div className="addtional_infor">
                                 <div className="category_infor">Category: {detail.category}</div>
                                 <div className="category_infor">Tag: nongnghiep</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="related_product">
+                        Có thể bạn quan tâm
+                        <div className="product_row">
+                            <div>
+                                <div class="list_product">
+                                    {products
+                                        ? products.map((item, index) => (
+                                              <Product
+                                                  product={item}
+                                                  key={item.id}
+                                                  update={item.id}
+                                                  number={index}
+                                              ></Product>
+                                          ))
+                                        : ''}
+                                </div>
                             </div>
                         </div>
                     </div>
