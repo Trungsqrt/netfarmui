@@ -17,6 +17,7 @@ import ProductDetail from './components/client_farm/e_commerce/Shop/Product/Prod
 import Cart from './components/client_farm/e_commerce/Cart/Cart';
 import ManageProduct from './components/admin_farm/ManageProduct/ManageProduct';
 import AdminHome from './components/admin_farm/home/AdminHome';
+import AddProduct from './components/admin_farm/ManageProduct/AddProduct';
 function App() {
     return (
         <div className="App">
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/shop/cart" element={<Cart />} />
                 <Route path="/manageproduct" element={<ManageProduct />} />
                 <Route path="/AdminHome" element={<AdminHome />} />
+                <Route path="/manageProduct/admin/addNewProduct" element={<AddProduct />} />
             </Routes>
         </div>
     );
