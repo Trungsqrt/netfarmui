@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import articleAPI from '../../../../apis/articleAPI';
 import { Link } from 'react-router-dom';
 import './News.css';
+import styles from './News.module.css';
 
 function News(props) {
     const [articles, setArticles] = useState([]);

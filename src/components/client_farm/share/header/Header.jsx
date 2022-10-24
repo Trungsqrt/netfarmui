@@ -100,7 +100,6 @@ const Header = () => {
                             <button className="button-setting">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </button>
-                            {notification && <NotificationDetail />}
                         </section>
                         <section className={styles.notificationBox}>
                             <button
@@ -113,7 +112,11 @@ const Header = () => {
                             {notification && <NotificationDetail />}
                         </section>
                         <section>
-                            <button className="button-setting" onClick={showToolbar} onBlur={hideToolbar}>
+                            <button
+                                className="button-setting"
+                                onClick={showToolbar}
+                                // onBlur={hideToolbar}
+                            >
                                 <i className="fa-solid fa-bars settings"></i>
                             </button>
                             {toolbar && <ToolbarAdmin />}

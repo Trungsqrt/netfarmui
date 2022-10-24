@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './AdminPage.module.css';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import Header from '../admin_farm/share/header/Header';
 
 function AdminPage() {
     const userUrl = 'https://localhost:44303/api/Users';
@@ -112,8 +113,17 @@ function AdminPage() {
         deleteHandler();
     };
 
+    const handleAddArticle = () => {
+        navigate('/ArticleHandler');
+    };
+
+    const handleAddSchedule = () => {
+        navigate('/CalenderHandler');
+    };
+
     return (
         <div>
+            <Header />
             <div className={styles.body}>
                 <div className={styles.container}>
                     <nav>
@@ -170,6 +180,7 @@ function AdminPage() {
                             )}
                             {render == 2 && (
                                 <tbody>
+                                    <i class="fa-solid fa-plus" onClick={handleAddArticle}></i>
                                     <tr>
                                         <th className={styles.th1}>Id</th>
                                         <th className={styles.th1}>Tiêu đề</th>
@@ -192,6 +203,7 @@ function AdminPage() {
 
                             {render == 3 && (
                                 <tbody>
+                                    <i class="fa-solid fa-plus" onClick={handleAddSchedule}></i>
                                     <tr>
                                         <th className={styles.th1}>Id</th>
                                         <th className={styles.th1}>Tên</th>

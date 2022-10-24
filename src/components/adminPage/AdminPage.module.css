@@ -1,81 +1,81 @@
 .body {
-   background-color: #bbbbbb;
-   width: 100%;
-   height: 100vh;
-   overflow: hidden;
+    background-color: #bbbbbb;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .container {
-   margin-left: 100px;
-   margin-right: 100px;
-   height: 300px;
+    margin-left: 100px;
+    margin-right: 100px;
+    height: 300px;
 }
 
 .tabList {
-   display: flex;
-   justify-content: flex-start;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .itemList {
-   list-style: none;
-   display: block;
-   padding: 16px;
-   border-top: none;
-   cursor: pointer;
-   margin: 0;
-   background-color: white;
-   border-top: 1px solid #bbbbbb;
+    list-style: none;
+    display: block;
+    padding: 16px;
+    border-top: none;
+    cursor: pointer;
+    margin: 0;
+    background-color: white;
+    border-top: 1px solid #bbbbbb;
 }
 
 .itemList:nth-child(1) {
-   border-right: 1px solid #bbbbbb;
+    border-right: 1px solid #bbbbbb;
 }
 
 .itemList:hover {
-   background-color: #bbbbbb;
-   color: white;
+    background-color: #bbbbbb;
+    color: white;
 }
 
 .tabList.active {
-   list-style: none;
-   display: block;
-   padding: 16px;
-   border-top: none;
-   cursor: pointer;
-   margin: 0;
-   background-color: white;
-   border-top: 1px solid #bbbbbb;
+    list-style: none;
+    display: block;
+    padding: 16px;
+    border-top: none;
+    cursor: pointer;
+    margin: 0;
+    background-color: white;
+    border-top: 1px solid #bbbbbb;
 }
 
 .bodyContainer {
-   background-color: white;
-   height: 90vh;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+    background-color: white;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 td,
 th {
-   border: 1px solid #dddddd;
-   text-align: center;
-   padding: 8px;
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
 }
 
 .th1 {
-   background-color: #dddddd;
+    background-color: #dddddd;
 }
 
 table {
-   font-family: arial, sans-serif;
-   border-collapse: collapse;
-   width: 80%;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
 }
 
 .bodyContainer {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }

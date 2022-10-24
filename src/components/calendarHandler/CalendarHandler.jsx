@@ -3,6 +3,7 @@ import styles from './CalendarHandler.module.css';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
 import { useEffect } from 'react';
+import Header from '../admin_farm/share/header/Header';
 
 const url = 'https://localhost:44303/api/ScheduleTask';
 const url2 = 'https://localhost:44303/api/Schedule';
@@ -51,6 +52,7 @@ function CalendarHandler() {
 
     return (
         <div>
+            <Header />
             <div className={styles.container}>
                 <div className={styles.label}>Tạo lịch thời vụ</div>
                 <div className={styles.textContainer}>

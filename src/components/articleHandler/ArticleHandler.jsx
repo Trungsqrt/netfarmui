@@ -5,6 +5,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
 import convertHtmlToReact from '@hedgedoc/html-to-react';
 import parse from 'html-react-parser';
+import Header from '../admin_farm/share/header/Header';
 
 const url = 'https://localhost:44303/api/Article';
 
@@ -36,8 +37,9 @@ function ArticleHandler() {
 
     return (
         <div>
+            <Header />
             <div className={styles.container}>
-                <div className={styles.label}>Tạo lịch thời vụ</div>
+                <div className={styles.label}>Đăng bài</div>
                 <div className={styles.textContainer}>
                     <p>Tiêu đề</p>
                     <input

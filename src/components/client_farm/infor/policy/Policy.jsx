@@ -16,7 +16,7 @@ const InforPage = () => {
             setArticles(articles);
             // // lấy các bài đăng thuộc category chính sách
             // trường hợp có nhiều bài thì lấy 3 nếu ko đúng bằng đồ dài của số bài đăng
-            const filterPolicy = data.filter((item) => item['category'] === 'chinhsach');
+            const filterPolicy = data.filter((item) => item['aCategoryName'] === 'chinhsach');
             setPolicyItems(filterPolicy);
         };
         fetchData();

@@ -15,7 +15,7 @@ const InforPage = () => {
             const data = response.data;
             setArticles(articles);
             // // lấy các bài đăng thuộc category tin tức
-            const filter = data.filter((item) => item['category'] === 'tintuc');
+            const filter = data.filter((item) => item['aCategoryName'] === 'tintuc');
             setItems(filter);
         };
         fetchData();
