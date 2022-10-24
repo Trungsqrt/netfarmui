@@ -11,7 +11,7 @@ const url = 'https://localhost:44303/api/Article';
 function ArticleHandler() {
     const editorRef = useRef();
     const [title, setTitle] = useState('');
-    const [category, setCategory] = useState('Cây trồng');
+    const [category, setCategory] = useState('tintuc');
     const [isPublic, setIsPublic] = useState(true);
     const [thumbnail, setThumbnail] = useState('');
     const onClickHandler = () => {
@@ -58,8 +58,9 @@ function ArticleHandler() {
                                 onChange={(e) => setCategory(e.target.value)}
                                 value={category}
                             >
-                                <option value="Cây trồng">Cây trồng</option>
-                                <option value="Vật nuôi">Vật nuôi</option>
+                                <option value="tintuc">Tin tức</option>
+                                <option value="chinhsach">Chính sách</option>
+                                <option value="huongdan">Hướng dẫn</option>
                             </select>
                         </div>
                         <button type="button" onClick={onClickHandler} className={styles.button}>
