@@ -16,9 +16,9 @@ function Article(props) {
         <div>
             <Link className="link_article" to={`/detail/${article.Article_id}`}>
                 <div class="article_item">
-                    <img src={article.img} className="article_img" />
+                    <img src={article.imageURL} className="article_img" />
                     <div class="article_text">
-                        <div class="article_title">{article.article_title}</div>
+                        <div class="article_title">{article.title}</div>
                         <div className="article_tag">
                             <div className="article_category">{article.category}</div>
                             <div className="article_category">{article.date_update}</div>

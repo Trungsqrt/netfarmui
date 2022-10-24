@@ -2,8 +2,8 @@ import axiosClient from './config';
 
 const articleAPI = {
     getAPI: () => {
-        // const url = '/Articles';
-        const url = '/Article';
+        const url = '/Articles';
+        // const url = '/Article';
         return axiosClient.get(url);
     },
 
@@ -14,8 +14,8 @@ const articleAPI = {
     },
 
     getDetail: (id) => {
-        // const url = `/Articles/${id}`;
-        const url = `/Article/${id}`;
+        const url = `/Articles/${id}`;
+        // const url = `/Article/${id}`;
         return axiosClient.get(url);
     },
 

@@ -7,8 +7,14 @@ const Shop = () => {
         <div>
             <Header></Header>
             <div className="shop">
-                <Category></Category>
-                <Products></Products>
+                <div className="shop_block">
+                    <div className="shop_block_text">SHOP</div>
+                    <div className="shop_block_text_sm">NetFarm</div>
+                </div>
+                <div className="shop_content">
+                    <Category></Category>
+                    <Products></Products>
+                </div>
             </div>
         </div>
     );

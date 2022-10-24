@@ -19,7 +19,7 @@ function DetailArticle(props) {
     useEffect(() => {
         const fetchData = async () => {
             const response = await articleAPI.getDetail(id);
-            console.log(response.data);
+            console.log('DETAIL', response.data);
             setDetail(response.data);
         };
         fetchData();

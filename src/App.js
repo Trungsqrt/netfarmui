@@ -14,7 +14,9 @@ import News from './components/client_farm/infor/news/News';
 import Schedule from './components/client_farm/infor/schedule/Schedule';
 import Shop from './components/client_farm/e_commerce/Shop/Shop';
 import ProductDetail from './components/client_farm/e_commerce/Shop/Product/ProductDetail';
-
+import Cart from './components/client_farm/e_commerce/Cart/Cart';
+import ManageProduct from './components/admin_farm/ManageProduct/ManageProduct';
+import AdminHome from './components/admin_farm/home/AdminHome';
 function App() {
     return (
         <div className="App">
@@ -34,6 +36,9 @@ function App() {
                 <Route path="/inforPage/schedule" element={<Schedule />} />
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/shop/product/detail/:id" element={<ProductDetail />} />
+                <Route path="/shop/cart" element={<Cart />} />
+                <Route path="/manageproduct" element={<ManageProduct />} />
+                <Route path="/AdminHome" element={<AdminHome />} />
             </Routes>
         </div>
     );

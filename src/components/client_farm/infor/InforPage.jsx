@@ -16,12 +16,13 @@ const InforPage = () => {
         const fetchData = async () => {
             const response = await articleAPI.getAPI();
             const data = response.data;
+            console.log('sdvxc', data);
             setArticles(articles);
             // lấy các bài đăng thuộc category tin tức
             const filtterNews = data.filter((item) => item['category'] === 'tintuc');
             const min = filtterNews.length > 3 ? 3 : filtterNews.length;
             setNewItems(filtterNews.slice(0, min));
-
+            console.log('cxdcx', filtterNews);
             //lấy các bài đăng thuộc category manual
             const filterManual = data.filter((item) => item['category'] === 'huongdan');
             const min2 = filterManual.length > 3 ? 3 : filterManual.length;

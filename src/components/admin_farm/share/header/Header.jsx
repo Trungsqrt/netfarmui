@@ -75,13 +75,13 @@ const Header = () => {
                     </a>
                     <ul className="navbarTask">
                         <li>
-                            <a href="/">Trang chủ</a>
+                            <a href="/adminHome">Trang chủ</a>
                         </li>
                         <li>
-                            <a href="/inforPage">Thông tin</a>
+                            <a href="/admin">QL bài đăng</a>
                         </li>
                         <li>
-                            <a href="/shop">Mua hàng</a>
+                            <a href="/manageProduct">QL bán hàng</a>
                         </li>
                     </ul>
                     <form className="form-search">
