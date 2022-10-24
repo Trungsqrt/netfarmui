@@ -15,7 +15,7 @@ function Product(props) {
         <div className="product_item">
             <div className="product_box">
                 <Link className="link_product" to={`product/detail/${product.id}`}>
-                    <img src={product.img1} alt="" className="product_img" />
+                    <img src={product.image1} alt="" className="product_img" />
                     <h6 className="product_name">{product.name}</h6>
                     <h3 className="product_price">{product.price}</h3>
                 </Link>

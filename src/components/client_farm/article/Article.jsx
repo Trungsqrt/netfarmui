@@ -10,6 +10,13 @@ Article.propTypes = {
 Article.defaultProps = {
     articles: [],
 };
+
+function getText(html) {
+    var divContainer = document.createElement('div');
+    divContainer.innerHTML = html;
+    return divContainer.textContent || divContainer.innerText || '';
+}
+
 function Article(props) {
     const { article } = props;
     return (
@@ -21,9 +28,9 @@ function Article(props) {
                         <div class="article_title">{article.title}</div>
                         <div className="article_tag">
                             <div className="article_category">{article.aCategoryName}</div>
-                            <div className="article_category">{article.dateUpdate}</div>
+                            <div className="article_category">{article.datePost}</div>
                         </div>
-                        <div class="article_content">{article.content}</div>
+                        <div class="article_content">{getText(article.content)}</div>
                     </div>
                 </div>
             </Link>

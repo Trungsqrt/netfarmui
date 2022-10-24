@@ -19,13 +19,13 @@ const Product = (props) => {
                 <div>{product.name}</div>
             </td>
             <td>
-                <div>{product.category}</div>
+                <div>{product.category_ID}</div>
             </td>
             <td>
                 <div>{product.price}</div>
             </td>
             <td>
-                <img src={product.img1} alt="" width="100px" />
+                <img src={product.image1} alt="" width="100px" />
             </td>
             <td>
                 <a

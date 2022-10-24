@@ -5,6 +5,7 @@ import axios from 'axios';
 import styles from './Header.module.css';
 import ToolbarAdmin from '../../../detailBar/toolbarAdmin/ToolbarAdmin';
 import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3';
@@ -97,9 +98,11 @@ const Header = () => {
                     </div>
                     <div className="setting-group">
                         <section className={styles.notificationBox}>
+                            <Link to="/shop/cart">
                             <button className="button-setting">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </button>
+                            </Link>
                         </section>
                         <section className={styles.notificationBox}>
                             <button

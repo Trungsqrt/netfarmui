@@ -29,7 +29,7 @@ const InforPage = () => {
                     <div className="menu">
                         <Menuleft></Menuleft>
                     </div>
-                    <div className="container">
+                    <div className="infor_container">
                         <div className="row">
                             <div className="section_title">Bản tin nông nghiệp</div>
                             <div>

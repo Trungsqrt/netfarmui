@@ -66,13 +66,13 @@ function ProductDetail(props) {
                         <div className="product_detail">
                             <div className="product_detail_img">
                                 <div className="product_detail_img_4">
-                                    <img className="img_sm" src={detail.img1}></img>
-                                    <img className="img_sm" src={detail.img2}></img>
-                                    <img className="img_sm" src={detail.img3}></img>
-                                    <img className="img_sm" src={detail.img4}></img>
+                                    <img className="img_sm" src={detail.image1}></img>
+                                    <img className="img_sm" src={detail.image2}></img>
+                                    <img className="img_sm" src={detail.image3}></img>
+                                    <img className="img_sm" src={detail.image4}></img>
                                 </div>
                                 <div className="product_detail_img_1">
-                                    <img className="img_lg" src={detail.img1}></img>
+                                    <img className="img_lg" src={detail.image1}></img>
                                 </div>
                             </div>
                             <div className="product_detail_content">
