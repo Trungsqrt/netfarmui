@@ -7,6 +7,11 @@ const productAPI = {
         const url = '/Products';
         return axiosClient.get(url);
     },
+    delete: (id) => {
+        const url = `/Products/${id}`;
+        // const url = '/Article';
+        return axiosClient.delete(url);
+    },
 
     getAll: async () => {
         const result = await axiosClient.get(`/${resource}`);
@@ -27,13 +32,13 @@ const productAPI = {
         });
     },
 
-    delete: (id) => {
-        axiosClient.delete(`/${id}`, {
-            headers: {
-                'x-access-token': 'token-value',
-            },
-        });
-    },
+    // delete: (id) => {
+    //     axiosClient.delete(`/${id}`, {
+    //         headers: {
+    //             'x-access-token': 'token-value',
+    //         },
+    //     });
+    // },
 };
 
 export default productAPI;

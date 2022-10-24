@@ -7,6 +7,8 @@ import '../css/style.css';
 import { Link } from 'react-router-dom';
 const ManageProduct = () => {
     const [products, setProducts] = useState([]);
+    const [data, setData] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await productAPI.getAPI();
@@ -16,6 +18,24 @@ const ManageProduct = () => {
         };
         fetchData();
     }, []);
+
+    const ProductHandler = () => {
+        const fetchData = async () => {
+            const response = await productAPI.getAPI();
+            const data = response.data;
+            setProducts(data);
+            console.log(products);
+        };
+        fetchData();
+    };
+
+    const handleDeleteProduct = (index) => {
+        async function deleteHandler() {
+            await productAPI.delete(index);
+            ProductHandler();
+        }
+        deleteHandler();
+    };
 
     return (
         <div>
@@ -67,12 +87,37 @@ const ManageProduct = () => {
                         <tbody>
                             {products
                                 ? products.map((product, index) => (
-                                      <Product
-                                          product={product}
-                                          key={product.id}
-                                          update={product.id}
-                                          number={index}
-                                      ></Product>
+                                      <tr className="text_center">
+                                          <td>
+                                              <div>{product.id}</div>
+                                          </td>
+                                          <td>
+                                              <div>{product.name}</div>
+                                          </td>
+                                          <td>
+                                              <div>{product.category}</div>
+                                          </td>
+                                          <td>
+                                              <div>{product.price}</div>
+                                          </td>
+                                          <td>
+                                              <img src={product.img1} alt="" width="100px" />
+                                          </td>
+                                          <td>
+                                              <a
+                                                  className="reset-anchor remove_cart"
+                                                  style={{ cursor: 'pointer' }}
+                                                  onClick={() => handleDeleteProduct(product.id)}
+                                              >
+                                                  <i className="fas fa-trash-alt small text-muted"></i>
+                                              </a>
+                                          </td>
+                                          <td>
+                                              <a className="reset-anchor remove_cart" style={{ cursor: 'pointer' }}>
+                                                  <i class="fa-solid fa-pen-to-square"></i>
+                                              </a>
+                                          </td>
+                                      </tr>
                                   ))
                                 : ''}
                         </tbody>

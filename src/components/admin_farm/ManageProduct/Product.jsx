@@ -1,11 +1,12 @@
 import React from 'react';
+import axios from 'axios';
 import productAPI from '../../../apis/productAPI';
 const Product = (props) => {
     const { product } = props;
+    const productUrl = 'https://6351413b3e9fa1244e59b320.mockapi.io';
     const handleDeleteProduct = (index) => {
         async function deleteHandler() {
             await productAPI.delete(index);
-            UserHandler();
         }
         deleteHandler();
     };

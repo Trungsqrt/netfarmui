@@ -75,12 +75,13 @@ function AdminPage() {
             setData([]);
             const Dataset = await axios.get(scheduleUrl);
 
-            Dataset.data.forEach((item) => {
+            Dataset.data.forEach((product) => {
                 const value = {
-                    id: item.id,
-                    name: item.name,
-                    dateStart: item.dateStart.slice(0, 10),
-                    dateEnd: item.dateEnd.slice(0, 10),
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    img1: product.img1,
+                    category: product.category,
                 };
                 setData((prevData) => [...prevData, value]);
             });
