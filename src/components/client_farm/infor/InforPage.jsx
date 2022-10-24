@@ -19,18 +19,18 @@ const InforPage = () => {
             console.log('sdvxc', data);
             setArticles(articles);
             // lấy các bài đăng thuộc category tin tức
-            const filtterNews = data.filter((item) => item['category'] === 'tintuc');
+            const filtterNews = data.filter((item) => item['aCategoryName'] === 'tintuc');
             const min = filtterNews.length > 3 ? 3 : filtterNews.length;
             setNewItems(filtterNews.slice(0, min));
             console.log('cxdcx', filtterNews);
             //lấy các bài đăng thuộc category manual
-            const filterManual = data.filter((item) => item['category'] === 'huongdan');
+            const filterManual = data.filter((item) => item['aCategoryName'] === 'huongdan');
             const min2 = filterManual.length > 3 ? 3 : filterManual.length;
             setManualItems(filterManual.slice(0, min2));
 
             // // lấy các bài đăng thuộc category chính sách
             // trường hợp có nhiều bài thì lấy 3 nếu ko đúng bằng đồ dài của số bài đăng
-            const filterPolicy = data.filter((item) => item['category'] === 'chinhsach');
+            const filterPolicy = data.filter((item) => item['aCategoryName'] === 'chinhsach');
             const min3 = filterPolicy.length > 3 ? 3 : filterPolicy.length;
             setPolicyItems(filterPolicy.slice(0, min3));
             // console.log('news', policyItems);
