@@ -24,7 +24,6 @@ export const registerUser = async (user, dispatch, navigate) => {
         await axios.post('https://localhost:44303/api/Users', user);
         dispatch(registerSuccess()); // để show status lên redux devtool extension
         alert('Đăng ký thành công!');
-        navigate('/login');
         window.location.reload();
     } catch (error) {
         alert('Đăng ký thất bại!');

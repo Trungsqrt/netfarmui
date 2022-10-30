@@ -1,18 +1,3 @@
-.overlay {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .iconCross {
     position: absolute;
     top: 0;
@@ -28,7 +13,20 @@
     height: 570px;
     background: white;
     border-radius: 5px;
-    overflow: scroll;
+    opacity: 0.96;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../../assets/image/loginImage.jpg');
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1280px 730px;
+    overflow: hidden;
+    height: 100vh;
 }
 
 .registerContainer2 {
@@ -93,7 +91,7 @@
     border: 2px solid var(--primary-border-color);
     padding: 18px 10px;
     margin: 0 10px;
-    margin-bottom: 6px;
+    margin-bottom: 9px;
     width: 100%;
 }
 
@@ -128,21 +126,13 @@ p a {
 }
 
 .btnSubmit {
-    width: 100%;
-    height: 100%;
-    font-size: 15px;
-    border-radius: 12px;
-    border: none;
-    padding: 10px;
     background-color: #049466;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 41px;
-    line-height: 15px;
     cursor: pointer;
     color: white;
     border: none !important;
     line-height: 1px;
+    top: 22px;
+    position: relative;
 }
 
 .btnSubmit:hover {
