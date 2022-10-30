@@ -89,6 +89,7 @@ ul li a:active {
     margin-right: 30px;
     border: none;
     background-color: white;
+    cursor: pointer;
 }
 .setting-group {
     margin-left: 30px;

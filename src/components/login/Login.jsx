@@ -43,16 +43,14 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const isValid = validateAll();
-        // if (!isValid) return;
+        const isValid = validateAll();
+        if (!isValid) return;
 
-        // const newUser = {
-        //    phone: uname,
-        //    passWord: pass,
-        // };
-        // loginUser(newUser, dispatch, navigate);
-
-        navigate('/');
+        const newUser = {
+            phone: uname,
+            passWord: pass,
+        };
+        loginUser(newUser, dispatch, navigate);
     };
 
     //#region jsx
