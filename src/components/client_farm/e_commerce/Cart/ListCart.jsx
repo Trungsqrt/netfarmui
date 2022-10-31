@@ -1,50 +1,35 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-ListCart.propTypes = {
-    listCart: PropTypes.array,
-    onDeleteCart: PropTypes.func,
-    onUpdateCount: PropTypes.func,
-};
-
-ListCart.defaultProps = {
-    listCart: [],
-    onDeleteCart: null,
-    onUpdateCount: null,
-};
-
+import axios from 'axios';
 function ListCart(props) {
-    // const { listCart, onDeleteCart, onUpdateCount } = props
-    // const handlerChangeText = (e) => {
-    //     console.log(e.target.value)
-    // }
-    // const handlerDelete = (getUser, getProduct) => {
-    //     if (!onDeleteCart){
-    //         return
-    //     }
-    //     onDeleteCart(getUser, getProduct)
-    // }
-    // const handlerDown = (getIdUser, getIdProduct, getCount) => {
-    //     if (!onUpdateCount) {
-    //         return;
-    //     }
-    //     if (getCount === 1) {
-    //         return;
-    //     }
-    //     //Trước khi trả dữ liệu về component cha thì phải thay đổi biến count
-    //     const updateCount = parseInt(getCount) - 1;
-    //     onUpdateCount(getIdUser, getIdProduct, updateCount);
-    // };
-    // const handlerUp = (getIdUser, getIdProduct, getCount) => {
-    //     if (!onUpdateCount) {
-    //         return;
-    //     }
-    //     //Trước khi trả dữ liệu về component cha thì phải thay đổi biến count
-    //     const updateCount = parseInt(getCount) + 1
-    //     onUpdateCount(getIdUser, getIdProduct, updateCount)
-    // }
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user);
+    const [carts, setCart] = useState([]);
+    const userId = user.userId;
+    const cartUrl = 'https://6351413b3e9fa1244e59b320.mockapi.io/cart';
 
+    // lấy toàn bộ sản phẩm trong cart theo userId
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(cartUrl);
+            const data = response.data;
+            const filter = data.filter((item) => item['user_id'] === userId);
+            setCart(filter);
+        };
+        fetchData();
+    }, []);
+    console.log('carts', carts);
+    function handlerChangeText() {}
+
+    // Phần này để xử lý xóa sản phẩm ra khỏi cart
+
+    function deleteCartHandler(index) {
+        async function deleteHandler() {
+            await axios.delete(`${cartUrl}/${index}`);
+            window.location.reload();
+        }
+        deleteHandler();
+    }
     return (
         <div className="table-responsive mb-4">
             <table className="listcart_table">
@@ -81,25 +66,25 @@ function ListCart(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {
+                    {carts.map((cart) => (
                         <tr className="text-center">
                             <td className="td_content">
                                 <div className="">
                                     <Link className="" to={`/shop/product/detail/1`}>
-                                        <img src="http://loremflickr.com/640/480" alt="..." width="70" />
+                                        <img src={cart.image} alt="..." width="70" />
                                     </Link>
                                 </div>
                             </td>
                             <td className="td_content">
                                 <div className="">
                                     <Link className="reset-anchor h6 animsition-link" to={`/shop/product/detail/1`}>
-                                        tên sp
+                                        {cart.product_name}
                                     </Link>
                                 </div>
                             </td>
 
                             <td className="td_content">
-                                <p className="mb-0 small">$giá</p>
+                                <p className="mb-0 small">{cart.price}đ</p>
                             </td>
                             <td className="td_content">
                                 <div className="">
@@ -113,8 +98,8 @@ function ListCart(props) {
                                     <input
                                         className="quantity_box"
                                         type="text"
-                                        // value={value.count}
-                                        // onChange={handlerChangeText}
+                                        value={cart.quantity}
+                                        onChange={handlerChangeText}
                                     />
                                     <button
                                         className="inc-btn p-0"
@@ -126,18 +111,21 @@ function ListCart(props) {
                                 </div>
                             </td>
                             <td className="td_content">
-                                <p className="mb-0 small">$ value.priceProduct * value.count</p>
+                                <p className="mb-0 small">{cart.quantity * cart.price}</p>
                             </td>
                             <td className="td_content">
                                 <a className="reset-anchor remove_cart" style={{ cursor: 'pointer' }}>
-                                    <i className="fas fa-trash-alt small text-muted"></i>
+                                    <i
+                                        className="fas fa-trash-alt small text-muted"
+                                        onClick={() => deleteCartHandler(cart.id)}
+                                    ></i>
                                 </a>
                             </td>
                             <td className="td_content">
                                 <input type="checkbox" />
                             </td>
                         </tr>
-                    }
+                    ))}
                 </tbody>
             </table>
         </div>

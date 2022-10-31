@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Article.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -22,15 +22,15 @@ function Article(props) {
     return (
         <div>
             <Link className="link_article" to={`/detail/${article.id}`}>
-                <div class="article_item">
+                <div className="article_item">
                     <img src={article.imageURL} className="article_img" />
-                    <div class="article_text">
-                        <div class="article_title">{article.title}</div>
+                    <div className="article_text">
+                        <div className="article_title">{article.title}</div>
                         <div className="article_tag">
                             <div className="article_category">{article.aCategoryName}</div>
                             <div className="article_category">{article.datePost}</div>
                         </div>
-                        <div class="article_content">{getText(article.content)}</div>
+                        <div className="article_content">{getText(article.content)}</div>
                     </div>
                 </div>
             </Link>

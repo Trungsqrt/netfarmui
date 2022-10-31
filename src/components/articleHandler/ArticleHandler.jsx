@@ -1,20 +1,25 @@
-import React, { useRef, useState } from 'react';
-import styles from './ArticleHandler.module.css';
 import './app.css';
+import React, { useRef, useState, useEffect } from 'react';
+import styles from './ArticleHandler.module.css';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
-import convertHtmlToReact from '@hedgedoc/html-to-react';
 import parse from 'html-react-parser';
+import convertHtmlToReact from '@hedgedoc/html-to-react';
 import Header from '../admin_farm/share/header/Header';
+import { useDatasContext } from '../../hooks';
 
 const url = 'https://localhost:44303/api/Article';
 
 function ArticleHandler() {
+    // Get data from context
+    const { datas, setDatas } = useDatasContext();
+
     const editorRef = useRef();
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('tintuc');
     const [isPublic, setIsPublic] = useState(true);
     const [thumbnail, setThumbnail] = useState('');
+
     const onClickHandler = () => {
         const postNew = {
             title: title,
@@ -34,6 +39,10 @@ function ArticleHandler() {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
     };
+
+    useEffect(() => {
+        console.log(datas.articles);
+    }, [datas]);
 
     return (
         <div>

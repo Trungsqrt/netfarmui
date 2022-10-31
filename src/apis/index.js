@@ -1,3 +1,3 @@
-export * from "./config";
-export * from "./articleAPI";
-export * from "./productAPI";
+export * from './config';
+export { default as articleAPI } from './articleAPI';
+export { default as productAPI } from './productAPI';

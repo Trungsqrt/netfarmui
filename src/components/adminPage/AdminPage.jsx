@@ -26,7 +26,6 @@ function AdminPage() {
                 setData((prevData) => [...prevData, value]);
             });
         }
-
         getData();
     }, []);
 
@@ -180,7 +179,7 @@ function AdminPage() {
                             )}
                             {render == 2 && (
                                 <tbody>
-                                    <i class="fa-solid fa-plus" onClick={handleAddArticle}></i>
+                                    <i className="fa-solid fa-plus" onClick={handleAddArticle}></i>
                                     <tr>
                                         <th className={styles.th1}>Id</th>
                                         <th className={styles.th1}>Tiêu đề</th>
@@ -203,7 +202,7 @@ function AdminPage() {
 
                             {render == 3 && (
                                 <tbody>
-                                    <i class="fa-solid fa-plus" onClick={handleAddSchedule}></i>
+                                    <i className="fa-solid fa-plus" onClick={handleAddSchedule}></i>
                                     <tr>
                                         <th className={styles.th1}>Id</th>
                                         <th className={styles.th1}>Tên</th>

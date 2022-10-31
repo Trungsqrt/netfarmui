@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import articleAPI from '../../../../apis/articleAPI';
-import { Link } from 'react-router-dom';
 import './News.css';
 import styles from './News.module.css';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import articleAPI from '../../../../apis/articleAPI';
 
 function News(props) {
     const [articles, setArticles] = useState([]);
@@ -41,8 +41,8 @@ function News(props) {
                                     <img src={value.imageURL} className="news_img"></img>
                                     <div className="box">
                                         <h3>
-                                            {/* <a className="title">{value.article_title}</a> */}
-                                            <a className="title">{value.title}</a>
+                                            {/* <div className="title">{value.article_title}</div> */}
+                                            <div className="title">{value.title}</div>
                                         </h3>
                                         {/* <div className="short-content">{value.article_content}</div> */}
 

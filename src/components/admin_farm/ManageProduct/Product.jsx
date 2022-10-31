@@ -38,7 +38,7 @@ const Product = (props) => {
             </td>
             <td>
                 <a className="reset-anchor remove_cart" style={{ cursor: 'pointer' }}>
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    <i className="fa-solid fa-pen-to-square"></i>
                 </a>
             </td>
         </tr>

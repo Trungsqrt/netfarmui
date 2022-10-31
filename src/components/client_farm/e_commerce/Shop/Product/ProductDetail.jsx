@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import productAPI from '../../../../../apis/productAPI';
 import Product from './Product';
 import Header from '../../../share/header/Header';
+import axios from 'axios';
+
 function ProductDetail(props) {
-    const [detail, setDetail] = useState({});
+    const [detail, setDetail] = useState();
 
     //id params cho từng sản phẩm
     const { id } = useParams();
@@ -18,16 +20,13 @@ function ProductDetail(props) {
     // tăng lên 1 đơn vị
     const upText = () => {
         const value = parseInt(text) + 1;
-
         setText(value);
     };
 
     //Giảm 1 đơn vị
     const downText = () => {
         const value = parseInt(text) - 1;
-
         if (value === 0) return;
-
         setText(value);
     };
 
@@ -35,13 +34,77 @@ function ProductDetail(props) {
     useEffect(() => {
         const fetchData = async () => {
             const response = await productAPI.getDetail(id);
-            console.log(response.data);
             setDetail(response.data);
         };
         fetchData();
     }, [id]);
 
-    //Hàm này gọi API và cắt chỉ lấy 4 sản phẩm
+    // phần này để thêm sản phẩm vào giỏ hàng
+    const cartUrl = 'https://localhost:44303/api/Carts';
+    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('user'));
+    const [carts, setCarts] = useState([]);
+    const [checkList, setCheckList] = useState([]);
+
+    // tìm trong giỏi hàng đã có sản phẩm này hay chưa
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(cartUrl);
+            const data = response.data;
+            if (user) {
+                const userId = user.userId;
+                const filter = data.filter((item) => item['userId'] === userId);
+                const filter2 = filter.filter((item) => item['productId'] === Number(id));
+                setCarts(filter2);
+            }
+        };
+        fetchData();
+    }, []);
+
+    function AddToCartHandler() {
+        if (user == null) navigate('/login');
+        else {
+            const userId = user.userId;
+            if (carts.length !== 0) {
+                UpdateProductToCart(userId, carts[0]);
+            } else {
+                // thêm mới sản phẩm nếu giỏ hàng chưa có
+                AddNewProductToCart(userId);
+            }
+        }
+    }
+    // Phần này để thêm sản phẩm mới hoàn toàn vào giỏ hàng
+    function AddNewProductToCart(userId) {
+        const newCart = {
+            userId: userId,
+            productId: detail.id,
+            name: detail.name,
+            quantity: text,
+            price: detail.price,
+            image: detail.image1,
+        };
+        console.log('newcarts', newCart);
+        try {
+            axios.post(cartUrl, newCart);
+            alert('Thêm vào giỏi hàng thành công!');
+            window.location.reload();
+        } catch (err) {
+            alert('Có lỗi, xin vui lòng thử lại!');
+        }
+    }
+
+    function UpdateProductToCart(userId, cart) {
+        cart.quantity = Number(cart.quantity) + Number(text);
+        try {
+            axios.put(`${cartUrl}/${cart.id}`, cart);
+            alert('Cập nhập lại số lượng');
+            window.location.reload();
+        } catch (err) {
+            alert('Có lỗi, xin vui lòng thử lại!');
+        }
+    }
+
+    //Hàm này gọi API và cắt chỉ lấy 3 sản phẩm
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -49,12 +112,34 @@ function ProductDetail(props) {
             const response = await productAPI.getAPI();
 
             const data = response.data.splice(0, 3);
-            console.log('test', data);
             setProducts(data);
         };
 
         fetchData();
     }, []);
+
+    function BuyNowHandler() {
+        if (user == null) navigate('/login');
+        else {
+            const userId = user.userId;
+            const newCart = {
+                userId: userId,
+                productId: detail.id,
+                name: detail.name,
+                quantity: text,
+                price: detail.price,
+                image: detail.image1,
+            };
+            console.log('newcarts', newCart);
+            try {
+                axios.post(cartUrl, newCart);
+            } catch (err) {
+                alert('Có lỗi, xin vui lòng thử lại!');
+            }
+            navigate('/shop/cart');
+            window.location.reload();
+        }
+    }
 
     return (
         <div>
@@ -109,8 +194,12 @@ function ProductDetail(props) {
                                     </div>
                                 </div>
                                 <div className="btn">
-                                    <button className="Detail_Add_btn">Thêm vào giỏ hàng</button>
-                                    <button className="Detail_Add_btn">Mua ngay</button>
+                                    <button className="Detail_Add_btn" onClick={AddToCartHandler}>
+                                        Thêm vào giỏ hàng
+                                    </button>
+                                    <button className="Detail_Add_btn" onClick={BuyNowHandler}>
+                                        Mua ngay
+                                    </button>
                                 </div>
                                 <div className="addtional_infor">
                                     <div className="category_infor">Category: {detail.category}</div>
@@ -154,20 +243,18 @@ function ProductDetail(props) {
                         </div>
                         <div className="related_product">
                             <div className="section_title">Có thể bạn quan tâm</div>
-                            <div className="product_row">
-                                <div>
-                                    <div class="list_product">
-                                        {products
-                                            ? products.map((item, index) => (
-                                                  <Product
-                                                      product={item}
-                                                      key={item.id}
-                                                      update={item.id}
-                                                      number={index}
-                                                  ></Product>
-                                              ))
-                                            : ''}
-                                    </div>
+                            <div className="product_related_row">
+                                <div className="list_product">
+                                    {products
+                                        ? products.map((item, index) => (
+                                              <Product
+                                                  product={item}
+                                                  key={item.id}
+                                                  update={item.id}
+                                                  number={index}
+                                              ></Product>
+                                          ))
+                                        : ''}
                                 </div>
                             </div>
                         </div>

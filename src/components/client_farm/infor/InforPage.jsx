@@ -51,7 +51,7 @@ const InforPage = () => {
                             <div className="col-2">
                                 <div className="section_title">Hướng dẫn nông nghiệp</div>
                                 <div>
-                                    <div class="listarticle">
+                                    <div className="listarticle">
                                         {manualItems
                                             ? manualItems.map((item, index) => (
                                                   <Article
@@ -68,7 +68,7 @@ const InforPage = () => {
                             <div className="col-2">
                                 <div className="section_title">Tin tức nông nghiệp</div>
                                 <div>
-                                    <div class="listarticle">
+                                    <div className="listarticle">
                                         {newsItems
                                             ? newsItems.map((item, index) => (
                                                   <Article
@@ -87,7 +87,7 @@ const InforPage = () => {
                         <div className="row">
                             <div className="section_title">Chính sách</div>
                             <div>
-                                <div class="listarticle">
+                                <div className="listarticle">
                                     {policyItems
                                         ? policyItems.map((item, index) => (
                                               <Policy

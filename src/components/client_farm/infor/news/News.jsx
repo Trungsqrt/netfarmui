@@ -33,7 +33,7 @@ const InforPage = () => {
                         <div className="row">
                             <div className="section_title">Bản tin nông nghiệp</div>
                             <div>
-                                <div class="listarticle">
+                                <div className="listarticle">
                                     {Items
                                         ? Items.map((item, index) => (
                                               <Article

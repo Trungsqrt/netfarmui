@@ -34,7 +34,7 @@ const InforPage = () => {
                         <div className="row">
                             <div className="section_title">Chính sách nhà nước</div>
                             <div>
-                                <div class="listarticle">
+                                <div className="listarticle">
                                     {policyItems
                                         ? policyItems.map((item, index) => (
                                               <Article

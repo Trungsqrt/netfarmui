@@ -20,7 +20,7 @@ function Products(props) {
         <div>
             <div className="product_row">
                 <div>
-                    <div class="list_product">
+                    <div className="list_product">
                         {products
                             ? products.map((item, index) => (
                                   <Product product={item} key={item.id} update={item.id} number={index}></Product>

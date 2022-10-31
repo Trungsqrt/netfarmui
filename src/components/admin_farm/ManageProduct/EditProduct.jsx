@@ -1,40 +1,62 @@
 import React from 'react';
 import Header from '../share/header/Header';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import productAPI from '../../../apis/productAPI';
 import axios from 'axios';
 import '../css/style.css';
 const url = 'https://localhost:44303/api/Products';
 
-const AddProduct = () => {
-    const [category, setCategory] = useState('1');
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [unit, setUnit] = useState('');
-    const [placeProduce, setPlaceProduce] = useState('');
-    const [invetory, setInventory] = useState('');
-    const [description, setDescription] = useState('');
-    const [imgUrl1, setimgUrl1] = useState('');
-    const [imgUrl2, setimgUrl2] = useState('');
-    const [imgUrl3, setimgUrl3] = useState('');
-    const [imgUrl4, setimgUrl4] = useState('');
-    const onClickHandler = () => {
-        const postProduct = {
-            name: name,
-            image1: imgUrl1,
-            image2: imgUrl2,
-            image3: imgUrl3,
-            image4: imgUrl4,
-            unit: unit,
-            category: category,
-            placeProduce: placeProduce,
-            price: price,
-            discount: 0,
-            inventoryNumber: invetory,
-            description: description,
-            category_ID: category,
+function EditProduct(props) {
+    const [detail, setDetail] = useState({});
+    const { id } = useParams();
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await productAPI.getDetail(id);
+            console.log(response.data);
+            setDetail(response.data);
         };
+        fetchData();
+    }, [id]);
+    // console.log('initialValue', initialValue);
+    console.log(detail.name);
+    const initialValue = {
+        name: '',
+        image1: '',
+        image2: '',
+        image3: '',
+        image4: '',
+        unit: '',
+        placeProduce: '',
+        price: 0,
+        discount: 0,
+        inventoryNumber: '',
+        description: '',
+        category_ID: 0,
+    };
+    console.log(detail);
+    // const [formValues, setFormValues] = useState(initialValue);
+    // console.log('vdsd', formValues);
+
+    const handleChange = (e) => {
+        const { value, name } = e.target;
+        setDetail({ ...detail, [name]: value });
+    };
+    // const [category, setCategory] = useState();
+    // const [name, setName] = useState();
+    // const [price, setPrice] = useState();
+    // const [unit, setUnit] = useState('');
+    // const [placeProduce, setPlaceProduce] = useState('');
+    // const [invetory, setInventory] = useState('');
+    // const [imgUrl1, setimgUrl1] = useState('');
+    // const [imgUrl2, setimgUrl2] = useState('');
+    // const [imgUrl3, setimgUrl3] = useState('');
+    // const [imgUrl4, setimgUrl4] = useState('');
+    const onClickHandler = () => {
         try {
-            axios.post(url, postProduct);
+            console.log('test', detail);
+            const putUrl = `${url}/${id}`;
+            axios.put(putUrl, detail);
             alert('Đăng thành công!');
             window.location.reload();
         } catch (err) {
@@ -52,9 +74,10 @@ const AddProduct = () => {
                         <input
                             className="product_input"
                             type={Text}
-                            value={name}
+                            defaultValue={detail.name}
                             placeholder="Nhập tên sản phẩm..."
-                            onChange={(e) => setName(e.target.value)}
+                            name="name"
+                            onChange={handleChange}
                             required
                         ></input>
                     </li>
@@ -62,11 +85,11 @@ const AddProduct = () => {
                         <div className="product_properties">Danh mục</div>
                         <div className="product_input product_input_select ">
                             <select
-                                name="category"
                                 id="category"
                                 className={'combobox'}
-                                onChange={(e) => setCategory(e.target.value)}
-                                value={category}
+                                onChange={handleChange}
+                                name="category_ID"
+                                defaultValue={detail.category_ID}
                             >
                                 <option value="1">Phân bón</option>
                                 <option value="2">Hạt giống</option>
@@ -79,10 +102,10 @@ const AddProduct = () => {
                         <div className="product_properties">Giá</div>
                         <input
                             className="product_input"
-                            type={Number}
-                            value={price}
+                            defaultValue={detail.price}
                             placeholder="Nhập gia sản phẩm"
-                            onChange={(e) => setPrice(e.target.value)}
+                            name="price"
+                            onChange={handleChange}
                             required
                         ></input>
                     </li>
@@ -91,9 +114,10 @@ const AddProduct = () => {
                         <input
                             className="product_input"
                             type={Text}
-                            value={unit}
+                            defaultValue={detail.unit}
                             placeholder="Nhập đơn vị tính ..."
-                            onChange={(e) => setUnit(e.target.value)}
+                            name="unit"
+                            onChange={handleChange}
                             required
                         ></input>
                     </li>
@@ -102,9 +126,10 @@ const AddProduct = () => {
                         <input
                             className="product_input"
                             type={Text}
-                            value={placeProduce}
+                            defaultValue={detail.placeProduce}
                             placeholder="Nhập nơi sản xuất ..."
-                            onChange={(e) => setPlaceProduce(e.target.value)}
+                            onChange={handleChange}
+                            name="placeProduce"
                         ></input>
                     </li>
                     <li className="addProduct_row">
@@ -112,9 +137,10 @@ const AddProduct = () => {
                         <input
                             className="product_input"
                             type={Number}
-                            value={invetory}
+                            defaultValue={detail.inventoryNumber}
                             placeholder="Nhập số lượng sản phẩm có sẵn ..."
-                            onChange={(e) => setInventory(e.target.value)}
+                            onChange={handleChange}
+                            name="inventoryNumber"
                             required
                         ></input>
                     </li>
@@ -122,11 +148,11 @@ const AddProduct = () => {
                         <div className="product_properties">Mô tả</div>
                         <input
                             className="product_input"
-                            type={Number}
-                            value={description}
-                            placeholder="Nhập số lượng sản phẩm có sẵn ..."
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
+                            type={Text}
+                            defaultValue={detail.description}
+                            placeholder="Nhập mô tả sản phẩm..."
+                            onChange={handleChange}
+                            name="description"
                         ></input>
                     </li>
                     <li className="addProduct_row">
@@ -134,9 +160,10 @@ const AddProduct = () => {
                         <input
                             className="product_input"
                             type={Text}
-                            value={imgUrl1}
+                            defaultValue={detail.image1}
                             placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                            onChange={(e) => setimgUrl1(e.target.value)}
+                            onChange={handleChange}
+                            name="image1"
                             required
                         ></input>
                     </li>
@@ -145,9 +172,10 @@ const AddProduct = () => {
                         <input
                             className="product_input"
                             type={URL}
-                            value={imgUrl2}
+                            defaultValue={detail.image2}
                             placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                            onChange={(e) => setimgUrl2(e.target.value)}
+                            onChange={handleChange}
+                            name="image2"
                             required
                         ></input>
                     </li>
@@ -156,9 +184,10 @@ const AddProduct = () => {
                         <input
                             className="product_input"
                             type={URL}
-                            value={imgUrl3}
+                            defaultValue={detail.image3}
                             placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                            onChange={(e) => setimgUrl3(e.target.value)}
+                            onChange={handleChange}
+                            name="image2"
                         ></input>
                     </li>
                     <li className="addProduct_row">
@@ -166,19 +195,20 @@ const AddProduct = () => {
                         <input
                             className="product_input"
                             type={URL}
-                            value={imgUrl4}
+                            defaultValue={detail.image4}
                             placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                            onChange={(e) => setimgUrl4(e.target.value)}
+                            onChange={handleChange}
+                            name="image4"
                             required
                         ></input>
                     </li>
                 </ul>
                 <button className="addProduct_btn" onClick={onClickHandler}>
-                    Thêm mới
+                    Cập nhập
                 </button>
             </div>
         </div>
     );
-};
+}
 
-export default AddProduct;
+export default EditProduct;

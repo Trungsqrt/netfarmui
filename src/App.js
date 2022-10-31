@@ -1,9 +1,9 @@
-import Login from './components/login/Login';
 import { Routes, Route } from 'react-router-dom';
+import Login from './components/login/Login';
 import Personal from './components/personalinfo/Personal';
 import ArticleHandler from './components/articleHandler/ArticleHandler';
 import AdminPage from './components/adminPage/AdminPage';
-import CreateExpert from './components/createExpert/CreateExpert';
+import CreateExpert from './components/admin_farm/ManageUser/Expert/CreateExpert';
 import CalendarHandler from './components/calendarHandler/CalendarHandler';
 import ClientHome from './components/client_farm/home/ClientHome';
 import DetailArticle from './components/client_farm/detail/DetailArticle';
@@ -18,6 +18,9 @@ import Cart from './components/client_farm/e_commerce/Cart/Cart';
 import ManageProduct from './components/admin_farm/ManageProduct/ManageProduct';
 import AdminHome from './components/admin_farm/home/AdminHome';
 import AddProduct from './components/admin_farm/ManageProduct/AddProduct';
+import EditProduct from './components/admin_farm/ManageProduct/EditProduct';
+import Checkout from './components/client_farm/e_commerce/Checkout/Checkout';
+import OrderList from './components/client_farm/e_commerce/Order/OrderList';
 function App() {
     return (
         <div className="App">
@@ -41,6 +44,9 @@ function App() {
                 <Route path="/manageproduct" element={<ManageProduct />} />
                 <Route path="/AdminHome" element={<AdminHome />} />
                 <Route path="/manageProduct/admin/addNewProduct" element={<AddProduct />} />
+                <Route path="/product/edit/:id" element={<EditProduct />} />
+                <Route path="/shop/checkout" element={<Checkout />} />
+                <Route path="/shop/orderlist" element={<OrderList />} />
             </Routes>
         </div>
     );

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from './authSlice';
-
 const urlLogin = 'https://localhost:44303/api/Login';
 const urlRegister = 'https://localhost:44303/api/Users';
 

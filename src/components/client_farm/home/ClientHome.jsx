@@ -6,6 +6,7 @@ import About from '../share/about/About';
 import News from '../share/newsSection/News';
 import './ClientHome.css';
 const ClientHome = () => {
+    const user = localStorage.getItem('user');
     return (
         <div>
             <Header></Header>

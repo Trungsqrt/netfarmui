@@ -1,5 +1,5 @@
 //#region import
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Login.module.css';
 import loginImage from '../../assets/image/loginImage.jpg';
 import Register from '../register/Register';
@@ -9,9 +9,12 @@ import isEmpty from 'validator/lib/isEmpty';
 import { loginUser } from '../../redux/apiRequest';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useDatasContext } from '../../hooks';
 //#endregion
 
 function Login() {
+    const { datas, setDatas } = useDatasContext();
+
     //overlay register
     const [overlay, setOverlay] = useState(false);
     const [overlay2, setOverlay2] = useState(false);
@@ -52,6 +55,10 @@ function Login() {
         };
         loginUser(newUser, dispatch, navigate);
     };
+
+    // useEffect(() => {
+    //     console.log(datas.newUser);
+    // }, [datas]);
 
     //#region jsx
 
