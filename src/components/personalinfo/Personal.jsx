@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Personal.module.css';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 function Personal() {
-    const [fname, setFname] = useState('');
-    const [lname, setLname] = useState('');
+    const [fullName, setFullName] = useState('');
     const [uname, setUname] = useState('');
     const [mail, setMail] = useState('');
     const [cccd, setCccd] = useState('');
@@ -12,10 +11,53 @@ function Personal() {
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
     const [gender, setGender] = useState(true);
-    const [accept, setAccept] = useState('');
+    const [createAt, setCreateAt] = useState('');
 
-    const fullName = fname + ' ' + lname;
     const navigate = useNavigate();
+
+    const userId = JSON.parse(localStorage.getItem('user')).userId;
+    const getUserByIdUrl = `https://localhost:44303/api/Users/${userId}`;
+    useEffect(() => {
+        const fillCurrentInfo = async () => {
+            let currentUserInfo = await axios.get(getUserByIdUrl);
+            currentUserInfo = currentUserInfo.data;
+            setFullName(currentUserInfo.fullName);
+            setGender(currentUserInfo.gender);
+            setCccd(currentUserInfo.identifyCard);
+            setMail(currentUserInfo.email);
+            const dob = currentUserInfo.dayOfBirth.slice(0, 10).split('-');
+            setYear(dob[0]);
+            setMonth(dob[1]);
+            setDay(dob[2]);
+            setCreateAt(currentUserInfo.createAt);
+            setUname(currentUserInfo.phone);
+        };
+        fillCurrentInfo();
+    }, []);
+
+    const newUserInfo = {
+        id: JSON.parse(localStorage.getItem('user')).userId,
+        fullName: fullName,
+        phone: uname,
+        email: mail,
+        dayOfBirth: new Date(Number(year), Number(month) - 1, Number(day) + 1).toISOString(),
+        gender: gender,
+        identifyCard: cccd,
+        createAt: createAt,
+        updateAt: new Date().toISOString(),
+    };
+
+    const updateHandler = async () => {
+        const res = await axios.put(getUserByIdUrl, newUserInfo);
+        console.log(res);
+    };
+
+    const submitHandler = () => {
+        updateHandler();
+        alert('Cập nhật thành công!');
+        window.location.reload();
+    };
+
     return (
         <div>
             <div className={styles.body}>
@@ -32,19 +74,11 @@ function Personal() {
                                                 <p className={styles.titleContent}>Họ và tên</p>
                                                 <input
                                                     type="text"
-                                                    name="fname"
+                                                    name="fullName"
                                                     placeholder="Họ lót"
                                                     className={(styles.inputField, styles.nameField)}
-                                                    value={fname}
-                                                    onChange={(e) => setFname(e.target.value)}
-                                                />
-                                                <input
-                                                    type="text"
-                                                    name="lname"
-                                                    placeholder="Tên"
-                                                    className={(styles.inputField, styles.nameField)}
-                                                    value={lname}
-                                                    onChange={(e) => setLname(e.target.value)}
+                                                    value={fullName}
+                                                    onChange={(e) => setFullName(e.target.value)}
                                                 />
                                             </div>
 
@@ -59,6 +93,7 @@ function Personal() {
                                                     placeholder="Số điện thoại"
                                                     className={styles.inputField}
                                                     value={uname}
+                                                    readOnly
                                                 />
                                             </div>
 
@@ -150,7 +185,12 @@ function Personal() {
                                     </section>
 
                                     <section className={styles.btnSub}>
-                                        <input type="submit" className={styles.btnSubmit} value="Xác nhận" />
+                                        <input
+                                            type="submit"
+                                            className={styles.btnSubmit}
+                                            value="Xác nhận"
+                                            onClick={submitHandler}
+                                        />
                                     </section>
                                 </form>
                             </section>

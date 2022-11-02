@@ -39,9 +39,8 @@ export const registerUser = async (user, dispatch, navigate) => {
 export const logoutUser = async (dispatch, navigate) => {
     dispatch(registerStart());
     try {
-        alert('Đã đăng xuất!');
-        localStorage.removeItem('user');
         navigate('/login');
+        localStorage.removeItem('user');
     } catch (error) {
         console.warn(error);
     }
