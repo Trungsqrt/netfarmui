@@ -10,6 +10,7 @@ const parse = require('html-react-parser');
 
 function DetailArticle(props) {
     const [detail, setDetail] = useState({});
+    const [showComment, setShowComment] = useState(false);
     const dispatch = useDispatch();
 
     //id params cho từng sản phẩm
@@ -25,7 +26,14 @@ function DetailArticle(props) {
         fetchData();
     }, [id]);
 
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        user ? setShowComment(true) : setShowComment(false);
+        console.log(showComment);
+    }, []);
+
     let Content;
+
     return (
         <div>
             <div className="wrapper">
@@ -49,7 +57,7 @@ function DetailArticle(props) {
                                 </div>
                             </div>
                         </div>
-                        <Comment />
+                        {showComment && <Comment />}
                         <Footer></Footer>
                     </div>
                 )}

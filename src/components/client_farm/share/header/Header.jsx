@@ -3,7 +3,7 @@ import styles from './Header.module.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import navbarImage from '../../../../assets/image/logonetfarm.png';
-import ToolbarAdmin from '../../../detailBar/toolbarAdmin/ToolbarAdmin';
+import ToolbarFarmer from '../../../detailBar/toolbarFarmer/ToolbarFarmer';
 import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
 import { Link, useNavigate } from 'react-router-dom';
 const Header = () => {
@@ -17,6 +17,7 @@ const Header = () => {
     const [timee, setTimee] = useState();
     const [notification, setNotification] = useState(false);
     const [toolbar, setToolbar] = useState(false);
+    const [isLoggin, setIsLoggin] = useState(false);
     let icon;
     useEffect(() => {
         axios.get(url).then((response) => {
@@ -29,6 +30,11 @@ const Header = () => {
             setIconState(icon);
         });
     }, []);
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        user ? setIsLoggin(true) : setIsLoggin(false);
+    }, [isLoggin]);
 
     function showNotificationHandler() {
         notification ? setNotification(false) : setNotification(true);
@@ -52,6 +58,19 @@ const Header = () => {
         if (user === null) return navigate('/login');
         return navigate('/shop/cart');
     }
+
+    let settingIcon = (
+        <section>
+            <button
+                className="button-setting"
+                onClick={showToolbar}
+                // onBlur={hideToolbar}
+            >
+                <i className="fa-solid fa-bars settings"></i>
+            </button>
+            {toolbar && <ToolbarFarmer />}
+        </section>
+    );
 
     return (
         <div style={{ backgroundColor: 'white' }}>
@@ -120,16 +139,12 @@ const Header = () => {
                             </button>
                             {notification && <NotificationDetail />}
                         </section>
-                        <section>
-                            <button
-                                className="button-setting"
-                                onClick={showToolbar}
-                                // onBlur={hideToolbar}
-                            >
-                                <i className="fa-solid fa-bars settings"></i>
-                            </button>
-                            {toolbar && <ToolbarAdmin />}
-                        </section>
+                        {isLoggin && settingIcon}
+                        {!isLoggin && (
+                            <Link to="/login" className={styles.loginLink}>
+                                Đăng nhập/Đăng ký
+                            </Link>
+                        )}
                     </div>
                 </nav>
             </div>

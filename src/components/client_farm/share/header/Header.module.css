@@ -122,3 +122,7 @@ ul li a:active {
 .notificationBox {
     position: relative;
 }
+
+.loginLink {
+    color: #ceba08;
+}
