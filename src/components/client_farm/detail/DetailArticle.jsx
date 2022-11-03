@@ -15,12 +15,13 @@ function DetailArticle(props) {
 
     //id params cho từng sản phẩm
     const { id } = useParams();
+    const idArticle = id;
 
     //Hàm này để lấy dữ liệu chi tiết sản phẩm
     useEffect(() => {
         const fetchData = async () => {
             const response = await articleAPI.getDetail(id);
-            console.log('DETAIL', response.data);
+            // console.log('DETAIL', response.data);
             setDetail(response.data);
         };
         fetchData();
@@ -29,7 +30,7 @@ function DetailArticle(props) {
     useEffect(() => {
         const user = localStorage.getItem('user');
         user ? setShowComment(true) : setShowComment(false);
-        console.log(showComment);
+        // console.log(showComment);
     }, []);
 
     let Content;
@@ -57,7 +58,7 @@ function DetailArticle(props) {
                                 </div>
                             </div>
                         </div>
-                        {showComment && <Comment />}
+                        {showComment && <Comment idArticle={idArticle} />}
                         <Footer></Footer>
                     </div>
                 )}
