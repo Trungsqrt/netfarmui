@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import styles from './AdminPage.module.css';
+import styles from './ExpertPage.module.css';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '../admin_farm/share/header/Header';
 
-function AdminPage() {
-    const userUrl = 'https://localhost:44303/api/Users';
+function ExpertPage() {
     const articleUrl = 'https://localhost:44303/api/Article';
     const scheduleUrl = 'https://localhost:44303/api/ScheduleTask';
-
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const [render, setRender] = useState(1); //1: User, 2: Posts, 3:Schedule
+    const [render, setRender] = useState(1); //1: Posts, 2: Schedule
+
     useEffect(() => {
         async function getData() {
-            const Dataset = await axios.get(userUrl);
+            const Dataset = await axios.get(articleUrl);
 
             Dataset.data.forEach((item) => {
                 const value = {
                     id: item.id,
-                    name: item.fullName,
-                    phone: item.phone,
-                    cccd: item.identifyCard,
+                    title: item.title,
+                    datePost: item.datePost.slice(0, 10),
+                    dateUpdate: item.dateUpdate,
                 };
                 setData((prevData) => [...prevData, value]);
             });
@@ -29,27 +28,8 @@ function AdminPage() {
         getData();
     }, []);
 
-    const UserHandler = () => {
-        setRender(1);
-        async function getData() {
-            setData([]);
-            const Dataset = await axios.get(userUrl);
-            Dataset.data.forEach((item) => {
-                const value = {
-                    id: item.id,
-                    name: item.fullName,
-                    phone: item.phone,
-                    cccd: item.identifyCard,
-                };
-                setData((prevData) => [...prevData, value]);
-            });
-        }
-
-        getData();
-    };
-
     const PostHandler = () => {
-        setRender(2);
+        setRender(1);
         async function getData() {
             setData([]);
             const Dataset = await axios.get(articleUrl);
@@ -69,7 +49,7 @@ function AdminPage() {
     };
 
     const ScheduleHandler = () => {
-        setRender(3);
+        setRender(2);
         async function getData() {
             setData([]);
             const Dataset = await axios.get(scheduleUrl);
@@ -96,14 +76,6 @@ function AdminPage() {
         deleteHandler();
     };
 
-    const handleDeleteUser = (index) => {
-        async function deleteHandler() {
-            await axios.delete(userUrl + '/' + index);
-            UserHandler();
-        }
-        deleteHandler();
-    };
-
     const handleDeleteSchedule = (index) => {
         async function deleteHandler() {
             await axios.delete(scheduleUrl + '/' + index);
@@ -111,7 +83,6 @@ function AdminPage() {
         }
         deleteHandler();
     };
-
     const handleAddArticle = () => {
         navigate('/ArticleHandler');
     };
@@ -120,6 +91,11 @@ function AdminPage() {
         navigate('/CalenderHandler');
     };
 
+    const handleEditPost = (id) => {
+        navigate(`/editArticle/${id}`);
+    };
+
+    const handleEditArticle = () => {};
     return (
         <div>
             <Header />
@@ -127,9 +103,6 @@ function AdminPage() {
                 <div className={styles.container}>
                     <nav>
                         <ul className={styles.tabList}>
-                            <li className={styles.itemList} onClick={UserHandler}>
-                                Users
-                            </li>
                             <li className={styles.itemList} onClick={PostHandler}>
                                 Posts
                             </li>
@@ -156,29 +129,6 @@ function AdminPage() {
                         <table>
                             {render == 1 && (
                                 <tbody>
-                                    <tr>
-                                        <th className={styles.th1}>Id</th>
-                                        <th className={styles.th1}>Tên</th>
-                                        <th className={styles.th1}>Số điện thoại</th>
-                                        <th className={styles.th1}>Email</th>
-                                        <th className={styles.th1}>CCCD</th>
-                                    </tr>
-                                    {data.map((item, index) => (
-                                        <tr key={index}>
-                                            <th>{item.id}</th>
-                                            <th>{item.name}</th>
-                                            <th>{item.user}</th>
-                                            <th>{item.email}</th>
-                                            <th>{item.cccd}</th>
-                                            <th style={{ cursor: 'pointer' }} onClick={() => handleDeleteUser(item.id)}>
-                                                &times;
-                                            </th>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            )}
-                            {render == 2 && (
-                                <tbody>
                                     <i className="fa-solid fa-plus" onClick={handleAddArticle}></i>
                                     <tr>
                                         <th className={styles.th1}>Id</th>
@@ -195,12 +145,15 @@ function AdminPage() {
                                             <th style={{ cursor: 'pointer' }} onClick={() => handleDeletePost(item.id)}>
                                                 &times;
                                             </th>
+                                            <th style={{ cursor: 'pointer' }} onClick={() => handleEditPost(item.id)}>
+                                                &#128394;&#65039;
+                                            </th>
                                         </tr>
                                     ))}
                                 </tbody>
                             )}
 
-                            {render == 3 && (
+                            {render == 2 && (
                                 <tbody>
                                     <i className="fa-solid fa-plus" onClick={handleAddSchedule}></i>
                                     <tr>
@@ -221,6 +174,12 @@ function AdminPage() {
                                             >
                                                 &times;
                                             </th>
+                                            <th
+                                                style={{ cursor: 'pointer' }}
+                                                onClick={() => handleEditArticle(item.id)}
+                                            >
+                                                &#128394;&#65039;
+                                            </th>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -233,4 +192,4 @@ function AdminPage() {
     );
 }
 
-export default AdminPage;
+export default ExpertPage;

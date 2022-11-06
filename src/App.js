@@ -3,6 +3,7 @@ import Login from './components/login/Login';
 import Personal from './components/personalinfo/Personal';
 import ArticleHandler from './components/articleHandler/ArticleHandler';
 import AdminPage from './components/adminPage/AdminPage';
+import ExpertPage from './components/expertPage/ExpertPage';
 import CreateExpert from './components/admin_farm/ManageUser/Expert/CreateExpert';
 import CalendarHandler from './components/calendarHandler/CalendarHandler';
 import ClientHome from './components/client_farm/home/ClientHome';
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/" element={<ClientHome />} />
                 <Route path="/detail/:id" element={<DetailArticle />} />
+                <Route path="/editArticle/:id" element={<ArticleHandler />} />
                 <Route path="/inforPage" element={<InforPage />} />
                 <Route path="/inforPage/policy" element={<Policy />} />
                 <Route path="/inforPage/manual" element={<Manual />} />
@@ -47,6 +49,7 @@ function App() {
                 <Route path="/product/edit/:id" element={<EditProduct />} />
                 <Route path="/shop/checkout" element={<Checkout />} />
                 <Route path="/shop/orderlist" element={<OrderList />} />
+                <Route path="/expert" element={<ExpertPage />} />
             </Routes>
         </div>
     );

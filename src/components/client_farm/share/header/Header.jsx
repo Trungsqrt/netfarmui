@@ -54,7 +54,7 @@ const Header = () => {
 
     function cartHandler() {
         const user = JSON.parse(localStorage.getItem('user'));
-        console.log('user', user);
+        // console.log('user', user);
         if (user === null) return navigate('/login');
         return navigate('/shop/cart');
     }

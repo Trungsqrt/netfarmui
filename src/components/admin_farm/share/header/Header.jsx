@@ -65,7 +65,6 @@ const Header = () => {
         </section>
     );
 
-    console.log(toolbar);
     return (
         <div style={{ backgroundColor: 'white' }}>
             <div className="container-navbar">

@@ -1,17 +1,22 @@
 import './app.css';
 import React, { useRef, useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styles from './ArticleHandler.module.css';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from 'axios';
-import parse from 'html-react-parser';
 import convertHtmlToReact from '@hedgedoc/html-to-react';
 import Header from '../admin_farm/share/header/Header';
 import { useDatasContext } from '../../hooks';
+import articleAPI from '../../apis/articleAPI';
+const parse = require('html-react-parser');
 
 const url = 'https://localhost:44303/api/Article';
 
 function ArticleHandler() {
     // Get data from context
+    const { id } = useParams();
+    const idArticle = id;
+
     const { datas, setDatas } = useDatasContext();
 
     const editorRef = useRef();
@@ -19,30 +24,63 @@ function ArticleHandler() {
     const [category, setCategory] = useState('tintuc');
     const [isPublic, setIsPublic] = useState(true);
     const [thumbnail, setThumbnail] = useState('');
+    const [currentContent, setCurrentContent] = useState('');
+
+    const fillCurrentDataArticle = async () => {
+        const res = await articleAPI.getDetail(idArticle);
+        const response = res.data;
+        setTitle(response.title);
+        setCategory(response.aCategoryName);
+        setIsPublic(response.status);
+        setThumbnail(response.imageURL);
+        setCurrentContent(response.content);
+    };
+
+    useEffect(() => {
+        if (idArticle) {
+            fillCurrentDataArticle();
+        }
+    }, []);
 
     const onClickHandler = () => {
-        const postNew = {
-            title: title,
-            aCategoryName: category,
-            status: isPublic,
-            content: editorRef.current.getContent(),
-            cmtStatus: true,
-            datePost: new Date().toISOString(),
-            dateUpdate: null,
-            imageURL: thumbnail,
-        };
+        let postNew = {};
+        if (idArticle) {
+            postNew = {
+                id: idArticle,
+                title: title,
+                aCategoryName: category,
+                status: isPublic,
+                content: editorRef.current.getContent(),
+                cmtStatus: true,
+                datePost: new Date().toISOString(),
+                dateUpdate: new Date().toISOString(),
+                imageURL: thumbnail,
+            };
+        } else {
+            postNew = {
+                title: title,
+                aCategoryName: category,
+                status: isPublic,
+                content: editorRef.current.getContent(),
+                cmtStatus: true,
+                datePost: new Date().toISOString(),
+                dateUpdate: new Date().toISOString(),
+                imageURL: thumbnail,
+            };
+        }
+
         try {
-            axios.post(url, postNew);
+            if (idArticle) {
+                axios.put(url + `/${idArticle}`, postNew);
+            } else {
+                axios.post(url, postNew);
+            }
             alert('Đăng thành công!');
             window.location.reload();
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
     };
-
-    // useEffect(() => {
-    //     console.log(datas.articles);
-    // }, [datas]);
 
     return (
         <div>
@@ -104,6 +142,7 @@ function ArticleHandler() {
                                 freeTiny.style.display = 'none';
                             },
                         }}
+                        initialValue={currentContent}
                     />
                     <br />
                     <p>Ảnh đại diện</p>
