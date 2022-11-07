@@ -35,6 +35,7 @@ function App() {
                 <Route path="/" element={<ClientHome />} />
                 <Route path="/detail/:id" element={<DetailArticle />} />
                 <Route path="/editArticle/:id" element={<ArticleHandler />} />
+                <Route path="/editSchedule/:id" element={<CalendarHandler />} />
                 <Route path="/inforPage" element={<InforPage />} />
                 <Route path="/inforPage/policy" element={<Policy />} />
                 <Route path="/inforPage/manual" element={<Manual />} />
