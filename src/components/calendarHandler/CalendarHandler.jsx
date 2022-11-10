@@ -21,7 +21,11 @@ function CalendarHandler() {
     const [currentContent, setCurrentContent] = useState('');
     const urlEdit = 'https://localhost:44303/api/ScheduleTask';
     const navigate = useNavigate();
+    const [user, setUser] = useState('');
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
     useEffect(() => {
+        setUser(currentUser.roleName);
         axios.get(url2).then((response) => {
             const data = response.data;
             data.forEach((item) => {
@@ -90,75 +94,80 @@ function CalendarHandler() {
 
     return (
         <div>
-            <Header />
-            <div className={styles.container}>
-                <div className={styles.label}>Tạo lịch thời vụ</div>
-                <div className={styles.textContainer}>
-                    <p>Tiêu đề</p>
-                    <input
-                        placeholder="Nhập tên thời vụ..."
-                        className={styles.input}
-                        onChange={(e) => setTitle(e.target.value)}
-                        value={title}
-                        type="text"
-                        required
-                        min={3}
-                    ></input>
-
-                    <div className={styles.comboboxContainer} lang="vi">
-                        <div>
-                            <p>Bắt đầu</p>
+            {(user === 'Expert' || user === 'Admin') && (
+                <>
+                    <Header />
+                    <div className={styles.container}>
+                        <div className={styles.label}>Tạo lịch thời vụ</div>
+                        <div className={styles.textContainer}>
+                            <p>Tiêu đề</p>
                             <input
-                                type="date"
-                                id="start"
-                                className={styles.combobox}
-                                onChange={(e) => setStart(e.target.value)}
-                                value={start}
-                                lang="vi"
+                                placeholder="Nhập tên thời vụ..."
+                                className={styles.input}
+                                onChange={(e) => setTitle(e.target.value)}
+                                value={title}
+                                type="text"
+                                required
+                                min={3}
                             ></input>
-                        </div>
 
-                        <div>
-                            <p>Kết thúc</p>
-                            <input
-                                type="date"
-                                id="start"
-                                className={styles.combobox}
-                                onChange={(e) => setEnd(e.target.value)}
-                                value={end}
-                            ></input>
+                            <div className={styles.comboboxContainer} lang="vi">
+                                <div>
+                                    <p>Bắt đầu</p>
+                                    <input
+                                        type="date"
+                                        id="start"
+                                        className={styles.combobox}
+                                        onChange={(e) => setStart(e.target.value)}
+                                        value={start}
+                                        lang="vi"
+                                    ></input>
+                                </div>
+
+                                <div>
+                                    <p>Kết thúc</p>
+                                    <input
+                                        type="date"
+                                        id="start"
+                                        className={styles.combobox}
+                                        onChange={(e) => setEnd(e.target.value)}
+                                        value={end}
+                                    ></input>
+                                </div>
+                                <div>
+                                    <p>Loại sản phẩm</p>
+                                    <select
+                                        name="category"
+                                        id="category"
+                                        className={styles.cateBox}
+                                        onChange={(e) => setCategory(Number(e.target.value))}
+                                        value={category}
+                                    >
+                                        {scheduleIdcombo.map((item, index) => (
+                                            <option value={item} key={index}>
+                                                {scheduleName[index]}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <button type="button" onClick={onClickHandler} className={styles.button}>
+                                    Đăng
+                                </button>
+                            </div>
+                            <div>
+                                <textarea
+                                    placeholder="Mô tả..."
+                                    className={styles.textBox}
+                                    required
+                                    onChange={(e) => setCurrentContent(e.target.value)}
+                                    value={currentContent}
+                                ></textarea>
+                            </div>
                         </div>
-                        <div>
-                            <p>Loại sản phẩm</p>
-                            <select
-                                name="category"
-                                id="category"
-                                className={styles.cateBox}
-                                onChange={(e) => setCategory(Number(e.target.value))}
-                                value={category}
-                            >
-                                {scheduleIdcombo.map((item, index) => (
-                                    <option value={item} key={index}>
-                                        {scheduleName[index]}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <button type="button" onClick={onClickHandler} className={styles.button}>
-                            Đăng
-                        </button>
                     </div>
-                    <div>
-                        <textarea
-                            placeholder="Mô tả..."
-                            className={styles.textBox}
-                            required
-                            onChange={(e) => setCurrentContent(e.target.value)}
-                            value={currentContent}
-                        ></textarea>
-                    </div>
-                </div>
-            </div>
+                </>
+            )}
+            {!(user === 'Expert' || user === 'Admin') && navigate('/')}
         </div>
     );
 }

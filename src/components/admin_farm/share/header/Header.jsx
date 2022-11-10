@@ -18,6 +18,9 @@ const Header = () => {
     const [notification, setNotification] = useState(false);
     const [toolbar, setToolbar] = useState(false);
     const [isLoggin, setIsLoggin] = useState(false);
+    const [user, setUser] = useState('');
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
     let icon;
     useEffect(() => {
         axios.get(url).then((response) => {
@@ -32,9 +35,13 @@ const Header = () => {
     }, []);
 
     useEffect(() => {
-        const user = localStorage.getItem('user');
-        user ? setIsLoggin(true) : setIsLoggin(false);
-    }, [isLoggin]);
+        if (currentUser) {
+            setIsLoggin(true);
+            setUser(currentUser.roleName);
+        } else {
+            setIsLoggin(false);
+        }
+    }, []);
 
     function showNotificationHandler() {
         notification ? setNotification(false) : setNotification(true);
@@ -94,13 +101,19 @@ const Header = () => {
                     </a>
                     <ul className="navbarTask">
                         <li>
-                            <a href="/adminHome">Trang chủ</a>
+                            {user === 'Admin' && <Link to="/adminHome">Trang chủ</Link>}
+                            {user === 'Expert' && <Link to="/adminHome">Trang chủ</Link>}
+                            {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
                         </li>
                         <li>
-                            <a href="/admin">QL bài đăng</a>
+                            {user === 'Admin' && <Link to="/admin">Bài đăng</Link>}
+                            {user === 'Expert' && <Link to="/expert">Bài đăng</Link>}
+                            {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
                         </li>
                         <li>
-                            <a href="/manageProduct">QL bán hàng</a>
+                            {user === 'Admin' && <Link to="/manageProduct">Bán hàng</Link>}
+                            {user === 'Expert' && <Link to="/manageProduct">Bán hàng</Link>}
+                            {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
                         </li>
                     </ul>
                     <form className="form-search">

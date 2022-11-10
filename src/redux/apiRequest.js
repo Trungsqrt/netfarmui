@@ -14,7 +14,7 @@ export const loginUser = async (user, dispatch, navigate) => {
         const user = JSON.parse(getUser);
         console.log(user);
         if (user.roleName === 'Admin') navigate('/AdminHome');
-        else if (user.roleName === 'Farmer') navigate('/');
+        else if (user.roleName === 'Expert') navigate('/expert');
         else navigate('/');
     } else {
         dispatch(loginFailed());

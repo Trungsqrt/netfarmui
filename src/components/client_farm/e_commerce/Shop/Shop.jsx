@@ -8,6 +8,12 @@ const Shop = () => {
     const categoryUrl = 'https://localhost:44303/api/Categories';
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState([]);
+    const [pageNumber, setPageNumber] = useState(0);
+
+    const productsPerPage = 8;
+    const pagesVisited = pageNumber * productsPerPage;
+    const displayProducts = products.slice(pagesVisited, pagesVisited + productsPerPage).map(products);
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await productAPI.getAPI();
@@ -43,7 +49,7 @@ const Shop = () => {
                     <div className="shop_block_text_sm">NetFarm</div>
                 </div>
                 <div className="shop_content">
-                    <div className="product_category">
+                    {/* <div className="product_category">
                         <ul className="product_category_list">
                             {category
                                 ? category.map((item, index) => (
@@ -58,7 +64,7 @@ const Shop = () => {
                                   ))
                                 : ''}
                         </ul>
-                    </div>
+                    </div> */}
                     <div className="product_row">
                         <div className="list_product">
                             {products
@@ -67,6 +73,7 @@ const Shop = () => {
                                   ))
                                 : ''}
                         </div>
+                        <div></div>
                     </div>
                 </div>
             </div>

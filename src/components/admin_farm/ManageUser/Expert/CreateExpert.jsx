@@ -7,6 +7,8 @@ import equals from 'validator/lib/equals';
 import { registerUser } from '../../../../redux/apiRequest';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
 function CreateExpert() {
     const [validationMsg, setValidationMsg] = useState({});
     const dispatch = useDispatch();
@@ -21,6 +23,13 @@ function CreateExpert() {
     const [year, setYear] = useState('');
     const [gender, setGender] = useState(true);
 
+    const [user, setUser] = useState('');
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
+
+    useEffect(() => {
+        setUser(currentUser.roleName);
+    }, []);
     const validateAll = () => {
         const msg = {};
         if (isEmpty(fname)) {
@@ -76,144 +85,162 @@ function CreateExpert() {
         registerUser(newUser, dispatch, navigate);
     };
     return (
-        <div className={styles.container}>
-            <section className={styles.registerContainer}>
-                <div className={styles.registerContainer2}>
-                    <div className={styles.label}>
-                        <h5 className={styles.title}>Đăng ký tài khoản expert</h5>
-                        <p className={styles.titleDesc}>Nhập thông tin đăng ký</p>
+        <>
+            {user === 'Admin' && (
+                <>
+                    <div className={styles.container}>
+                        <section className={styles.registerContainer}>
+                            <div className={styles.registerContainer2}>
+                                <div className={styles.label}>
+                                    <h5 className={styles.title}>Đăng ký tài khoản expert</h5>
+                                    <p className={styles.titleDesc}>Nhập thông tin đăng ký</p>
+                                </div>
+                                <form className={styles.form} autoComplete="off">
+                                    <section className={styles.error2}>
+                                        <p className={styles.error}>{validationMsg.fname}</p>
+                                        <p className={styles.error}>{validationMsg.lname}</p>
+                                    </section>
+                                    <section className={styles.formContainer}>
+                                        <input
+                                            type="text"
+                                            name="fname"
+                                            placeholder="Họ lót"
+                                            className={(styles.inputField, styles.nameField)}
+                                            value={fname}
+                                            onChange={(e) => setFname(e.target.value)}
+                                        />
+                                        <input
+                                            type="text"
+                                            name="lname"
+                                            placeholder="Tên"
+                                            className={(styles.inputField, styles.nameField)}
+                                            value={lname}
+                                            onChange={(e) => setLname(e.target.value)}
+                                        />
+                                    </section>
+
+                                    <section className={styles.error2}>
+                                        <p className={styles.error}>{validationMsg.uname}</p>
+                                    </section>
+                                    <section className={styles.formContainer}>
+                                        <input
+                                            type="number"
+                                            name="uname"
+                                            id="uname"
+                                            onChange={(e) => setUname(e.target.value)}
+                                            placeholder="Số điện thoại"
+                                            className={styles.inputField}
+                                            value={uname}
+                                        />
+                                    </section>
+
+                                    <section className={styles.error2}>
+                                        <p className={styles.error}>{validationMsg.pass}</p>
+                                    </section>
+                                    <section className={styles.formContainer}>
+                                        <input
+                                            type="password"
+                                            name="pass"
+                                            placeholder="Mật khẩu"
+                                            className={styles.inputField}
+                                            value={pass}
+                                            onChange={(e) => setPass(e.target.value)}
+                                        />
+                                    </section>
+
+                                    <section className={styles.error2}>
+                                        <p className={styles.error}>{validationMsg.repass}</p>
+                                    </section>
+                                    <section className={styles.formContainer}>
+                                        <input
+                                            type="password"
+                                            name="repass"
+                                            placeholder="Xác nhận mật khẩu"
+                                            className={styles.inputField}
+                                            value={repass}
+                                            onChange={(e) => setRepass(e.target.value)}
+                                        />
+                                    </section>
+
+                                    <section className={styles.error2}>
+                                        <p className={styles.error}>{validationMsg.day}</p>
+                                        <p className={styles.error}>{validationMsg.month}</p>
+                                        <p className={styles.error}>{validationMsg.year}</p>
+                                    </section>
+                                    <section className={styles.formContainer}>
+                                        <input
+                                            type="number"
+                                            name="day"
+                                            value={day}
+                                            onChange={(e) => setDay(e.target.value)}
+                                            placeholder="Ngày sinh"
+                                            className={styles.inputField}
+                                            min="1"
+                                            max="31"
+                                        />
+                                        <input
+                                            type="number"
+                                            name="month"
+                                            value={month}
+                                            onChange={(e) => setMonth(e.target.value)}
+                                            placeholder="Tháng sinh"
+                                            className={styles.inputField}
+                                            min="1"
+                                            max="12"
+                                        />
+
+                                        <input
+                                            type="number"
+                                            name="year"
+                                            value={year}
+                                            onChange={(e) => setYear(e.target.value)}
+                                            placeholder="Năm sinh"
+                                            className={styles.inputField}
+                                            min="1900"
+                                        />
+                                    </section>
+
+                                    <section className={styles.formGender}>
+                                        {/* NOTE: nam */}
+                                        <section className={styles.radioBtn}>
+                                            <label>Nam</label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="male"
+                                                onChange={(e) => setGender(true)}
+                                                defaultChecked
+                                            />
+                                        </section>
+
+                                        {/* NOTE: nu */}
+                                        <section className={styles.radioBtn}>
+                                            <label>Nữ</label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="female"
+                                                onChange={(e) => setGender(false)}
+                                            />
+                                        </section>
+                                    </section>
+                                    <section className={styles.formContainer}>
+                                        <input
+                                            type="submit"
+                                            className={styles.btnSubmit}
+                                            value="Đăng ký"
+                                            onClick={handleSubmit}
+                                        />
+                                    </section>
+                                </form>
+                            </div>
+                        </section>
                     </div>
-                    <form className={styles.form} autoComplete="off">
-                        <section className={styles.error2}>
-                            <p className={styles.error}>{validationMsg.fname}</p>
-                            <p className={styles.error}>{validationMsg.lname}</p>
-                        </section>
-                        <section className={styles.formContainer}>
-                            <input
-                                type="text"
-                                name="fname"
-                                placeholder="Họ lót"
-                                className={(styles.inputField, styles.nameField)}
-                                value={fname}
-                                onChange={(e) => setFname(e.target.value)}
-                            />
-                            <input
-                                type="text"
-                                name="lname"
-                                placeholder="Tên"
-                                className={(styles.inputField, styles.nameField)}
-                                value={lname}
-                                onChange={(e) => setLname(e.target.value)}
-                            />
-                        </section>
-
-                        <section className={styles.error2}>
-                            <p className={styles.error}>{validationMsg.uname}</p>
-                        </section>
-                        <section className={styles.formContainer}>
-                            <input
-                                type="number"
-                                name="uname"
-                                id="uname"
-                                onChange={(e) => setUname(e.target.value)}
-                                placeholder="Số điện thoại"
-                                className={styles.inputField}
-                                value={uname}
-                            />
-                        </section>
-
-                        <section className={styles.error2}>
-                            <p className={styles.error}>{validationMsg.pass}</p>
-                        </section>
-                        <section className={styles.formContainer}>
-                            <input
-                                type="password"
-                                name="pass"
-                                placeholder="Mật khẩu"
-                                className={styles.inputField}
-                                value={pass}
-                                onChange={(e) => setPass(e.target.value)}
-                            />
-                        </section>
-
-                        <section className={styles.error2}>
-                            <p className={styles.error}>{validationMsg.repass}</p>
-                        </section>
-                        <section className={styles.formContainer}>
-                            <input
-                                type="password"
-                                name="repass"
-                                placeholder="Xác nhận mật khẩu"
-                                className={styles.inputField}
-                                value={repass}
-                                onChange={(e) => setRepass(e.target.value)}
-                            />
-                        </section>
-
-                        <section className={styles.error2}>
-                            <p className={styles.error}>{validationMsg.day}</p>
-                            <p className={styles.error}>{validationMsg.month}</p>
-                            <p className={styles.error}>{validationMsg.year}</p>
-                        </section>
-                        <section className={styles.formContainer}>
-                            <input
-                                type="number"
-                                name="day"
-                                value={day}
-                                onChange={(e) => setDay(e.target.value)}
-                                placeholder="Ngày sinh"
-                                className={styles.inputField}
-                                min="1"
-                                max="31"
-                            />
-                            <input
-                                type="number"
-                                name="month"
-                                value={month}
-                                onChange={(e) => setMonth(e.target.value)}
-                                placeholder="Tháng sinh"
-                                className={styles.inputField}
-                                min="1"
-                                max="12"
-                            />
-
-                            <input
-                                type="number"
-                                name="year"
-                                value={year}
-                                onChange={(e) => setYear(e.target.value)}
-                                placeholder="Năm sinh"
-                                className={styles.inputField}
-                                min="1900"
-                            />
-                        </section>
-
-                        <section className={styles.formGender}>
-                            {/* NOTE: nam */}
-                            <section className={styles.radioBtn}>
-                                <label>Nam</label>
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="male"
-                                    onChange={(e) => setGender(true)}
-                                    defaultChecked
-                                />
-                            </section>
-
-                            {/* NOTE: nu */}
-                            <section className={styles.radioBtn}>
-                                <label>Nữ</label>
-                                <input type="radio" name="gender" value="female" onChange={(e) => setGender(false)} />
-                            </section>
-                        </section>
-                        <section className={styles.formContainer}>
-                            <input type="submit" className={styles.btnSubmit} value="Đăng ký" onClick={handleSubmit} />
-                        </section>
-                    </form>
-                </div>
-            </section>
-        </div>
+                </>
+            )}
+            {user === 'Expert' && navigate('/adminHome')}
+            {user === 'Farmer' && navigate('/')}
+        </>
     );
 }
 export default CreateExpert;
