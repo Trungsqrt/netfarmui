@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('../../assets/image/loginImage.jpg');
+    background-image: url('../../../../assets/image/loginImage.jpg');
     background-origin: content-box;
     background-repeat: no-repeat;
     background-position: center;

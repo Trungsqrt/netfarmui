@@ -40,9 +40,9 @@ function ArticleHandler() {
         }
     };
 
-    useEffect(() => {
-        console.log(datas.articles);
-    }, [datas]);
+    // useEffect(() => {
+    //     console.log(datas.articles);
+    // }, [datas]);
 
     return (
         <div>

@@ -5,6 +5,7 @@ import axios from 'axios';
 import styles from './Header.module.css';
 import ToolbarAdmin from '../../../detailBar/toolbarAdmin/ToolbarAdmin';
 import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3';
@@ -16,6 +17,7 @@ const Header = () => {
     const [timee, setTimee] = useState();
     const [notification, setNotification] = useState(false);
     const [toolbar, setToolbar] = useState(false);
+    const [isLoggin, setIsLoggin] = useState(false);
     let icon;
     useEffect(() => {
         axios.get(url).then((response) => {
@@ -28,6 +30,11 @@ const Header = () => {
             setIconState(icon);
         });
     }, []);
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        user ? setIsLoggin(true) : setIsLoggin(false);
+    }, [isLoggin]);
 
     function showNotificationHandler() {
         notification ? setNotification(false) : setNotification(true);
@@ -44,6 +51,19 @@ const Header = () => {
     function hideToolbar() {
         setToolbar(false);
     }
+
+    let settingIcon = (
+        <section>
+            <button
+                className="button-setting"
+                onClick={showToolbar}
+                // onBlur={hideToolbar}
+            >
+                <i className="fa-solid fa-bars settings"></i>
+            </button>
+            {toolbar && <ToolbarAdmin />}
+        </section>
+    );
 
     console.log(toolbar);
     return (
@@ -108,16 +128,12 @@ const Header = () => {
                             </button>
                             {notification && <NotificationDetail />}
                         </section>
-                        <section>
-                            <button
-                                className="button-setting"
-                                onClick={showToolbar}
-                                // onBlur={hideToolbar}
-                            >
-                                <i className="fa-solid fa-bars settings"></i>
-                            </button>
-                            {toolbar && <ToolbarAdmin />}
-                        </section>
+                        {isLoggin && settingIcon}
+                        {!isLoggin && (
+                            <Link to="/login" className={styles.loginLink}>
+                                Đăng nhập/Đăng ký
+                            </Link>
+                        )}
                     </div>
                 </nav>
             </div>

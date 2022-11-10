@@ -10,22 +10,31 @@ const parse = require('html-react-parser');
 
 function DetailArticle(props) {
     const [detail, setDetail] = useState({});
+    const [showComment, setShowComment] = useState(false);
     const dispatch = useDispatch();
 
     //id params cho từng sản phẩm
     const { id } = useParams();
+    const idArticle = id;
 
     //Hàm này để lấy dữ liệu chi tiết sản phẩm
     useEffect(() => {
         const fetchData = async () => {
             const response = await articleAPI.getDetail(id);
-            console.log('DETAIL', response.data);
+            // console.log('DETAIL', response.data);
             setDetail(response.data);
         };
         fetchData();
     }, [id]);
 
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        user ? setShowComment(true) : setShowComment(false);
+        // console.log(showComment);
+    }, []);
+
     let Content;
+
     return (
         <div>
             <div className="wrapper">
@@ -49,7 +58,7 @@ function DetailArticle(props) {
                                 </div>
                             </div>
                         </div>
-                        <Comment />
+                        {showComment && <Comment idArticle={idArticle} />}
                         <Footer></Footer>
                     </div>
                 )}
