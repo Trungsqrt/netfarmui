@@ -62,6 +62,7 @@ function App() {
                 <Route path="/manage/Feedback/:id" element={<FeedbackList />} />
                 <Route path="/manage/Feedback" element={<FeedbackList />} />
                 <Route path="feedback/:id" element={<FeedbackProduct />} />
+                <Route path="/expert" element={<ExpertPage />} />
             </Routes>
         </div>
     );
