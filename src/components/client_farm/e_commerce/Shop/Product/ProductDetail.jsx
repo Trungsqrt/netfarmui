@@ -4,12 +4,25 @@ import productAPI from '../../../../../apis/productAPI';
 import Product from './Product';
 import Header from '../../../share/header/Header';
 import axios from 'axios';
+import _ from 'lodash';
 
 function ProductDetail(props) {
-    const [detail, setDetail] = useState();
-
     //id params cho từng sản phẩm
     const { id } = useParams();
+
+    // phần này dể lấy feedback
+    const feedbackUrl = 'https://localhost:44303/api/Feedbacks';
+    const [feedbacks, setFeedbacks] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(feedbackUrl);
+            const filter = response.data.filter((item) => item['productId'] === Number(id));
+            setFeedbacks(filter);
+            console.log(filter);
+        };
+        fetchData();
+    }, []);
+    const [detail, setDetail] = useState();
 
     //Phần này là để thay đổi số lượng khi mua sản phẩm
     const [text, setText] = useState(1);
@@ -20,6 +33,7 @@ function ProductDetail(props) {
     // tăng lên 1 đơn vị
     const upText = () => {
         const value = parseInt(text) + 1;
+        if (value > Number(detail.inventoryNumber)) return;
         setText(value);
     };
 
@@ -56,6 +70,7 @@ function ProductDetail(props) {
                 const filter = data.filter((item) => item['userId'] === userId);
                 const filter2 = filter.filter((item) => item['productId'] === Number(id));
                 setCarts(filter2);
+                console.log('carts', filter2);
             }
         };
         fetchData();
@@ -65,6 +80,7 @@ function ProductDetail(props) {
         if (user == null) navigate('/login');
         else {
             const userId = user.userId;
+            console.log(carts);
             if (carts.length !== 0) {
                 UpdateProductToCart(userId, carts[0]);
             } else {
@@ -111,7 +127,7 @@ function ProductDetail(props) {
         const fetchData = async () => {
             const response = await productAPI.getAPI();
 
-            const data = response.data.splice(0, 3);
+            const data = response.data.splice(0, 4);
             setProducts(data);
         };
 
@@ -146,7 +162,7 @@ function ProductDetail(props) {
             <Header></Header>
             <div className="productDetail_wrapper">
                 {detail && (
-                    <div className="detail_wrapper">
+                    <div className="detail_wrapper" key={id}>
                         <div className="section_title">Thông tin sản phẩm</div>
                         <div className="product_detail">
                             <div className="product_detail_img">
@@ -181,15 +197,24 @@ function ProductDetail(props) {
                                 <h1 className="product_detail_name">{detail.name}</h1>
                                 <div className="product_detail_price">{detail.price} đ</div>
                                 <div className="product_detail_description">{detail.description} </div>
+                                <div className="product_detail_description">Nơi sản xuất: {detail.placeProduce} </div>
+                                <div className="product_detail_description">Đơn vị tính: {detail.unit} </div>
+                                <div className="product_detail_description">
+                                    Số lượng hàng có sẵn: {detail.inventoryNumber}{' '}
+                                </div>
                                 <div className="quantity_row">
                                     <span className="quantity_text">Số lượng</span>
                                     <div className="quantity">
-                                        <button className="dec-btn p-0" style={{ cursor: 'pointer' }}>
-                                            <i className="fas fa-caret-left" onClick={downText}></i>
+                                        <button
+                                            className="dec-btn p-0"
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={downText}
+                                        >
+                                            <i className="fas fa-caret-left"></i>
                                         </button>
                                         <input className="" type="text" value={text} onChange={onChangeText} />
-                                        <button className="inc-btn p-0" style={{ cursor: 'pointer' }}>
-                                            <i className="fas fa-caret-right" onClick={upText}></i>
+                                        <button className="inc-btn p-0" style={{ cursor: 'pointer' }} onClick={upText}>
+                                            <i className="fas fa-caret-right"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -209,37 +234,27 @@ function ProductDetail(props) {
                         </div>
                         <div className="review_feedback">
                             <div className="section_title">Phản hồi của khách hàng</div>
-                            <div className="feedback_row">
-                                <div className="feedback_detail">
-                                    <div className="feedback_detail_header">
-                                        <div className="feedback_user">ABC</div>
-                                        <div className="feedback_start">
-                                            <ul className="list-inline mb-2">
-                                                <li className="list-inline-item m-0">
-                                                    <i className="fas fa-star small text-warning"></i>
-                                                </li>
-                                                <li className="list-inline-item m-0">
-                                                    <i className="fas fa-star small text-warning"></i>
-                                                </li>
-                                                <li className="list-inline-item m-0">
-                                                    <i className="fas fa-star small text-warning"></i>
-                                                </li>
-                                                <li className="list-inline-item m-0">
-                                                    <i className="fas fa-star small text-warning"></i>
-                                                </li>
-                                                <li className="list-inline-item m-0">
-                                                    <i className="fas fa-star small text-warning"></i>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="feedback_content">
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem error
-                                        dignissimos nesciunt veritatis dolore iste, porro ex cupiditate officia unde ut
-                                        dolor odit? Nemo molestiae maiores, voluptates ratione odio quibusdam!
-                                    </div>
-                                </div>
-                            </div>
+                            {feedbacks
+                                ? feedbacks.map((feedback, index) => (
+                                      <div className="feedback_row" key={index}>
+                                          <div className="feedback_detail">
+                                              <div className="feedback_detail_header">
+                                                  <div className="feedback_user">{feedback.userName}</div>
+                                                  <div className="feedback_start">
+                                                      <ul className="list-inline mb-2">
+                                                          {_.times(feedback.star, (i) => (
+                                                              <li className="list-inline-item m-0 " key={i}>
+                                                                  <i className="fas fa-star small text-warning"></i>
+                                                              </li>
+                                                          ))}
+                                                      </ul>
+                                                  </div>
+                                              </div>
+                                              <div className="feedback_content">{feedback.contents}</div>
+                                          </div>
+                                      </div>
+                                  ))
+                                : ''}
                         </div>
                         <div className="related_product">
                             <div className="section_title">Có thể bạn quan tâm</div>

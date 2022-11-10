@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../share/header/Header';
 import { useNavigate } from 'react-router-dom';
-
+import { productAPI } from '../../../../apis';
 const Cart = () => {
     localStorage.removeItem('checklist');
     const user = JSON.parse(localStorage.getItem('user'));
@@ -25,15 +25,22 @@ const Cart = () => {
     function handlerChangeText() {}
     function handlerUp(getCart) {
         const count = getCart.quantity;
-        getCart.quantity = count + 1;
-        console.log(getCart);
-        // carts.quantity = Number(getQuantity) + 1;
-        try {
-            axios.put(`${cartUrl}/${getCart.id}`, getCart);
-            window.location.reload();
-        } catch (err) {
-            alert('Có lỗi, xin vui lòng thử lại!');
-        }
+        const fetchData = async () => {
+            const product = await productAPI.getDetail(getCart.productId);
+            console.log(product.data);
+            if (count + 1 > product.data.inventoryNumber) return;
+            else {
+                getCart.quantity = count + 1;
+                console.log(getCart);
+                try {
+                    axios.put(`${cartUrl}/${getCart.id}`, getCart);
+                } catch (err) {
+                    alert('Có lỗi, xin vui lòng thử lại!');
+                }
+                window.location.reload();
+            }
+        };
+        fetchData();
     }
 
     function handlerDown(getCart) {

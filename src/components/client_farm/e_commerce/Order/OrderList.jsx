@@ -18,16 +18,78 @@ const OrderList = () => {
         fetchData();
     }, []);
 
+    function HanderFilter(value) {
+        console.log(value);
+        if (value === 'all') window.location.reload();
+        if (value === 'choxacnhan') {
+            const fetchData = async () => {
+                const response = await axios.get(orderURL);
+                const data = response.data;
+                const filter = data.filter((item) => item['userId'] === userId && !item[`status`] && !item[`cancel`]);
+                setOrders(filter);
+            };
+            fetchData();
+        } else if (value === 'daxacnhan') {
+            const fetchData = async () => {
+                const response = await axios.get(orderURL);
+                const data = response.data;
+                const filter = data.filter(
+                    (item) => item['userId'] === userId && item[`status`] && !item[`cancel`] && !item[`delivery`],
+                );
+                setOrders(filter);
+            };
+            fetchData();
+        } else if (value === 'danggiao') {
+            const fetchData = async () => {
+                const response = await axios.get(orderURL);
+                const data = response.data;
+                const filter = data.filter((item) => item['userId'] === userId && item[`delivery`] && !item[`finish`]);
+                setOrders(filter);
+            };
+            fetchData();
+        } else if (value === 'dagiao') {
+            const fetchData = async () => {
+                const response = await axios.get(orderURL);
+                const data = response.data;
+                const filter = data.filter((item) => item['userId'] === userId && item[`finish`]);
+                setOrders(filter);
+            };
+            fetchData();
+        } else if (value === 'dahuy') {
+            const fetchData = async () => {
+                const response = await axios.get(orderURL);
+                const data = response.data;
+                const filter = data.filter((item) => item['userId'] === userId && item[`cancel`]);
+                setOrders(filter);
+            };
+            fetchData();
+        }
+    }
+
     return (
         <div>
             <Header />
             <div className="orderList_container">
                 <div className="OrderList_category">
                     <ul className="OrderList_type">
-                        <li className="OrderList_item">Tất cả</li>
-                        <li className="OrderList_item">Đã xác nhận</li>
-                        <li className="OrderList_item">Đang giao</li>
-                        <li className="OrderList_item">Đã giao</li>
+                        <li className="OrderList_item" onClick={() => HanderFilter('all')} value="all">
+                            Tất cả
+                        </li>
+                        <li className="OrderList_item" onClick={() => HanderFilter('choxacnhan')} value="status">
+                            Chờ xác nhận
+                        </li>
+                        <li className="OrderList_item" onClick={() => HanderFilter('daxacnhan')} value="delivery">
+                            Đã xác nhận
+                        </li>
+                        <li className="OrderList_item" onClick={() => HanderFilter('danggiao')} value="finish">
+                            Đang giao
+                        </li>
+                        <li className="OrderList_item" onClick={() => HanderFilter('dagiao')} value="finish">
+                            Đã giao
+                        </li>
+                        <li className="OrderList_item" onClick={() => HanderFilter('dahuy')} value="cancel">
+                            Đã hủy
+                        </li>
                     </ul>
                 </div>
                 <div className="OrderList">

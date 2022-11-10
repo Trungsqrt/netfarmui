@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import '../../css/style.css';
 function Product(props) {
-    const { product } = props;
+    const { product, index } = props;
     return (
-        <div className="product_item">
+        <div className="product_item" key={index}>
             <div className="product_box">
                 <div className="product_yt">Yêu thích</div>
                 <Link className="link_product" to={`product/detail/${product.id}`}>
@@ -32,11 +32,11 @@ function Product(props) {
                         </li>
                     </ul>
                     <div className="list-inline">
-                        <i class="fa-solid fa-location-dot product_location_icon"></i>
+                        <i className="fa-solid fa-location-dot product_location_icon"></i>
                         <div className="product_location">{product.placeProduce}</div>
                     </div>
                 </div>
-                <button className="Add_btn">Xem thêm</button>
+                {/* <button className="Add_btn">Xem thêm</button> */}
             </div>
         </div>
     );

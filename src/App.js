@@ -21,6 +21,11 @@ import AddProduct from './components/admin_farm/ManageProduct/AddProduct';
 import EditProduct from './components/admin_farm/ManageProduct/EditProduct';
 import Checkout from './components/client_farm/e_commerce/Checkout/Checkout';
 import OrderList from './components/client_farm/e_commerce/Order/OrderList';
+import AddCategory from './components/admin_farm/ManageProduct/ManageCategory/AddCategory';
+import EditCategory from './components/admin_farm/ManageProduct/ManageCategory/EditCategory';
+import Order from './components/admin_farm/ManageProduct/ManageOrder/Order';
+import FeedbackList from './components/client_farm/e_commerce/Feedback/FeedbackList';
+import FeedbackProduct from './components/client_farm/e_commerce/Feedback/FeedbackProduct';
 function App() {
     return (
         <div className="App">
@@ -47,6 +52,12 @@ function App() {
                 <Route path="/product/edit/:id" element={<EditProduct />} />
                 <Route path="/shop/checkout" element={<Checkout />} />
                 <Route path="/shop/orderlist" element={<OrderList />} />
+                <Route path="/manageProduct/addNewCategory" element={<AddCategory />} />
+                <Route path="/category/edit/:id" element={<EditCategory />} />
+                <Route path="/manage/OrderDetail/:id" element={<Order />} />
+                <Route path="/manage/Feedback/:id" element={<FeedbackList />} />
+                <Route path="/manage/Feedback" element={<FeedbackList />} />
+                <Route path="feedback/:id" element={<FeedbackProduct />} />
             </Routes>
         </div>
     );
