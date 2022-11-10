@@ -49,7 +49,7 @@ function ArticleHandler() {
                 id: idArticle,
                 title: title,
                 aCategoryName: category,
-                status: isPublic,
+                status: Boolean(isPublic),
                 content: editorRef.current.getContent(),
                 cmtStatus: true,
                 datePost: new Date().toISOString(),
@@ -60,7 +60,7 @@ function ArticleHandler() {
             postNew = {
                 title: title,
                 aCategoryName: category,
-                status: isPublic,
+                status: Boolean(isPublic),
                 content: editorRef.current.getContent(),
                 cmtStatus: true,
                 datePost: new Date().toISOString(),
@@ -121,11 +121,11 @@ function ArticleHandler() {
                                 name="category"
                                 id="category"
                                 className={styles.combobox}
-                                onChange={(e) => setIsPublic(Boolean(e.target.value))}
+                                onChange={(e) => setIsPublic(e.target.value)}
                                 value={isPublic}
                             >
                                 <option value="1">Công khai</option>
-                                <option value="0">Không</option>
+                                <option value="">Thông báo</option>
                             </select>
                         </div>
                     </div>

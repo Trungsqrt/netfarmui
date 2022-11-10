@@ -1,7 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './NotificationDetail.module.css';
+import axios from 'axios';
 
 function NotificationDetail() {
+    const [isSigned, SetIsSigned] = useState(false);
+    const [notification, setNotification] = useState([]);
+    const nagivate = useNavigate();
+    function truncate(str, n) {
+        return str.length > n ? str.slice(0, n - 1) + '...' : str;
+    }
+
+    function getText(html) {
+        var divContainer = document.createElement('div');
+        divContainer.innerHTML = html;
+        return divContainer.textContent || divContainer.innerText || '';
+    }
+
+    useEffect(() => {
+        if (localStorage.getItem('user')) {
+            SetIsSigned(true);
+            (async function () {
+                const res = await axios.get('https://localhost:44303/api/Article');
+                const response = res.data;
+                let comments = [];
+                let newArray = [];
+                response.forEach((item) => {
+                    if (item.status === false) {
+                        comments.push(item);
+                    }
+                });
+                if (comments.length >= 5) {
+                    const arrayFilterYet = [...comments];
+                    const arrayFiltered = [];
+                    let amountOfLeftComment = 1;
+                    while (amountOfLeftComment <= 5) {
+                        arrayFiltered.push(arrayFilterYet.at(amountOfLeftComment * -1));
+                        ++amountOfLeftComment;
+                    }
+                    newArray = [...arrayFiltered];
+                    setNotification(newArray);
+                } else {
+                    setNotification(comments);
+                }
+            })();
+        } else {
+            SetIsSigned(false);
+        }
+    }, []);
+
     return (
         <div className={styles.notificationContainer}>
             <section>
@@ -16,56 +64,37 @@ function NotificationDetail() {
                     Thông báo
                 </h3>
                 <section className={styles.itemContainer}>
-                    <section className={styles.itemWrap}>
-                        <section className={`${styles.item} ${styles.nonRead}`}>
-                            <p>
-                                <i>Nguyễn Văn A</i> đã trả lời bình luận của bạn trong bài viết{' '}
-                                <strong>Cây trồng vào mùa xuân</strong>
-                            </p>
+                    {isSigned && (
+                        <section>
+                            <section className={styles.itemWrap}>
+                                {notification?.map((i, index) => (
+                                    <section
+                                        className={`${styles.item}`}
+                                        key={index}
+                                        onClick={() => {
+                                            nagivate(`/detail/${i.id}`);
+                                        }}
+                                    >
+                                        {/* ${styles.nonRead} */}
+                                        <section className={styles.imageS}>
+                                            <img src={i.imageURL} className={styles.imageSection}></img>
+                                        </section>
+                                        <p className={styles.contentSection}>
+                                            <section className={styles.notificationTitle}>
+                                                <strong>{truncate(i.title, 30)}</strong>
+                                            </section>
+                                            <section className={styles.notificationContent}>
+                                                {getText(truncate(i.content, 30))}
+                                            </section>
+                                        </p>
+                                    </section>
+                                ))}
+                            </section>
                         </section>
-                    </section>
-                    <section className={`styles.itemWrap`}>
-                        <section className={`${styles.item}`}>
-                            <p>
-                                Phan Văn B đã trả lời bình luận của bạn trong bài viết{' '}
-                                <strong>Cây trồng vào mùa hạ</strong>
-                            </p>
-                        </section>
-                    </section>
-                    <section className={styles.itemWrap}>
-                        <section className={`${styles.item}`}>
-                            <p>
-                                Đỗ Thành C đã trả lời bình luận của bạn trong bài viết{' '}
-                                <strong>Cây trồng vào mùa thu</strong>
-                            </p>
-                        </section>
-                    </section>
-                    <section className={styles.itemWrap}>
-                        <section className={`${styles.item}`}>
-                            <p>
-                                Đoàn Văn D đã trả lời bình luận của bạn trong bài viết{' '}
-                                <strong>Cây trồng vào mùa đông</strong>
-                            </p>
-                        </section>
-                    </section>
-                    <section className={styles.itemWrap}>
-                        <section className={`${styles.item}`}>
-                            <p>
-                                Lê Văn E đã trả lời bình luận của bạn trong bài viết <strong>Cây trồng bốn mùa</strong>
-                            </p>
-                        </section>
-                    </section>
-                    <section className={styles.more}>
-                        <p
-                            style={{
-                                fontWeight: 'bold',
-                                textAlign: 'center',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Xem thêm
-                        </p>
-                    </section>
+                    )}
+                    {!isSigned && (
+                        <h3 style={{ fontSize: '15px', textAlign: 'center', color: 'red' }}>Vui lòng đăng nhập!</h3>
+                    )}
                 </section>
             </section>
         </div>

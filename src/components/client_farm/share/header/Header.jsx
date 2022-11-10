@@ -133,7 +133,7 @@ const Header = () => {
                             <button
                                 className="button-setting"
                                 onClick={showNotificationHandler}
-                                onBlur={hideNotificationHandler}
+                                // onBlur={hideNotificationHandler}
                             >
                                 <i className="fa-solid fa-bell settings"></i>
                             </button>
