@@ -27,7 +27,7 @@
 }
 
 .shop_content {
-    display: flex;
+    /* display: flex; */
 }
 
 /* ccs product */
@@ -47,20 +47,22 @@
 
 .link_product {
     text-decoration: none;
-    width: 33.33%;
+    width: 24%;
 }
 
 .product_box {
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 3px;
-    position: relative;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .product_start {
     display: flex;
-    justify-content: space-between;
-    padding: 4px 4px;
+    justify-content: space-around;
+    padding: 4px 2px;
+    height: 40px;
 }
 
 .product_location_icon {
@@ -71,6 +73,8 @@
 .product_location {
     font-size: 16px;
     color: #222;
+    box-sizing: border-box;
+    text-align: left;
 }
 
 .list-inline-start {
@@ -92,7 +96,7 @@
 
 .product_name {
     width: 100%;
-    height: 24px;
+    min-height: 24px;
     font-size: 18px;
     line-height: 24px;
     font-weight: 400;
@@ -111,6 +115,7 @@
 }
 
 .Add_btn {
+    position: absolute;
     width: 100%;
     height: 36px;
     font-size: 16px;
@@ -119,6 +124,7 @@
     background-color: #222;
     color: #fff;
     margin-top: 5px;
+    bottom: 10px;
 }
 
 .Add_btn:hover {
@@ -139,23 +145,32 @@
 .list_product {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .product_item {
-    width: 33.33%;
-    padding: 10px;
+    position: relative;
+    width: 23%;
+    padding: 10px 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px #343a40;
+    margin: 10px 10px;
+    border: 1px solid #ccc;
 }
 
 /* css category */
 .product_category {
-    width: 300px;
-    padding: 0 10px;
+    width: 100%;
+    margin: 50px 0;
+    display: flex;
 }
 
 .product_category_list {
-    text-decoration: none;
-    text-align: center;
-    justify-content: center;
+    display: flex;
+    margin: 0 auto;
+    padding: 0 10px;
+    width: 100%;
+    justify-content: space-around;
 }
 
 .first_title {
@@ -164,13 +179,29 @@
 }
 .product_category_item {
     width: 100%;
-    min-height: 40px;
+    height: 200px;
     font-size: 20px;
     text-transform: uppercase;
     line-height: 40px;
-    text-align: left;
-    color: #444;
-    background-color: #f8f9fa;
+    color: rgba(155, 22, 22, 0.894);
+    background-color: #fff;
+    border: 2px solid goldenrod;
+    box-shadow: 5px 5px 10px gold;
+    text-align: center;
+    padding: 20px 0;
+    margin: 0 20px;
+}
+
+.product_category_title {
+    padding: 0 4px;
+    cursor: pointer;
+}
+
+.product_category_img {
+    display: flex;
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
 }
 
 .product_category_detail {
@@ -224,7 +255,7 @@
 .list-inline-item {
     width: 16px;
     margin: 2px;
-    color: rgb(251, 248, 71);
+    color: rgb(244, 241, 56);
 }
 
 .product_detail_name {
@@ -501,10 +532,15 @@
 }
 
 .OrderList_item {
-    height: 60px;
+    height: 100px;
     font-size: 24px;
     line-height: 60px;
     text-align: center;
+}
+
+.OrderList_item:hover {
+    opacity: 0.8;
+    cursor: pointer;
 }
 
 .order_container {
@@ -583,7 +619,7 @@
 
 .order_start {
     font-size: 36px;
-    color: rgb(235, 235, 28);
+    color: rgb(255, 255, 40);
 }
 
 .order_price {
@@ -606,13 +642,212 @@
 }
 
 .order_btn {
-    width: 150px;
+    min-width: 150px;
     background-color: green;
     color: #fff;
     font-size: 18px;
     padding: 10px 6px;
+    margin: 0 4px;
 }
 
 .order_total {
     text-align: center;
+}
+
+.feedback_row {
+    border: 1px solid #222;
+    margin: 2px 0;
+}
+
+.hiden_btn {
+    display: none;
+}
+
+/* feedback */
+
+.feedback_container {
+    width: 100%;
+    padding: 10px;
+    box-shadow: 4px 4px 6px #777;
+    margin: 20px 0;
+}
+
+.feedbackrow {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    margin: 1px 0;
+    padding: 10px;
+}
+
+.inline_list {
+    display: flex;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.header_item {
+    padding: 4px 4px;
+    font-size: 14px;
+    border: 1px solid goldenrod;
+    margin: 6px 8px;
+    vertical-align: middle;
+    height: 24px;
+    line-height: 16px;
+    border-radius: 4px;
+}
+
+.text-br {
+    text-align: center;
+    color: #fff;
+    background-color: #008000;
+}
+
+.feedback_header {
+}
+
+.feedback_product {
+}
+
+.feedback_product_img {
+    width: 10%;
+    margin: 10px 0px 10px 30px;
+    border: 1px solid #ccc;
+    max-width: 70px;
+}
+
+.feedback_product_content {
+    width: 80%;
+    margin: 10px 10px;
+}
+
+.feedback_product_name {
+    font-size: 18px;
+    color: #000;
+    line-height: 20px;
+}
+
+.feedback_product_quantity {
+    font-size: 16px;
+    color: #343a40;
+    line-height: 20px;
+}
+
+.feedback_product_price {
+    font-size: 22px;
+    color: #008000;
+    padding: 10px 10px;
+    font-weight: 400;
+    text-align: justify;
+}
+
+.feedback_product_footer {
+    border: 1px solid #ccc;
+    text-align: right;
+    padding: 10px;
+}
+
+.feedback_product_total {
+    font-size: 22px;
+    color: blue;
+    font-weight: 500;
+    height: 40px;
+    line-height: 40px;
+}
+
+.feedback_btn_row {
+    height: 40px;
+}
+
+.btn {
+    width: 120px;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #008000;
+    color: #fff;
+    border: 1px solid #ccc;
+    margin: 0 2px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 6px #777;
+}
+
+/* feedback list */
+.feedList_container {
+    margin: 10px 80px;
+}
+
+.container {
+    width: 100%;
+    margin: 20px 80px;
+}
+
+.feedback_wrapper {
+    width: 80%;
+    margin: 0 auto;
+    box-shadow: 4px 4px 5px #777;
+}
+
+.feedback_title {
+    font-size: 24px;
+    color: #000;
+    font-weight: 400;
+}
+
+.feedback_text {
+    font-size: 20px;
+}
+
+.list-inline-start-big {
+    font-size: 22px;
+    color: rgb(246, 246, 9);
+    margin: 4px;
+}
+
+.feedback_content {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.btn_right {
+    text-align: end;
+    padding: 10px 10px;
+    border: 1px solid #ccc;
+}
+
+.btn_white {
+    width: 120px;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    margin: 0 2px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 6px #777;
+}
+
+.list-star {
+    width: 50%;
+}
+
+.star_quantity {
+    width: 30%;
+    display: flex;
+    height: 30px;
+}
+
+.star {
+    width: 40%;
+    margin: 0 20px;
+    display: flex;
+}
+
+.star_text {
+    width: 30%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+    color: #eda500;
+    font-weight: 500;
 }

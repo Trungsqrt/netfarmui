@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import productAPI from '../../../apis/productAPI';
 import axios from 'axios';
 import '../css/style.css';
+import Order from './ManageOrder/Order';
 const ManageProduct = () => {
     const categoryUrl = 'https://localhost:44303/api/Categories';
     const orderUrl = 'https://localhost:44303/api/Order';
@@ -11,22 +12,31 @@ const ManageProduct = () => {
     const [data, setData] = useState([]);
     const [render, setRender] = useState(1);
     const [products, setProducts] = useState([]);
-
-    console.log('loadPage');
+    const [text, setText] = useState('Xác nhận đơn hàng');
+    const currentTab = localStorage.getItem('currentTab');
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await productAPI.getAPI();
-            const dataset = response.data;
-            setProducts(dataset);
-            setData(dataset);
-        };
-        fetchData();
+        if (currentTab) {
+            if (Number(currentTab) === 3) {
+                OrderHandler();
+            } else if (Number(currentTab) === 2) {
+                CategoryHandler();
+            }
+            setRender(currentTab);
+        } else {
+            const fetchData = async () => {
+                const response = await productAPI.getAPI();
+                const dataset = response.data;
+                setProducts(dataset);
+                setData(dataset);
+            };
+            fetchData();
+        }
     }, []);
-    console.log(render);
     // phần này lấy dữ liệu về sản phẩm
 
     const ProductHandler = () => {
         setRender(1);
+        localStorage.setItem('currentTab', 1);
         const fetchData = async () => {
             setData([]);
             const response = await productAPI.getAPI();
@@ -49,6 +59,7 @@ const ManageProduct = () => {
     // Phần này lấy dữ liệu cho category
     const CategoryHandler = () => {
         setRender(2);
+        localStorage.setItem('currentTab', 2);
         const fetchData = async () => {
             setData([]);
             const response = await axios.get(categoryUrl);
@@ -62,6 +73,7 @@ const ManageProduct = () => {
     const handleDeleteCategory = (index) => {
         async function deleteHandler() {
             await axios.delete(`${categoryUrl}/${index}`);
+            CategoryHandler();
         }
         deleteHandler();
     };
@@ -76,6 +88,41 @@ const ManageProduct = () => {
         };
         fetchData();
     };
+
+    function handleApproveOrder(e) {
+        const orderId = e.target.name;
+        const fetchData = async () => {
+            const response = await axios.get(orderUrl);
+            const dataset = response.data;
+            const filter = dataset.filter((item) => item['id'] === orderId);
+            const order = filter[0];
+            order.status = true;
+            try {
+                const putUrl = `${orderUrl}/${orderId}`;
+                axios.put(putUrl, order);
+                localStorage.setItem('currentTab', 3);
+                window.location.reload();
+                OrderHandler();
+            } catch (err) {
+                alert('Có lỗi, xin vui lòng thử lại!');
+            }
+        };
+        fetchData();
+        // window.location.reload();
+    }
+
+    function handlerDetaiOrder(e) {
+        const orderId = e.target.value;
+        setRender(4);
+        const fetchData = async () => {
+            setData([]);
+            const response = await axios.get(orderUrl);
+            const dataset = response.data;
+            const filter = dataset.filter((item) => item['id'] === orderId);
+            setData(filter);
+        };
+        fetchData();
+    }
 
     return (
         <div>
@@ -148,7 +195,7 @@ const ManageProduct = () => {
                                 <tbody>
                                     {data
                                         ? data.map((product, index) => (
-                                              <tr className="text_center">
+                                              <tr className="text_center" key={index}>
                                                   <td className="text_center">{product.id}</td>
                                                   <td className="text_center">{product.name}</td>
                                                   <td className="text_center">{product.category_ID}</td>
@@ -181,12 +228,12 @@ const ManageProduct = () => {
                     )}
                     {render == 2 && (
                         <section>
-                            <Link to="admin/addNewProduct" className="add_new_product_link">
+                            <Link to="/manageProduct/addNewCategory" className="add_new_product_link">
                                 <div className="add_new_product">
-                                    <a className="reset-anchor add_icon" style={{ cursor: 'pointer' }}>
+                                    <p className="reset-anchor add_icon" style={{ cursor: 'pointer' }}>
                                         <i className="fa-solid fa-plus"></i>
-                                    </a>
-                                    Thêm mặt hàng mới
+                                    </p>
+                                    Thêm danh mục mới
                                 </div>
                             </Link>
                             <table className="products_table">
@@ -212,7 +259,7 @@ const ManageProduct = () => {
                                 <tbody>
                                     {data
                                         ? data.map((item, index) => (
-                                              <tr className="text_center">
+                                              <tr className="text_center" key={index}>
                                                   <td className="text_center">{item.categoryId}</td>
                                                   <td className="text_center">{item.display}</td>
                                                   <td className="text_center">{item.categorySlug}</td>
@@ -227,9 +274,9 @@ const ManageProduct = () => {
                                                   </td>
                                                   <td className="text_center">
                                                       <Link to={`/category/edit/${item.categoryId}`}>
-                                                          <a className="reset-anchor " style={{ cursor: 'pointer' }}>
+                                                          <p className="reset-anchor " style={{ cursor: 'pointer' }}>
                                                               <i className="fa-solid fa-pen-to-square"></i>
-                                                          </a>
+                                                          </p>
                                                       </Link>
                                                   </td>
                                               </tr>
@@ -270,17 +317,21 @@ const ManageProduct = () => {
                                 <tbody>
                                     {data
                                         ? data.map((item, index) => (
-                                              <tr className="text_center">
+                                              <tr className="text_center" key={index}>
                                                   <td className="text_center">{item.id}</td>
                                                   <td className="text_center">{item.name}</td>
                                                   <td className="text_center">{item.address}</td>
                                                   <td className="text_center">{item.phone}</td>
                                                   <td className="text_center">{item.total}</td>
                                                   <td className="text_center">
-                                                      <button>Chi tiết đơn hàng</button>
+                                                      <Link to={`/manage/OrderDetail/${item.id}`}>
+                                                          <button value={item.id}>Chi tiết đơn hàng</button>
+                                                      </Link>
                                                   </td>
                                                   <td className="text_center">
-                                                      <button>Xác nhận đơn hàng</button>
+                                                      <button onClick={handleApproveOrder} value={text} name={item.id}>
+                                                          {item.status ? 'Đã xác nhận' : 'Xác nhận đơn hàng'}
+                                                      </button>
                                                   </td>
                                               </tr>
                                           ))
@@ -289,6 +340,12 @@ const ManageProduct = () => {
                             </table>
                         </section>
                     )}
+                    {render == 4 &&
+                        (data
+                            ? data.map((item, index) => (
+                                  <Order order={item} key={item.id} update={item.id} number={index}></Order>
+                              ))
+                            : '')}
                 </div>
             </div>
         </div>

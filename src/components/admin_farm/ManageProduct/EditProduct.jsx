@@ -6,10 +6,19 @@ import productAPI from '../../../apis/productAPI';
 import axios from 'axios';
 import '../css/style.css';
 const url = 'https://localhost:44303/api/Products';
+const categoryUrl = 'https://localhost:44303/api/Categories';
 
 function EditProduct(props) {
     const [detail, setDetail] = useState({});
     const { id } = useParams();
+    const [catList, setCatList] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(categoryUrl);
+            setCatList(response.data);
+        };
+        fetchData();
+    }, []);
     useEffect(() => {
         const fetchData = async () => {
             const response = await productAPI.getDetail(id);
@@ -18,40 +27,14 @@ function EditProduct(props) {
         };
         fetchData();
     }, [id]);
-    // console.log('initialValue', initialValue);
-    console.log(detail.name);
-    const initialValue = {
-        name: '',
-        image1: '',
-        image2: '',
-        image3: '',
-        image4: '',
-        unit: '',
-        placeProduce: '',
-        price: 0,
-        discount: 0,
-        inventoryNumber: '',
-        description: '',
-        category_ID: 0,
-    };
-    console.log(detail);
-    // const [formValues, setFormValues] = useState(initialValue);
-    // console.log('vdsd', formValues);
 
     const handleChange = (e) => {
         const { value, name } = e.target;
+        console.log(e.target.name);
+        console.log(e.target.value);
         setDetail({ ...detail, [name]: value });
     };
-    // const [category, setCategory] = useState();
-    // const [name, setName] = useState();
-    // const [price, setPrice] = useState();
-    // const [unit, setUnit] = useState('');
-    // const [placeProduce, setPlaceProduce] = useState('');
-    // const [invetory, setInventory] = useState('');
-    // const [imgUrl1, setimgUrl1] = useState('');
-    // const [imgUrl2, setimgUrl2] = useState('');
-    // const [imgUrl3, setimgUrl3] = useState('');
-    // const [imgUrl4, setimgUrl4] = useState('');
+
     const onClickHandler = () => {
         try {
             console.log('test', detail);
@@ -63,6 +46,7 @@ function EditProduct(props) {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
     };
+
     return (
         <div>
             <Header></Header>
@@ -89,12 +73,15 @@ function EditProduct(props) {
                                 className={'combobox'}
                                 onChange={handleChange}
                                 name="category_ID"
-                                defaultValue={detail.category_ID}
+                                value={detail.category_ID}
                             >
-                                <option value="1">Phân bón</option>
-                                <option value="2">Hạt giống</option>
-                                <option value="3">Cây giống</option>
-                                <option value="4">Thức ăn</option>
+                                {catList
+                                    ? catList.map((cat, index) => (
+                                          <option value={cat.categoryId} key={index}>
+                                              {cat.display}
+                                          </option>
+                                      ))
+                                    : ''}
                             </select>
                         </div>
                     </li>

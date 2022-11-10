@@ -166,3 +166,148 @@
     margin-left: -30px;
     margin-bottom: -30px;
 }
+
+/* Order css */
+.order_detail {
+    display: flex;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.orderList_container {
+    margin: 20px 80px;
+}
+
+.OrderList_category {
+    width: 100%;
+    background-color: #ccc;
+    height: 60px;
+}
+
+.OrderList_type {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.OrderList_item {
+    height: 60px;
+    font-size: 24px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.order_container {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #fff;
+    box-shadow: 2px 3px 7px 2px #ccc;
+}
+
+.order_header {
+    display: flex;
+    margin-bottom: 1px;
+    height: 40px;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+    font-size: 20px;
+    color: #000;
+}
+
+.order_item {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+    border-bottom: 0.1px solid lightgray;
+}
+
+.order_content {
+    width: 80%;
+    font-size: 16px;
+    color: #000;
+    padding-left: 20px;
+    align-items: center;
+    margin: auto 0;
+}
+
+.order_img {
+    width: 10%;
+    border: 1px solid rgb(163, 159, 159);
+}
+
+.order_name {
+    font-size: 18px;
+    line-height: 20px;
+    color: #000;
+}
+
+.order_category {
+    font-size: 16px;
+    color: #777;
+    line-height: 20px;
+}
+
+.order_quantity {
+    font-size: 16px;
+    line-height: 20px;
+    color: #000;
+}
+
+.order_itemprice {
+    font-size: 16px;
+    line-height: 16px;
+    margin: auto 0;
+    color: green;
+    font-weight: 400;
+}
+
+.order_footer {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+}
+
+.order_start {
+    font-size: 36px;
+    color: rgb(235, 235, 28);
+}
+
+.order_price {
+    display: flex;
+}
+
+.order_price_text {
+    font-size: 18px;
+    padding: 10px 10px;
+    color: #000;
+    line-height: 40px;
+}
+
+.order_price_number {
+    font-size: 24px;
+    padding: 10px 0;
+    color: green;
+    font-weight: 500;
+    line-height: 40px;
+}
+
+.order_btn {
+    min-width: 150px;
+    background-color: green;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 6px;
+}
+
+.order_total {
+    text-align: center;
+}
+
+.hiden_btn {
+    display: none;
+}

@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../share/header/Header';
 import { useNavigate } from 'react-router-dom';
-
+import { productAPI } from '../../../../apis';
 const Checkout = () => {
     const cartUrl = 'https://localhost:44303/api/Carts';
     const orderUrl = 'https://localhost:44303/api/Order';
     const itemUrl = 'https://localhost:44303/api/OrderDetail';
+    const productUrl = 'https://localhost:44303/api/Products';
     const checkList = localStorage.getItem('checklist').split(',');
     const user = JSON.parse(localStorage.getItem('user'));
     const userId = user.userId;
@@ -26,8 +27,6 @@ const Checkout = () => {
             const data = response.data;
             const filter = data.filter((item) => item['userId'] === userId);
             const filter2 = filter.filter((item) => checkList.includes(`${item['id']}`));
-            console.log(filter);
-            console.log(checkList);
             setCart(filter2);
             if (filter2.length !== 0) {
                 var result = 0;
@@ -53,6 +52,10 @@ const Checkout = () => {
             total: total,
             status: false,
             delivery: false,
+            createAt: new Date().toISOString(),
+            finish: false,
+            cancel: false,
+            finishAt: null,
         };
         try {
             axios.post(orderUrl, postOrder);
@@ -65,18 +68,41 @@ const Checkout = () => {
                     price: carts[i].price,
                     image: carts[i].image,
                     productName: carts[i].name,
+                    feedback: false,
                 };
-                console.log(postItem);
-                axios.post(itemUrl, postItem);
-                axios.delete(`${cartUrl}/${carts[i].id}`);
+                try {
+                    axios.post(itemUrl, postItem);
+                    axios.delete(`${cartUrl}/${carts[i].id}`);
+                } catch (err) {
+                    alert('có lỗi');
+                }
             }
-
             alert('Đặt hàng thành công!');
             localStorage.removeItem(checkList);
             navigate('/shop/orderlist');
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
+        for (var i = 0; i < length; i++) {
+            const sl = carts[i].quantity;
+            const id = carts[i].productId;
+            console.log(sl);
+            handlerProduct(sl, id);
+        }
+    }
+    function handlerProduct(sl, id) {
+        const fetchData = async () => {
+            const product = await productAPI.getDetail(id);
+            const oldnum = product.data.inventoryNumber;
+            product.data.inventoryNumber = oldnum - sl;
+            console.log(product.data);
+            try {
+                axios.put(`${productUrl}/${id}`, product.data);
+            } catch (err) {
+                alert('Có lỗi, xin vui lòng thử lại!');
+            }
+        };
+        fetchData();
     }
 
     return (

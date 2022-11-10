@@ -1,11 +1,12 @@
 import React from 'react';
 import Header from '../share/header/Header';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/style.css';
 const url = 'https://localhost:44303/api/Products';
-
+const categoryUrl = 'https://localhost:44303/api/Categories';
 const AddProduct = () => {
+    const [catList, setCatList] = useState([]);
     const [category, setCategory] = useState('1');
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
@@ -17,6 +18,15 @@ const AddProduct = () => {
     const [imgUrl2, setimgUrl2] = useState('');
     const [imgUrl3, setimgUrl3] = useState('');
     const [imgUrl4, setimgUrl4] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(categoryUrl);
+            setCatList(response.data);
+        };
+        fetchData();
+    }, []);
+
     const onClickHandler = () => {
         const postProduct = {
             name: name,
@@ -68,10 +78,14 @@ const AddProduct = () => {
                                 onChange={(e) => setCategory(e.target.value)}
                                 value={category}
                             >
-                                <option value="1">Phân bón</option>
-                                <option value="2">Hạt giống</option>
-                                <option value="3">Cây giống</option>
-                                <option value="4">Thức ăn</option>
+                                {' '}
+                                {catList
+                                    ? catList.map((cat, index) => (
+                                          <option value={cat.categoryId} key={index}>
+                                              {cat.display}
+                                          </option>
+                                      ))
+                                    : ''}
                             </select>
                         </div>
                     </li>
