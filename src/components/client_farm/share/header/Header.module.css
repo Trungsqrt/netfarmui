@@ -132,3 +132,80 @@ ul li a:active {
 .navbarTask_item {
     width: 100%;
 }
+
+.temperature {
+    position: relative;
+    top: -4px;
+}
+
+.calling-info {
+    border: none;
+}
+
+.searchContainer {
+    width: 100%;
+    height: 100px;
+    /* background-color: white; */
+    position: absolute;
+    z-index: 88;
+}
+
+.searchWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.itemList {
+    list-style: none;
+}
+
+.articleItem {
+    display: flex;
+}
+
+.articleImage {
+    width: 10px;
+    height: 10px;
+    object-fit: contain;
+}
+
+.articleTitle {
+    flex: 1;
+}
+
+.itemWrap {
+    width: 100%;
+    height: 100%;
+}
+
+.item {
+    background-color: #ffffff;
+    width: 100%;
+    height: 58px;
+    padding-left: 15px;
+    padding-right: 15px;
+    /* padding-top: 10px; */
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 300px;
+}
+
+.item:hover {
+    cursor: pointer;
+    background-color: #f4f4f4;
+}
+
+.imageSection {
+    height: 40px;
+    width: 40px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.contentSection {
+    margin-top: 5px;
+}

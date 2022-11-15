@@ -18,6 +18,10 @@ const Header = () => {
     const [notification, setNotification] = useState(false);
     const [toolbar, setToolbar] = useState(false);
     const [isLoggin, setIsLoggin] = useState(false);
+    const [searchContent, setSearchContent] = useState('');
+    const [articles, setArticles] = useState([]);
+    const [currentArticles, setCurrentArticles] = useState([]);
+
     let icon;
     useEffect(() => {
         axios.get(url).then((response) => {
@@ -72,6 +76,32 @@ const Header = () => {
         </section>
     );
 
+    useEffect(() => {
+        const getData = async () => {
+            const res = await axios.get('https://localhost:44303/api/Article');
+            const response = res.data;
+            setArticles([...response]);
+        };
+        getData();
+    }, []);
+
+    useEffect(() => {
+        if (searchContent != '') {
+            const resultArray = articles.filter((item) => item.title.includes(searchContent));
+            setCurrentArticles([...resultArray]);
+        } else if (searchContent == '') {
+            setCurrentArticles([]);
+        }
+    }, [searchContent]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
+    function truncate(str, n) {
+        return str.length > n ? str.slice(0, n - 1) + '...' : str;
+    }
+
     return (
         <div style={{ backgroundColor: 'white' }}>
             <div className="container-navbar">
@@ -110,8 +140,16 @@ const Header = () => {
                             <a href="/shop">Mua hàng</a>
                         </li>
                     </ul>
-                    <form className="form-search">
-                        <input type="text" className="search-input" placeholder="Search" name="search"></input>
+                    <form className="form-search" onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            className="search-input"
+                            placeholder="Search"
+                            name="search"
+                            autoComplete="none"
+                            onChange={(e) => setSearchContent(e.target.value)}
+                            value={searchContent}
+                        ></input>
                         <button className="btn-search">
                             <i className="fa-solid fa-magnifying-glass icon-search"></i>
                         </button>
@@ -147,6 +185,30 @@ const Header = () => {
                         )}
                     </div>
                 </nav>
+
+                <div className={styles.searchContainer}>
+                    <section className={styles.itemWrap}>
+                        {currentArticles.map((i, index) => (
+                            <section
+                                className={`${styles.item}`}
+                                key={index}
+                                onClick={() => {
+                                    navigate(`/detail/${i.id}`);
+                                }}
+                            >
+                                {/* ${styles.nonRead} */}
+                                <section className={styles.imageS}>
+                                    <img src={i.imageURL} className={styles.imageSection}></img>
+                                </section>
+                                <p className={styles.contentSection}>
+                                    <section className={styles.notificationTitle}>
+                                        <strong>{truncate(i.title, 30)}</strong>
+                                    </section>
+                                </p>
+                            </section>
+                        ))}
+                    </section>
+                </div>
             </div>
         </div>
     );

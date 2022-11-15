@@ -83,7 +83,7 @@ const InforPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row">lich nong vu ở đây</div>
+                        {/* <div className="row">lich nong vu ở đây</div> */}
                         <div className="row">
                             <div className="section_title">Chính sách</div>
                             <div>

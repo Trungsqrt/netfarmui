@@ -13,6 +13,7 @@ function ExpertPage() {
     const [user, setUser] = useState('');
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
+
     useEffect(() => {
         setUser(currentUser.roleName);
         async function getData() {
@@ -119,7 +120,7 @@ function ExpertPage() {
                                 </ul>
                             </nav>
                             <section className={styles.bodyContainer}>
-                                <form
+                                {/* <form
                                     className="form-search"
                                     style={{
                                         alignSelf: 'end',
@@ -137,69 +138,81 @@ function ExpertPage() {
                                     <button className="btn-search">
                                         <i className="fa-solid fa-magnifying-glass icon-search"></i>
                                     </button>
-                                </form>
+                                </form> */}
                                 <table>
                                     {render == 1 && (
                                         <tbody>
-                                            <i className="fa-solid fa-plus" onClick={handleAddArticle}></i>
-                                            <tr>
-                                                <th className={styles.th1}>Id</th>
-                                                <th className={styles.th1}>Tiêu đề</th>
-                                                <th className={styles.th1}>Ngày đăng</th>
-                                                <th className={styles.th1}>Ngày cập nhật</th>
-                                            </tr>
-                                            {data.map((item) => (
-                                                <tr key={item.id}>
-                                                    <th width="10%">{item.id}</th>
-                                                    <th width="50%">{item.title}</th>
-                                                    <th width="20%">{item.datePost}</th>
-                                                    <th width="20%">{item.dateUpdate}</th>
-                                                    <th
-                                                        style={{ cursor: 'pointer' }}
-                                                        onClick={() => handleDeletePost(item.id)}
-                                                    >
-                                                        &times;
-                                                    </th>
-                                                    <th
-                                                        style={{ cursor: 'pointer' }}
-                                                        onClick={() => handleEditPost(item.id)}
-                                                    >
-                                                        &#128394;&#65039;
-                                                    </th>
+                                            <i
+                                                id={styles.iconAdd}
+                                                className="fa-solid fa-plus"
+                                                onClick={handleAddArticle}
+                                            ></i>
+                                            <section className={styles.tableContent}>
+                                                <tr>
+                                                    <th className={styles.th1}>Id</th>
+                                                    <th className={styles.th1}>Tiêu đề</th>
+                                                    <th className={styles.th1}>Ngày đăng</th>
+                                                    <th className={styles.th1}>Ngày cập nhật</th>
                                                 </tr>
-                                            ))}
+                                                {data.map((item) => (
+                                                    <tr key={item.id}>
+                                                        <th width="10%">{item.id}</th>
+                                                        <th width="50%">{item.title}</th>
+                                                        <th width="20%">{item.datePost}</th>
+                                                        <th width="20%">{item.dateUpdate}</th>
+                                                        <th
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={() => handleDeletePost(item.id)}
+                                                        >
+                                                            &times;
+                                                        </th>
+                                                        <th
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={() => handleEditPost(item.id)}
+                                                        >
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </th>
+                                                    </tr>
+                                                ))}
+                                            </section>
                                         </tbody>
                                     )}
 
                                     {render == 2 && (
                                         <tbody>
-                                            <i className="fa-solid fa-plus" onClick={handleAddSchedule}></i>
-                                            <tr>
-                                                <th className={styles.th1}>Id</th>
-                                                <th className={styles.th1}>Tên</th>
-                                                <th className={styles.th1}>Bắt đầu</th>
-                                                <th className={styles.th1}>Kết thúc</th>
-                                            </tr>
-                                            {data.map((item) => (
-                                                <tr key={item.id}>
-                                                    <th width="10%">{item.id}</th>
-                                                    <th width="50%">{item.name}</th>
-                                                    <th width="20%">{item.dateStart}</th>
-                                                    <th width="20%">{item.dateEnd}</th>
-                                                    <th
-                                                        style={{ cursor: 'pointer' }}
-                                                        onClick={() => handleDeleteSchedule(item.id)}
-                                                    >
-                                                        &times;
-                                                    </th>
-                                                    <th
-                                                        style={{ cursor: 'pointer' }}
-                                                        onClick={() => handleEditSchedule(item.id)}
-                                                    >
-                                                        &#128394;&#65039;
-                                                    </th>
+                                            <i
+                                                id={styles.iconAdd}
+                                                className="fa-solid fa-plus"
+                                                onClick={handleAddSchedule}
+                                            ></i>
+                                            <section className={styles.tableContent}>
+                                                <tr>
+                                                    <th className={styles.th1}>Id</th>
+                                                    <th className={styles.th1}>Tên</th>
+                                                    <th className={styles.th1}>Bắt đầu</th>
+                                                    <th className={styles.th1}>Kết thúc</th>
                                                 </tr>
-                                            ))}
+                                                {data.map((item) => (
+                                                    <tr key={item.id}>
+                                                        <th width="10%">{item.id}</th>
+                                                        <th width="50%">{item.name}</th>
+                                                        <th width="20%">{item.dateStart}</th>
+                                                        <th width="20%">{item.dateEnd}</th>
+                                                        <th
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={() => handleDeleteSchedule(item.id)}
+                                                        >
+                                                            &times;
+                                                        </th>
+                                                        <th
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={() => handleEditSchedule(item.id)}
+                                                        >
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </th>
+                                                    </tr>
+                                                ))}
+                                            </section>
                                         </tbody>
                                     )}
                                 </table>

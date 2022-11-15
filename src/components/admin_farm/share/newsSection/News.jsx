@@ -13,7 +13,7 @@ function News(props) {
         const fetchData = async () => {
             const response = await articleAPI.getAPI();
 
-            const data = response.data.splice(0, 3);
+            const data = response.data.reverse().splice(0, 3);
             setArticles(data);
         };
 
@@ -33,7 +33,7 @@ function News(props) {
                 {articles &&
                     articles.slice(0, 3).map((value) => (
                         <div className="owl-item cloned" key={value.id}>
-                            <Link to={`/detail/${value.Article_id}`} className="news_link">
+                            <Link to={`/detail/${value.id}`} className="news_link">
                                 <div className="item">
                                     <img src={value.imageURL} className="news_img"></img>
                                     <div className="box">

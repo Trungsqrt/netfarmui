@@ -63,9 +63,10 @@ ul li a:active {
     height: 40px;
     padding: 0 10px;
     align-items: center;
-    border: solid 1px;
     padding: 2px 15px;
     display: flex;
+    border: none;
+    user-select: none;
 }
 .calling {
     width: 80px;

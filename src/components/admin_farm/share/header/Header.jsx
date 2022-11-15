@@ -4,12 +4,13 @@ import navbarImage from '../../../../assets/image/logonetfarm.png';
 import axios from 'axios';
 import styles from './Header.module.css';
 import ToolbarAdmin from '../../../detailBar/toolbarAdmin/ToolbarAdmin';
+import ToolbarExpert from '../../../detailBar/toolbarExpert/ToolbarExpert';
 import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3';
-
+    const navigate = useNavigate();
     const [data, setData] = useState(null);
     const [error, setError] = useState('');
     const [loaded, setLoaded] = useState(false);
@@ -21,6 +22,9 @@ const Header = () => {
     const [user, setUser] = useState('');
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
+    const [searchContent, setSearchContent] = useState('');
+    const [articles, setArticles] = useState([]);
+    const [currentArticles, setCurrentArticles] = useState([]);
     let icon;
     useEffect(() => {
         axios.get(url).then((response) => {
@@ -59,18 +63,73 @@ const Header = () => {
         setToolbar(false);
     }
 
-    let settingIcon = (
-        <section>
-            <button
-                className="button-setting"
-                onClick={showToolbar}
-                // onBlur={hideToolbar}
-            >
-                <i className="fa-solid fa-bars settings"></i>
-            </button>
-            {toolbar && <ToolbarAdmin />}
-        </section>
-    );
+    function settingIcon() {
+        if (toolbar && user === 'Admin') {
+            return (
+                <section>
+                    <button
+                        className="button-setting"
+                        onClick={showToolbar}
+                        // onBlur={hideToolbar}
+                    >
+                        <i className="fa-solid fa-bars settings"></i>
+                    </button>
+                    {toolbar && <ToolbarAdmin />}
+                </section>
+            );
+        } else if (toolbar && user === 'Expert') {
+            return (
+                <section>
+                    <button
+                        className="button-setting"
+                        onClick={showToolbar}
+                        // onBlur={hideToolbar}
+                    >
+                        <i className="fa-solid fa-bars settings"></i>
+                    </button>
+                    {toolbar && <ToolbarExpert />}
+                </section>
+            );
+        }
+        return (
+            <section>
+                <button
+                    className="button-setting"
+                    onClick={showToolbar}
+                    // onBlur={hideToolbar}
+                >
+                    <i className="fa-solid fa-bars settings"></i>
+                </button>
+                {toolbar && <ToolbarExpert />}
+            </section>
+        );
+    }
+
+    useEffect(() => {
+        const getData = async () => {
+            const res = await axios.get('https://localhost:44303/api/Article');
+            const response = res.data;
+            setArticles([...response]);
+        };
+        getData();
+    }, []);
+
+    useEffect(() => {
+        if (searchContent != '') {
+            const resultArray = articles.filter((item) => item.title.includes(searchContent));
+            setCurrentArticles([...resultArray]);
+        } else if (searchContent == '') {
+            setCurrentArticles([]);
+        }
+    }, [searchContent]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
+    function truncate(str, n) {
+        return str.length > n ? str.slice(0, n - 1) + '...' : str;
+    }
 
     return (
         <div style={{ backgroundColor: 'white' }}>
@@ -96,9 +155,9 @@ const Header = () => {
                     </div>
                 </div>
                 <nav className="navbar">
-                    <a href="/#">
+                    <Link to="/adminHome">
                         <img className="logo" src={navbarImage} alt="logo"></img>
-                    </a>
+                    </Link>
                     <ul className="navbarTask">
                         <li>
                             {user === 'Admin' && <Link to="/adminHome">Trang chủ</Link>}
@@ -117,7 +176,15 @@ const Header = () => {
                         </li>
                     </ul>
                     <form className="form-search">
-                        <input type="text" className="search-input" placeholder="Search" name="search"></input>
+                        <input
+                            type="text"
+                            className="search-input"
+                            placeholder="Search"
+                            name="search"
+                            autoComplete="none"
+                            onChange={(e) => setSearchContent(e.target.value)}
+                            value={searchContent}
+                        ></input>
                         <button className="btn-search">
                             <i className="fa-solid fa-magnifying-glass icon-search"></i>
                         </button>
@@ -140,7 +207,7 @@ const Header = () => {
                             </button>
                             {notification && <NotificationDetail />}
                         </section>
-                        {isLoggin && settingIcon}
+                        {isLoggin && settingIcon()}
                         {!isLoggin && (
                             <Link to="/login" className={styles.loginLink}>
                                 Đăng nhập/Đăng ký
@@ -148,6 +215,31 @@ const Header = () => {
                         )}
                     </div>
                 </nav>
+                {currentArticles.length > 0 && (
+                    <div className={styles.searchContainer}>
+                        <section className={styles.itemWrap}>
+                            {currentArticles.map((i, index) => (
+                                <section
+                                    className={`${styles.item}`}
+                                    key={index}
+                                    onClick={() => {
+                                        navigate(`/detail/${i.id}`);
+                                    }}
+                                >
+                                    {/* ${styles.nonRead} */}
+                                    <section className={styles.imageS}>
+                                        <img src={i.imageURL} className={styles.imageSection}></img>
+                                    </section>
+                                    <p className={styles.contentSection}>
+                                        <section className={styles.notificationTitle}>
+                                            <strong>{truncate(i.title, 30)}</strong>
+                                        </section>
+                                    </p>
+                                </section>
+                            ))}
+                        </section>
+                    </div>
+                )}
             </div>
         </div>
     );

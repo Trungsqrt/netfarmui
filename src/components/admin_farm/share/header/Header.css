@@ -1,97 +1,99 @@
 .container-navbar {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 /* ------------------Navbar-top */
 .info-header {
-  padding: 2px 50px;
-  width: 100%;
-  display: flex;
-  background: #f1f3f4;
-  justify-content: space-around;
+    padding: 2px 50px;
+    width: 100%;
+    display: flex;
+    background: #f1f3f4;
+    justify-content: space-around;
 }
 .info {
-  display: inline;
+    display: inline;
 }
 /* ------------------Navbar-bottom */
 .logo {
-  width: 150px;
-  height: 75px;
+    width: 150px;
+    height: 75px;
 }
 .navbar {
-  margin-left: 50px;
-  margin-right: 30px;
-  height: 75px;
-  display: flex;
+    margin-left: 50px;
+    margin-right: 30px;
+    height: 75px;
+    display: flex;
 }
 ul li a {
-  text-decoration: none;
-  color: #3e4041;
-  font-size: 120%;
+    text-decoration: none;
+    color: #3e4041;
+    font-size: 120%;
 }
 ul li {
-  margin-right: 60px;
+    margin-right: 60px;
 }
 ul li a:hover,
 ul li a:active {
-  color: green;
-  text-decoration: underline;
+    color: green;
+    text-decoration: underline;
 }
 .navbarTask {
-  margin-left: 50px;
-  display: flex;
-  align-items: center;
+    margin-left: 50px;
+    display: flex;
+    align-items: center;
 }
 .form-search {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 .search-input {
-  width: 200px;
-  height: 30px;
+    width: 200px;
+    height: 30px;
 }
+
 .btn-search {
-  width: 30px;
-  height: 30px;
+    width: 30px;
+    height: 30px;
 }
 .icon-search {
-  color: green;
+    color: green;
 }
 .calling-info {
-  margin-left: 30px;
-  margin-top: 13px;
-  background: orange;
-  height: 40px;
-  padding: 0 10px;
-  align-items: center;
-  border: solid 1px;
-  padding: 2px 15px;
-  display: flex;
+    margin-left: 30px;
+    margin-top: 13px;
+    background: orange;
+    height: 40px;
+    padding: 0 10px;
+    align-items: center;
+    padding: 2px 15px;
+    display: flex;
+    border: none;
+    user-select: none;
 }
 .calling {
-  width: 80px;
-  box-sizing: border-box;
+    width: 80px;
+    box-sizing: border-box;
 }
 .phone {
-  font-size: 120%;
-  margin-top: 5px;
-  padding-right: 5px;
-  color: white;
+    font-size: 120%;
+    margin-top: 5px;
+    padding-right: 5px;
+    color: white;
 }
 .info-detail {
-  font-size: 10px;
-  color: white;
-  font-weight: bold;
-  margin-bottom: 3px;
-  margin-top: 5px;
+    font-size: 10px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 3px;
+    margin-top: 5px;
 }
 .button-setting {
-  font-size: 150%;
-  margin-right: 30px;
-  border: none;
-  background-color: white;
+    font-size: 150%;
+    margin-right: 30px;
+    border: none;
+    background-color: white;
 }
 .setting-group {
-  margin-left: 30px;
-  display: flex;
-  align-items: center;
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
 }

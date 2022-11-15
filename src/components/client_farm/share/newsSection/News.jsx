@@ -12,10 +12,11 @@ function News(props) {
         const fetchData = async () => {
             const response = await articleAPI.getAPI();
 
-            const data = response.data.splice(0, 3);
+            const data = response.data.reverse().splice(0, 3);
             setArticles(data);
         };
         fetchData();
+        console.log(articles);
     }, []);
 
     function getText(html) {
