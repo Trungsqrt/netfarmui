@@ -9,7 +9,7 @@ const Checkout = () => {
     const orderUrl = 'https://localhost:44303/api/Order';
     const itemUrl = 'https://localhost:44303/api/OrderDetail';
     const productUrl = 'https://localhost:44303/api/Products';
-    const checkList = localStorage.getItem('checklist').split(',');
+    var checkList = localStorage.getItem('checklist').split(',');
     const user = JSON.parse(localStorage.getItem('user'));
     const userId = user.userId;
     const navigate = useNavigate();
@@ -41,53 +41,57 @@ const Checkout = () => {
     }, []);
 
     function handlerSubmit() {
-        var uuid = require('uuid');
-        const order_id = uuid.v4();
-        const postOrder = {
-            id: order_id,
-            userId: userId,
-            name: name,
-            address: address,
-            phone: phone,
-            total: total,
-            status: false,
-            delivery: false,
-            createAt: new Date().toISOString(),
-            finish: false,
-            cancel: false,
-            finishAt: null,
-        };
-        try {
-            axios.post(orderUrl, postOrder);
-            var length = carts.length;
-            for (var i = 0; i < length; i++) {
-                const postItem = {
-                    orderId: order_id,
-                    productId: carts[i].productId,
-                    quantity: carts[i].quantity,
-                    price: carts[i].price,
-                    image: carts[i].image,
-                    productName: carts[i].name,
-                    feedback: false,
-                };
-                try {
-                    axios.post(itemUrl, postItem);
-                    axios.delete(`${cartUrl}/${carts[i].id}`);
-                } catch (err) {
-                    alert('có lỗi');
+        if (name === '' || address === '' || phone === '') {
+            alert('Bạn phải nhập đầy đủ thông tin');
+        } else {
+            var uuid = require('uuid');
+            const order_id = uuid.v4();
+            const postOrder = {
+                id: order_id,
+                userId: userId,
+                name: name,
+                address: address,
+                phone: phone,
+                total: total,
+                status: false,
+                delivery: false,
+                createAt: new Date().toISOString(),
+                finish: false,
+                cancel: false,
+                finishAt: null,
+            };
+            try {
+                axios.post(orderUrl, postOrder);
+                var length = carts.length;
+                for (var i = 0; i < length; i++) {
+                    const postItem = {
+                        orderId: order_id,
+                        productId: carts[i].productId,
+                        quantity: carts[i].quantity,
+                        price: carts[i].price,
+                        image: carts[i].image,
+                        productName: carts[i].name,
+                        feedback: false,
+                    };
+                    try {
+                        axios.post(itemUrl, postItem);
+                        axios.delete(`${cartUrl}/${carts[i].id}`);
+                    } catch (err) {
+                        alert('có lỗi');
+                    }
                 }
+                alert('Đặt hàng thành công!');
+                localStorage.removeItem(checkList);
+                navigate('/shop/orderlist');
+            } catch (err) {
+                alert('Có lỗi, xin vui lòng thử lại!');
             }
-            alert('Đặt hàng thành công!');
-            localStorage.removeItem(checkList);
-            navigate('/shop/orderlist');
-        } catch (err) {
-            alert('Có lỗi, xin vui lòng thử lại!');
-        }
-        for (var i = 0; i < length; i++) {
-            const sl = carts[i].quantity;
-            const id = carts[i].productId;
-            console.log(sl);
-            handlerProduct(sl, id);
+            for (var i = 0; i < length; i++) {
+                const sl = carts[i].quantity;
+                const id = carts[i].productId;
+                console.log(sl);
+                handlerProduct(sl, id);
+            }
         }
     }
     function handlerProduct(sl, id) {
@@ -150,6 +154,7 @@ const Checkout = () => {
                             <div className="checkout_row">
                                 <div className="checkout_item">Số điện thoại</div>
                                 <input
+                                    type={'number'}
                                     className="checkout_input"
                                     placeholder="Nhập số điện thoại"
                                     value={phone}

@@ -12,6 +12,13 @@ const Cart = () => {
     const userId = user.userId;
     const cartUrl = 'https://localhost:44303/api/Carts';
     const navigate = useNavigate();
+    const checkedlist = localStorage.getItem('checked');
+    var checkeds = [];
+    const [total, setTotal] = useState(0);
+    const [checkList, setCheckList] = useState([]);
+    if (checkedlist) {
+        checkeds = localStorage.getItem('checked').split(',');
+    }
     // lấy toàn bộ sản phẩm trong cart theo userId
     useEffect(() => {
         const fetchData = async () => {
@@ -19,6 +26,17 @@ const Cart = () => {
             const data = response.data;
             const filter = data.filter((item) => item['userId'] === userId);
             setCart(filter);
+            var sumTotal = 0;
+            if (checkeds) {
+                for (var i = 0; i < checkeds.length; i++) {
+                    const checked = document.getElementById(`checked${checkeds[i]}`);
+                    if (checked) {
+                        checked.checked = true;
+                        sumTotal += Number(checked.value);
+                    }
+                }
+            }
+            setTotal(sumTotal);
         };
         fetchData();
     }, []);
@@ -48,7 +66,6 @@ const Cart = () => {
         if (count > 1) {
             getCart.quantity = count - 1;
         }
-        console.log(getCart);
         // carts.quantity = Number(getQuantity) + 1;
         try {
             axios.put(`${cartUrl}/${getCart.id}`, getCart);
@@ -67,24 +84,32 @@ const Cart = () => {
         }
         deleteHandler();
     }
-    const [total, setTotal] = useState(0);
-    const [checkList, setCheckList] = useState([]);
+
     function handlerCheckBox(e) {
-        const list = checkList;
         if (e.target.checked) {
             setTotal(total + Number(e.target.value));
-            list.push(e.target.name);
-            setCheckList(list);
         } else {
             setTotal(total - Number(e.target.value));
-            const newlist = list.filter((item) => item !== e.target.name);
-            setCheckList(newlist);
         }
     }
 
     function checkoutHandler() {
+        const listcart = [];
+        const checkboxs = document.getElementsByClassName('checkbox');
         localStorage.setItem('checklist', checkList);
-        navigate('/shop/checkout');
+        for (var i = 0; i < checkboxs.length; i++) {
+            if (checkboxs[i].checked) {
+                listcart.push(Number(checkboxs[i].name));
+            }
+        }
+        console.log(listcart);
+        if (listcart.length === 0) return;
+        else {
+            setCheckList(listcart);
+            localStorage.removeItem('checklist');
+            localStorage.setItem('checklist', listcart);
+            navigate('/shop/checkout');
+        }
     }
     return (
         <div>
@@ -137,7 +162,10 @@ const Cart = () => {
                                             <tr className="text-center" key={index}>
                                                 <td className="td_content">
                                                     <div className="">
-                                                        <Link className="" to={`/shop/product/detail/1`}>
+                                                        <Link
+                                                            className=""
+                                                            to={`/shop/product/detail/${cart.productId}`}
+                                                        >
                                                             <img src={cart.image} alt="..." width="70" />
                                                         </Link>
                                                     </div>
@@ -146,7 +174,7 @@ const Cart = () => {
                                                     <div className="">
                                                         <Link
                                                             className="reset-anchor h6 animsition-link"
-                                                            to={`/shop/product/detail/1`}
+                                                            to={`/shop/product/detail/${cart.productId}`}
                                                         >
                                                             {cart.name}
                                                         </Link>
@@ -196,9 +224,11 @@ const Cart = () => {
                                                 </td>
                                                 <td className="td_content">
                                                     <input
+                                                        className="checkbox"
                                                         type="checkbox"
                                                         value={cart.quantity * cart.price}
                                                         name={cart.id}
+                                                        id={`checked${cart.productId}`}
                                                         onChange={handlerCheckBox}
                                                     />
                                                 </td>

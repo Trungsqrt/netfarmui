@@ -125,4 +125,10 @@ ul li a:active {
 
 .loginLink {
     color: #ceba08;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbarTask_item {
+    width: 100%;
 }

@@ -8,17 +8,18 @@ const Order = (props) => {
     const itemUrl = 'https://localhost:44303/api/OrderDetail';
     const { order } = props;
     const [orderItems, setOrderItems] = useState([]);
-    const date = order.createAt;
+    const date = new Date(order.createAt).toLocaleDateString();
     const [text, setText] = useState('');
     const navigate = useNavigate();
     const currentDate = new Date();
 
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userId = user.userId;
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(itemUrl);
             const data = response.data;
             const filter = data.filter((item) => item['orderId'] === order.id);
-
             setOrderItems(filter);
             if (order.cancel) {
                 setText('Đã hủy');
@@ -100,12 +101,62 @@ const Order = (props) => {
     // function FeedbackOrder() {
     //     navigate(`/manage/Feedback/${order.id}`);
     // }
+    const cartUrl = 'https://localhost:44303/api/Carts';
 
-    function RebuyProduct() {}
+    const [carts, setCarts] = useState([]);
+    function RebuyProduct() {
+        const checkedList = [];
+        for (var i = 0; i < orderItems.length; i++) {
+            const id = orderItems[i].productId;
+            checkedList.push(id);
+            const postCart = {
+                name: orderItems[i].productName,
+                quantity: orderItems[i].quantity,
+                price: orderItems[i].price,
+                image: orderItems[i].image,
+                userId: userId,
+                productId: orderItems[i].productId,
+            };
+            const fetchData = async () => {
+                const response = await axios.get(cartUrl);
+                const data = response.data;
+                const filter = data.filter((item) => item['userId'] === userId);
+                const filter2 = filter.filter((item) => item['productId'] === id);
+                setCarts(filter2);
+                if (filter2.length === 0) {
+                    AddNewProductToCart(postCart);
+                } else {
+                    const putCart = filter2[0];
+                    putCart.quantity = filter2[0].quantity + postCart.quantity;
+                    UpdateProductToCart(putCart);
+                }
+            };
+            fetchData();
+            localStorage.setItem('checked', checkedList);
+            navigate('/shop/cart');
+            window.location.reload();
+        }
+
+        function AddNewProductToCart(postCart) {
+            try {
+                axios.post(cartUrl, postCart);
+            } catch (err) {
+                alert('Có lỗi, xin vui lòng thử lại!');
+            }
+        }
+
+        function UpdateProductToCart(cart) {
+            try {
+                axios.put(`${cartUrl}/${cart.id}`, cart);
+            } catch (err) {
+                alert('Có lỗi, xin vui lòng thử lại!');
+            }
+        }
+    }
     return (
         <div className="order_container">
             <div className="order_header">
-                <div>Yêu thích</div>
+                <div>Yêu thích - {date}</div>
                 <div>Tình trạng đơn hàng: {text}</div>
             </div>
             <div>

@@ -23,7 +23,12 @@ function ToolbarFarmer() {
                     <div className={styles.item} onClick={() => navigate('/changepassword')}>
                         <h5>Đổi mật khẩu</h5>
                     </div>
-
+                    <div className={styles.item} onClick={() => navigate('/shop/orderlist')}>
+                        <h5>Đơn mua</h5>
+                    </div>
+                    <div className={styles.item} onClick={() => navigate('/manage/Feedback')}>
+                        <h5>Phản hồi</h5>
+                    </div>
                     <div className={styles.item} onClick={handleLogout}>
                         <h5>Đăng xuất</h5>
                     </div>

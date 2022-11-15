@@ -100,13 +100,13 @@ const Header = () => {
                         <img className="logo" src={navbarImage} alt="logo"></img>
                     </a>
                     <ul className="navbarTask">
-                        <li>
+                        <li className="navbarTask_item">
                             <a href="/">Trang chủ</a>
                         </li>
-                        <li>
+                        <li className="navbarTask_item">
                             <a href="/inforPage">Thông tin</a>
                         </li>
-                        <li>
+                        <li className="navbarTask_item">
                             <a href="/shop">Mua hàng</a>
                         </li>
                     </ul>
@@ -142,7 +142,7 @@ const Header = () => {
                         {isLoggin && settingIcon}
                         {!isLoggin && (
                             <Link to="/login" className={styles.loginLink}>
-                                Đăng nhập/Đăng ký
+                                Đăng nhập Đăng ký
                             </Link>
                         )}
                     </div>

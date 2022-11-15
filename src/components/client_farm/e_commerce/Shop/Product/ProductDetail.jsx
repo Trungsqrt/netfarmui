@@ -27,7 +27,8 @@ function ProductDetail(props) {
     //Phần này là để thay đổi số lượng khi mua sản phẩm
     const [text, setText] = useState(1);
     const onChangeText = (e) => {
-        setText(e.target.value);
+        const value = Math.max(1, Math.min(Number(detail.inventoryNumber), Number(e.target.value)));
+        setText(value);
     };
 
     // tăng lên 1 đơn vị
@@ -49,6 +50,18 @@ function ProductDetail(props) {
         const fetchData = async () => {
             const response = await productAPI.getDetail(id);
             setDetail(response.data);
+
+            if (response.data.inventoryNumber === 0) {
+                const btns = document.getElementById(`btnAdd`);
+                if (btns !== null) {
+                    btns.classList.add('hiden_btn');
+                }
+
+                const soldOuttext = document.getElementById('soldOut');
+                if (soldOuttext !== null) {
+                    soldOuttext.classList.remove('hiden_btn');
+                }
+            }
         };
         fetchData();
     }, [id]);
@@ -58,7 +71,6 @@ function ProductDetail(props) {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user'));
     const [carts, setCarts] = useState([]);
-    const [checkList, setCheckList] = useState([]);
 
     // tìm trong giỏi hàng đã có sản phẩm này hay chưa
     useEffect(() => {
@@ -80,13 +92,13 @@ function ProductDetail(props) {
         if (user == null) navigate('/login');
         else {
             const userId = user.userId;
-            console.log(carts);
             if (carts.length !== 0) {
                 UpdateProductToCart(userId, carts[0]);
             } else {
                 // thêm mới sản phẩm nếu giỏ hàng chưa có
                 AddNewProductToCart(userId);
             }
+            window.location.reload();
         }
     }
     // Phần này để thêm sản phẩm mới hoàn toàn vào giỏ hàng
@@ -103,7 +115,6 @@ function ProductDetail(props) {
         try {
             axios.post(cartUrl, newCart);
             alert('Thêm vào giỏi hàng thành công!');
-            window.location.reload();
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
@@ -114,7 +125,6 @@ function ProductDetail(props) {
         try {
             axios.put(`${cartUrl}/${cart.id}`, cart);
             alert('Cập nhập lại số lượng');
-            window.location.reload();
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
@@ -135,26 +145,34 @@ function ProductDetail(props) {
     }, []);
 
     function BuyNowHandler() {
-        if (user == null) navigate('/login');
-        else {
-            const userId = user.userId;
-            const newCart = {
-                userId: userId,
-                productId: detail.id,
-                name: detail.name,
-                quantity: text,
-                price: detail.price,
-                image: detail.image1,
-            };
-            console.log('newcarts', newCart);
-            try {
-                axios.post(cartUrl, newCart);
-            } catch (err) {
-                alert('Có lỗi, xin vui lòng thử lại!');
-            }
-            navigate('/shop/cart');
-            window.location.reload();
-        }
+        // if (user == null) navigate('/login');
+        // else {
+        //     const userId = user.userId;
+        //     const newCart = {
+        //         userId: userId,
+        //         productId: detail.id,
+        //         name: detail.name,
+        //         quantity: text,
+        //         price: detail.price,
+        //         image: detail.image1,
+        //     };
+        //     console.log('newcarts', newCart);
+        //     try {
+        //         axios.post(cartUrl, newCart);
+        //     } catch (err) {
+        //         alert('Có lỗi, xin vui lòng thử lại!');
+        //     }
+        //     navigate('/shop/cart');
+        //     window.location.reload();
+        // }
+        const checkedList = [];
+        checkedList.push(detail.id);
+        console.log(checkedList);
+        localStorage.removeItem('checked');
+        localStorage.setItem('checked', checkedList);
+        AddToCartHandler();
+        navigate('/shop/cart');
+        window.location.reload();
     }
 
     return (
@@ -212,19 +230,29 @@ function ProductDetail(props) {
                                         >
                                             <i className="fas fa-caret-left"></i>
                                         </button>
-                                        <input className="" type="text" value={text} onChange={onChangeText} />
+                                        <input
+                                            className=""
+                                            type="number"
+                                            min="1"
+                                            max="5"
+                                            value={text}
+                                            onChange={onChangeText}
+                                        />
                                         <button className="inc-btn p-0" style={{ cursor: 'pointer' }} onClick={upText}>
                                             <i className="fas fa-caret-right"></i>
                                         </button>
                                     </div>
                                 </div>
-                                <div className="btn">
+                                <div className="" id="btnAdd">
                                     <button className="Detail_Add_btn" onClick={AddToCartHandler}>
                                         Thêm vào giỏ hàng
                                     </button>
                                     <button className="Detail_Add_btn" onClick={BuyNowHandler}>
                                         Mua ngay
                                     </button>
+                                </div>
+                                <div className="soldOut hiden_btn" id="soldOut">
+                                    Sản phẩm này hiện đang hết hàng!
                                 </div>
                                 <div className="addtional_infor">
                                     <div className="category_infor">Category: {detail.category}</div>
