@@ -43,7 +43,7 @@ function ExpertPage() {
                     id: item.id,
                     title: item.title,
                     datePost: item.datePost.slice(0, 10),
-                    dateUpdate: item.dateUpdate,
+                    dateUpdate: item.dateUpdate?.slice(0, 10),
                 };
                 setData((prevData) => [...prevData, value]);
             });
@@ -120,25 +120,6 @@ function ExpertPage() {
                                 </ul>
                             </nav>
                             <section className={styles.bodyContainer}>
-                                {/* <form
-                                    className="form-search"
-                                    style={{
-                                        alignSelf: 'end',
-                                        marginRight: '105px',
-                                        marginBottom: '10px',
-                                        marginTop: '-10px',
-                                    }}
-                                >
-                                    <input
-                                        type="text"
-                                        className="search-input"
-                                        placeholder="Search"
-                                        name="search"
-                                    ></input>
-                                    <button className="btn-search">
-                                        <i className="fa-solid fa-magnifying-glass icon-search"></i>
-                                    </button>
-                                </form> */}
                                 <table>
                                     {render == 1 && (
                                         <tbody>
@@ -159,7 +140,7 @@ function ExpertPage() {
                                                         <th width="10%">{item.id}</th>
                                                         <th width="50%">{item.title}</th>
                                                         <th width="20%">{item.datePost}</th>
-                                                        <th width="20%">{item.dateUpdate}</th>
+                                                        <th width="20%">{item.dateUpdate?.slice(0, 10)}</th>
                                                         <th
                                                             style={{ cursor: 'pointer' }}
                                                             onClick={() => handleDeletePost(item.id)}

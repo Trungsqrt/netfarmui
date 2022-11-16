@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../share/header/Header';
+import { default as StaffHeader } from '../share/header/Header';
+import { default as FarmerHeader } from '../../client_farm/share/header/Header';
 import Footer from '../share/footer/Footer';
 import Menuleft from '../share/menu/Menuleft';
 import Article from '../article/Article';
@@ -12,7 +13,12 @@ const InforPage = () => {
     const [newsItems, setNewItems] = useState([]);
     const [manualItems, setManualItems] = useState([]);
     const [policyItems, setPolicyItems] = useState([]);
+    const [user, setUser] = useState('');
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
+
     useEffect(() => {
+        setUser(currentUser.roleName);
         const fetchData = async () => {
             const response = await articleAPI.getAPI();
             const data = response.data;
@@ -41,7 +47,8 @@ const InforPage = () => {
     return (
         <div>
             <div>
-                <Header></Header>
+                {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
+                {user === 'Farmer' && <FarmerHeader />}
                 <div className="infor_main">
                     <div className="menu">
                         <Menuleft></Menuleft>

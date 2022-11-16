@@ -140,6 +140,7 @@ function ArticleHandler() {
                             <Editor
                                 onInit={(evt, editor) => (editorRef.current = editor)}
                                 init={{
+                                    selector: 'textarea',
                                     plugins: [
                                         'image',
                                         'code',
@@ -158,6 +159,7 @@ function ArticleHandler() {
                                         var freeTiny = document.querySelector('.tox .tox-notification--in');
                                         freeTiny.style.display = 'none';
                                     },
+                                    content_style: 'p{font-size: 12pt;} body{margin: 16px 16px;}',
                                 }}
                                 initialValue={currentContent}
                             />

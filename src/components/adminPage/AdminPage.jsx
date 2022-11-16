@@ -57,18 +57,18 @@ function AdminPage() {
         async function getData() {
             setData([]);
             const Dataset = await axios.get(articleUrl);
-
             Dataset.data.forEach((item) => {
                 const value = {
                     id: item.id,
                     title: item.title,
                     datePost: item.datePost.slice(0, 10),
-                    dateUpdate: item.dateUpdate.slice(0, 10),
+                    dateUpdate: item.dateUpdate?.slice(0, 10),
                 };
                 setData((prevData) => [...prevData, value]);
             });
+            console.log('abcc');
         }
-
+        console.log('abc');
         getData();
     };
 

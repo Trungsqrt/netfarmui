@@ -180,35 +180,36 @@ const Header = () => {
                         {isLoggin && settingIcon}
                         {!isLoggin && (
                             <Link to="/login" className={styles.loginLink}>
-                                Đăng nhập Đăng ký
+                                Đăng nhập/ Đăng ký
                             </Link>
                         )}
                     </div>
                 </nav>
-
-                <div className={styles.searchContainer}>
-                    <section className={styles.itemWrap}>
-                        {currentArticles.map((i, index) => (
-                            <section
-                                className={`${styles.item}`}
-                                key={index}
-                                onClick={() => {
-                                    navigate(`/detail/${i.id}`);
-                                }}
-                            >
-                                {/* ${styles.nonRead} */}
-                                <section className={styles.imageS}>
-                                    <img src={i.imageURL} className={styles.imageSection}></img>
-                                </section>
-                                <p className={styles.contentSection}>
-                                    <section className={styles.notificationTitle}>
-                                        <strong>{truncate(i.title, 30)}</strong>
+                {currentArticles.length > 0 && (
+                    <div className={styles.searchContainer}>
+                        <section className={styles.itemWrap}>
+                            {currentArticles.map((i, index) => (
+                                <section
+                                    className={`${styles.item}`}
+                                    key={index}
+                                    onClick={() => {
+                                        navigate(`/detail/${i.id}`);
+                                    }}
+                                >
+                                    {/* ${styles.nonRead} */}
+                                    <section className={styles.imageS}>
+                                        <img src={i.imageURL} className={styles.imageSection}></img>
                                     </section>
-                                </p>
-                            </section>
-                        ))}
-                    </section>
-                </div>
+                                    <p className={styles.contentSection}>
+                                        <section className={styles.notificationTitle}>
+                                            <strong>{truncate(i.title, 30)}</strong>
+                                        </section>
+                                    </p>
+                                </section>
+                            ))}
+                        </section>
+                    </div>
+                )}
             </div>
         </div>
     );

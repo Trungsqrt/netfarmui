@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Personal.module.css';
 import { useNavigate } from 'react-router-dom';
+import Header from '../client_farm/share/header/Header';
 import axios from 'axios';
 function Personal() {
     const [fullName, setFullName] = useState('');
@@ -17,6 +18,7 @@ function Personal() {
 
     const userId = JSON.parse(localStorage.getItem('user')).userId;
     const getUserByIdUrl = `https://localhost:44303/api/Users/${userId}`;
+
     useEffect(() => {
         const fillCurrentInfo = async () => {
             let currentUserInfo = await axios.get(getUserByIdUrl);
@@ -60,6 +62,7 @@ function Personal() {
 
     return (
         <div>
+            <Header />
             <div className={styles.body}>
                 <div className={styles.container}>
                     <section className={styles.title}>Cập nhật thông tin cá nhân</section>
