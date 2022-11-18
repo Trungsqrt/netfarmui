@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 50px;
+}
+
+.body {
+    background-color: #f7f7f7;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.chartDraw {
+    height: 100vh;
+}
+
+.cateBox {
+    margin: 0;
+    width: 200px;
+    border-radius: 12px;
+    margin-top: 5px;
+    text-align: center;
+    font-weight: bold;
+}
