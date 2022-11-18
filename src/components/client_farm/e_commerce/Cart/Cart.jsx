@@ -121,7 +121,7 @@ const Cart = () => {
                 </div>
                 <div className="cart_content">
                     <div className="shopping_cart">
-                        <div className="section_title">SHOPPING CART</div>
+                        <div className="section_title">GIỎ HÀNG</div>
                         <div className="shopping_cart_table">
                             <div className="table-responsive mb-4">
                                 <table className="listcart_table">
@@ -242,19 +242,19 @@ const Cart = () => {
                             <Link to="/shop">
                                 <button className="shopping_cart_btn">
                                     <i className="fa-solid fa-arrow-left shopping_cart_btn_icon"></i>
-                                    Continue Shopping
+                                    Tiếp tục mua sắm
                                 </button>
                             </Link>
                             <button className="shopping_cart_btn" onClick={checkoutHandler}>
-                                Checkout
+                                Đặt hàng
                                 <i className="fa-solid fa-arrow-right shopping_cart_btn_icon"></i>
                             </button>
                         </div>
                     </div>
                     <div className="cart_total">
-                        <div className="section_title">CART TOTAL</div>
+                        <div className="section_title"> TỔNG TIỀN</div>
                         <div className="total">
-                            Total
+                            Thành tiền
                             <div className="total_value">{total}</div>
                         </div>
                         <form>
@@ -262,7 +262,7 @@ const Cart = () => {
                                 <input className="form-control" type="text" placeholder="Enter your coupon" />
                                 <button className="coupon_btn" type="submit">
                                     {' '}
-                                    <i className="fas fa-gift mr-2"></i>Apply coupon
+                                    <i className="fas fa-gift mr-2"></i>Áp dụng khuyến mãi
                                 </button>
                             </div>
                         </form>

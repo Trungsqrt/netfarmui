@@ -165,7 +165,7 @@ const Order = (props) => {
                           <div className="order_item" key={index}>
                               <img className="order_img" src={item.image}></img>
                               <div className="order_content">
-                                  <div className="order_name">{item.productName}</div>
+                                  <div className="order_name_1">{item.productName}</div>
                                   {/* <div className="order_category">Phân bón</div> */}
                                   <div className="order_quantity">x{item.quantity}</div>
                               </div>
