@@ -11,7 +11,7 @@ function Products(props) {
             const response = await productAPI.getAPI();
             const data = response.data;
             setProducts(data);
-            console.log(data);
+            // console.log(data);
         };
         fetchData();
     }, []);
