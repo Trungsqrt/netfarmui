@@ -22,34 +22,16 @@ const InforPage = () => {
     }, []);
 
     return (
-        <div>
+        <div className="row">
+            <div className="section_title">Bản tin nông nghiệp</div>
             <div>
-                <Header></Header>
-                <div className="infor_main">
-                    <div className="menu">
-                        <Menuleft></Menuleft>
-                    </div>
-                    <div className="infor_container">
-                        <div className="row">
-                            <div className="section_title">Bản tin nông nghiệp</div>
-                            <div>
-                                <div className="listarticle">
-                                    {Items
-                                        ? Items.map((item, index) => (
-                                              <Article
-                                                  article={item}
-                                                  key={item.id}
-                                                  update={item.id}
-                                                  number={index}
-                                              ></Article>
-                                          ))
-                                        : ''}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="listarticle">
+                    {Items
+                        ? Items.map((item, index) => (
+                              <Article article={item} key={item.id} update={item.id} number={index}></Article>
+                          ))
+                        : ''}
                 </div>
-                <Footer></Footer>
             </div>
         </div>
     );

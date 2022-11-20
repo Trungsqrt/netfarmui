@@ -1,11 +1,9 @@
 import React from 'react';
-import { Chart } from 'recharts';
-import { default as StaffHeader } from '../../../admin_farm/share/header/Header';
-import { default as FarmerHeader } from '../../../client_farm/share/header/Header';
 import styles from './Schedule.module.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Calendar from './Calendar';
+import '../css/style1.css';
 const Schedule = () => {
     const [user, setUser] = useState('');
     const getUser = localStorage.getItem('user');
@@ -23,12 +21,31 @@ const Schedule = () => {
         };
         fetchData();
     }, []);
+
+    function handlerChange(e) {
+        const fetchData = async () => {
+            const response = await axios.get(`${scheduleUrl}/${e.target.value}`);
+            const data = response.data;
+            console.log(data);
+            setSchedule(data);
+        };
+        fetchData();
+    }
     return (
-        <div className={styles.body}>
-            <section>
-                {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
-                {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />}
-            </section>
+        <div className="body">
+            <div className="schedule_header">Xem lịch nông vụ</div>
+            <div className="Select_row">
+                <span className="select_title">Chọn lịch:</span>
+                <select onChange={handlerChange} className="select_section">
+                    {schedules
+                        ? schedules.map((sche, index) => (
+                              <option value={sche.id} key={index}>
+                                  {sche.name}
+                              </option>
+                          ))
+                        : ''}
+                </select>
+            </div>
             {schedule && <Calendar schedule={schedule} key={schedule.id} update={schedule.id}></Calendar>}
         </div>
     );

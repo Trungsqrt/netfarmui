@@ -903,3 +903,25 @@
     margin: 0 30px;
     width: 300px;
 }
+
+.Banner {
+    background-image: url('https://bom.so/fd4VQ7');
+    width: 100%;
+    height: 300px;
+}
+
+.main {
+    padding: 10px 100px;
+    display: flex;
+}
+.column-left {
+    width: 30%;
+    padding-top: 10px;
+}
+
+.column-right {
+    width: 70%;
+    box-sizing: border-box;
+    height: max-content;
+    padding-left: 20px;
+}
