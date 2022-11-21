@@ -1,39 +1,40 @@
 import React from 'react';
 import './menu.css';
+import { Link } from 'react-router-dom';
 const Menuleft = () => {
     return (
         <div>
-            <div>
+            <div className="min-width-menu">
                 <ul className="menulist">
                     <li className="MenuItem">
-                        <a href="/inforPage" className="menu_link">
+                        <Link to="/inforPage" className="menu_link">
                             CHUNG
-                        </a>
+                        </Link>
                     </li>
                     <li className="MenuItem">
-                        <a href="/inforPage/schedule" className="menu_link">
+                        <Link to="/inforPage/schedule" className="menu_link">
                             LỊCH NÔNG VỤ
-                        </a>
+                        </Link>
                     </li>
                     <li className="MenuItem">
-                        <a href="/inforPage/news" className="menu_link">
+                        <Link to="/inforPage/news" className="menu_link">
                             TIN TỨC
-                        </a>
+                        </Link>
                     </li>
                     <li className="MenuItem">
-                        <a href="/inforPage/manual" className="menu_link">
+                        <Link to="/inforPage/manual" className="menu_link">
                             HƯỚNG DẪN
-                        </a>
+                        </Link>
                     </li>
                     <li className="MenuItem">
-                        <a href="/inforPage/policy" className="menu_link">
+                        <Link to="/inforPage/policy" className="menu_link">
                             CHÍNH SÁCH
-                        </a>
+                        </Link>
                     </li>
                     <li className="MenuItem">
-                        <a href="/inforPage/DSS" className="menu_link">
+                        <Link to="/inforPage/DSS" className="menu_link">
                             TƯ VẤN
-                        </a>
+                        </Link>
                     </li>
                 </ul>
                 <img className="menulist_img" src="https://bom.so/0nAKIP"></img>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { default as StaffHeader } from '../share/header/Header';
-import { default as FarmerHeader } from '../../client_farm/share/header/Header';
+import { default as StaffHeader } from '../../admin_farm/share/header/Header';
+import { default as FarmerHeader } from '../share/header/Header';
 import Footer from '../share/footer/Footer';
 import Menuleft from '../share/menu/Menuleft';
 import Article from '../article/Article';
@@ -13,22 +13,19 @@ const InforPage = () => {
     const [newsItems, setNewItems] = useState([]);
     const [manualItems, setManualItems] = useState([]);
     const [policyItems, setPolicyItems] = useState([]);
-    const [user, setUser] = useState('');
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
+    const [user, setUser] = useState(currentUser.roleName);
 
     useEffect(() => {
-        setUser(currentUser.roleName);
         const fetchData = async () => {
             const response = await articleAPI.getAPI();
             const data = response.data;
-            console.log('sdvxc', data);
             setArticles(articles);
             // lấy các bài đăng thuộc category tin tức
             const filtterNews = data.filter((item) => item['aCategoryName'] === 'tintuc');
             const min = filtterNews.length > 3 ? 3 : filtterNews.length;
             setNewItems(filtterNews.slice(0, min));
-            console.log('cxdcx', filtterNews);
             //lấy các bài đăng thuộc category manual
             const filterManual = data.filter((item) => item['aCategoryName'] === 'huongdan');
             const min2 = filterManual.length > 3 ? 3 : filterManual.length;
@@ -39,7 +36,6 @@ const InforPage = () => {
             const filterPolicy = data.filter((item) => item['aCategoryName'] === 'chinhsach');
             const min3 = filterPolicy.length > 3 ? 3 : filterPolicy.length;
             setPolicyItems(filterPolicy.slice(0, min3));
-            // console.log('news', policyItems);
         };
         fetchData();
     }, []);
@@ -48,7 +44,7 @@ const InforPage = () => {
         <div>
             <div>
                 {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
-                {user === 'Farmer' && <FarmerHeader />}
+                {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />}
                 <div className="infor_main">
                     <div className="menu">
                         <Menuleft></Menuleft>
@@ -61,12 +57,14 @@ const InforPage = () => {
                                     <div className="listarticle">
                                         {manualItems
                                             ? manualItems.map((item, index) => (
-                                                  <Article
-                                                      article={item}
-                                                      key={item.id}
-                                                      update={item.id}
-                                                      number={index}
-                                                  ></Article>
+                                                  <section className="an-item">
+                                                      <Article
+                                                          article={item}
+                                                          key={item.id}
+                                                          update={item.id}
+                                                          number={index}
+                                                      ></Article>
+                                                  </section>
                                               ))
                                             : ''}
                                     </div>
@@ -94,7 +92,7 @@ const InforPage = () => {
                         <div className="row">
                             <div className="section_title">Chính sách</div>
                             <div>
-                                <div className="listarticle">
+                                <div className="listarticle-policy">
                                     {policyItems
                                         ? policyItems.map((item, index) => (
                                               <Policy

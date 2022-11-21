@@ -126,18 +126,18 @@ const Header = () => {
                     </div>
                 </div>
                 <nav className="navbar">
-                    <a href="/#">
+                    <Link to="/">
                         <img className="logo" src={navbarImage} alt="logo"></img>
-                    </a>
+                    </Link>
                     <ul className="navbarTask">
                         <li className="navbarTask_item">
-                            <a href="/">Trang chủ</a>
+                            <Link to="/">Trang chủ</Link>
                         </li>
                         <li className="navbarTask_item">
-                            <a href="/inforPage">Thông tin</a>
+                            <Link to="/inforPage">Thông tin</Link>
                         </li>
                         <li className="navbarTask_item">
-                            <a href="/shop">Mua hàng</a>
+                            <Link to="/shop">Mua hàng</Link>
                         </li>
                     </ul>
                     <form className="form-search" onSubmit={handleSubmit}>

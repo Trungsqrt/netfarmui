@@ -82,6 +82,7 @@ function ArticleHandler() {
                 axios.post(url, postNew);
             }
             alert('Đăng thành công!');
+            navigate('/ArticleHandler');
             window.location.reload();
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
@@ -152,7 +153,7 @@ function ArticleHandler() {
                                         'lists',
                                     ],
                                     toolbar:
-                                        'image | link | undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | help',
+                                        'image | media | link | undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | help',
                                     menubar: false,
                                     branding: false,
                                     init_instance_callback: function (editor) {
@@ -160,6 +161,34 @@ function ArticleHandler() {
                                         freeTiny.style.display = 'none';
                                     },
                                     content_style: 'p{font-size: 12pt;} body{margin: 16px 16px;}',
+                                    audio_template_callback: function (data) {
+                                        return (
+                                            '<audio controls>' +
+                                            '\n<source src="' +
+                                            data.source +
+                                            '"' +
+                                            (data.sourcemime ? ' type="' + data.sourcemime + '"' : '') +
+                                            ' />\n' +
+                                            (data.altsource
+                                                ? '<source src="' +
+                                                  data.altsource +
+                                                  '"' +
+                                                  (data.altsourcemime ? ' type="' + data.altsourcemime + '"' : '') +
+                                                  ' />\n'
+                                                : '') +
+                                            '</audio>'
+                                        );
+                                    },
+
+                                    media_url_resolver: function (data, resolve /*, reject*/) {
+                                        if (data.url.indexOf('YOUR_SPECIAL_VIDEO_URL') !== -1) {
+                                            var embedHtml =
+                                                '<iframe src="' + data.url + '" width="200" height="100" ></iframe>';
+                                            resolve({ html: embedHtml });
+                                        } else {
+                                            resolve({ html: '' });
+                                        }
+                                    },
                                 }}
                                 initialValue={currentContent}
                             />

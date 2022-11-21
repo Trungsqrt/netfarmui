@@ -17,6 +17,14 @@ function getText(html) {
     return divContainer.textContent || divContainer.innerText || '';
 }
 
+function truncateString(str) {
+    if (str.length > 30) {
+        return str.slice(0, 30) + '...';
+    } else {
+        return str;
+    }
+}
+
 function Article(props) {
     const { article } = props;
     return (
@@ -25,10 +33,10 @@ function Article(props) {
                 <div className="article_item">
                     <img src={article.imageURL} className="article_img" />
                     <div className="article_text">
-                        <div className="article_title">{article.title}</div>
+                        <div className="article_title">{truncateString(article.title)}</div>
                         <div className="article_tag">
                             <div className="article_category">{article.aCategoryName}</div>
-                            <div className="article_category">{article.datePost}</div>
+                            <div className="article_category">{article.datePost.slice(0, 10)}</div>
                         </div>
                         <div className="article_content">{getText(article.content)}</div>
                     </div>

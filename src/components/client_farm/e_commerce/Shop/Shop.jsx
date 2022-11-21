@@ -8,19 +8,21 @@ import '../css/style.css';
 let PageSize = 8;
 const Shop = () => {
     const categoryUrl = 'https://localhost:44303/api/Categories';
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]); //all raw data
     const [category, setCategory] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState([]);
     const [currentTab, setCurrentTab] = useState(0);
     useEffect(() => {
         const fetchData = async () => {
+            //fetch raw data
             const response = await productAPI.getAPI();
             const data = response.data;
             setProducts(data);
-            const firstPageIndex = (currentPage - 1) * PageSize;
-            const lastPageIndex = firstPageIndex + PageSize;
-            setCurrentData(data.slice(firstPageIndex, lastPageIndex));
+
+            const firstPageIndex = (currentPage - 1) * PageSize; //(1 - 1) * 8 = 0
+            const lastPageIndex = firstPageIndex + PageSize; // 0 + 8
+            setCurrentData(data.slice(firstPageIndex, lastPageIndex)); //(0,8)
         };
         fetchData();
     }, []);

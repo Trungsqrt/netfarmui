@@ -1,0 +1,12 @@
+.pagination_line1 {
+    background-color: rgb(225, 216, 40);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    color: white;
+}
+
+.listarticle {
+    margin-top: 30px;
+}
