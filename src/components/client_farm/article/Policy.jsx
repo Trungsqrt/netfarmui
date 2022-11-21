@@ -14,7 +14,7 @@ function Policy(props) {
 
     return (
         <div className="owl-item cloned" key={article.id}>
-            <Link to={`/detail/${article.Article_id}`} className="news_link">
+            <Link to={`/detail/${article.id}`} className="news_link">
                 <div className="item">
                     <img src={article.imageURL} className="news_img"></img>
                     <div className="box">

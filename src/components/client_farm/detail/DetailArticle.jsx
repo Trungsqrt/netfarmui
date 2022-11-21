@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import articleAPI from '../../../../src/apis/articleAPI';
 import Footer from '../share/footer/Footer';
@@ -11,6 +11,7 @@ import styles from './DetailArticle.module.css';
 const parse = require('html-react-parser');
 
 function DetailArticle(props) {
+    let navigate = useNavigate();
     const [detail, setDetail] = useState({});
     const [showComment, setShowComment] = useState(false);
     const dispatch = useDispatch();
