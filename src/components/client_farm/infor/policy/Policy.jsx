@@ -9,7 +9,7 @@ import { default as FarmerHeader } from '../../../client_farm/share/header/Heade
 import Pagination from '../../../admin_farm/share/Pagination/Pagination';
 
 import '../InforPage.css';
-import '../../e_commerce/css/style.css';
+// import '../../e_commerce/css/style.css';
 import './Policy.css';
 let PageSize = 3;
 
@@ -57,12 +57,12 @@ const InforPage = () => {
 
     return (
         <div>
-            {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
-            {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />}
+            {/* {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
+            {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />} */}
             <div className="infor_main">
-                <div className="menu">
+                {/* <div className="menu">
                     <Menuleft></Menuleft>
-                </div>
+                </div> */}
                 <div className="infor_container">
                     <div className="row">
                         <div className="section_title">Chính sách nhà nước</div>
@@ -93,7 +93,6 @@ const InforPage = () => {
                     onPageChange={(page) => setCurrentPage(page)}
                 />
             </div>
-            <Footer></Footer>
         </div>
     );
 };

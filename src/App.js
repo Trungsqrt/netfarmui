@@ -28,6 +28,9 @@ import Order from './components/admin_farm/ManageProduct/ManageOrder/Order';
 import FeedbackList from './components/client_farm/e_commerce/Feedback/FeedbackList';
 import FeedbackProduct from './components/client_farm/e_commerce/Feedback/FeedbackProduct';
 import Information from './components/client_farm/infor/Information';
+import Policy from './components/client_farm/infor/policy/Policy';
+import Manual from './components/client_farm/infor/manual/Manual';
+import News from './components/client_farm/infor/news/News';
 function App() {
     return (
         <div className="App">
@@ -42,11 +45,11 @@ function App() {
                 <Route path="/detail/:id" element={<DetailArticle />} />
                 <Route path="/editArticle/:id" element={<ArticleHandler />} />
                 <Route path="/editSchedule/:id" element={<CalendarHandler />} />
-                {/* <Route path="/inforPage" element={<InforPage />} />
+                {/* <Route path="/inforPage" element={<InforPage />} /> */}
                 <Route path="/inforPage/policy" element={<Policy />} />
                 <Route path="/inforPage/manual" element={<Manual />} />
                 <Route path="/inforPage/news" element={<News />} />
-                <Route path="/inforPage/schedule" element={<Schedule />} /> */}
+                {/* <Route path="/inforPage/schedule" element={<Schedule />} /> */}
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/shop/product/detail/:id" element={<ProductDetail />} />
                 <Route path="/shop/cart" element={<Cart />} />

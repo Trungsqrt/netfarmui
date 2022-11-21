@@ -54,12 +54,12 @@ const InforPage = () => {
 
     return (
         <div>
-            {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
-            {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />}
+            {/* {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
+            {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />} */}
             <div className="infor_main">
-                <div className="menu">
+                {/* <div className="menu">
                     <Menuleft></Menuleft>
-                </div>
+                </div> */}
                 <div className="infor_container">
                     <div className="row">
                         <div className="section_title">Nông nghiệp mới và hướng dẫn</div>
@@ -90,8 +90,6 @@ const InforPage = () => {
                     onPageChange={(page) => setCurrentPage(page)}
                 />
             </div>
-
-            <Footer></Footer>
         </div>
     );
 };

@@ -46,9 +46,9 @@ const InforPage = () => {
                 {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
                 {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />}
                 <div className="infor_main">
-                    <div className="menu">
+                    {/* <div className="menu">
                         <Menuleft></Menuleft>
-                    </div>
+                    </div> */}
                     <div className="infor_container">
                         <div className="row">
                             <div className="col-2">
@@ -108,8 +108,6 @@ const InforPage = () => {
                         </div>
                     </div>
                 </div>
-
-                <Footer></Footer>
             </div>
         </div>
     );

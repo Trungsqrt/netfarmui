@@ -6,22 +6,21 @@ import Schedule from './schedule/Schedule';
 import News from './news/News';
 import Policy from './policy/Policy';
 import Manual from './manual/Manual';
+import Footer from '../share/footer/Footer';
 import './InforPage.css';
 import './css/style1.css';
 const Information = () => {
     // lấy dữ liệu toàn bộ các bài đăng
-    const [user, setUser] = useState('');
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
-    useEffect(() => {
-        setUser(currentUser.roleName);
-    }, []);
+    const [user, setUser] = useState(currentUser.roleName);
+
     return (
         <div>
             <div>
                 {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
-                {user === 'Farmer' && <FarmerHeader />}
+                {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />}
                 <div className="infor_main">
                     <div className="menu">
                         <div className="menu_header">NETFARM</div>
@@ -74,6 +73,7 @@ const Information = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
