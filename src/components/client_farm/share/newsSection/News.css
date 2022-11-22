@@ -31,8 +31,8 @@
     position: relative;
     width: 100%;
     margin-bottom: 20px;
-    padding-right: 15px;
-    padding-left: 15px;
+    /* padding-right: 15px;
+    padding-left: 15px; */
 }
 
 .box {

@@ -243,7 +243,7 @@ function ProductDetail(props) {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="" id="btnAdd">
+                                <div className="btn_Add" id="btnAdd">
                                     <button className="Detail_Add_btn" onClick={AddToCartHandler}>
                                         Thêm vào giỏ hàng
                                     </button>
@@ -254,10 +254,10 @@ function ProductDetail(props) {
                                 <div className="soldOut hiden_btn" id="soldOut">
                                     Sản phẩm này hiện đang hết hàng!
                                 </div>
-                                <div className="addtional_infor">
+                                {/* <div className="addtional_infor">
                                     <div className="category_infor">Category: {detail.category}</div>
                                     <div className="category_infor">Tag: nongnghiep</div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div className="review_feedback">

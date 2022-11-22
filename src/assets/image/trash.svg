@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 260 260" style="enable-background:new 0 0 260 260;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#3F94D6;}
+	.st1{fill:none;stroke:#FFFFFF;stroke-width:14.1524;stroke-linecap:round;}
+	.st2{fill:none;stroke:#FFFFFF;stroke-width:9;stroke-linejoin:round;}
+	.st3{fill:none;stroke:#FFFFFF;stroke-width:8;}
+	.st4{fill:none;stroke:#FFFFFF;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;}
+	.st5{fill:none;stroke:#FFFFFF;stroke-width:6;}
+	.st6{fill:#FFFFFF;stroke:#FFFFFF;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;}
+	.st7{fill:#FFFFFF;}
+</style>
+<circle class="st0" cx="130" cy="130" r="130"/>
+<g>
+	<g id="g2276">
+		<g id="g2260">
+			<g id="basket" transform="translate(-429.398, -46.1522)">
+				<path id="path2280" class="st1" d="M482.3,170.7c74.8,0,74.8,0.3,74.8,0.3"/>
+				<path id="path1405" class="st2" d="M554.8,174.1l-9,91.5H502c-16.9-91.7-16.9-91.7-16.9-91.7"/>
+				<path id="path7527" class="st3" d="M487.6,188.2c66.4,0,66.4,0,66.4,0"/>
+				<path id="path7529" class="st3" d="M551.6,204.6c-60.7,0-60.7,0-60.7,0"/>
+				<path id="path7535" class="st3" d="M493.5,219.5c56.5,0,56.5,0,56.5,0"/>
+				<path id="path7539" class="st3" d="M496.5,234.3c52.1,0,52.1,0.6,52.1,0.6"/>
+				<path id="path7541" class="st3" d="M547.1,250.4c-47.9,0-47.9,0-47.9,0"/>
+				<path id="path7543" class="st3" d="M501.6,171c11.6,93.7,11.6,93.7,11.6,93.7"/>
+				<path id="path7545" class="st3" d="M523.3,264.4c-3-93.1-3-93.1-3-93.1"/>
+				<path id="path7547" class="st3" d="M538.5,171.6c-3.6,93.7-3.6,93.7-3.6,93.7"/>
+			</g>
+			<g id="g2256">
+				<path id="path9309" class="st4" d="M65.6,107.2C82,99,81.9,86,83.2,86.5c15.5,6.2,30.3,8,39.8,6c-27.7,21.1-13.6,22.1-17.4,20.7
+					C93.8,108.9,76.8,121.6,65.6,107.2z"/>
+				<path id="path11057" class="st5" d="M94.8,90.3c15.1,0,15.5-4.8,18.3-6c0.2-0.1,1.6,6.4,5.4,8.9"/>
+			</g>
+		</g>
+		<g id="person" transform="translate(-46.6017, -41.1721)">
+			<g id="body" transform="translate(-0.254381, -0.249374)">
+				<path id="upper_body" class="st6" d="M130.8,104.7l95.5,0.3c8.1,9.3,21.6,40.8,22.6,48.1l-47.6,2.4c-1.3-15.6-8.8-30.2-9.8-32.4
+					L130.8,104.7z"/>
+				<path id="lower_body" class="st6" d="M201,158.7l-16.2,104.5l37.3-68.7l16.5,69l9.9-103.3L201,158.7z"/>
+			</g>
+		</g>
+	</g>
+	<circle class="st7" cx="160.4" cy="42.8" r="18.5"/>
+</g>
+</svg>

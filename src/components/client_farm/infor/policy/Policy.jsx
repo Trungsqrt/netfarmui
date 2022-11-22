@@ -56,42 +56,20 @@ const InforPage = () => {
     }, [currentPage]);
 
     return (
-        <div>
-            {/* {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
-            {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />} */}
-            <div className="infor_main">
-                {/* <div className="menu">
-                    <Menuleft></Menuleft>
-                </div> */}
-                <div className="infor_container">
-                    <div className="row">
-                        <div className="section_title">Chính sách nhà nước</div>
-                        <div>
-                            <div className="listarticle">
-                                {currentData
-                                    ? currentData.map((item, index) => (
-                                          <Article
-                                              article={item}
-                                              key={item.id}
-                                              update={item.id}
-                                              number={index}
-                                          ></Article>
-                                      ))
-                                    : ''}
-                            </div>
+        <div className="infor_main">
+            <div className="infor_container">
+                <div className="row">
+                    <div className="section_title">Chính sách nhà nước</div>
+                    <div>
+                        <div className="listarticle">
+                            {currentData
+                                ? currentData.map((item, index) => (
+                                      <Article article={item} key={item.id} update={item.id} number={index}></Article>
+                                  ))
+                                : ''}
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className="pagination_line1">
-                <Pagination
-                    className="pagination-bar"
-                    currentPage={currentPage}
-                    totalCount={articles.length}
-                    pageSize={PageSize}
-                    onPageChange={(page) => setCurrentPage(page)}
-                />
             </div>
         </div>
     );

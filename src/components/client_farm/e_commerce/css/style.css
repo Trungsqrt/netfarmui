@@ -244,6 +244,7 @@
 
 .product_detail {
     display: flex;
+    margin-top: 20px;
 }
 
 .product_detail_img {
@@ -294,6 +295,7 @@
 
 .product_detail_description {
     padding-bottom: 10px;
+    white-space: pre-line;
 }
 
 .quantity_row {
@@ -317,8 +319,12 @@
     line-height: 40px;
 }
 
+.btn_Add {
+    margin: 20px 0;
+}
+
 .Detail_Add_btn {
-    width: 200px;
+    width: 180px;
     height: 40px;
     font-size: 16px;
     line-height: 40px;

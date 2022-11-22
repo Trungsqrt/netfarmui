@@ -1,7 +1,15 @@
+.articlecontainer:hover {
+    background-color: #f0e935;
+}
+
 .link_article {
     text-decoration: none;
     color: black;
     min-width: 120px;
+}
+
+.link_article:hover {
+    background-color: #f0e935;
 }
 
 .article_item {
@@ -17,6 +25,7 @@
 .article_img {
     width: 170px;
     padding-right: 10px;
+    height: 140px;
 }
 
 .article_text {
@@ -53,12 +62,13 @@
 
 .article_category {
     min-width: 10px;
-    border: 1px solid rgb(53, 9, 230);
+    border: 1px solid rgb(202, 245, 10);
     font-size: 10px;
     text-align: center;
     margin: 4px 4px 0 0;
     border-radius: 10%;
     padding: 2px;
+    background: #f8f497;
 }
 
 .news {
@@ -87,23 +97,27 @@ h1 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: 33.33%;
+    width: 32%;
+    margin: 4px;
 }
 
 .item {
     position: relative;
     width: 100%;
     margin-bottom: 20px;
-    padding-right: 15px;
-    padding-left: 15px;
+    border: 1px solid goldenrod;
+    box-shadow: 2px 2px 4px #343a40;
+}
+
+.item:hover {
+    background-color: #f0e935;
+    opacity: 0.6;
 }
 
 .box {
     width: 100%;
     background-color: #fff;
     padding: 20px;
-    box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 3%), 0 2.8px 2.2px rgb(0 0 0 / 5%), 0 2.8px 2.2px rgb(0 0 0 / 6%),
-        0 2.8px 2.2px rgb(0 0 0 / 7%), 0 2.8px 2.2px rgb(0 0 0 / 1%), 0 2.8px 2.2px rgb(0 0 0 / 1%);
     margin-left: 30%;
     margin-top: -18%;
     width: 70%;
@@ -111,7 +125,12 @@ h1 {
     position: relative;
     display: block;
     height: 400px;
+    box-shadow: 2px 2px 4px #343a40;
 }
+
+/* .box:hover {
+    background-color: rgb(228, 224, 224);
+} */
 
 .title {
     display: block;

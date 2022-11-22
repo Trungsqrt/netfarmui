@@ -1,20 +1,36 @@
-.article_img {
-    width: 100%;
+.news_suggest_inpage {
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.expNoEdit {
     text-align: center;
-    justify-items: center;
+    padding: 20px 0;
+}
+
+.expEdit {
+    font-size: 14px;
+}
+
+.wp-caption-text {
+    font-size: 14px;
+}
+
+figure {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.aligncenter {
+    text-align: center;
     display: flex;
     margin: 0 auto;
 }
 
-.content {
-    padding-top: 20px;
-    font-size: 16px;
-    line-height: 18px;
-    font-weight: 300;
-    color: #333;
-    text-align: justify;
-}
-
-h3 strong {
-    font-size: 10px;
+.DetailBanner {
+    background-image: url('https://bom.so/fd4VQ7');
+    height: 300px;
+    width: 100%;
 }

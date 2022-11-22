@@ -1,4 +1,8 @@
 .news {
-  display: flex;
-  width: 100%;
+    display: flex;
+    width: 100%;
+}
+
+.Home_container {
+    margin: 0 40px;
 }

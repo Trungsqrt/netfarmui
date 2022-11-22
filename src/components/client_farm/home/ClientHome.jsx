@@ -10,12 +10,14 @@ const ClientHome = () => {
     return (
         <div>
             <Header></Header>
-            <Slide></Slide>
-            <About></About>
-            <div className="news">
-                <News></News>
+            <div className="Home_container">
+                <Slide></Slide>
+                <About></About>
+                <div className="news">
+                    <News></News>
+                </div>
+                <Footer></Footer>
             </div>
-            <Footer></Footer>
         </div>
     );
 };

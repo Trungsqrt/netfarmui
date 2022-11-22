@@ -5,7 +5,8 @@ import ArticleHandler from './components/articleHandler/ArticleHandler';
 import AdminPage from './components/adminPage/AdminPage';
 import ExpertPage from './components/expertPage/ExpertPage';
 import CreateExpert from './components/admin_farm/ManageUser/Expert/CreateExpert';
-import CalendarHandler from './components/calendarHandler/CalendarHandler';
+// import CalendarHandler from './components/calendarHandler/CalendarHandler';
+import AddSchedule from './components/admin_farm/ManagePost/Addschedule';
 import ClientHome from './components/client_farm/home/ClientHome';
 import DetailArticle from './components/client_farm/detail/DetailArticle';
 // import InforPage from './components/client_farm/infor/InforPage';
@@ -39,13 +40,13 @@ function App() {
                 <Route path="/personal" element={<Personal />} />
                 <Route path="/createexpert" element={<CreateExpert />} />
                 <Route path="/articlehandler" element={<ArticleHandler />} />
-                <Route path="/calenderhandler" element={<CalendarHandler />} />
+                <Route path="/calenderhandler" element={<AddSchedule />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/" element={<ClientHome />} />
                 <Route path="/detail/:id" element={<DetailArticle />} />
                 <Route path="/editArticle/:id" element={<ArticleHandler />} />
-                <Route path="/editSchedule/:id" element={<CalendarHandler />} />
-                {/* <Route path="/inforPage" element={<InforPage />} /> */}
+                <Route path="/editSchedule/:id" element={<AddSchedule />} />
+                {/* <Route path="/inforPage" element={<InforPage />} />
                 <Route path="/inforPage/policy" element={<Policy />} />
                 <Route path="/inforPage/manual" element={<Manual />} />
                 <Route path="/inforPage/news" element={<News />} />

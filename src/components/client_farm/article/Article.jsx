@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Article.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
 Article.propTypes = {
     articles: PropTypes.array,
 };
@@ -28,7 +27,7 @@ function truncateString(str) {
 function Article(props) {
     const { article } = props;
     return (
-        <div>
+        <div className="articlecontainer">
             <Link className="link_article" to={`/detail/${article.id}`}>
                 <div className="article_item">
                     <img src={article.imageURL} className="article_img" />
@@ -36,7 +35,9 @@ function Article(props) {
                         <div className="article_title">{truncateString(article.title)}</div>
                         <div className="article_tag">
                             <div className="article_category">{article.aCategoryName}</div>
-                            <div className="article_category">{article.datePost.slice(0, 10)}</div>
+                            <div className="article_category">
+                                {article.datePost.replace('-', '/').split('T')[0].replace('-', '/')}
+                            </div>
                         </div>
                         <div className="article_content">{getText(article.content)}</div>
                     </div>

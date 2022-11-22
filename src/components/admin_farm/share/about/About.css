@@ -1,7 +1,6 @@
 .about {
     background-color: #ceba08;
     padding-bottom: 20px;
-    margin-top: 100px;
 }
 .container {
     max-width: 1200px;
@@ -13,7 +12,8 @@
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin: 0;
+    margin-right: -15px;
+    margin-left: -15px;
 }
 *,
 ::after,
@@ -46,7 +46,7 @@
     width: 90%;
 }
 
-h3 {
+.GioiThieu {
     color: #333;
     font-size: 35px;
     font-family: 'Roboto Bold', Helvetica Neue, Helvetica, Arial, sans-serif;
