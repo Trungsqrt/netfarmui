@@ -28,7 +28,7 @@ function AddSchedule() {
     ]);
     var uuid = require('uuid');
     const scheduleId = uuid.v4();
-    console.log(scheduleId);
+    // console.log(scheduleId);
     function AddTask() {
         if (scheduleName === '') alert('Bạn phải nhập tên lịch thời vụ');
         else {
@@ -43,7 +43,7 @@ function AddSchedule() {
                     description: '',
                 };
                 var list = data;
-                console.log(list);
+                // console.log(list);
                 list.push([String(taskName), new Date(start), new Date(end)]);
                 setScheduleTask((preData) => [...preData, newTask]);
                 setData(list);
@@ -73,7 +73,7 @@ function AddSchedule() {
                 name: scheduleName,
                 description: description,
             };
-            console.log(sched);
+            // console.log('shed ', sched);
 
             try {
                 axios.post(scheduleUrl, sched);
@@ -81,12 +81,13 @@ function AddSchedule() {
                     scheduleTask[i].scheduleId = scheduleId;
                     scheduleTask[i].description = '';
                     axios.post(TaskUrl, scheduleTask[i]);
-                    console.log(scheduleTask[i]);
+                    // console.log(scheduleTask[i]);
                 }
+                alert('Đăng lịch thành công');
             } catch (err) {
                 alert('có lỗi. Vui lòng thử lại');
             }
-            console.log(scheduleTask);
+            // console.log(scheduleTask);
         }
     }
 

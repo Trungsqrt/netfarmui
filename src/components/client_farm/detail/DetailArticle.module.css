@@ -81,11 +81,12 @@
 }
 
 .relatedItemTitle {
-    font-size: 24px;
+    font-size: 18px;
     color: #000;
     line-height: 24px;
     text-align: justify;
     margin-top: 4px;
+    font-weight: bold;
 }
 
 .relatedItemLine {
@@ -99,6 +100,7 @@
     line-height: 20px;
     color: #000;
     text-align: justify;
+    font-weight: bold;
 }
 
 .newsItemTitle:hover {

@@ -80,7 +80,6 @@ const InforPage = () => {
                     </div>
                 </div>
             </div>
-
             <div className="pagination_line1">
                 <Pagination
                     className="pagination-bar"

@@ -15,6 +15,9 @@ function AdminPage() {
     const [user, setUser] = useState('');
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
+
+    const [schedule, setSchedule] = useState([]);
+
     useEffect(() => {
         setUser(currentUser.roleName);
         async function getData() {
@@ -31,6 +34,14 @@ function AdminPage() {
             });
         }
         getData();
+
+        async function getSchedule() {
+            const res = await axios.get('https://localhost:44303/api/Schedule');
+            const data = res.data;
+            setSchedule(data);
+        }
+
+        getSchedule();
     }, []);
 
     const UserHandler = () => {
@@ -66,14 +77,15 @@ function AdminPage() {
                 };
                 setData((prevData) => [...prevData, value]);
             });
-            console.log('abcc');
         }
-        console.log('abc');
+
         getData();
     };
 
     const ScheduleHandler = () => {
         setRender(3);
+        setData([]);
+
         async function getData() {
             setData([]);
             const Dataset = await axios.get(scheduleUrl);
@@ -89,7 +101,7 @@ function AdminPage() {
             });
         }
 
-        getData();
+        // getData();
     };
 
     const handleDeletePost = (index) => {
@@ -123,6 +135,27 @@ function AdminPage() {
     const handleAddSchedule = () => {
         navigate('/CalenderHandler');
     };
+
+    function handlerChange(e) {
+        setData([]);
+        const id = e.target.value;
+        const getData = async () => {
+            const res = await axios.get(scheduleUrl);
+            const dataFilterYet = res.data;
+            dataFilterYet.forEach((item) => {
+                if (Number(item.scheduleId) === Number(id)) {
+                    const value = {
+                        id: item.id,
+                        name: item.name,
+                        dateStart: item.dateStart.slice(0, 10),
+                        dateEnd: item.dateEnd.slice(0, 10),
+                    };
+                    setData((prev) => [...prev, value]);
+                }
+            });
+        };
+        getData();
+    }
 
     return (
         <div>
@@ -208,35 +241,53 @@ function AdminPage() {
                                     )}
 
                                     {render == 3 && (
-                                        <tbody>
-                                            <i
-                                                id={styles.iconAdd}
-                                                className="fa-solid fa-plus"
-                                                onClick={handleAddSchedule}
-                                            ></i>
-                                            <section className={styles.tableContent}>
-                                                <tr>
-                                                    <th className={styles.th1}>Id</th>
-                                                    <th className={styles.th1}>Tên</th>
-                                                    <th className={styles.th1}>Bắt đầu</th>
-                                                    <th className={styles.th1}>Kết thúc</th>
-                                                </tr>
-                                                {data.map((item) => (
-                                                    <tr key={item.id}>
-                                                        <th width="10%">{item.id}</th>
-                                                        <th width="50%">{item.name}</th>
-                                                        <th width="20%">{item.dateStart}</th>
-                                                        <th width="20%">{item.dateEnd}</th>
-                                                        <th
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={() => handleDeleteSchedule(item.id)}
-                                                        >
-                                                            &times;
-                                                        </th>
+                                        <div className={styles.bodyContainer2}>
+                                            <select
+                                                onChange={handlerChange}
+                                                className={styles.selectSection}
+                                                style={{ marginLeft: '0px' }}
+                                            >
+                                                <option value={''} key={'asd'}>
+                                                    Chọn loại cây
+                                                </option>
+                                                {schedule
+                                                    ? schedule.map((sche, index) => (
+                                                          <option value={sche.id} key={index}>
+                                                              {sche.name}
+                                                          </option>
+                                                      ))
+                                                    : ''}
+                                            </select>
+                                            <tbody>
+                                                <i
+                                                    id={styles.iconAdd}
+                                                    className="fa-solid fa-plus"
+                                                    onClick={handleAddSchedule}
+                                                ></i>
+                                                <section className={styles.tableContent}>
+                                                    <tr>
+                                                        <th className={styles.th1}>Id</th>
+                                                        <th className={styles.th1}>Tên</th>
+                                                        <th className={styles.th1}>Bắt đầu</th>
+                                                        <th className={styles.th1}>Kết thúc</th>
                                                     </tr>
-                                                ))}
-                                            </section>
-                                        </tbody>
+                                                    {data.map((item) => (
+                                                        <tr key={item.id}>
+                                                            <th width="10%">{item.id}</th>
+                                                            <th width="50%">{item.name}</th>
+                                                            <th width="20%">{item.dateStart}</th>
+                                                            <th width="20%">{item.dateEnd}</th>
+                                                            <th
+                                                                style={{ cursor: 'pointer' }}
+                                                                onClick={() => handleDeleteSchedule(item.id)}
+                                                            >
+                                                                &times;
+                                                            </th>
+                                                        </tr>
+                                                    ))}
+                                                </section>
+                                            </tbody>
+                                        </div>
                                     )}
                                 </table>
                             </section>

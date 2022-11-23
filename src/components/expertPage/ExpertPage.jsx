@@ -3,6 +3,7 @@ import styles from './ExpertPage.module.css';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '../admin_farm/share/header/Header';
+import './ExpertPage.css';
 
 function ExpertPage() {
     const articleUrl = 'https://localhost:44303/api/Article';
@@ -13,6 +14,8 @@ function ExpertPage() {
     const [user, setUser] = useState('');
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
+
+    const [schedule, setSchedule] = useState([]);
 
     useEffect(() => {
         setUser(currentUser.roleName);
@@ -29,7 +32,15 @@ function ExpertPage() {
                 setData((prevData) => [...prevData, value]);
             });
         }
+
+        async function getSchedule() {
+            const res = await axios.get('https://localhost:44303/api/Schedule');
+            const data = res.data;
+            setSchedule(data);
+        }
+
         getData();
+        getSchedule();
     }, []);
 
     const PostHandler = () => {
@@ -65,7 +76,7 @@ function ExpertPage() {
                     dateStart: item.dateStart.slice(0, 10),
                     dateEnd: item.dateEnd.slice(0, 10),
                 };
-                setData((prevData) => [...prevData, value]);
+                // setData((prevData) => [...prevData, value]);
             });
         }
 
@@ -87,6 +98,7 @@ function ExpertPage() {
         }
         deleteHandler();
     };
+
     const handleAddArticle = () => {
         navigate('/ArticleHandler');
     };
@@ -102,6 +114,28 @@ function ExpertPage() {
     const handleEditSchedule = (id) => {
         navigate(`/editSchedule/${id}`);
     };
+
+    function handlerChange(e) {
+        setData([]);
+        const id = e.target.value;
+        const getData = async () => {
+            const res = await axios.get(scheduleUrl);
+            const dataFilterYet = res.data;
+            dataFilterYet.forEach((item) => {
+                if (Number(item.scheduleId) === Number(id)) {
+                    const value = {
+                        id: item.id,
+                        name: item.name,
+                        dateStart: item.dateStart.slice(0, 10),
+                        dateEnd: item.dateEnd.slice(0, 10),
+                    };
+                    setData((prev) => [...prev, value]);
+                }
+            });
+        };
+        getData();
+    }
+
     return (
         <div>
             {user === 'Expert' && (
@@ -160,41 +194,57 @@ function ExpertPage() {
                                     )}
 
                                     {render == 2 && (
-                                        <tbody>
-                                            <i
-                                                id={styles.iconAdd}
-                                                className="fa-solid fa-plus"
-                                                onClick={handleAddSchedule}
-                                            ></i>
-                                            <section className={styles.tableContent}>
-                                                <tr>
-                                                    <th className={styles.th1}>Id</th>
-                                                    <th className={styles.th1}>Tên</th>
-                                                    <th className={styles.th1}>Bắt đầu</th>
-                                                    <th className={styles.th1}>Kết thúc</th>
-                                                </tr>
-                                                {data.map((item) => (
-                                                    <tr key={item.id}>
-                                                        <th width="10%">{item.id}</th>
-                                                        <th width="50%">{item.name}</th>
-                                                        <th width="20%">{item.dateStart}</th>
-                                                        <th width="20%">{item.dateEnd}</th>
-                                                        <th
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={() => handleDeleteSchedule(item.id)}
-                                                        >
-                                                            &times;
-                                                        </th>
-                                                        <th
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={() => handleEditSchedule(item.id)}
-                                                        >
-                                                            <i class="fa-solid fa-pen-to-square"></i>
-                                                        </th>
+                                        <div className={styles.bodyContainer2}>
+                                            <select
+                                                onChange={handlerChange}
+                                                className={styles.selectSection}
+                                                style={{ marginLeft: '0px' }}
+                                            >
+                                                <option>Chọn loại cây</option>
+                                                {schedule
+                                                    ? schedule.map((sche, index) => (
+                                                          <option value={sche.id} key={index}>
+                                                              {sche.name}
+                                                          </option>
+                                                      ))
+                                                    : ''}
+                                            </select>
+                                            <tbody>
+                                                <i
+                                                    id={styles.iconAdd}
+                                                    className="fa-solid fa-plus"
+                                                    onClick={handleAddSchedule}
+                                                ></i>
+                                                <section className={styles.tableContent}>
+                                                    <tr>
+                                                        <th className={styles.th1}>Id</th>
+                                                        <th className={styles.th1}>Tên</th>
+                                                        <th className={styles.th1}>Bắt đầu</th>
+                                                        <th className={styles.th1}>Kết thúc</th>
                                                     </tr>
-                                                ))}
-                                            </section>
-                                        </tbody>
+                                                    {data.map((item) => (
+                                                        <tr key={item.id}>
+                                                            <th width="10%">{item.id}</th>
+                                                            <th width="50%">{item.name}</th>
+                                                            <th width="20%">{item.dateStart}</th>
+                                                            <th width="20%">{item.dateEnd}</th>
+                                                            <th
+                                                                style={{ cursor: 'pointer' }}
+                                                                onClick={() => handleDeleteSchedule(item.id)}
+                                                            >
+                                                                &times;
+                                                            </th>
+                                                            <th
+                                                                style={{ cursor: 'pointer' }}
+                                                                onClick={() => handleEditSchedule(item.id)}
+                                                            >
+                                                                <i className="fa-solid fa-pen-to-square"></i>
+                                                            </th>
+                                                        </tr>
+                                                    ))}
+                                                </section>
+                                            </tbody>
+                                        </div>
                                     )}
                                 </table>
                             </section>

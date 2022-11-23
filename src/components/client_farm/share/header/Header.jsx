@@ -87,7 +87,9 @@ const Header = () => {
 
     useEffect(() => {
         if (searchContent != '') {
-            const resultArray = articles.filter((item) => item.title.includes(searchContent));
+            const resultArray = articles.filter((item) =>
+                item.title.toLowerCase().includes(searchContent.toLowerCase()),
+            );
             setCurrentArticles([...resultArray]);
         } else if (searchContent == '') {
             setCurrentArticles([]);

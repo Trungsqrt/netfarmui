@@ -44,14 +44,6 @@
     border-top: 1px solid #bbbbbb;
 }
 
-.bodyContainer {
-    background-color: white;
-    height: 90vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 td,
 th {
     border: 1px solid #dddddd;
@@ -70,11 +62,25 @@ table {
 }
 
 .bodyContainer {
+    background-color: white;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
+}
+
+.bodyContainer2 {
+    margin-top: 20px;
+    background-color: white;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* position: relative; */
+    width: 100%;
 }
 
 .tableContent {
