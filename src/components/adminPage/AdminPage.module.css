@@ -109,13 +109,13 @@ table {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: rgb(169, 169, 169);
     border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: rgb(169, 169, 169);
 }
 
 .schedule_header {

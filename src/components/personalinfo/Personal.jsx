@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from './Personal.module.css';
 import { useNavigate } from 'react-router-dom';
 import Header from '../client_farm/share/header/Header';
+import { default as StaffHeader } from '../admin_farm/share/header/Header';
+import { default as FarmerHeader } from '../client_farm/share/header/Header';
 import axios from 'axios';
 function Personal() {
     const [fullName, setFullName] = useState('');
@@ -13,6 +15,10 @@ function Personal() {
     const [year, setYear] = useState('');
     const [gender, setGender] = useState(true);
     const [createAt, setCreateAt] = useState('');
+
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
+    const [user, setUser] = useState(currentUser.roleName);
 
     const navigate = useNavigate();
 
@@ -62,7 +68,8 @@ function Personal() {
 
     return (
         <div>
-            <Header />
+            {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
+            {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />}
             <div className={styles.body}>
                 <div className={styles.container}>
                     <section className={styles.title}>Cập nhật thông tin cá nhân</section>

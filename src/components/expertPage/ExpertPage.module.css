@@ -74,7 +74,7 @@ table {
 .bodyContainer2 {
     margin-top: 20px;
     background-color: white;
-    height: 90vh;
+    height: 86vh;
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
@@ -85,7 +85,7 @@ table {
 
 .tableContent {
     overflow-y: scroll;
-    height: 80vh;
+    height: 70vh;
 }
 
 #iconAdd {

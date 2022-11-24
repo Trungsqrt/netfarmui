@@ -7,9 +7,12 @@ import './Calendar.css';
 import { Chart } from 'react-google-charts';
 
 function AddSchedule() {
+    const { id } = useParams();
+    const idSchedule = id;
     const TaskUrl = 'https://localhost:44303/api/ScheduleTask';
     const scheduleUrl = 'https://localhost:44303/api/Schedule';
     const navigate = useNavigate();
+    // const isremoved
     const currentUser = JSON.parse(localStorage.getItem('user'));
     const [user, setUser] = useState(currentUser.roleName);
     const [schedule, setSchedule] = useState({});
@@ -26,6 +29,60 @@ function AddSchedule() {
             { type: 'date', label: 'Ngày kết thúc' },
         ],
     ]);
+
+    const [flag, setFlag] = useState(false);
+    const [initTasks, setInitTasks] = useState([]);
+    const [lengthh, setLengthh] = useState(0);
+    const [tasks, setTasks] = useState([]);
+    const [tasksAdd, setTasksAdd] = useState([]);
+    useEffect(() => {
+        const getSchedule = async () => {
+            const resSchedules = await axios.get(scheduleUrl + `/${idSchedule}`);
+            const responseSchedules = resSchedules.data;
+
+            const resTasks = await axios.get(TaskUrl);
+            const responseTasks = resTasks.data;
+            const TasksFiltered = responseTasks.filter((task) => {
+                return task.scheduleId == idSchedule;
+            });
+
+            const TasksConverted = TasksFiltered.map((item) => {
+                return {
+                    dateEnd: item.dateEnd.slice(0, 10),
+                    dateStart: item.dateStart.slice(0, 10),
+                    description: item.description,
+                    id: item.id,
+                    name: item.name,
+                    scheduleId: item.scheduleId,
+                };
+            });
+
+            setScheduleTask(TasksConverted);
+            setInitTasks(TasksConverted);
+            setScheduleName(responseSchedules.name);
+            setDescription(responseSchedules.description);
+            setFlag(true);
+
+            TasksFiltered.forEach((item) => {
+                var list = data;
+                list.push([String(item.name.trim()), new Date(item.dateStart), new Date(item.dateEnd)]);
+                setData(list);
+            });
+        };
+
+        if (idSchedule) {
+            getSchedule();
+        }
+    }, []);
+
+    useEffect(() => {
+        setLengthh(scheduleTask.length);
+    }, [flag]);
+
+    useEffect(() => {
+        console.log(lengthh);
+    }, [lengthh]);
+
     var uuid = require('uuid');
     const scheduleId = uuid.v4();
     // console.log(scheduleId);
@@ -47,6 +104,9 @@ function AddSchedule() {
                 list.push([String(taskName), new Date(start), new Date(end)]);
                 setScheduleTask((preData) => [...preData, newTask]);
                 setData(list);
+
+                //setTaskAdd for edit
+                setTasksAdd((prev) => [...prev, newTask]);
             }
         }
         setTaskName('');
@@ -58,36 +118,86 @@ function AddSchedule() {
         var isComfirm = window.confirm('Chọn OK để xóa nhiệm vụ này');
         if (isComfirm) {
             data.splice(index + 1, 1);
-            scheduleTask.splice(index, 1);
+            const value = scheduleTask.splice(index, 1);
             setData(data);
             setScheduleTask(scheduleTask);
+
+            //setTasks for delete handle
+            setTasks((prev) => [...prev, value[0].id]);
+
+            for (let i = 0; i < tasksAdd.length; i++) {
+                if (tasksAdd[i].name === value[0].name) {
+                    const indexx = tasksAdd.indexOf(tasksAdd[i]);
+                    tasksAdd.splice(indexx, 1);
+                }
+            }
+
+            setTasksAdd(tasksAdd);
         }
         setTaskName(name);
+        // setTaskName();
     }
 
     function saveHandler() {
-        if (scheduleName === '' || scheduleTask.length === 0) return;
-        else {
-            const sched = {
-                id: scheduleId,
-                name: scheduleName,
-                description: description,
-            };
-            // console.log('shed ', sched);
+        if (idSchedule) {
+            console.log('edit');
+            if (scheduleName === '' || scheduleTask.length === 0) return;
+            else {
+                const sched = {
+                    id: idSchedule,
+                    name: scheduleName,
+                    description: description,
+                };
+                // console.log('shed ', sched);
 
-            try {
-                axios.post(scheduleUrl, sched);
-                for (var i = 0; i < scheduleTask.length; i++) {
-                    scheduleTask[i].scheduleId = scheduleId;
-                    scheduleTask[i].description = '';
-                    axios.post(TaskUrl, scheduleTask[i]);
-                    // console.log(scheduleTask[i]);
+                if (lengthh !== 0) {
+                    for (let i = 0; i < tasks.length; i++) {
+                        console.log(TaskUrl + `/${tasks[i]}`);
+                        axios.delete(TaskUrl + `/${tasks[i]}`);
+                    }
                 }
-                alert('Đăng lịch thành công');
-            } catch (err) {
-                alert('có lỗi. Vui lòng thử lại');
+                try {
+                    for (var i = 0; i < tasksAdd.length; i++) {
+                        tasksAdd[i].scheduleId = idSchedule;
+                        tasksAdd[i].description = '';
+                        axios.post(TaskUrl, tasksAdd[i]);
+                    }
+
+                    alert('Đăng lịch thành công');
+                    window.location.reload();
+                } catch (err) {
+                    alert('có lỗi. Vui lòng thử lại');
+                }
+                // console.log(scheduleTask);
             }
-            // console.log(scheduleTask);
+        } else {
+            console.log('add');
+
+            if (scheduleName === '' || scheduleTask.length === 0) return;
+            else {
+                const sched = {
+                    id: scheduleId,
+                    name: scheduleName,
+                    description: description,
+                };
+
+                try {
+                    axios.post(scheduleUrl, sched);
+                    for (let i = 0; i < scheduleTask.length; i++) {
+                        const postt = async () => {
+                            scheduleTask[i].scheduleId = scheduleId;
+                            scheduleTask[i].description = '';
+                            axios.post(TaskUrl, scheduleTask[i]);
+                            console.log(scheduleTask[i]);
+                        };
+                        postt();
+                    }
+                    alert('Đăng lịch thành công');
+                    window.location.reload();
+                } catch (err) {
+                    alert('có lỗi. Vui lòng thử lại');
+                }
+            }
         }
     }
 
@@ -123,6 +233,7 @@ function AddSchedule() {
                                         type="text"
                                         required
                                         min={3}
+                                        readOnly={idSchedule ? true : false}
                                     ></input>
                                 </div>
                                 <div className="schedule_row">

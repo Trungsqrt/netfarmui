@@ -8,6 +8,7 @@ function AdminPage() {
     const userUrl = 'https://localhost:44303/api/Users';
     const articleUrl = 'https://localhost:44303/api/Article';
     const scheduleUrl = 'https://localhost:44303/api/ScheduleTask';
+    const ScheUrl = 'https://localhost:44303/api/Schedule';
 
     const [data, setData] = useState([]);
     const navigate = useNavigate();
@@ -17,6 +18,8 @@ function AdminPage() {
     const currentUser = JSON.parse(getUser);
 
     const [schedule, setSchedule] = useState([]);
+    const [flag, setFlag] = useState(false);
+    const [idHandle, setIdHandle] = useState(-1);
 
     useEffect(() => {
         setUser(currentUser.roleName);
@@ -120,12 +123,38 @@ function AdminPage() {
         deleteHandler();
     };
 
-    const handleDeleteSchedule = (index) => {
-        async function deleteHandler() {
-            await axios.delete(scheduleUrl + '/' + index);
-            ScheduleHandler();
-        }
-        deleteHandler();
+    const handleDeleteSchedule = () => {
+        const dataFil = [];
+        axios
+            .get(scheduleUrl)
+            .then((res) => {
+                res.data.forEach((item) => {
+                    if (item.scheduleId == idHandle) dataFil.push(item.id);
+                });
+
+                //delete tasks
+                dataFil.forEach((item) => {
+                    const dele = async () => {
+                        await axios.delete(scheduleUrl + '/' + item);
+                    };
+                    dele();
+                });
+            })
+            .then(() => {
+                //delete schedule
+                axios.delete(ScheUrl + '/' + idHandle);
+            })
+            .then(() => {
+                ScheduleHandler();
+            })
+            .then(() => {
+                async function getSchedule() {
+                    const res = await axios.get('https://localhost:44303/api/Schedule');
+                    const data = res.data;
+                    setSchedule(data);
+                }
+                getSchedule();
+            });
     };
 
     const handleAddArticle = () => {
@@ -139,16 +168,24 @@ function AdminPage() {
     function handlerChange(e) {
         setData([]);
         const id = e.target.value;
+
+        if (id == 'Chọn loại cây') {
+            setFlag(false);
+        } else {
+            setFlag(true);
+            setIdHandle(id);
+        }
         const getData = async () => {
             const res = await axios.get(scheduleUrl);
             const dataFilterYet = res.data;
             dataFilterYet.forEach((item) => {
-                if (Number(item.scheduleId) === Number(id)) {
+                if (item.scheduleId === id) {
                     const value = {
                         id: item.id,
                         name: item.name,
                         dateStart: item.dateStart.slice(0, 10),
                         dateEnd: item.dateEnd.slice(0, 10),
+                        scheduleId: item.scheduleId,
                     };
                     setData((prev) => [...prev, value]);
                 }
@@ -247,12 +284,10 @@ function AdminPage() {
                                                 className={styles.selectSection}
                                                 style={{ marginLeft: '0px' }}
                                             >
-                                                <option value={''} key={'asd'}>
-                                                    Chọn loại cây
-                                                </option>
+                                                <option>Chọn loại cây</option>
                                                 {schedule
                                                     ? schedule.map((sche, index) => (
-                                                          <option value={sche.id} key={index}>
+                                                          <option value={sche.id} key={sche.id}>
                                                               {sche.name}
                                                           </option>
                                                       ))
@@ -264,25 +299,26 @@ function AdminPage() {
                                                     className="fa-solid fa-plus"
                                                     onClick={handleAddSchedule}
                                                 ></i>
+
+                                                {flag && (
+                                                    <i class="fa-solid fa-trash" onClick={handleDeleteSchedule}></i>
+                                                )}
+
                                                 <section className={styles.tableContent}>
                                                     <tr>
                                                         <th className={styles.th1}>Id</th>
                                                         <th className={styles.th1}>Tên</th>
                                                         <th className={styles.th1}>Bắt đầu</th>
                                                         <th className={styles.th1}>Kết thúc</th>
+                                                        <th className={styles.th1}>Id lịch</th>
                                                     </tr>
                                                     {data.map((item) => (
                                                         <tr key={item.id}>
                                                             <th width="10%">{item.id}</th>
-                                                            <th width="50%">{item.name}</th>
+                                                            <th width="20%">{item.name}</th>
                                                             <th width="20%">{item.dateStart}</th>
                                                             <th width="20%">{item.dateEnd}</th>
-                                                            <th
-                                                                style={{ cursor: 'pointer' }}
-                                                                onClick={() => handleDeleteSchedule(item.id)}
-                                                            >
-                                                                &times;
-                                                            </th>
+                                                            <th width="40%">{item.scheduleId}</th>
                                                         </tr>
                                                     ))}
                                                 </section>
