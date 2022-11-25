@@ -39,7 +39,9 @@ function DSS() {
                 rain: value[i].precip,
             };
             try {
-                axios.put(`${putWeatherUrl}/${i}`, obj);
+                console.log(obj);
+                // axios.delete(`${putWeatherUrl}/${i}`);
+                axios.put(`${putWeatherUrl}`, obj);
             } catch (err) {
                 alert('Có lỗi vui lòng thử lại');
             }
@@ -81,8 +83,8 @@ function DSS() {
         } else {
             const getData = async () => {
                 const res = await axios.get(`${resultUrl}/${selectedType}/${selectedAction}`);
-                console.log(res);
-                setMessage(res);
+                // console.log(res);
+                setMessage(res.data.result);
             };
             getData();
         }
