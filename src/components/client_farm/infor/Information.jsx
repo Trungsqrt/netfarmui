@@ -7,7 +7,7 @@ import News from './news/News';
 import Policy from './policy/Policy';
 import Manual from './manual/Manual';
 import Footer from '../share/footer/Footer';
-import DSS from '../../client_farm/infor/dss/DSS';
+import DSS from '../../client_farm/infor/DSS/DSS';
 import './InforPage.css';
 import './css/style1.css';
 const Information = () => {
@@ -16,9 +16,10 @@ const Information = () => {
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
     const [user, setUser] = useState('');
-    if (currentUser) {
-        setUser(currentUser.roleName);
-    }
+    console.log(currentUser);
+    useEffect(() => {
+        if (currentUser) setUser(currentUser.roleName);
+    }, []);
     return (
         <div>
             <div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import dssImage from '../../../../assets/image/pngwing.com.png';
-import styles from '../dss/DSS.module.css';
+import styles from '../../infor/DSS/DSS.module.css';
 import dssImageChat from '../../../../assets/image/chat.png';
 function DSS() {
     const [loaicay, setLoaiCay] = useState([]);
@@ -14,7 +14,8 @@ function DSS() {
     return (
         <div>
             <section className={styles.selectBox}>
-                <select onChange={handlerChangeLoaiCay} className="select_section">
+                <div className={styles.dsstitle}>Đối tượng tư vấn: </div>
+                <select onChange={handlerChangeLoaiCay} className={styles.selectElement}>
                     {loaicay
                         ? loaicay.map((item, index) => (
                               <option value={item.id} key={index}>
@@ -23,7 +24,7 @@ function DSS() {
                           ))
                         : ''}
                 </select>
-                <select onChange={handlerChangeHoatDong} className="select_section">
+                <select onChange={handlerChangeHoatDong} className={styles.selectElement}>
                     {hoatdong
                         ? hoatdong.map((item, index) => (
                               <option value={item.id} key={index}>
@@ -35,17 +36,17 @@ function DSS() {
             </section>
 
             <section className={styles.container}>
-                <section className={styles.imageHuman}></section>
+                <div className={styles.imageHuman}></div>
 
-                <section className={styles.bubble}>
+                <div className={styles.bubble}>
                     <div className={styles.text}>
                         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum consectetur repellat nihil
                         aperiam voluptate maxime iusto, deleniti nemo quas asperiores incidunt nulla eum, aliquam
                         voluptatum quod provident vero debitis ullam?
                     </div>
                     <img src={dssImageChat} className={styles.chat}></img>
-                </section>
-                <section className={styles.chart}></section>
+                </div>
+                <div className={styles.chart}></div>
             </section>
         </div>
     );
