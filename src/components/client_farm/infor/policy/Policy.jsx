@@ -69,6 +69,15 @@ const InforPage = () => {
                         </div>
                     </div>
                 </div>
+                <div className="pagination_line1">
+                    <Pagination
+                        className="pagination-bar"
+                        currentPage={currentPage}
+                        totalCount={articles.length}
+                        pageSize={PageSize}
+                        onPageChange={(page) => setCurrentPage(page)}
+                    />
+                </div>
             </div>
         </div>
     );

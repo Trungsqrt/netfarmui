@@ -28,6 +28,7 @@ const TemperatureChart = () => {
         const res = await axios.get(weatherAPIURL);
         setDataWeather(res.data.data);
         setCityName(res.data.city_name);
+        console.log(res.data.data[0].weather.description);
     };
     useEffect(() => {
         getData();
