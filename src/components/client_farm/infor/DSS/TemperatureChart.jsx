@@ -23,17 +23,6 @@ const TemperatureChart = () => {
 
     //set temporary data
     const [tempData, setTempData] = useState([]);
-    const data = [
-        { ngay: '00:00', NhietDo: -5, LuongMua: 0 },
-        { ngay: '03:00', NhietDo: -2, LuongMua: 0 },
-        { ngay: '06:00', NhietDo: -1, LuongMua: 0 },
-        { ngay: '09:00', NhietDo: 0, LuongMua: 0 },
-        { ngay: '12:00', NhietDo: 2, LuongMua: 3 },
-        { ngay: '15:00', NhietDo: 4, LuongMua: 10 },
-        { ngay: '18:00', NhietDo: 5, LuongMua: 3 },
-        { ngay: '21:00', NhietDo: 3, LuongMua: 0 },
-        { ngay: '00:00', NhietDo: 0, LuongMua: 0 },
-    ];
     const getData = async () => {
         const res = await axios.get(weatherAPIURL);
         setDataWeather(res.data.data);
@@ -44,15 +33,16 @@ const TemperatureChart = () => {
     }, []);
 
     useEffect(() => {
-        // const list = [];
+        const list = [];
         const weather10days = dataWeather.slice(0, 10);
         weather10days.forEach((item) => {
             const temp = {};
             temp.Ngày = item.datetime;
             temp.Nhiệt_độ = item.temp;
             temp.Lượng_mưa = item.precip;
-            setTempData((prev) => [...prev, temp]);
+            list.push(temp);
         });
+        setTempData(list);
     }, [dataWeather]);
 
     return (
@@ -60,11 +50,11 @@ const TemperatureChart = () => {
             <ComposedChart width={730} height={250} data={tempData}>
                 <XAxis dataKey="Ngày" />
                 <YAxis yAxisId={1} orientation="right" label={{ value: 'Lượng mưa mm', angle: -90 }} />
-                <YAxis yAxisId={2} label={{ value: 'Nhiệt độ (oC)', angle: -90 }} />
+                <YAxis yAxisId={2} label={{ value: 'Nhiệt độ ', angle: -90 }} />
                 <Tooltip />
                 <Legend />
                 <CartesianGrid stroke="#f5f5f5" />
-                <Bar yAxisId={1} dataKey="Lượng_mưa" barSize={40} fill="#413ea0" />
+                <Bar yAxisId={1} dataKey="Lượng_mưa" barSize={40} fill="#413ea0" label="Lượng mưa" />
                 <Line yAxisId={2} type="monotone" dataKey="Nhiệt_độ" stroke="#ff0000" />
             </ComposedChart>
         </div>
