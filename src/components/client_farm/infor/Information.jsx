@@ -7,6 +7,7 @@ import News from './news/News';
 import Policy from './policy/Policy';
 import Manual from './manual/Manual';
 import Footer from '../share/footer/Footer';
+import DSS from '../../client_farm/infor/dss/DSS';
 import './InforPage.css';
 import './css/style1.css';
 const Information = () => {
@@ -73,6 +74,7 @@ const Information = () => {
                         {render === 2 && <News></News>}
                         {render === 3 && <Manual></Manual>}
                         {render === 4 && <Policy></Policy>}
+                        {render === 5 && <DSS></DSS>}
                     </div>
                 </div>
             </div>

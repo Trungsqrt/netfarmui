@@ -1,0 +1,35 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+}
+
+.imageHuman {
+    width: 300px;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-image: url('../../../../assets/image/pngwing.com.png');
+    background-origin: content-box;
+    margin-top: 100px;
+    flex: 1;
+}
+.bubble {
+    flex: 1;
+}
+
+.chart {
+    flex: 1;
+}
+
+.imageItem {
+}
+
+.chat {
+    width: 70%;
+    height: 50%;
+}
+
+.text {
+}
