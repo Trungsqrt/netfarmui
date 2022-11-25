@@ -17,15 +17,29 @@ function Shopping() {
     const [totalProduct, setTotalProduct] = useState(0);
     const [totalOrder, setTotalOrder] = useState(0);
     const [totalFeedback, setTotalFeedback] = useState(0);
-
+    const [increaseUser, setIncreaseUser] = useState(0);
+    const [increaseFeedback, setIncreateFeedback] = useState(0);
+    const [increaseOrder, setIncreateOrder] = useState(0);
     useEffect(() => {
         const fetchData = async () => {
             const order = await axios.get(orderUrl);
+            const gapOrder = order.data.filter(
+                (item) => new Date(item['createAt']).getMonth() === new Date().getMonth(),
+            );
             setTotalOrder(order.data.length);
+            setIncreateOrder(gapOrder.length);
             const user = await axios.get(UserUrl);
+            const userIncreate = user.data.filter(
+                (item) => new Date(item['createAt']).getMonth() === new Date().getMonth(),
+            );
+            setIncreaseUser(userIncreate.length);
             setTotalUser(user.data.length);
             const feedback = await axios.get(feedbackurl);
+            const gapFeedback = feedback.data.filter(
+                (item) => new Date(item['createAt']).getMonth() === new Date().getMonth(),
+            );
             setTotalFeedback(feedback.data.length);
+            setIncreateFeedback(gapFeedback.length);
             const product = await axios.get(productUrl);
             setTotalProduct(product.data.length);
         };
@@ -45,7 +59,7 @@ function Shopping() {
                 <div className="number ">
                     <h6>{totalOrder}</h6>
                     <AiFillCaretUp className="svg1" />
-                    <span className="t1">146 </span>
+                    <span className="t1">{increaseOrder}</span>
                 </div>
             </div>
             <div className="shopping ">
@@ -60,7 +74,7 @@ function Shopping() {
                 <div className="number ">
                     <h6>{totalProduct}</h6>
                     <AiFillCaretUp className="svg1" />
-                    <span className="t1">67 </span>
+                    <span className="t1">0</span>
                 </div>
             </div>
             <div className="shopping ">
@@ -75,7 +89,7 @@ function Shopping() {
                 <div className="number ">
                     <h6>{totalUser}</h6>
                     <AiFillCaretUp className="svg1" />
-                    <span className="t1">324 </span>
+                    <span className="t1">{increaseUser}</span>
                 </div>
             </div>
             <div className="shopping ">
@@ -90,7 +104,7 @@ function Shopping() {
                 <div className="number ">
                     <h6>{totalFeedback}</h6>
                     <AiFillCaretUp className="svg1" />
-                    <span className="t1">48 </span>
+                    <span className="t1">{increaseFeedback}</span>
                 </div>
             </div>
         </Section>

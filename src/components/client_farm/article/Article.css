@@ -21,6 +21,7 @@
     padding-right: 12px;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 2px 2px 4px #998;
 }
 .article_img {
     width: 170px;

@@ -136,7 +136,7 @@
 .body {
     width: 100%;
     overflow: hidden;
-    border: 1px solid goldenrod;
+    /* border: 1px solid goldenrod; */
 }
 
 .select_section {

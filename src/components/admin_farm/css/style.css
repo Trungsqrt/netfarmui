@@ -444,6 +444,7 @@
     text-align: center;
     padding: 6px 0;
     margin: 0 10px;
+    border-radius: 4px;
 }
 
 .product_category_item_active_ad {
@@ -459,6 +460,7 @@
     text-align: center;
     padding: 6px 0;
     margin: 0 10px;
+    border-radius: 4px;
 }
 
 .product_category_ad {

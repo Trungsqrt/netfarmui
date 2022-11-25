@@ -14,8 +14,10 @@ const Information = () => {
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
-    const [user, setUser] = useState(currentUser.roleName);
-
+    const [user, setUser] = useState('');
+    if (currentUser) {
+        setUser(currentUser.roleName);
+    }
     return (
         <div>
             <div>

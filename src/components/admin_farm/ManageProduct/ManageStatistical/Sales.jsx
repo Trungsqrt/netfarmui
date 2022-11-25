@@ -42,7 +42,7 @@ function Sales() {
             <div className="sales">
                 <div className="sales__details">
                     <div>
-                        <h4>Thống kê doanh thu</h4>
+                        <h4 className="product_static">Thống kê doanh thu</h4>
                     </div>
                 </div>
                 <div className="sales__graph">

@@ -1,168 +1,195 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from 'recharts';
-const data = [
-    { data: 4500 },
-    {
-        data: 5000,
-    },
-    {
-        data: 4700,
-    },
-    {
-        data: 4400,
-    },
-    {
-        data: 4800,
-    },
-    {
-        data: 5300,
-    },
-    {
-        data: 5800,
-    },
-    {
-        data: 6000,
-    },
-    {
-        data: 6300,
-    },
-    {
-        data: 6580,
-    },
-    {
-        data: 6780,
-    },
-    {
-        data: 6680,
-    },
-    {
-        data: 6500,
-    },
-    {
-        data: 6300,
-    },
-    {
-        data: 5900,
-    },
-    {
-        data: 5700,
-    },
-    {
-        data: 5500,
-    },
-    {
-        data: 5300,
-    },
-    {
-        data: 5100,
-    },
-    {
-        data: 5090,
-    },
-    {
-        data: 5300,
-    },
-    {
-        data: 5800,
-    },
-    {
-        data: 6000,
-    },
-    {
-        data: 6300,
-    },
-    {
-        data: 6780,
-    },
-    {
-        data: 6500,
-    },
-    {
-        data: 6300,
-    },
-    {
-        data: 6500,
-    },
-    {
-        data: 6700,
-    },
-    {
-        data: 7000,
-    },
-    {
-        data: 7300,
-    },
-    {
-        data: 7500,
-    },
-    {
-        data: 7700,
-    },
-    {
-        data: 8090,
-    },
-    {
-        data: 8190,
-    },
-    {
-        data: 7990,
-    },
+import axios from 'axios';
+// const data = [
+//     { data: 4500 },
+//     {
+//         data: 5000,
+//     },
+//     {
+//         data: 4700,
+//     },
+//     {
+//         data: 4400,
+//     },
+//     {
+//         data: 4800,
+//     },
+//     {
+//         data: 5300,
+//     },
+//     {
+//         data: 5800,
+//     },
+//     {
+//         data: 6000,
+//     },
+//     {
+//         data: 6300,
+//     },
+//     {
+//         data: 6580,
+//     },
+//     {
+//         data: 6780,
+//     },
+//     {
+//         data: 6680,
+//     },
+//     {
+//         data: 6500,
+//     },
+//     {
+//         data: 6300,
+//     },
+//     {
+//         data: 5900,
+//     },
+//     {
+//         data: 5700,
+//     },
+//     {
+//         data: 5500,
+//     },
+//     {
+//         data: 5300,
+//     },
+//     {
+//         data: 5100,
+//     },
+//     {
+//         data: 5090,
+//     },
+//     {
+//         data: 5300,
+//     },
+//     {
+//         data: 5800,
+//     },
+//     {
+//         data: 6000,
+//     },
+//     {
+//         data: 6300,
+//     },
+//     {
+//         data: 6780,
+//     },
+//     {
+//         data: 6500,
+//     },
+//     {
+//         data: 6300,
+//     },
+//     {
+//         data: 6500,
+//     },
+//     {
+//         data: 6700,
+//     },
+//     {
+//         data: 7000,
+//     },
+//     {
+//         data: 7300,
+//     },
+//     {
+//         data: 7500,
+//     },
+//     {
+//         data: 7700,
+//     },
+//     {
+//         data: 8090,
+//     },
+//     {
+//         data: 8190,
+//     },
+//     {
+//         data: 7990,
+//     },
 
-    {
-        data: 7700,
-    },
-    {
-        data: 7500,
-    },
-    {
-        data: 7300,
-    },
-    {
-        data: 7000,
-    },
-    {
-        data: 6700,
-    },
-    {
-        data: 6500,
-    },
-    {
-        data: 6300,
-    },
-    {
-        data: 6500,
-    },
-    {
-        data: 6780,
-    },
-    {
-        data: 6300,
-    },
-    {
-        data: 6000,
-    },
-    {
-        data: 5800,
-    },
+//     {
+//         data: 7700,
+//     },
+//     {
+//         data: 7500,
+//     },
+//     {
+//         data: 7300,
+//     },
+//     {
+//         data: 7000,
+//     },
+//     {
+//         data: 6700,
+//     },
+//     {
+//         data: 6500,
+//     },
+//     {
+//         data: 6300,
+//     },
+//     {
+//         data: 6500,
+//     },
+//     {
+//         data: 6780,
+//     },
+//     {
+//         data: 6300,
+//     },
+//     {
+//         data: 6000,
+//     },
+//     {
+//         data: 5800,
+//     },
 
-    {
-        data: 5490,
-    },
-    {
-        data: 6000,
-    },
-    {
-        data: 8000,
-    },
-];
+//     {
+//         data: 5490,
+//     },
+//     {
+//         data: 6000,
+//     },
+//     {
+//         data: 8000,
+//     },
+// ];
 function Analytic() {
+    const OrderUrl = 'https://localhost:44303/api/Order';
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(OrderUrl);
+            const dataset = response.data;
+            dataset.sort((a, b) => new Date(b['createAt']) - new Date(a['createAt']));
+            var datalist = [];
+            var i = 0;
+            var item = dataset[0].total;
+            for (var k = 1; k < dataset.length; k++) {
+                if (
+                    Number(new Date(dataset[k].createAt).getDate()) ===
+                    Number(new Date(dataset[k - 1].createAt).getDate())
+                ) {
+                    item += dataset[k].total;
+                } else {
+                    datalist.push({ data: item });
+                    item = dataset[k].total;
+                }
+            }
+            setData(datalist);
+        };
+        fetchData();
+    }, []);
+
     return (
         <Section>
             <div className="analytics">
                 <div className="analytics__details">
                     <div>
-                        <h4>Thống kê bán hàng</h4>
+                        <h4>Doanh số bán hàng</h4>
                     </div>
                 </div>
                 <div className="analytics__graph">

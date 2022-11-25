@@ -17,7 +17,7 @@ function Statistic() {
     useEffect(() => {
         const fetchData = async () => {
             const order = await axios.get(orderUrl);
-            const finishOrder = order.data.filter((item) => item['finish']);
+            const finishOrder = order.data; /*.filter((item) => item['finish'])*/
             var sum = 0;
             for (var i = 0; i < finishOrder.length; i++) {
                 sum += finishOrder[i].total;
@@ -42,8 +42,8 @@ function Statistic() {
                 </div>
                 <div className="total">
                     <h6>TỔNG DOANH THU</h6>
-                    <span className="t1">+18%</span>
-                    <AiOutlineArrowUp className="svg1" />
+                    {/* <span className="t1">+18%</span>
+                    <AiOutlineArrowUp className="svg1" /> */}
                 </div>
             </div>
             <div className="analytic color2">
@@ -57,8 +57,8 @@ function Statistic() {
                 </div>
                 <div className="total">
                     <h6>TỔNG CHI PHÍ</h6>
-                    <span className="t2">-9%</span>
-                    <AiOutlineArrowDown className="svg2" />
+                    {/* <span className="t2">-9%</span>
+                    <AiOutlineArrowDown className="svg2" /> */}
                 </div>
             </div>
             <div className="analytic color3">
@@ -72,8 +72,8 @@ function Statistic() {
                 </div>
                 <div className="total">
                     <h6>TỔNG LỢI NHUẬN</h6>
-                    <span className="t1">+24%</span>
-                    <AiOutlineArrowUp className="svg1" />
+                    {/* <span className="t1">+24%</span>
+                    <AiOutlineArrowUp className="svg1" /> */}
                 </div>
             </div>
         </Section>
