@@ -46,9 +46,10 @@ function DSS() {
                         voluptatum quod provident vero debitis ullam?
                     </div>
                     <img src={dssImageChat} className={styles.chat}></img>
-                </div>
-                <div className={styles.chart}>
-                    <TemperatureChart />
+
+                    <div className={styles.chart}>
+                        <TemperatureChart />
+                    </div>
                 </div>
             </section>
         </div>
