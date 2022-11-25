@@ -16,7 +16,6 @@ let PageSize = 3;
 const InforPage = () => {
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
-    const [user, setUser] = useState(currentUser.roleName);
     // lấy dữ liệu toàn bộ các bài đăng
     const [articles, setArticles] = useState([]);
     const [policyItems, setPolicyItems] = useState([]);

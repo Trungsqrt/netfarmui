@@ -17,7 +17,6 @@ const InforPage = () => {
     const [manualItems, setManualItems] = useState([]);
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
-    const [user, setUser] = useState(currentUser.roleName);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState([]);

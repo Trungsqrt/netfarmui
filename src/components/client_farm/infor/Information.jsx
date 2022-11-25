@@ -16,10 +16,11 @@ const Information = () => {
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
     const [user, setUser] = useState('');
-    console.log(currentUser);
+
     useEffect(() => {
         if (currentUser) setUser(currentUser.roleName);
     }, []);
+
     return (
         <div>
             <div>

@@ -14,6 +14,8 @@
     background-origin: content-box;
     margin-top: 100px;
     flex: 1;
+    background-size: auto;
+    object-fit: cover;
 }
 .bubble {
     flex: 1;

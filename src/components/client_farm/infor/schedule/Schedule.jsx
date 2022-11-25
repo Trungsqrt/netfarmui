@@ -16,7 +16,7 @@ const Schedule = () => {
     const scheduleUrl = 'https://localhost:44303/api/Schedule';
     useEffect(() => {
         const fetchData = async () => {
-            setUser(currentUser.roleName);
+            // setUser(currentUser.roleName);
             const response = await axios.get(scheduleUrl);
             const data = response.data;
             SetSchedules(data);

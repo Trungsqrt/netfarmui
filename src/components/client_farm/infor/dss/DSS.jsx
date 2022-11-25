@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import dssImage from '../../../../assets/image/pngwing.com.png';
-import styles from '../../infor/DSS/DSS.module.css';
+import styles from '../DSS/DSS.module.css';
 import dssImageChat from '../../../../assets/image/chat.png';
+import TemperatureChart from './TemperatureChart';
 function DSS() {
     const [loaicay, setLoaiCay] = useState([]);
     const [hoatdong, setHoatDong] = useState([]);
@@ -46,7 +47,9 @@ function DSS() {
                     </div>
                     <img src={dssImageChat} className={styles.chat}></img>
                 </div>
-                <div className={styles.chart}></div>
+                <div className={styles.chart}>
+                    <TemperatureChart />
+                </div>
             </section>
         </div>
     );
