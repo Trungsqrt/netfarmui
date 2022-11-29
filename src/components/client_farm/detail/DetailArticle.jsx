@@ -92,7 +92,6 @@ function DetailArticle(props) {
                             </div>
                         </div>
                         {showComment && <Comment idArticle={idArticle} />}
-                        <Footer></Footer>
                     </div>
                 )}
             </div>

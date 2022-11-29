@@ -354,11 +354,20 @@
     padding: 10px 10px;
 }
 
+.section_cart_title {
+    font-size: 24px;
+    font-weight: 600;
+    /* text-align: center; */
+    padding-top: 20px;
+    margin-bottom: 30px;
+}
+
 .section_title {
     font-size: 24px;
     font-weight: 600;
-    text-align: center;
+    /* text-align: center; */
     padding-top: 20px;
+    margin-bottom: 30px;
 }
 
 .feedback_detail_header {

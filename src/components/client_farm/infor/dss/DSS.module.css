@@ -26,6 +26,7 @@
 }
 
 .chart {
+    width: 600px;
     position: absolute;
     bottom: 40px;
     left: -100px;
@@ -35,8 +36,8 @@
 }
 
 .chat {
-    width: 95%;
-    height: 40%;
+    width: 98%;
+    height: 60%;
     position: absolute;
     top: 30px;
     left: -100px;
@@ -44,15 +45,20 @@
 
 .text {
     position: absolute;
-    top: 80px;
+    top: 75px;
     left: -60px;
+    bottom: 200px;
     z-index: 2;
-    width: 80%;
+    width: 85%;
     height: 40%;
     font-size: 16px;
     color: #000;
     line-height: 20px;
     font-weight: 500;
+    text-align: justify;
+    padding: 6px;
+    display: flex;
+    margin: auto 0;
 }
 
 .selectBox {
@@ -91,4 +97,10 @@
 .ConfirmBtn:hover {
     background-color: green;
     color: yellow;
+}
+
+.Section_title {
+    margin: 20px;
+    font-size: 24px;
+    color: #000;
 }

@@ -32,6 +32,7 @@ import Information from './components/client_farm/infor/Information';
 import Policy from './components/client_farm/infor/policy/Policy';
 import Manual from './components/client_farm/infor/manual/Manual';
 import News from './components/client_farm/infor/news/News';
+import Footer from './components/client_farm/share/footer/Footer';
 function App() {
     return (
         <div className="App">
@@ -69,6 +70,7 @@ function App() {
                 <Route path="feedback/:id" element={<FeedbackProduct />} />
                 <Route path="/inforPage" element={<Information />} />
             </Routes>
+            <Footer></Footer>
         </div>
     );
 }

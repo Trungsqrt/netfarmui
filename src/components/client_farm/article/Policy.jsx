@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Policy(props) {
     const { article } = props;
+    console.log(article);
     function getText(html) {
         var divContainer = document.createElement('div');
         divContainer.innerHTML = html;
@@ -13,7 +14,7 @@ function Policy(props) {
     return (
         <div>
             <div className="owl-item cloned" key={article.id}>
-                <Link to={`/detail/${article.Article_id}`} className="news_link">
+                <Link to={`/detail/${article.id}`} className="news_link">
                     <div className="item">
                         <img src={article.imageURL} className="news_img"></img>
                         <div className="box">

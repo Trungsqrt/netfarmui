@@ -16,7 +16,6 @@ const ClientHome = () => {
                 <div className="news">
                     <News></News>
                 </div>
-                <Footer></Footer>
             </div>
         </div>
     );

@@ -83,7 +83,7 @@ function DSS() {
         } else {
             const getData = async () => {
                 const res = await axios.get(`${resultUrl}/${selectedType}/${selectedAction}`);
-                // console.log(res);
+                console.log(res.data);
                 setMessage(res.data.result);
             };
             getData();

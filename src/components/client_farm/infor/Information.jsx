@@ -80,7 +80,6 @@ const Information = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 };

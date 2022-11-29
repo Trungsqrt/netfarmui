@@ -4,6 +4,7 @@ import axios from 'axios';
 import Header from '../../share/header/Header';
 import { useNavigate } from 'react-router-dom';
 import { productAPI } from '../../../../apis';
+import '../css/style.css';
 const Cart = () => {
     localStorage.removeItem('checklist');
     const user = JSON.parse(localStorage.getItem('user'));
@@ -121,7 +122,7 @@ const Cart = () => {
                 </div>
                 <div className="cart_content">
                     <div className="shopping_cart">
-                        <div className="section_title">GIỎ HÀNG</div>
+                        <div className="section_cart_title">GIỎ HÀNG</div>
                         <div className="shopping_cart_table">
                             <div className="table-responsive mb-4">
                                 <table className="listcart_table">
@@ -252,7 +253,7 @@ const Cart = () => {
                         </div>
                     </div>
                     <div className="cart_total">
-                        <div className="section_title"> TỔNG TIỀN</div>
+                        <div className="section_cart_title"> TỔNG TIỀN</div>
                         <div className="total">
                             Thành tiền
                             <div className="total_value">{total}</div>
