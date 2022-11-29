@@ -26,26 +26,33 @@ function DSS() {
         const res = await axios.get(weatherAPIURL);
         setDataWeather(res.data.data);
         const value = res.data.data;
-        console.log(value);
-        for (var i = 0; i < 8; i++) {
-            const obj = {
-                id: i,
-                description: value[i].weather.description,
-                dateTime: value[i].datetime,
-                minTemp: value[i].min_temp,
-                maxTemp: value[i].max_temp,
-                humidity: value[i].rh,
-                wind: value[i].wind_spd,
-                rain: value[i].precip,
-            };
-            try {
-                console.log(obj);
-                // axios.delete(`${putWeatherUrl}/${i}`);
-                axios.put(`${putWeatherUrl}`, obj);
-            } catch (err) {
-                alert('Có lỗi vui lòng thử lại');
+        for (let i = 0; i < 8;) {
+
+            const postData = async () => {
+
+                const obj = {
+                    id: i,
+                    description: value[i].weather.description,
+                    dateTime: value[i].datetime,
+                    minTemp: value[i].min_temp,
+                    maxTemp: value[i].max_temp,
+                    humidity: value[i].rh,
+                    wind: value[i].wind_spd,
+                    rain: value[i].precip,
+                };
+
+                await axios.put(`${putWeatherUrl}`, obj)
             }
+            postData();
+            i+=1;
+            console.log("i: ", i)
+
         }
+        // axios.delete(`${putWeatherUrl}/${i}`);
+
+    
+        
+
     };
     useEffect(() => {
         getData();
