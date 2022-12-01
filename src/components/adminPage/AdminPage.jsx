@@ -21,6 +21,10 @@ function AdminPage() {
     const [schedule, setSchedule] = useState([]);
     const [flag, setFlag] = useState(false);
     const [idHandle, setIdHandle] = useState(-1);
+    const [userSearch, setUserSearch] = useState('');
+    const [currentUsers, setCurrentUsers] = useState([]);
+    const [postSearch, setPostSearch] = useState('');
+    const [currentPosts, setCurrentPosts] = useState([]);
 
     useEffect(() => {
         setUser(currentUser.roleName);
@@ -48,6 +52,10 @@ function AdminPage() {
         getSchedule();
     }, []);
 
+    useEffect(() => {
+        setCurrentUsers([...data]);
+    }, [data]);
+
     const UserHandler = () => {
         setRender(1);
         async function getData() {
@@ -71,6 +79,7 @@ function AdminPage() {
         setRender(2);
         async function getData() {
             setData([]);
+            setCurrentPosts([]);
             const Dataset = await axios.get(articleUrl);
             Dataset.data.forEach((item) => {
                 const value = {
@@ -80,6 +89,7 @@ function AdminPage() {
                     dateUpdate: item.dateUpdate?.slice(0, 10),
                 };
                 setData((prevData) => [...prevData, value]);
+                setCurrentPosts((prevData) => [...prevData, value]);
             });
         }
 
@@ -195,6 +205,51 @@ function AdminPage() {
         getData();
     }
 
+    const handleOnChangeSearchUser = (e) => {
+        setUserSearch(e.target.value);
+    };
+
+    useEffect(() => {
+        if (userSearch !== '') {
+            // const dataa = dataCopied.filter((item) => item.fullName?.includes(userSearch));
+            const resultArray = data.filter((item) => item.name.toLowerCase().includes(userSearch.toLowerCase()));
+
+            setCurrentUsers([...resultArray]);
+            // console.log(dataa);
+        } else if (userSearch === '') {
+            setCurrentUsers([...data]);
+        }
+    }, [userSearch]);
+
+    const handleOnChangePostSearch = (e) => {
+        setPostSearch(e.target.value);
+    };
+
+    useEffect(() => {
+        if (postSearch !== '') {
+            const resultArray = data.filter((item) => item.title.toLowerCase().includes(postSearch.toLowerCase()));
+            setCurrentPosts([...resultArray]);
+        } else if (postSearch === '') {
+            setCurrentPosts([...data]);
+        }
+    }, [postSearch]);
+
+    function truncateString(str) {
+        if (str.length > 40) {
+            return str.slice(0, 40) + '...';
+        } else {
+            return str;
+        }
+    }
+
+    function truncateString2(str) {
+        if (str.length > 5) {
+            return str.slice(0, 5) + '...';
+        } else {
+            return str;
+        }
+    }
+
     return (
         <div>
             {user === 'Admin' && (
@@ -238,6 +293,7 @@ function AdminPage() {
                                                     type="text"
                                                     className={styles.searchBar}
                                                     autoComplete="none"
+                                                    onChange={handleOnChangeSearchUser}
                                                 ></input>
                                             </div>
 
@@ -258,9 +314,11 @@ function AdminPage() {
                                                     <th className={styles.th1} width="15%">
                                                         <strong>CCCD</strong>
                                                     </th>
-                                                    <th className={styles.th1}></th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Xóa</strong>
+                                                    </th>
                                                 </tr>
-                                                {data.map((item, index) => (
+                                                {currentUsers.map((item, index) => (
                                                     <tr key={index}>
                                                         <th width="10%">{item.id}</th>
                                                         <th width="30%">{item.name}</th>
@@ -290,21 +348,32 @@ function AdminPage() {
                                                     type="text"
                                                     className={styles.searchBar}
                                                     autoComplete="none"
+                                                    onChange={handleOnChangePostSearch}
                                                 ></input>
                                             </div>
                                             <section className={styles.tableContent}>
-                                                <tr>
-                                                    <th className={styles.th1}>Id</th>
-                                                    <th className={styles.th1}>Tiêu đề</th>
-                                                    <th className={styles.th1}>Ngày đăng</th>
-                                                    <th className={styles.th1}>Ngày cập nhật</th>
-                                                    <th className={styles.th1}></th>
+                                                <tr className={styles.tableContainerDiv}>
+                                                    <th className={styles.th1} width="5%">
+                                                        <strong>Id</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="55%">
+                                                        <strong>Tiêu đề</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Ngày đăng</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Ngày cập nhật</strong>
+                                                    </th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Xóa</strong>
+                                                    </th>
                                                 </tr>
 
-                                                {data.map((item) => (
+                                                {currentPosts?.map((item) => (
                                                     <tr key={item.id}>
-                                                        <th width="10%">{item.id}</th>
-                                                        <th width="50%">{item.title}</th>
+                                                        <th width="5%">{item.id}</th>
+                                                        <th width="55%">{truncateString(item.title)}</th>
                                                         <th width="20%">{item.datePost}</th>
                                                         <th width="20%">{item.dateUpdate}</th>
                                                         <th
@@ -360,20 +429,30 @@ function AdminPage() {
                                             </div>
 
                                             <section className={styles.tableContent}>
-                                                <tr>
-                                                    <th className={styles.th1}>Id</th>
-                                                    <th className={styles.th1}>Tên</th>
-                                                    <th className={styles.th1}>Bắt đầu</th>
-                                                    <th className={styles.th1}>Kết thúc</th>
-                                                    <th className={styles.th1}>Id lịch</th>
+                                                <tr className={styles.tableContainerDiv}>
+                                                    <th className={styles.th1} width="10%">
+                                                        <strong>Id</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Tên</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="40%">
+                                                        <strong>Bắt đầu</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="40%">
+                                                        <strong>Kết thúc</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="30%">
+                                                        <strong>Id lịch</strong>
+                                                    </th>
                                                 </tr>
                                                 {data.map((item) => (
-                                                    <tr key={item.id}>
-                                                        <th width="20%">{item.id}</th>
+                                                    <tr key={item.id} style={{ minWidth: '100%' }}>
+                                                        <th width="10%">{item.id}</th>
                                                         <th width="20%">{item.name}</th>
-                                                        <th width="20%">{item.dateStart}</th>
-                                                        <th width="20%">{item.dateEnd}</th>
-                                                        <th width="40%">{item.scheduleId}</th>
+                                                        <th width="30%">{item.dateStart}</th>
+                                                        <th width="30%">{item.dateEnd}</th>
+                                                        <th width="10%">{truncateString2(item.scheduleId)}</th>
                                                     </tr>
                                                 ))}
                                             </section>

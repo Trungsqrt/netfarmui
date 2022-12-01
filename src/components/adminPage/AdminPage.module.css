@@ -90,18 +90,31 @@ th {
     border-radius: 5px;
     overflow: hidden;
     white-space: nowrap;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+tr:nth-child(even) {
+    background-color: #ffffcc;
 }
 
 .th1 {
     background-color: #c5b30d;
     overflow: hidden;
     position: sticky;
+    table-layout: fixed;
 }
 
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 80%;
+    table-layout: fixed;
+}
+
+tr {
+    width: 100%;
+    table-layout: fixed;
 }
 
 .tableContent {
@@ -109,6 +122,7 @@ table {
     height: 83.5vh;
     margin: 10px 10px;
     position: relative;
+    table-layout: fixed;
 }
 
 #iconAdd {
@@ -247,6 +261,8 @@ table {
 
 .tableContainerDiv {
     width: 100%;
+    min-width: 100%;
+    table-layout: fixed;
 }
 
 .searchContainer {
