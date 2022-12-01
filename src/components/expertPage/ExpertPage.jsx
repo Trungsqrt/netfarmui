@@ -180,7 +180,7 @@ function ExpertPage() {
             {user === 'Expert' && (
                 <>
                     <Header />
-                    <div className={styles.body}>
+                    {/* <div className={styles.body}>
                         <div className={styles.container}>
                             <nav>
                                 <ul className={styles.tabList}>
@@ -284,6 +284,152 @@ function ExpertPage() {
                                                     ))}
                                                 </section>
                                             </tbody>
+                                        </div>
+                                    )}
+                                </table>
+                            </section>
+                        </div>
+                    </div> */}
+
+                    <div className={styles.body}>
+                        <div className={styles.left}>
+                            <h3 className={styles.title}>Admin Page</h3>
+                            <ul className={styles.nav}>
+                                <li
+                                    className={render == 1 ? styles.navItemSelected : styles.navItem}
+                                    onClick={PostHandler}
+                                >
+                                    <i class="menuIconItem fa-regular fa-newspaper"></i>
+                                    Posts
+                                </li>
+                                <li
+                                    className={render == 2 ? styles.navItemSelected : styles.navItem}
+                                    onClick={ScheduleHandler}
+                                >
+                                    <i class="menuIconItem fa-solid fa-calendar-days"></i>
+                                    Schedules
+                                </li>
+                            </ul>
+                        </div>
+                        <div className={styles.right}>
+                            <section className={styles.bodyContainer}>
+                                <table className={styles.tableContainerr}>
+                                    {render == 1 && (
+                                        <div>
+                                            {/* <tbody> */}
+                                            <div className={styles.searchContainer}>
+                                                <button id={styles.iconAdd} onClick={handleAddArticle}>
+                                                    Thêm
+                                                </button>
+                                                <input
+                                                    type="text"
+                                                    className={styles.searchBar}
+                                                    autoComplete="none"
+                                                ></input>
+                                            </div>
+                                            <section className={styles.tableContent}>
+                                                <tr>
+                                                    <th className={styles.th1}>Id</th>
+                                                    <th className={styles.th1}>Tiêu đề</th>
+                                                    <th className={styles.th1}>Ngày đăng</th>
+                                                    <th className={styles.th1}>Ngày cập nhật</th>
+                                                    <th className={styles.th1}>Xóa</th>
+                                                    <th className={styles.th1}>Sửa</th>
+                                                </tr>
+
+                                                {data.map((item) => (
+                                                    <tr key={item.id}>
+                                                        <th width="10%">{item.id}</th>
+                                                        <th width="50%">{item.title}</th>
+                                                        <th width="20%">{item.datePost}</th>
+                                                        <th width="20%">{item.dateUpdate}</th>
+                                                        <th
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={() => handleDeletePost(item.id)}
+                                                        >
+                                                            <i class="trashcan fa-solid fa-trash"></i>
+                                                        </th>
+                                                        <th
+                                                            style={{ cursor: 'pointer', color: 'blue' }}
+                                                            onClick={() => handleEditPost(item.id)}
+                                                        >
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </th>
+                                                    </tr>
+                                                ))}
+                                            </section>
+                                            {/* </tbody> */}
+                                        </div>
+                                    )}
+
+                                    {render == 2 && (
+                                        <div>
+                                            <div
+                                                className={styles.searchContainer}
+                                                style={{ marginBottom: '-30px', marginTop: '8px' }}
+                                            >
+                                                <button
+                                                    id={styles.iconAddd}
+                                                    onClick={handleAddSchedule}
+                                                    style={{ height: '30px' }}
+                                                >
+                                                    Thêm
+                                                </button>
+                                                {flag && (
+                                                    <button
+                                                        id={styles.iconDelete}
+                                                        onClick={handleDeleteSchedule}
+                                                        style={{ height: '30px' }}
+                                                    >
+                                                        Xóa
+                                                    </button>
+                                                )}
+
+                                                {flag && (
+                                                    <button
+                                                        id={styles.iconEdit}
+                                                        onClick={() => handleEditSchedule()}
+                                                        style={{ height: '30px' }}
+                                                    >
+                                                        Sửa
+                                                    </button>
+                                                )}
+                                                <select
+                                                    onChange={handlerChange}
+                                                    className="selectInput"
+                                                    style={{ paddingBottom: '1px' }}
+                                                >
+                                                    <option>Chọn loại cây</option>
+                                                    {schedule
+                                                        ? schedule.map((sche, index) => (
+                                                              <option value={sche.id} key={sche.id}>
+                                                                  {sche.name}
+                                                              </option>
+                                                          ))
+                                                        : ''}
+                                                </select>
+                                                {/* <tbody> */}
+                                            </div>
+
+                                            <section className={styles.tableContent}>
+                                                <tr>
+                                                    <th className={styles.th1}>Id</th>
+                                                    <th className={styles.th1}>Tên</th>
+                                                    <th className={styles.th1}>Bắt đầu</th>
+                                                    <th className={styles.th1}>Kết thúc</th>
+                                                    <th className={styles.th1}>Id lịch</th>
+                                                </tr>
+                                                {data.map((item) => (
+                                                    <tr key={item.id}>
+                                                        <th width="20%">{item.id}</th>
+                                                        <th width="20%">{item.name}</th>
+                                                        <th width="20%">{item.dateStart}</th>
+                                                        <th width="20%">{item.dateEnd}</th>
+                                                        <th width="40%">{item.scheduleId}</th>
+                                                    </tr>
+                                                ))}
+                                            </section>
+                                            {/* </tbody> */}
                                         </div>
                                     )}
                                 </table>
