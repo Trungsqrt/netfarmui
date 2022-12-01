@@ -211,11 +211,8 @@ function AdminPage() {
 
     useEffect(() => {
         if (userSearch !== '') {
-            // const dataa = dataCopied.filter((item) => item.fullName?.includes(userSearch));
             const resultArray = data.filter((item) => item.name.toLowerCase().includes(userSearch.toLowerCase()));
-
             setCurrentUsers([...resultArray]);
-            // console.log(dataa);
         } else if (userSearch === '') {
             setCurrentUsers([...data]);
         }

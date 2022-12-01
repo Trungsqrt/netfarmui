@@ -116,6 +116,10 @@ th {
     white-space: nowrap;
 }
 
+tr:nth-child(even) {
+    background-color: #ffffcc;
+}
+
 .th1 {
     background-color: #c5b30d;
     overflow: hidden;

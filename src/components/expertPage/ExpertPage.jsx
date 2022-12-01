@@ -20,10 +20,14 @@ function ExpertPage() {
     const [flag, setFlag] = useState(false);
     const [idHandle, setIdHandle] = useState(-1);
 
+    const [postSearch, setPostSearch] = useState('');
+    const [currentPosts, setCurrentPosts] = useState([]);
+
     useEffect(() => {
         setUser(currentUser.roleName);
         async function getData() {
             const Dataset = await axios.get(articleUrl);
+            setCurrentPosts([]);
 
             Dataset.data.forEach((item) => {
                 const value = {
@@ -33,6 +37,7 @@ function ExpertPage() {
                     dateUpdate: item.dateUpdate,
                 };
                 setData((prevData) => [...prevData, value]);
+                setCurrentPosts((prevData) => [...prevData, value]);
             });
         }
 
@@ -173,6 +178,35 @@ function ExpertPage() {
             });
         };
         getData();
+    }
+
+    const handleOnChangePostSearch = (e) => {
+        setPostSearch(e.target.value);
+    };
+
+    useEffect(() => {
+        if (postSearch !== '') {
+            const resultArray = data.filter((item) => item.title.toLowerCase().includes(postSearch.toLowerCase()));
+            setCurrentPosts([...resultArray]);
+        } else if (postSearch === '') {
+            setCurrentPosts([...data]);
+        }
+    }, [postSearch]);
+
+    function truncateString(str) {
+        if (str.length > 40) {
+            return str.slice(0, 40) + '...';
+        } else {
+            return str;
+        }
+    }
+
+    function truncateString2(str) {
+        if (str.length > 5) {
+            return str.slice(0, 5) + '...';
+        } else {
+            return str;
+        }
     }
 
     return (
@@ -325,22 +359,35 @@ function ExpertPage() {
                                                     type="text"
                                                     className={styles.searchBar}
                                                     autoComplete="none"
+                                                    onChange={handleOnChangePostSearch}
                                                 ></input>
                                             </div>
                                             <section className={styles.tableContent}>
                                                 <tr>
-                                                    <th className={styles.th1}>Id</th>
-                                                    <th className={styles.th1}>Tiêu đề</th>
-                                                    <th className={styles.th1}>Ngày đăng</th>
-                                                    <th className={styles.th1}>Ngày cập nhật</th>
-                                                    <th className={styles.th1}>Xóa</th>
-                                                    <th className={styles.th1}>Sửa</th>
+                                                    <th className={styles.th1} width="10%">
+                                                        <strong>Id</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="50%">
+                                                        <strong>Tiêu đề</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Ngày đăng</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Ngày cập nhật</strong>
+                                                    </th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Xóa</strong>
+                                                    </th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Sửa</strong>
+                                                    </th>
                                                 </tr>
 
-                                                {data.map((item) => (
+                                                {currentPosts?.map((item) => (
                                                     <tr key={item.id}>
                                                         <th width="10%">{item.id}</th>
-                                                        <th width="50%">{item.title}</th>
+                                                        <th width="50%">{truncateString(item.title)}</th>
                                                         <th width="20%">{item.datePost}</th>
                                                         <th width="20%">{item.dateUpdate}</th>
                                                         <th
@@ -413,19 +460,29 @@ function ExpertPage() {
 
                                             <section className={styles.tableContent}>
                                                 <tr>
-                                                    <th className={styles.th1}>Id</th>
-                                                    <th className={styles.th1}>Tên</th>
-                                                    <th className={styles.th1}>Bắt đầu</th>
-                                                    <th className={styles.th1}>Kết thúc</th>
-                                                    <th className={styles.th1}>Id lịch</th>
+                                                    <th className={styles.th1} width="10%">
+                                                        <strong>Id</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Tên</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="40%">
+                                                        <strong>Bắt đầu</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="40%">
+                                                        <strong>Kết thúc</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="30%">
+                                                        <strong>Id lịch</strong>
+                                                    </th>
                                                 </tr>
                                                 {data.map((item) => (
                                                     <tr key={item.id}>
-                                                        <th width="20%">{item.id}</th>
+                                                        <th width="10%">{item.id}</th>
                                                         <th width="20%">{item.name}</th>
-                                                        <th width="20%">{item.dateStart}</th>
-                                                        <th width="20%">{item.dateEnd}</th>
-                                                        <th width="40%">{item.scheduleId}</th>
+                                                        <th width="30%">{item.dateStart}</th>
+                                                        <th width="30%">{item.dateEnd}</th>
+                                                        <th width="10%">{truncateString2(item.scheduleId)}</th>
                                                     </tr>
                                                 ))}
                                             </section>
