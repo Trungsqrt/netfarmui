@@ -20,10 +20,14 @@ function ExpertPage() {
     const [flag, setFlag] = useState(false);
     const [idHandle, setIdHandle] = useState(-1);
 
+    const [postSearch, setPostSearch] = useState('');
+    const [currentPosts, setCurrentPosts] = useState([]);
+
     useEffect(() => {
         setUser(currentUser.roleName);
         async function getData() {
             const Dataset = await axios.get(articleUrl);
+            setCurrentPosts([]);
 
             Dataset.data.forEach((item) => {
                 const value = {
@@ -33,6 +37,7 @@ function ExpertPage() {
                     dateUpdate: item.dateUpdate,
                 };
                 setData((prevData) => [...prevData, value]);
+                setCurrentPosts((prevData) => [...prevData, value]);
             });
         }
 
@@ -175,53 +180,114 @@ function ExpertPage() {
         getData();
     }
 
+    const handleOnChangePostSearch = (e) => {
+        setPostSearch(e.target.value);
+    };
+
+    useEffect(() => {
+        if (postSearch !== '') {
+            const resultArray = data.filter((item) => item.title.toLowerCase().includes(postSearch.toLowerCase()));
+            setCurrentPosts([...resultArray]);
+        } else if (postSearch === '') {
+            setCurrentPosts([...data]);
+        }
+    }, [postSearch]);
+
+    function truncateString(str) {
+        if (str.length > 40) {
+            return str.slice(0, 40) + '...';
+        } else {
+            return str;
+        }
+    }
+
+    function truncateString2(str) {
+        if (str.length > 5) {
+            return str.slice(0, 5) + '...';
+        } else {
+            return str;
+        }
+    }
+
     return (
         <div>
             {user === 'Expert' && (
                 <>
                     <Header />
+
                     <div className={styles.body}>
-                        <div className={styles.container}>
-                            <nav>
-                                <ul className={styles.tabList}>
-                                    <li className={styles.itemList} onClick={PostHandler}>
-                                        Posts
-                                    </li>
-                                    <li className={styles.itemList} onClick={ScheduleHandler}>
-                                        Schedules
-                                    </li>
-                                </ul>
-                            </nav>
+                        <div className={styles.left}>
+                            <h3 className={styles.title}>Admin Page</h3>
+                            <ul className={styles.nav}>
+                                <li
+                                    className={render == 1 ? styles.navItemSelected : styles.navItem}
+                                    onClick={PostHandler}
+                                >
+                                    <i class="menuIconItem fa-regular fa-newspaper"></i>
+                                    Posts
+                                </li>
+                                <li
+                                    className={render == 2 ? styles.navItemSelected : styles.navItem}
+                                    onClick={ScheduleHandler}
+                                >
+                                    <i class="menuIconItem fa-solid fa-calendar-days"></i>
+                                    Schedules
+                                </li>
+                            </ul>
+                        </div>
+                        <div className={styles.right}>
                             <section className={styles.bodyContainer}>
-                                <table>
+                                <table className={styles.tableContainerr}>
                                     {render == 1 && (
-                                        <tbody>
-                                            <i
-                                                id={styles.iconAdd}
-                                                className="fa-solid fa-plus"
-                                                onClick={handleAddArticle}
-                                            ></i>
+                                        <div>
+                                            {/* <tbody> */}
+                                            <div className={styles.searchContainer}>
+                                                <button id={styles.iconAdd} onClick={handleAddArticle}>
+                                                    Thêm
+                                                </button>
+                                                <input
+                                                    type="text"
+                                                    className={styles.searchBar}
+                                                    autoComplete="none"
+                                                    onChange={handleOnChangePostSearch}
+                                                ></input>
+                                            </div>
                                             <section className={styles.tableContent}>
                                                 <tr>
-                                                    <th className={styles.th1}>Id</th>
-                                                    <th className={styles.th1}>Tiêu đề</th>
-                                                    <th className={styles.th1}>Ngày đăng</th>
-                                                    <th className={styles.th1}>Ngày cập nhật</th>
+                                                    <th className={styles.th1} width="10%">
+                                                        <strong>Id</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="50%">
+                                                        <strong>Tiêu đề</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Ngày đăng</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Ngày cập nhật</strong>
+                                                    </th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Xóa</strong>
+                                                    </th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Sửa</strong>
+                                                    </th>
                                                 </tr>
-                                                {data.map((item) => (
+
+                                                {currentPosts?.map((item) => (
                                                     <tr key={item.id}>
                                                         <th width="10%">{item.id}</th>
-                                                        <th width="50%">{item.title}</th>
+                                                        <th width="50%">{truncateString(item.title)}</th>
                                                         <th width="20%">{item.datePost}</th>
-                                                        <th width="20%">{item.dateUpdate?.slice(0, 10)}</th>
+                                                        <th width="20%">{item.dateUpdate}</th>
                                                         <th
                                                             style={{ cursor: 'pointer' }}
                                                             onClick={() => handleDeletePost(item.id)}
                                                         >
-                                                            &times;
+                                                            <i class="trashcan fa-solid fa-trash"></i>
                                                         </th>
                                                         <th
-                                                            style={{ cursor: 'pointer' }}
+                                                            style={{ cursor: 'pointer', color: 'blue' }}
                                                             onClick={() => handleEditPost(item.id)}
                                                         >
                                                             <i class="fa-solid fa-pen-to-square"></i>
@@ -229,61 +295,88 @@ function ExpertPage() {
                                                     </tr>
                                                 ))}
                                             </section>
-                                        </tbody>
+                                            {/* </tbody> */}
+                                        </div>
                                     )}
 
                                     {render == 2 && (
-                                        <div className={styles.bodyContainer2}>
-                                            <select
-                                                onChange={handlerChange}
-                                                className={styles.selectSection}
-                                                style={{ marginLeft: '0px' }}
+                                        <div>
+                                            <div
+                                                className={styles.searchContainer}
+                                                style={{ marginBottom: '-30px', marginTop: '8px' }}
                                             >
-                                                <option>Chọn loại cây</option>
-                                                {schedule
-                                                    ? schedule.map((sche, index) => (
-                                                          <option value={sche.id} key={sche.id}>
-                                                              {sche.name}
-                                                          </option>
-                                                      ))
-                                                    : ''}
-                                            </select>
-                                            <tbody>
-                                                <i
-                                                    id={styles.iconAdd}
-                                                    className="fa-solid fa-plus"
+                                                <button
+                                                    id={styles.iconAddd}
                                                     onClick={handleAddSchedule}
-                                                ></i>
+                                                    style={{ height: '30px' }}
+                                                >
+                                                    Thêm
+                                                </button>
+                                                {flag && (
+                                                    <button
+                                                        id={styles.iconDelete}
+                                                        onClick={handleDeleteSchedule}
+                                                        style={{ height: '30px' }}
+                                                    >
+                                                        Xóa
+                                                    </button>
+                                                )}
 
                                                 {flag && (
-                                                    <i
-                                                        className="fa-solid fa-pen-to-square"
+                                                    <button
+                                                        id={styles.iconEdit}
                                                         onClick={() => handleEditSchedule()}
-                                                    ></i>
+                                                        style={{ height: '30px' }}
+                                                    >
+                                                        Sửa
+                                                    </button>
                                                 )}
-                                                {flag && (
-                                                    <i class="fa-solid fa-trash" onClick={handleDeleteSchedule}></i>
-                                                )}
+                                                <select
+                                                    onChange={handlerChange}
+                                                    className="selectInput"
+                                                    style={{ paddingBottom: '1px' }}
+                                                >
+                                                    <option>Chọn loại cây</option>
+                                                    {schedule
+                                                        ? schedule.map((sche, index) => (
+                                                              <option value={sche.id} key={sche.id}>
+                                                                  {sche.name}
+                                                              </option>
+                                                          ))
+                                                        : ''}
+                                                </select>
+                                                {/* <tbody> */}
+                                            </div>
 
-                                                <section className={styles.tableContent}>
-                                                    <tr>
-                                                        <th className={styles.th1}>Id</th>
-                                                        <th className={styles.th1}>Tên</th>
-                                                        <th className={styles.th1}>Bắt đầu</th>
-                                                        <th className={styles.th1}>Kết thúc</th>
-                                                        <th className={styles.th1}>Id lịch</th>
+                                            <section className={styles.tableContent}>
+                                                <tr>
+                                                    <th className={styles.th1} width="10%">
+                                                        <strong>Id</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Tên</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="40%">
+                                                        <strong>Bắt đầu</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="40%">
+                                                        <strong>Kết thúc</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="30%">
+                                                        <strong>Id lịch</strong>
+                                                    </th>
+                                                </tr>
+                                                {data.map((item) => (
+                                                    <tr key={item.id}>
+                                                        <th width="10%">{item.id}</th>
+                                                        <th width="20%">{item.name}</th>
+                                                        <th width="30%">{item.dateStart}</th>
+                                                        <th width="30%">{item.dateEnd}</th>
+                                                        <th width="10%">{truncateString2(item.scheduleId)}</th>
                                                     </tr>
-                                                    {data.map((item) => (
-                                                        <tr key={item.id}>
-                                                            <th width="10%">{item.id}</th>
-                                                            <th width="20%">{item.name}</th>
-                                                            <th width="20%">{item.dateStart}</th>
-                                                            <th width="20%">{item.dateEnd}</th>
-                                                            <th width="40%">{item.scheduleId}</th>
-                                                        </tr>
-                                                    ))}
-                                                </section>
-                                            </tbody>
+                                                ))}
+                                            </section>
+                                            {/* </tbody> */}
                                         </div>
                                     )}
                                 </table>

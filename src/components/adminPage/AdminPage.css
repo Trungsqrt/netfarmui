@@ -1,8 +1,33 @@
-select {
+/* select {
     width: 30%;
     font-size: 12pt;
     margin-bottom: 20px;
     margin-top: 20px;
     padding: 7px 11px;
     margin-left: 0px;
+} */
+
+select {
+    height: unset !important;
+    margin-left: unset !important;
+}
+
+.menuIconItem {
+    margin-right: 10px;
+}
+
+.trashcan {
+    color: red;
+}
+
+.selectInput {
+    height: unset !important;
+    margin-left: unset !important;
+    border-radius: 8px !important;
+    padding: 4px !important;
+    border: 1px solid black !important;
+
+    width: 300px !important;
+    margin-top: 2px;
+    /* margin-bottom: 0px; */
 }
