@@ -11,11 +11,11 @@ const fetchData = async () => {
     const numberoffeedback = products.data.filter((a) => a['feedback']);
     data.push({
         name: 'Đã Đánh giá',
-        value: (numberoffeedback.length / products.data.length) * 100,
+        value: Number(((numberoffeedback.length / products.data.length) * 100).toFixed(2)),
     });
     data.push({
         name: 'Chưa đánh giá',
-        value: ((products.data.length - numberoffeedback.length) / products.data.length) * 100,
+        value: Number((((products.data.length - numberoffeedback.length) / products.data.length) * 100).toFixed(2)),
     });
 };
 fetchData();

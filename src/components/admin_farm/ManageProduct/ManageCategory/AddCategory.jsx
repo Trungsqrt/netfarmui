@@ -26,34 +26,38 @@ const AddCategory = () => {
         <div>
             <Header></Header>
             <div className="addProduct_container">
-                <div className="addProduct_title">Nhập thông tin danh mục </div>
-                <ul className="addProduct_list">
-                    <li className="addProduct_row">
-                        <div className="product_properties">Tên danh mục</div>
-                        <input
-                            className="product_input"
-                            type={Text}
-                            value={display}
-                            placeholder="Nhập tên danh mục..."
-                            onChange={(e) => setDisplay(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Slug</div>
-                        <input
-                            className="product_input"
-                            type={Text}
-                            value={categorySlug}
-                            placeholder="Nhập slug..."
-                            onChange={(e) => setCategorySlug(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                </ul>
-                <button className="addProduct_btn" onClick={onClickHandler}>
-                    Thêm mới
-                </button>
+                <div className="products_table_container">
+                    <div className="addProduct_title">Nhập thông tin danh mục </div>
+                    <ul className="addProduct_list">
+                        <li className="addProduct_row">
+                            <div className="product_properties">Tên danh mục</div>
+                            <input
+                                className="product_input"
+                                type={Text}
+                                value={display}
+                                placeholder="Nhập tên danh mục..."
+                                onChange={(e) => setDisplay(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Slug</div>
+                            <input
+                                className="product_input"
+                                type={Text}
+                                value={categorySlug}
+                                placeholder="Nhập slug..."
+                                onChange={(e) => setCategorySlug(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                    </ul>
+                    <div className="addProduct_btn_line">
+                        <button className="add_new_product" onClick={onClickHandler}>
+                            Thêm mới
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

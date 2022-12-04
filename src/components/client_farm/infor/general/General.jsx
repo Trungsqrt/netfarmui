@@ -43,7 +43,7 @@ const General = () => {
         <div>
             <div className="general_row">
                 <div className="col-2">
-                    <div className="section_title">Hướng dẫn nông nghiệp</div>
+                    <div className="section_title_inf">Hướng dẫn nông nghiệp</div>
                     <div>
                         <div className="listarticle">
                             {manualItems
@@ -55,7 +55,7 @@ const General = () => {
                     </div>
                 </div>
                 <div className="col-2">
-                    <div className="section_title">Tin tức nông nghiệp</div>
+                    <div className="section_title_inf">Tin tức nông nghiệp</div>
                     <div>
                         <div className="listarticle">
                             {newsItems
@@ -71,9 +71,9 @@ const General = () => {
 
             </div> */}
             <div className="row">
-                <div className="section_title">Chính sách</div>
+                <div className="section_title_inf">Chính sách</div>
                 <div>
-                    <div className="listarticle">
+                    <div className="PolicyRow">
                         {policyItems
                             ? policyItems.map((item, index) => (
                                   <Policy article={item} key={item.id} update={item.id} number={index}></Policy>

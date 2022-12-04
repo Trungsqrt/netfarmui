@@ -54,142 +54,146 @@ const AddProduct = () => {
     return (
         <div>
             <Header></Header>
-            <div className="addProduct_container">
-                <div className="addProduct_title">Nhập thông tin sản phẩm</div>
-                <ul className="addProduct_list">
-                    <li className="addProduct_row">
-                        <div className="product_properties">Tên sản phẩm</div>
-                        <input
-                            className="product_input"
-                            type={Text}
-                            value={name}
-                            placeholder="Nhập tên sản phẩm..."
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Danh mục</div>
-                        <div className="product_input product_input_select ">
-                            <select
-                                name="category"
-                                id="category"
-                                className={'combobox'}
-                                onChange={(e) => setCategory(e.target.value)}
-                                value={category}
-                            >
-                                {' '}
-                                {catList
-                                    ? catList.map((cat, index) => (
-                                          <option value={cat.categoryId} key={index}>
-                                              {cat.display}
-                                          </option>
-                                      ))
-                                    : ''}
-                            </select>
-                        </div>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Giá</div>
-                        <input
-                            className="product_input"
-                            type={Number}
-                            value={price}
-                            placeholder="Nhập gia sản phẩm"
-                            onChange={(e) => setPrice(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Đơn vị tính</div>
-                        <input
-                            className="product_input"
-                            type={Text}
-                            value={unit}
-                            placeholder="Nhập đơn vị tính ..."
-                            onChange={(e) => setUnit(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Nơi sản xuất</div>
-                        <input
-                            className="product_input"
-                            type={Text}
-                            value={placeProduce}
-                            placeholder="Nhập nơi sản xuất ..."
-                            onChange={(e) => setPlaceProduce(e.target.value)}
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Số lượng tồn kho</div>
-                        <input
-                            className="product_input"
-                            type={Number}
-                            value={invetory}
-                            placeholder="Nhập số lượng sản phẩm có sẵn ..."
-                            onChange={(e) => setInventory(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Mô tả</div>
-                        <input
-                            className="product_input"
-                            type={Number}
-                            value={description}
-                            placeholder="Nhập số lượng sản phẩm có sẵn ..."
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Link ảnh 1</div>
-                        <input
-                            className="product_input"
-                            type={Text}
-                            value={imgUrl1}
-                            placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                            onChange={(e) => setimgUrl1(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Link ảnh 2</div>
-                        <input
-                            className="product_input"
-                            type={URL}
-                            value={imgUrl2}
-                            placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                            onChange={(e) => setimgUrl2(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Link ảnh 3</div>
-                        <input
-                            className="product_input"
-                            type={URL}
-                            value={imgUrl3}
-                            placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                            onChange={(e) => setimgUrl3(e.target.value)}
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Link ảnh 4</div>
-                        <input
-                            className="product_input"
-                            type={URL}
-                            value={imgUrl4}
-                            placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                            onChange={(e) => setimgUrl4(e.target.value)}
-                            required
-                        ></input>
-                    </li>
-                </ul>
-                <button className="addProduct_btn" onClick={onClickHandler}>
-                    Thêm mới
-                </button>
+            <div className="addProduct_container ">
+                <div className="products_table_container">
+                    <div className="addProduct_title">Nhập thông tin sản phẩm</div>
+                    <ul className="addProduct_list">
+                        <li className="addProduct_row">
+                            <div className="product_properties">Tên sản phẩm</div>
+                            <input
+                                className="product_input"
+                                type={Text}
+                                value={name}
+                                placeholder="Nhập tên sản phẩm..."
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Danh mục</div>
+                            <div className="product_input product_input_select ">
+                                <select
+                                    name="category"
+                                    id="category"
+                                    className={'product_input'}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                    value={category}
+                                >
+                                    {' '}
+                                    {catList
+                                        ? catList.map((cat, index) => (
+                                              <option value={cat.categoryId} key={index}>
+                                                  {cat.display}
+                                              </option>
+                                          ))
+                                        : ''}
+                                </select>
+                            </div>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Giá</div>
+                            <input
+                                className="product_input"
+                                type={Number}
+                                value={price}
+                                placeholder="Nhập gia sản phẩm"
+                                onChange={(e) => setPrice(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Đơn vị tính</div>
+                            <input
+                                className="product_input"
+                                type={Text}
+                                value={unit}
+                                placeholder="Nhập đơn vị tính ..."
+                                onChange={(e) => setUnit(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Nơi sản xuất</div>
+                            <input
+                                className="product_input"
+                                type={Text}
+                                value={placeProduce}
+                                placeholder="Nhập nơi sản xuất ..."
+                                onChange={(e) => setPlaceProduce(e.target.value)}
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Số lượng tồn kho</div>
+                            <input
+                                className="product_input"
+                                type={Number}
+                                value={invetory}
+                                placeholder="Nhập số lượng sản phẩm có sẵn ..."
+                                onChange={(e) => setInventory(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Mô tả</div>
+                            <input
+                                className="product_input"
+                                type={Number}
+                                value={description}
+                                placeholder="Nhập số lượng sản phẩm có sẵn ..."
+                                onChange={(e) => setDescription(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Link ảnh 1</div>
+                            <input
+                                className="product_input"
+                                type={Text}
+                                value={imgUrl1}
+                                placeholder="Nhập đường dẫn ảnh sản phẩm..."
+                                onChange={(e) => setimgUrl1(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Link ảnh 2</div>
+                            <input
+                                className="product_input"
+                                type={URL}
+                                value={imgUrl2}
+                                placeholder="Nhập đường dẫn ảnh sản phẩm..."
+                                onChange={(e) => setimgUrl2(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Link ảnh 3</div>
+                            <input
+                                className="product_input"
+                                type={URL}
+                                value={imgUrl3}
+                                placeholder="Nhập đường dẫn ảnh sản phẩm..."
+                                onChange={(e) => setimgUrl3(e.target.value)}
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Link ảnh 4</div>
+                            <input
+                                className="product_input"
+                                type={URL}
+                                value={imgUrl4}
+                                placeholder="Nhập đường dẫn ảnh sản phẩm..."
+                                onChange={(e) => setimgUrl4(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                    </ul>
+                    <div className="addProduct_btn_line">
+                        <button className="add_new_product" onClick={onClickHandler}>
+                            Thêm mới
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

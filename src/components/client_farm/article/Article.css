@@ -1,5 +1,10 @@
+.articlecontainer {
+    transition: transform 0.2s;
+}
+
 .articlecontainer:hover {
     background-color: #f0e935;
+    transform: scale(1.03);
 }
 
 .link_article {
@@ -98,8 +103,13 @@ h1 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: 32%;
-    margin: 4px;
+    width: 30%;
+    margin: 10px;
+    transition: transform 0.2s;
+}
+
+.owl-item:hover {
+    transform: scale(1.03);
 }
 
 .item {

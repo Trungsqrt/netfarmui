@@ -37,28 +37,37 @@
 
 .chat {
     width: 98%;
+    height: 50vh;
+    background-repeat: no-repeat;
+    background-image: url('../../../../assets/image/chat.jpg');
+    background-origin: content-box;
+    margin-top: 100px;
+    flex: 1;
+    background-size: auto;
+    object-fit: cover;
+}
+
+.text {
+    width: 98%;
     height: 60%;
     position: absolute;
     top: 30px;
     left: -100px;
-}
-
-.text {
-    position: absolute;
-    top: 75px;
-    left: -60px;
     bottom: 200px;
     z-index: 2;
-    width: 85%;
-    height: 40%;
+    /* width: 85%;
+    height: 40%; */
     font-size: 16px;
     color: #000;
     line-height: 20px;
     font-weight: 500;
     text-align: justify;
     padding: 6px;
-    display: flex;
-    margin: auto 0;
+    background-origin: content-box;
+    background-size: auto;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    z-index: 2;
 }
 
 .selectBox {
@@ -103,4 +112,71 @@
     margin: 20px;
     font-size: 24px;
     color: #000;
+}
+
+.columnRight {
+    width: 65%;
+    margin-top: 40px;
+}
+
+.boxMessage {
+    display: flex;
+    width: 90%;
+    background-color: rgb(224, 252, 255);
+    box-shadow: 2px 2px 6px #333;
+    min-height: 200px;
+    border-radius: 4px;
+    vertical-align: middle;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.messageContent {
+    flex-direction: column;
+    font-size: 18px;
+    color: #000;
+    text-align: justify;
+    margin: auto 0;
+    line-height: 20px;
+    white-space: pre-line;
+}
+
+.chartContainer {
+    background-color: rgb(255, 240, 252);
+    margin-top: 50px;
+    padding: 20px;
+    box-shadow: 2px 2px 6px #333;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 20px 0;
+    text-decoration: underline;
+}
+
+.todayWeather {
+    width: 400px;
+    height: 200px;
+    background-color: rgb(186, 220, 253);
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 4px;
+    color: #000;
+    text-align: center;
+    border: 1px solid blue;
+}
+
+.todayLocation {
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+.todayTempt {
+    font-size: 60px;
+    margin: 10px;
 }

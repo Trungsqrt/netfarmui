@@ -16,6 +16,7 @@ import Dashboard from './ManageStatistical/Dashboard';
 import ManageCategory from './ManageCategory/ManageCategory';
 import ManageOrder from './ManageOrder/ManageOrder';
 import Manage from './ManageProduct/Manage';
+import SaleReport from './ManageReport/SaleReport';
 const ManageProduct = () => {
     const [render, setRender] = useState(1);
     // localStorage.removeItem('currentTab');
@@ -47,6 +48,12 @@ const ManageProduct = () => {
         setRender(4);
         localStorage.setItem('currentTab', 4);
     };
+
+    const ReportHandler = () => {
+        setRender(5);
+        localStorage.setItem('currentTab', 5);
+    };
+
     return (
         <div>
             <Header></Header>
@@ -106,10 +113,10 @@ const ManageProduct = () => {
                                         </a>
                                     </li>
 
-                                    <li className={render === 5 ? 'active' : 'none'} onClick={() => setRender(5)}>
+                                    <li className={render === 5 ? 'active' : 'none'} onClick={ReportHandler}>
                                         <a href="#">
                                             <AiOutlineUsergroupAdd />
-                                            <span className="border">Khách hàng</span>
+                                            <span className="border">Báo cáo</span>
                                         </a>
                                     </li>
                                     <li className={render === 6 ? 'active' : 'none'} onClick={() => setRender(6)}>
@@ -134,6 +141,7 @@ const ManageProduct = () => {
                     {render == 2 && <ManageCategory></ManageCategory>}
                     {render == 3 && <ManageOrder></ManageOrder>}
                     {render == 4 && <Dashboard></Dashboard>}
+                    {render == 5 && <SaleReport></SaleReport>}
                 </div>
             </div>
         </div>

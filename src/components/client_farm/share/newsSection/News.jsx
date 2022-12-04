@@ -12,7 +12,7 @@ function News(props) {
         const fetchData = async () => {
             const response = await articleAPI.getAPI();
 
-            const data = response.data.reverse().splice(0, 3);
+            const data = response.data.reverse().splice(0, 4);
             setArticles(data);
         };
         fetchData();
@@ -28,11 +28,11 @@ function News(props) {
     return (
         <div>
             <h1 className="labelNews">Tin Tức</h1>
-            <div className="news">
+            <div className="homepage_news">
                 {articles &&
-                    articles.slice(0, 3).map((value) => (
+                    articles.slice(0, 4).map((value) => (
                         <div
-                            className="owl-item cloned"
+                            className="owl-item_news cloned"
                             // key={value.Article_id}
                             key={value.id}
                         >

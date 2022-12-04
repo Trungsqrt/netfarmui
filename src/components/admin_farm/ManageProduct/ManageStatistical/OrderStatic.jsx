@@ -9,29 +9,29 @@ const fetchData = async () => {
     const cancel = order.data.filter((item) => item['cancel']);
     data.push({
         name: 'Đã hủy',
-        value: (cancel.length / order.data.length) * 100,
+        value: Number(((cancel.length / order.data.length) * 100).toFixed(2)),
     });
     const finish = order.data.filter((item) => item['finish'] && !item['cancel']);
     data.push({
         name: 'Đã giao',
-        value: (finish.length / order.data.length) * 100,
+        value: Number(((finish.length / order.data.length) * 100).toFixed(2)),
     });
     const dangGiao = order.data.filter((item) => item['delivery'] && !item['finish'] && !item['cancel']);
     data.push({
         name: 'Đang giao hàng',
-        value: (dangGiao.length / order.data.length) * 100,
+        value: Number(((dangGiao.length / order.data.length) * 100).toFixed(2)),
     });
 
     const daXacNhan = order.data.filter((item) => !item['delivery'] && item['status'] && !item['cancel']);
     data.push({
         name: 'Đã xác nhận',
-        value: (daXacNhan.length / order.data.length) * 100,
+        value: Number(((daXacNhan.length / order.data.length) * 100).toFixed(2)),
     });
 
     const chuaXacNhan = order.data.filter((item) => !item['status'] && !item['cancel']);
     data.push({
         name: 'Chưa xác nhận',
-        value: (daXacNhan.length / order.data.length) * 100,
+        value: Number(((chuaXacNhan.length / order.data.length) * 100).toFixed(2)),
     });
 };
 fetchData();

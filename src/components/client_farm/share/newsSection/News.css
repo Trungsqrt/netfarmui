@@ -1,4 +1,4 @@
-.news {
+.homepage_news {
     display: flex;
     padding-top: 50px;
     justify-content: space-around;
@@ -13,7 +13,7 @@
     padding-left: 44px;
 }
 
-.owl-item {
+.owl-item_news {
     position: relative;
     min-height: 1px;
     float: left;
@@ -24,7 +24,12 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: 30%;
+    width: 23%;
+    transition: transform 0.2s;
+}
+
+.owl-item_news:hover {
+    transform: scale(1.05);
 }
 
 .item {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import dssImage from '../../../../assets/image/pngwing.com.png';
 import styles from '../DSS/DSS.module.css';
-import dssImageChat from '../../../../assets/image/chat.png';
 import TemperatureChart from './TemperatureChart';
 import axios from 'axios';
 function DSS() {
@@ -21,15 +20,22 @@ function DSS() {
     const [message, setMessage] = useState(
         'Xin chào bạn! Cảm ơn đã lựa chọn Netfarm DSS để đồng hành cũng với vụ mùa của bạn  . Mời bạn chọn chuyên mục tư vấn ở phía trên. Chúc bạn một ngày tốt lành !!',
     );
+    const [iconState, setIconState] = useState('');
+    const [location, setLocation] = useState('');
+    const [description, setDescription] = useState('');
+    const [tempt, setTempt] = useState('');
     //set temporary data
     const getData = async () => {
         const res = await axios.get(weatherAPIURL);
-        setDataWeather(res.data.data);
         const value = res.data.data;
-        for (let i = 0; i < 8;) {
-
+        setDataWeather(res.data.data);
+        setLocation(res.data.city_name);
+        setDescription(value[0].weather.description);
+        setTempt(value[0].temp);
+        setIconState(value[0].weather.icon);
+        console.log(iconState);
+        for (let i = 0; i < 8; ) {
             const postData = async () => {
-
                 const obj = {
                     id: i,
                     description: value[i].weather.description,
@@ -41,18 +47,12 @@ function DSS() {
                     rain: value[i].precip,
                 };
 
-                await axios.put(`${putWeatherUrl}`, obj)
-            }
+                await axios.put(`${putWeatherUrl}`, obj);
+            };
             postData();
-            i+=1;
-            console.log("i: ", i)
-
+            i += 1;
         }
         // axios.delete(`${putWeatherUrl}/${i}`);
-
-    
-        
-
     };
     useEffect(() => {
         getData();
@@ -133,12 +133,40 @@ function DSS() {
             <section className={styles.container}>
                 <div className={styles.imageHuman}></div>
 
-                <div className={styles.bubble}>
-                    <div className={styles.text}>{message}</div>
+                {/* <div className={styles.bubble}>
+                    <div className={styles.chat}>
+                        <div className={styles.text}>{message}</div>
+                    </div>
                     <img src={dssImageChat} className={styles.chat}></img>
 
                     <div className={styles.chart}>
                         <TemperatureChart />
+                    </div>
+                </div> */}
+                <div className={styles.columnRight}>
+                    <div className={styles.boxMessage}>
+                        <div className={styles.messageContent}>{message}</div>
+                    </div>
+                    <div className={styles.chartContainer}>
+                        <div className={styles.today}>
+                            <div className={styles.title}>hôm nay</div>
+                            <div className={styles.todayWeather}>
+                                <div className={styles.todayLocation}>{location}</div>
+                                <div className={styles.todayTempt}>{tempt} °C</div>
+                                <div className={styles.todayDesc}>{description}</div>
+                                <div className={styles.todayIcon}>
+                                    <img
+                                        src={`http://openweathermap.org/img/wn/${iconState}@2x.png`}
+                                        alt=""
+                                        className={styles.iconWeather}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className={styles.title}>Thời tiết tuần tới</div>
+                            <TemperatureChart />
+                        </div>
                     </div>
                 </div>
             </section>

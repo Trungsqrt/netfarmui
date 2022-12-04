@@ -50,18 +50,18 @@ function ProductDetail(props) {
         const fetchData = async () => {
             const response = await productAPI.getDetail(id);
             setDetail(response.data);
+            // console.log(response.data.inventoryNumber);
+            // if (response.data.inventoryNumber === 0) {
+            //     const btns = document.getElementById(`btnAdd`);
+            //     if (btns !== null) {
+            //         btns.classList.add('hiden_btn');
+            //     }
 
-            if (response.data.inventoryNumber === 0) {
-                const btns = document.getElementById(`btnAdd`);
-                if (btns !== null) {
-                    btns.classList.add('hiden_btn');
-                }
-
-                const soldOuttext = document.getElementById('soldOut');
-                if (soldOuttext !== null) {
-                    soldOuttext.classList.remove('hiden_btn');
-                }
-            }
+            //     const soldOuttext = document.getElementById('soldOut');
+            //     if (soldOuttext !== null) {
+            //         soldOuttext.classList.remove('hiden_btn');
+            //     }
+            // }
         };
         fetchData();
     }, [id]);
@@ -243,7 +243,10 @@ function ProductDetail(props) {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="btn_Add" id="btnAdd">
+                                <div
+                                    className={detail.inventoryNumber !== 0 ? 'btn_Add' : 'btn_Add hiden_btn'}
+                                    id="btnAdd"
+                                >
                                     <button className="Detail_Add_btn" onClick={AddToCartHandler}>
                                         Thêm vào giỏ hàng
                                     </button>
@@ -251,7 +254,10 @@ function ProductDetail(props) {
                                         Mua ngay
                                     </button>
                                 </div>
-                                <div className="soldOut hiden_btn" id="soldOut">
+                                <div
+                                    className={detail.inventoryNumber !== 0 ? 'soldOut  hiden_btn' : 'soldOut'}
+                                    id="soldOut"
+                                >
                                     Sản phẩm này hiện đang hết hàng!
                                 </div>
                                 {/* <div className="addtional_infor">
@@ -261,7 +267,9 @@ function ProductDetail(props) {
                             </div>
                         </div>
                         <div className="review_feedback">
-                            <div className="section_title">Phản hồi của khách hàng</div>
+                            <div className={feedbacks.length !== 0 ? 'section_title' : 'section_title hiden_btn'}>
+                                Phản hồi của khách hàng
+                            </div>
                             {feedbacks
                                 ? feedbacks.map((feedback, index) => (
                                       <div className="feedback_row" key={index}>

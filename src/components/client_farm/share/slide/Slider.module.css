@@ -1,7 +1,7 @@
 .container {
     width: 100%;
     margin: 0 auto;
-
+    height: 250px;
     list-style: none;
     padding: 0;
 }
@@ -13,7 +13,7 @@
     background-size: cover;
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    height: 70vh;
+    height: 50vh;
 }
 
 .slide span {

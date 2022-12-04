@@ -1,8 +1,1 @@
-export default [
-    "https://bom.so/YOKHbx",
-    "https://bom.so/mok5fo",
-    "https://bom.so/aoIlEi",
-    "https://bom.so/M37UHc",
-    "https://bom.so/q678i6",
-    "https://bom.so/YOKHbx"
-  ];
+export default ['https://bom.so/mA9hw5', 'https://bom.so/Eo5n8t', 'https://bom.so/YOKHbx'];

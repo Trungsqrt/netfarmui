@@ -8,13 +8,13 @@ import '../css/style.css';
 const Cart = () => {
     localStorage.removeItem('checklist');
     const user = JSON.parse(localStorage.getItem('user'));
+    const checkedlist = localStorage.getItem('checked');
     // console.log(user);
     const [carts, setCart] = useState([]);
     const userId = user.userId;
     const cartUrl = 'https://localhost:44303/api/Carts';
     const navigate = useNavigate();
-    const checkedlist = localStorage.getItem('checked');
-    var checkeds = [];
+    let checkeds = [];
     const [total, setTotal] = useState(0);
     const [checkList, setCheckList] = useState([]);
     if (checkedlist) {

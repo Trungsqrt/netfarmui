@@ -172,79 +172,84 @@ const ManageOrder = () => {
                     </li>
                 </ul>
             </div>
-            <table className="products_table">
-                <thead className="bg-light">
-                    <tr className="text-center">
-                        <th className="border-0" scope="col">
-                            <strong className="text-small text-uppercase">ID</strong>
-                        </th>
-                        <th className="border-0" scope="col">
-                            <strong className="text-small text-uppercase">Tên Khách Hàng</strong>
-                        </th>
-                        <th className="border-0" scope="col">
-                            <strong className="text-small text-uppercase">Địa chỉ</strong>
-                        </th>
-                        <th className="border-0" scope="col">
-                            <strong className="text-small text-uppercase">SĐT</strong>
-                        </th>
-                        <th className="border-0" scope="col">
-                            <strong className="text-small text-uppercase">Số tiền</strong>
-                        </th>
-                        <th className="border-0" scope="col">
-                            <strong className="text-small text-uppercase">Duyệt đơn</strong>
-                        </th>
-                        <th className="border-0" scope="col">
-                            <strong className="text-small text-uppercase">Chi tiết</strong>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentData
-                        ? currentData.map((item, index) => (
-                              <tr className="text_center" key={index}>
-                                  <td className="text_center">{item.id}</td>
-                                  <td className="text_center">{item.name}</td>
-                                  <td className="text_center">{item.address}</td>
-                                  <td className="text_center">{item.phone}</td>
-                                  <td className="text_center">{item.total}</td>
+            <div className="products_table_container">
+                <div className="products_table_title">Danh sách đơn hàng</div>
+                <br />
+                <br />
+                <table className="products_table">
+                    <thead className="bg-light">
+                        <tr className="text-center">
+                            {/* <th className="border-0" scope="col">
+                                <strong className="text-small text-uppercase">ID</strong>
+                            </th> */}
+                            <th className="border-0" scope="col">
+                                <strong className="text-small text-uppercase">Tên Khách Hàng</strong>
+                            </th>
+                            <th className="border-0" scope="col">
+                                <strong className="text-small text-uppercase">Địa chỉ</strong>
+                            </th>
+                            <th className="border-0" scope="col">
+                                <strong className="text-small text-uppercase">SĐT</strong>
+                            </th>
+                            <th className="border-0" scope="col">
+                                <strong className="text-small text-uppercase">Số tiền</strong>
+                            </th>
+                            <th className="border-0" scope="col">
+                                <strong className="text-small text-uppercase">Duyệt đơn</strong>
+                            </th>
+                            <th className="border-0" scope="col">
+                                <strong className="text-small text-uppercase">Chi tiết</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentData
+                            ? currentData.map((item, index) => (
+                                  <tr className="text_center" key={index}>
+                                      {/* <td className="text_center">{item.id}</td> */}
+                                      <td className="text_center">{item.name}</td>
+                                      <td className="text_center">{item.address}</td>
+                                      <td className="text_center">{item.phone}</td>
+                                      <td className="text_center">{item.total}</td>
 
-                                  <td className="text_center">
-                                      <button
-                                          onClick={handleApproveOrder}
-                                          value={item.status}
-                                          name={item.id}
-                                          className={item.status || item.cancel ? 'hiden_btn' : ''}
-                                      >
-                                          {item.status ? 'Đã xác nhận' : 'Xác nhận đơn hàng'}
-                                      </button>
-                                      <div className={item.status || item.cancel ? '' : 'hiden_btn'}>
-                                          {item.cancel
-                                              ? 'Đã hủy'
-                                              : item.finish
-                                              ? 'Đã nhận hàng'
-                                              : item.delivery
-                                              ? 'Đang giao hàng'
-                                              : 'Đã xác nhận- chờ giao hàng'}
-                                      </div>
-                                  </td>
-                                  <td className="text_center">
-                                      <Link to={`/manage/OrderDetail/${item.id}`}>
-                                          <button value={item.id}>Chi tiết đơn hàng</button>
-                                      </Link>
-                                  </td>
-                              </tr>
-                          ))
-                        : ''}
-                </tbody>
-            </table>
-            <div className="pagination_line">
-                <Pagination
-                    className="pagination-bar"
-                    currentPage={currentPage}
-                    totalCount={data.length}
-                    pageSize={PageSize}
-                    onPageChange={(page) => setCurrentPage(page)}
-                />
+                                      <td className="text_center">
+                                          <button
+                                              onClick={handleApproveOrder}
+                                              value={item.status}
+                                              name={item.id}
+                                              className={item.status || item.cancel ? 'hiden_btn' : ''}
+                                          >
+                                              {item.status ? 'Đã xác nhận' : 'Xác nhận đơn hàng'}
+                                          </button>
+                                          <div className={item.status || item.cancel ? '' : 'hiden_btn'}>
+                                              {item.cancel
+                                                  ? 'Đã hủy'
+                                                  : item.finish
+                                                  ? 'Đã nhận hàng'
+                                                  : item.delivery
+                                                  ? 'Đang giao hàng'
+                                                  : 'Đã xác nhận- chờ giao hàng'}
+                                          </div>
+                                      </td>
+                                      <td className="text_center">
+                                          <Link to={`/manage/OrderDetail/${item.id}`}>
+                                              <button value={item.id}>Chi tiết đơn hàng</button>
+                                          </Link>
+                                      </td>
+                                  </tr>
+                              ))
+                            : ''}
+                    </tbody>
+                </table>
+                <div className="pagination_line">
+                    <Pagination
+                        className="pagination-bar"
+                        currentPage={currentPage}
+                        totalCount={data.length}
+                        pageSize={PageSize}
+                        onPageChange={(page) => setCurrentPage(page)}
+                    />
+                </div>
             </div>
         </section>
     );

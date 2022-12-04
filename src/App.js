@@ -33,6 +33,7 @@ import Policy from './components/client_farm/infor/policy/Policy';
 import Manual from './components/client_farm/infor/manual/Manual';
 import News from './components/client_farm/infor/news/News';
 import Footer from './components/client_farm/share/footer/Footer';
+import SaleReport from './components/admin_farm/ManageProduct/ManageReport/SaleReport';
 function App() {
     return (
         <div className="App">
@@ -69,6 +70,7 @@ function App() {
                 <Route path="/manage/Feedback" element={<FeedbackList />} />
                 <Route path="feedback/:id" element={<FeedbackProduct />} />
                 <Route path="/inforPage" element={<Information />} />
+                <Route path="/report" element={<SaleReport />} />
             </Routes>
             <Footer></Footer>
         </div>

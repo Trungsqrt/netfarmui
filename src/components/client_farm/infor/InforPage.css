@@ -32,12 +32,14 @@
     padding-top: 10px;
 }
 
-.section_title {
+.section_title_inf {
     font-size: 26px;
     color: #000;
     text-transform: uppercase;
     padding-top: 16px;
     font-weight: 500;
+    margin-bottom: 20px;
+    text-decoration: underline;
 }
 
 .listarticle-policy {
@@ -46,4 +48,9 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.PolicyRow {
+    /* display: flex; */
+    justify-content: space-between;
 }
