@@ -1,14 +1,98 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import JsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import OrderStatistic from '../ManageStatistical/OrderStatic';
 import '../../css/style.css';
+import axios from 'axios';
 
 const SaleReport = () => {
+    const OrderUrl = 'https://localhost:44303/api/Order';
+    const ProductUrl = 'https://localhost:44303/api/Products';
+    const OrderDetailUrl = 'https://localhost:44303/api/OrderDetail';
+    const [numberOrder, setnumberOrder] = useState(0);
+    const [revenue, setrevenue] = useState(0);
+    const [expenses, setexpenses] = useState(0);
+    const [profit, setprofit] = useState(0);
+    const [finishRevenue, setfinishRevenue] = useState(0);
+    const [finishExpenses, setfinishExpenses] = useState(0);
+    const [finishProfit, setfinishProfit] = useState(0);
+    const [UnfinishRevenue, setUnfinishRevenue] = useState(0);
+    const [UnfinishExpenses, setUnfinishExpenses] = useState(0);
+    const [UnfinishProfit, setUnfinishProfit] = useState(0);
+    const [CancelRevenue, setCancelRevenue] = useState(0);
+    const [CancelExpenses, setCancelExpenses] = useState(0);
+    const [CancelProfit, setCancelProfit] = useState(0);
+    useEffect(() => {
+        const fetchData = async () => {
+            const order = await axios.get(OrderUrl);
+            const detailOrderRes = await axios.get(OrderDetailUrl);
+            const ProductsRes = await axios.get(OrderDetailUrl);
+            // lấy tất cả các đơn trong tháng hiện tại
+            const Order = order.data.filter((item) => new Date(item['createAt']).getMonth() === new Date().getMonth());
+
+            const Products = ProductsRes.data;
+            setnumberOrder(Order.length);
+            var sum = 0,
+                cancelreve = 0,
+                finishreven = 0,
+                unfinishreven = 0;
+            var cancel = [];
+            var finish = [];
+            var unfinish = [];
+            var OrderIdInMonth = [];
+            for (var i = 0; i < Order.length; i++) {
+                sum += Order[i].total;
+                OrderIdInMonth.push(Order[i].id);
+                if (Order[i].cancel) {
+                    cancelreve += Order[i].total;
+                    cancel.push(Order[i].id);
+                } else if (Order[i].finish) {
+                    finishreven += Order[i].total;
+                    finish.push(Order[i].id);
+                } else {
+                    unfinishreven += Order[i].total;
+                    unfinish.push(Order[i].id);
+                }
+            }
+            console.log(unfinish);
+            setrevenue(sum);
+            setfinishRevenue(finishreven);
+            setCancelRevenue(cancelreve);
+            setUnfinishRevenue(unfinishreven);
+            const OrderDetail = detailOrderRes.data.filter((item) => OrderIdInMonth.includes(item.orderId));
+            var allcost = 0,
+                cancelcost = 0,
+                finishcost = 0,
+                unfinishcost = 0;
+            for (var i = 0; i < OrderDetail.length; i++) {
+                const productId = OrderDetail[i].productId;
+                const quantity = OrderDetail[i].quantity;
+                const ProductRes = await axios.get(`${ProductUrl}/${productId}`);
+                const cost = ProductRes.data.discount;
+                allcost += quantity * cost;
+                if (cancel.includes(OrderDetail[i].orderId)) {
+                    cancelcost += quantity * cost;
+                } else if (finish.includes(OrderDetail[i].orderId)) {
+                    finishcost += quantity * cost;
+                } else {
+                    unfinishcost += quantity * cost;
+                }
+            }
+            setexpenses(allcost);
+            setCancelExpenses(cancelcost);
+            setfinishExpenses(finishcost);
+            setUnfinishExpenses(unfinishcost);
+            setprofit(revenue - expenses);
+            setCancelProfit(CancelRevenue - CancelExpenses);
+            setfinishProfit(finishRevenue - finishExpenses);
+            setUnfinishProfit(UnfinishRevenue - UnfinishExpenses);
+        };
+        fetchData();
+    }, []);
+
     function myFunction() {
         var dots = document.getElementById('dots');
-        console.log(dots);
         var moreText = document.getElementById('more');
         var btnText = document.getElementById('myBtn');
 
@@ -33,7 +117,6 @@ const SaleReport = () => {
             var imgWidth = 180;
             var imgHeight = (canvas.height * imgWidth) / canvas.width;
             var heightLeft = imgHeight;
-            console.log(imgHeight);
             var position = 15;
             doc.addImage(imgData, 'PNG', 15, position, imgWidth, imgHeight);
             heightLeft -= pageHeight;
@@ -43,7 +126,6 @@ const SaleReport = () => {
                 doc.addPage();
                 doc.addImage(imgData, 'PNG', 15, position - 20, imgWidth, imgHeight);
                 heightLeft -= pageHeight;
-                console.log(heightLeft);
             }
             doc.save('MyReport.pdf');
             // doc.output('dataurlnewwindow');
@@ -115,19 +197,19 @@ const SaleReport = () => {
                                 </tr> */}
                                 <tr>
                                     <td className="table_object">Tổng đơn bán</td>
-                                    <td>1995</td>
+                                    <td>{numberOrder}</td>
                                 </tr>
                                 <tr>
                                     <td className="table_object">Tổng doanh thu </td>
-                                    <td>1992</td>
+                                    <td>{revenue}</td>
                                 </tr>
                                 <tr>
                                     <td className="table_object">Tổng chi phí</td>
-                                    <td>1993</td>
+                                    <td>{expenses}</td>
                                 </tr>
                                 <tr>
                                     <td className="table_object">Tổng lợi nhuận</td>
-                                    <td>1994</td>
+                                    <td>{profit}</td>
                                 </tr>
                             </table>
                         </div>
@@ -148,72 +230,72 @@ const SaleReport = () => {
                             <div className="report_table">
                                 <table>
                                     <tr>
-                                        <td className="table_object table_object_header" colSpan={3}>
+                                        <td className="table_object table_object_header" colSpan={2}>
                                             Tổng{' '}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Doanh thu </td>
-                                        <td>1992</td>
+                                        <td>{revenue}</td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Chi phí</td>
-                                        <td>1993</td>
+                                        <td>{expenses}</td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Lợi nhuận</td>
-                                        <td>1994</td>
+                                        <td>{profit}</td>
                                     </tr>
                                     <tr>
-                                        <td className="table_object table_object_header" colSpan={3}>
+                                        <td className="table_object table_object_header" colSpan={2}>
                                             Đơn thành công{' '}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Doanh thu </td>
-                                        <td>1992</td>
+                                        <td>{finishRevenue}</td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Chi phí</td>
-                                        <td>1993</td>
+                                        <td>{finishExpenses}</td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Lợi nhuận</td>
-                                        <td>1994</td>
+                                        <td>{finishProfit}</td>
                                     </tr>
                                     <tr>
-                                        <td className="table_object table_object_header" colSpan={3}>
+                                        <td className="table_object table_object_header" colSpan={2}>
                                             Đơn đang xử lý{' '}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Doanh thu </td>
-                                        <td>1992</td>
+                                        <td>{UnfinishRevenue}</td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Chi phí</td>
-                                        <td>1993</td>
+                                        <td>{UnfinishExpenses}</td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Lợi nhuận</td>
-                                        <td>1994</td>
+                                        <td>{UnfinishProfit}</td>
                                     </tr>
                                     <tr>
-                                        <td className="table_object table_object_header" colSpan={3}>
+                                        <td className="table_object table_object_header" colSpan={2}>
                                             Đơn thất bại / đã hủy{' '}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Doanh thu </td>
-                                        <td>1992</td>
+                                        <td>{CancelRevenue}</td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Chi phí</td>
-                                        <td>1993</td>
+                                        <td>{CancelExpenses}</td>
                                     </tr>
                                     <tr>
                                         <td className="table_object">Lợi nhuận</td>
-                                        <td>1994</td>
+                                        <td>{CancelProfit}</td>
                                     </tr>
                                 </table>
                             </div>

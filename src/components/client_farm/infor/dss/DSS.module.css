@@ -77,6 +77,8 @@
     text-align: center;
     height: 40px;
     vertical-align: middle;
+    justify-content: space-between;
+    margin-right: 100px;
 }
 
 .dsstitle {
@@ -88,6 +90,7 @@
 }
 
 .selectElement {
+    width: 350px;
     height: 40px;
     color: #000;
 }

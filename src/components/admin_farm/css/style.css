@@ -713,3 +713,24 @@
     text-align: right;
     padding-right: 110px;
 }
+
+.inputReportFiel {
+    width: 60%;
+    font-size: 18px;
+    color: #000;
+    border: none;
+}
+
+.inputReportFiel2 {
+    width: 70%;
+    font-size: 18px;
+    color: #000;
+    border: none;
+}
+
+.inputReportFiel3 {
+    width: 90%;
+    font-size: 18px;
+    color: #000;
+    border: none;
+}
