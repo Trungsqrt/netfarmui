@@ -4,6 +4,7 @@ import axios from 'axios';
 import Header from '../../share/header/Header';
 import { useNavigate } from 'react-router-dom';
 import { productAPI } from '../../../../apis';
+import moment from 'moment';
 const Checkout = () => {
     const cartUrl = 'https://localhost:44303/api/Carts';
     const orderUrl = 'https://localhost:44303/api/Order';
@@ -21,6 +22,8 @@ const Checkout = () => {
     const [status, setStatus] = useState();
     const [delivery, setDelivery] = useState();
     // lấy toàn bộ sản phẩm trong cart theo userId
+
+    // console.log(moment(new Date()).format('DD:MM:yyyy hh:mm:ss'));
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(cartUrl);
@@ -40,7 +43,7 @@ const Checkout = () => {
         fetchData();
     }, []);
 
-    function handlerSubmit() {
+    const handlerSubmit = async () => {
         if (name === '' || address === '' || phone === '') {
             alert('Bạn phải nhập đầy đủ thông tin');
         } else {
@@ -61,7 +64,7 @@ const Checkout = () => {
                 finishAt: null,
             };
             try {
-                axios.post(orderUrl, postOrder);
+                await axios.post(orderUrl, postOrder);
                 var length = carts.length;
                 for (var i = 0; i < length; i++) {
                     const postItem = {
@@ -74,8 +77,8 @@ const Checkout = () => {
                         feedback: false,
                     };
                     try {
-                        axios.post(itemUrl, postItem);
-                        axios.delete(`${cartUrl}/${carts[i].id}`);
+                        await axios.post(itemUrl, postItem);
+                        await axios.delete(`${cartUrl}/${carts[i].id}`);
                     } catch (err) {
                         alert('có lỗi');
                     }
@@ -89,11 +92,10 @@ const Checkout = () => {
             for (var i = 0; i < length; i++) {
                 const sl = carts[i].quantity;
                 const id = carts[i].productId;
-                console.log(sl);
                 handlerProduct(sl, id);
             }
         }
-    }
+    };
     function handlerProduct(sl, id) {
         const fetchData = async () => {
             const product = await productAPI.getDetail(id);
@@ -127,7 +129,7 @@ const Checkout = () => {
                 </div>
                 <div className="checkout_container">
                     <div className="checkout_block">
-                        <form>
+                        <div>
                             <div className="checkout_header"> Thông tin đơn hàng</div>
                             <div className="checkout_row">
                                 <div className="checkout_item">Tên người nhận</div>
@@ -249,7 +251,7 @@ const Checkout = () => {
                                     Đặt hàng
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

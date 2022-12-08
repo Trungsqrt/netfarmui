@@ -27,20 +27,23 @@ const Cart = () => {
             const data = response.data;
             const filter = data.filter((item) => item['userId'] === userId);
             setCart(filter);
+            const inputData = [];
             var sumTotal = 0;
-            if (checkeds) {
-                for (var i = 0; i < checkeds.length; i++) {
-                    const checked = document.getElementById(`checked${checkeds[i]}`);
-                    if (checked) {
-                        checked.checked = true;
-                        sumTotal += Number(checked.value);
-                    }
+            console.log(checkeds);
+            for (const i in filter) {
+                if (checkeds.includes(filter[i].productId + '')) {
+                    inputData.push({ ...filter[i], checked: true });
+                    sumTotal += filter[i].quantity * filter[i].price;
+                } else {
+                    inputData.push({ ...filter[i], checked: false });
                 }
             }
+            setCart(inputData);
             setTotal(sumTotal);
         };
         fetchData();
     }, []);
+
     function handlerChangeText() {}
     function handlerUp(getCart) {
         const count = getCart.quantity;
@@ -86,7 +89,10 @@ const Cart = () => {
         deleteHandler();
     }
 
-    function handlerCheckBox(e) {
+    function handlerCheckBox(e, index) {
+        const newCarts = [...carts];
+        newCarts[index].checked = e.target.value;
+        setCart(newCarts);
         if (e.target.checked) {
             setTotal(total + Number(e.target.value));
         } else {
@@ -227,10 +233,11 @@ const Cart = () => {
                                                     <input
                                                         className="checkbox"
                                                         type="checkbox"
-                                                        value={cart.quantity * cart.price}
+                                                        value={cart.price * cart.quantity}
                                                         name={cart.id}
                                                         id={`checked${cart.productId}`}
-                                                        onChange={handlerCheckBox}
+                                                        onChange={(e) => handlerCheckBox(e, index)}
+                                                        defaultChecked={cart.checked}
                                                     />
                                                 </td>
                                             </tr>

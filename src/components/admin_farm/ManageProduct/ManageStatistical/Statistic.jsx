@@ -11,20 +11,34 @@ function Statistic() {
     const orderUrl = 'https://localhost:44303/api/Order';
     const orderItemUrl = 'https://localhost:44303/api/OrderDetail';
     const UserUrl = 'https://localhost:44303/api/Users';
+    const ProductUrl = 'https://localhost:44303/api/Products';
     const [revenue, setRevenue] = useState(0);
     const [expenses, setExpenses] = useState(0);
     const [profit, setProfit] = useState(0);
     useEffect(() => {
         const fetchData = async () => {
             const order = await axios.get(orderUrl);
-            const finishOrder = order.data; /*.filter((item) => item['finish'])*/
+            const detailOrderRes = await axios.get(orderItemUrl);
+            const ProductsRes = await axios.get(ProductUrl);
+            const finishOrder = order.data.filter((item) => item['finish']);
+            const finishOrderId = [];
             var sum = 0;
             for (var i = 0; i < finishOrder.length; i++) {
                 sum += finishOrder[i].total;
+                finishOrderId.push(finishOrder[i].id);
             }
             setRevenue(sum);
-            setExpenses(sum * 0.73);
-            setProfit(sum * 0.27);
+            const OrderDetail = detailOrderRes.data.filter((item) => finishOrderId.includes(item.orderId));
+            var allcost = 0;
+            for (var i = 0; i < OrderDetail.length; i++) {
+                const productId = OrderDetail[i].productId;
+                const quantity = OrderDetail[i].quantity;
+                const ProductRes = await axios.get(`${ProductUrl}/${productId}`);
+                const cost = ProductRes.data.discount;
+                allcost += quantity * cost;
+            }
+            setExpenses(allcost);
+            setProfit(sum - allcost);
         };
         fetchData();
     }, []);

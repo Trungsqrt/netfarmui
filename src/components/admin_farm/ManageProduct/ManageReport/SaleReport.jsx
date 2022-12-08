@@ -27,7 +27,7 @@ const SaleReport = () => {
         const fetchData = async () => {
             const order = await axios.get(OrderUrl);
             const detailOrderRes = await axios.get(OrderDetailUrl);
-            const ProductsRes = await axios.get(OrderDetailUrl);
+            const ProductsRes = await axios.get(ProductUrl);
             // lấy tất cả các đơn trong tháng hiện tại
             const Order = order.data.filter((item) => new Date(item['createAt']).getMonth() === new Date().getMonth());
 
@@ -55,7 +55,6 @@ const SaleReport = () => {
                     unfinish.push(Order[i].id);
                 }
             }
-            console.log(unfinish);
             setrevenue(sum);
             setfinishRevenue(finishreven);
             setCancelRevenue(cancelreve);
@@ -83,10 +82,10 @@ const SaleReport = () => {
             setCancelExpenses(cancelcost);
             setfinishExpenses(finishcost);
             setUnfinishExpenses(unfinishcost);
-            setprofit(revenue - expenses);
-            setCancelProfit(CancelRevenue - CancelExpenses);
-            setfinishProfit(finishRevenue - finishExpenses);
-            setUnfinishProfit(UnfinishRevenue - UnfinishExpenses);
+            setprofit(sum - allcost);
+            setCancelProfit(cancelreve - cancelcost);
+            setfinishProfit(finishreven - finishcost);
+            setUnfinishProfit(unfinishreven - unfinishcost);
         };
         fetchData();
     }, []);
@@ -110,6 +109,8 @@ const SaleReport = () => {
         var breakpart = document.getElementById('break');
         breakpart.classList.remove('Report_section');
         breakpart.classList.add('Report_section_break');
+        var moreText = document.getElementById('more');
+        moreText.style.display = 'inline';
         var doc = new JsPDF('p', 'mm', 'a4');
         html2canvas(document.querySelector('#demo')).then(function (canvas) {
             var imgData = canvas.toDataURL('image/png');
@@ -132,6 +133,7 @@ const SaleReport = () => {
         });
         breakpart.classList.remove('Report_section_break');
         breakpart.classList.add('Report_section');
+        moreText.style.display = 'none';
     }
     return (
         <div className="content">
@@ -155,7 +157,7 @@ const SaleReport = () => {
                     </div>
                 </div>
                 <div className="pdf_name">
-                    <div className="pdf_name_title">BÁO CÁO DOANH THU</div>
+                    <div className="pdf_name_title">BÁO CÁO HOẠT ĐỘNG KINH DOANH</div>
                     <div className="pdf_name_content">
                         Kính
                         gửi:..........................................................................................
