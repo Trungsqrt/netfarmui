@@ -252,7 +252,7 @@ function ExpertPage() {
                                                     onChange={handleOnChangePostSearch}
                                                 ></input>
                                             </div>
-                                            <section className={styles.tableContent}>
+                                            <section id='alskdj' className={styles.tableContent}  style={{marginTop: '-7px' }}>
                                                 <tr>
                                                     <th className={styles.th1} width="10%">
                                                         <strong>Id</strong>

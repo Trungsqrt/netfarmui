@@ -192,6 +192,7 @@ ul li a:active {
     align-items: center;
     justify-content: flex-start;
     padding: 0 300px;
+    z-index: 999;
 }
 
 .item:hover {
