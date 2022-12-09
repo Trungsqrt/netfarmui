@@ -34,6 +34,7 @@ import Manual from './components/client_farm/infor/manual/Manual';
 import News from './components/client_farm/infor/news/News';
 import Footer from './components/client_farm/share/footer/Footer';
 import SaleReport from './components/admin_farm/ManageProduct/ManageReport/SaleReport';
+import ChangePassword from './components/changePassword/ChangePassword';
 function App() {
     return (
         <div className="App">
@@ -71,6 +72,7 @@ function App() {
                 <Route path="feedback/:id" element={<FeedbackProduct />} />
                 <Route path="/inforPage" element={<Information />} />
                 <Route path="/report" element={<SaleReport />} />
+                <Route path="/changepassword" element={<ChangePassword />} />
             </Routes>
             <Footer></Footer>
         </div>
