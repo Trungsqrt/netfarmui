@@ -89,9 +89,24 @@ ul li a:active {
     border: none;
     background-color: white;
     cursor: pointer;
+    position: relative;
 }
 .setting-group {
     margin-left: 30px;
     display: flex;
     align-items: center;
+}
+
+.cartNum {
+    position: absolute;
+    background-color: red;
+    color: #fff;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 50%;
+    top: -10px;
+    right: 0px;
 }

@@ -8,7 +8,7 @@ import NotificationDetail from '../../../detailBar/notificationDetail/Notificati
 import { Link, useNavigate } from 'react-router-dom';
 const Header = () => {
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3';
-
+    const CartURL = 'https://localhost:44303/api/Carts';
     const navigate = useNavigate();
     const [data, setData] = useState(null);
     const [error, setError] = useState('');
@@ -21,12 +21,27 @@ const Header = () => {
     const [searchContent, setSearchContent] = useState('');
     const [articles, setArticles] = useState([]);
     const [currentArticles, setCurrentArticles] = useState([]);
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(CartURL);
+            const data = response.data;
+            const user = JSON.parse(localStorage.getItem('user'));
+            var userId = '';
+            if (user) {
+                userId = user.userId;
+                const filter = data.filter((item) => item['userId'] === userId);
+                setCount(filter.length);
+            }
+        };
+        fetchData();
+    }, []);
 
     let icon;
     useEffect(() => {
         axios.get(url).then((response) => {
             const res = response.data;
-
             const result = res.main.temp - 273.15;
             setData(Math.round(result));
             icon = [...res.weather];
@@ -167,6 +182,7 @@ const Header = () => {
                         <section className={styles.notificationBox}>
                             <button className="button-setting" onClick={cartHandler}>
                                 <i className="fa-solid fa-cart-shopping"></i>
+                                <div className="cartNum">{count}</div>
                             </button>
                         </section>
                         <section className={styles.notificationBox}>
