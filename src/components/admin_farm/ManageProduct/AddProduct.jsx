@@ -18,7 +18,7 @@ const AddProduct = () => {
     const [imgUrl2, setimgUrl2] = useState('');
     const [imgUrl3, setimgUrl3] = useState('');
     const [imgUrl4, setimgUrl4] = useState('');
-
+    const [cost, setCost] = useState('');
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(categoryUrl);
@@ -28,6 +28,10 @@ const AddProduct = () => {
     }, []);
 
     const onClickHandler = () => {
+        if (name === '' || imgUrl1 === '' || unit === '' || price === '' || cost === '' || invetory === '') {
+            alert('Bạn phản nhập đầy đủ thông tin !!');
+            return;
+        }
         const postProduct = {
             name: name,
             image1: imgUrl1,
@@ -35,18 +39,18 @@ const AddProduct = () => {
             image3: imgUrl3,
             image4: imgUrl4,
             unit: unit,
-            category: category,
             placeProduce: placeProduce,
             price: price,
-            discount: 0,
+            cost: cost,
             inventoryNumber: invetory,
             description: description,
             category_ID: category,
         };
         try {
+            console.log(postProduct);
             axios.post(url, postProduct);
             alert('Đăng thành công!');
-            window.location.reload();
+            // window.location.reload();
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
@@ -94,7 +98,6 @@ const AddProduct = () => {
                             <div className="product_properties">Giá</div>
                             <input
                                 className="product_input"
-                                type={Number}
                                 value={price}
                                 placeholder="Nhập gia sản phẩm"
                                 onChange={(e) => setPrice(e.target.value)}
@@ -126,7 +129,6 @@ const AddProduct = () => {
                             <div className="product_properties">Số lượng tồn kho</div>
                             <input
                                 className="product_input"
-                                type={Number}
                                 value={invetory}
                                 placeholder="Nhập số lượng sản phẩm có sẵn ..."
                                 onChange={(e) => setInventory(e.target.value)}
@@ -134,10 +136,19 @@ const AddProduct = () => {
                             ></input>
                         </li>
                         <li className="addProduct_row">
+                            <div className="product_properties">Chi phí</div>
+                            <input
+                                className="product_input"
+                                value={cost}
+                                placeholder="Nhập chi phí gốc của sản phẩm ..."
+                                onChange={(e) => setCost(e.target.value)}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
                             <div className="product_properties">Mô tả</div>
                             <input
                                 className="product_input"
-                                type={Number}
                                 value={description}
                                 placeholder="Nhập số lượng sản phẩm có sẵn ..."
                                 onChange={(e) => setDescription(e.target.value)}

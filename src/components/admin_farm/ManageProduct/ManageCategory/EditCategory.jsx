@@ -38,35 +38,39 @@ function EditCategory(props) {
         <div>
             <Header></Header>
             <div className="addProduct_container">
-                <div className="addProduct_title">Nhập thông tin danh mục</div>
-                <ul className="addProduct_list">
-                    <li className="addProduct_row">
-                        <div className="product_properties">Tên danh mục</div>
-                        <input
-                            className="product_input"
-                            type={Text}
-                            defaultValue={detail.display}
-                            placeholder="Nhập tên sản phẩm..."
-                            name="display"
-                            onChange={handleChange}
-                            required
-                        ></input>
-                    </li>
-                    <li className="addProduct_row">
-                        <div className="product_properties">Slug</div>
-                        <input
-                            className="product_input"
-                            defaultValue={detail.categorySlug}
-                            placeholder="Nhập Slug"
-                            name="categorySlug"
-                            onChange={handleChange}
-                            required
-                        ></input>
-                    </li>
-                </ul>
-                <button className="addProduct_btn" onClick={onClickHandler}>
-                    Cập nhập
-                </button>
+                <div className="products_table_container">
+                    <div className="addProduct_title">Nhập thông tin danh mục</div>
+                    <ul className="addProduct_list">
+                        <li className="addProduct_row">
+                            <div className="product_properties">Tên danh mục</div>
+                            <input
+                                className="product_input"
+                                type={Text}
+                                defaultValue={detail.display}
+                                placeholder="Nhập tên sản phẩm..."
+                                name="display"
+                                onChange={handleChange}
+                                required
+                            ></input>
+                        </li>
+                        <li className="addProduct_row">
+                            <div className="product_properties">Slug</div>
+                            <input
+                                className="product_input"
+                                defaultValue={detail.categorySlug}
+                                placeholder="Nhập Slug"
+                                name="categorySlug"
+                                onChange={handleChange}
+                                required
+                            ></input>
+                        </li>
+                    </ul>
+                    <div className="addProduct_btn_line">
+                        <button className="add_new_product" onClick={onClickHandler}>
+                            Cập nhập
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

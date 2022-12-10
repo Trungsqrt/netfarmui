@@ -59,8 +59,6 @@ const ManageOrder = () => {
                 const putUrl = `${orderUrl}/${orderId}`;
                 axios.put(putUrl, order);
                 localStorage.setItem('currentTab', 3);
-                window.location.reload();
-                OrderHandler();
             } catch (err) {
                 alert('Có lỗi, xin vui lòng thử lại!');
             }

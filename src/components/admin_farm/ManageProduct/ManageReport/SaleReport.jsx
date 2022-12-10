@@ -68,7 +68,7 @@ const SaleReport = () => {
                 const productId = OrderDetail[i].productId;
                 const quantity = OrderDetail[i].quantity;
                 const ProductRes = await axios.get(`${ProductUrl}/${productId}`);
-                const cost = ProductRes.data.discount;
+                const cost = ProductRes.data.cost;
                 allcost += quantity * cost;
                 if (cancel.includes(OrderDetail[i].orderId)) {
                     cancelcost += quantity * cost;
