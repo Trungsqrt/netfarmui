@@ -1,153 +1,154 @@
 .container {
-   position: relative;
-   width: 100%;
-   height: 100vh;
-   display: flex;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
 }
 
 .left {
-   position: relative;
-   width: 50%;
-   height: 100%;
+    position: relative;
+    width: 50%;
+    height: 100%;
 }
 
 .loginImage {
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .right {
-   display: flex;
-   width: 50%;
-   height: 100%;
-   justify-content: center;
-   align-items: center;
-   position: relative;
+    display: flex;
+    width: 50%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .loginForm {
-   height: 100%;
+    height: 100%;
 }
 
 .loginForm h5 {
-   color: #000000;
-   font-weight: 600;
-   font-size: 1.5rem;
-   margin-bottom: 10px;
+    color: #000000;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
 }
 
 .label {
-   width: 100%;
-   margin-top: 50px;
-   margin-bottom: 50px;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .inputContainer {
-   margin-bottom: 12px;
-   position: relative;
+    margin-bottom: 12px;
+    position: relative;
 }
 
 .inputField {
-   font-size: 15px;
-   width: 100%;
-   height: 25px;
-   border-radius: 12px;
-   border: 2px solid var(--primary-border-color);
-   padding: 20px 40px;
+    font-size: 15px;
+    width: 100%;
+    height: 25px;
+    border-radius: 12px;
+    border: 2px solid var(--primary-border-color);
+    padding: 20px 40px;
 }
 
 .inputField:focus {
-   outline: none;
-   border-color: var(--primary-border-color-focus);
+    outline: none;
+    border-color: var(--primary-border-color-focus);
 }
 
 input.inputError,
 select.inputError {
-   font-size: 15px;
-   width: 100%;
-   height: 25px;
-   border-radius: 12px;
-   border: 2px solid #fc8181;
-   padding: 20px 40px;
+    font-size: 15px;
+    width: 100%;
+    height: 25px;
+    border-radius: 12px;
+    border: 2px solid #fc8181;
+    padding: 20px 40px;
 }
 
 .inputError:focus {
-   outline: none;
-   border-color: #fc8181;
+    outline: none;
+    border-color: #fc8181;
 }
 
 .error {
-   color: #fc8181;
-   font-size: 0.75rem;
-   text-align: left;
-   margin-top: 0.25rem;
-   margin-bottom: 0.25rem;
-   font-weight: bold;
+    color: #fc8181;
+    font-size: 0.75rem;
+    text-align: left;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-weight: bold;
 }
 
 .titleDesc {
-   color: #bbbbbb;
+    color: #bbbbbb;
 }
 
 .line {
-   border-bottom: 2px solid var(--primary-border-color);
-   margin-top: 50px;
+    border-bottom: 2px solid var(--primary-border-color);
+    margin-top: 50px;
 }
 
 .forgotSection {
-   text-align: end;
-   text-decoration: underline;
-   margin-top: 10px;
+    text-align: end;
+    text-decoration: underline;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
 .forgot {
-   font-size: 1rem;
-   color: rgba(0, 0, 0, 87%);
-   text-decoration: none;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 87%);
+    text-decoration: none;
 }
 
 .createNew {
-   display: flex;
-   align-items: center;
-   width: 100%;
-   height: 30vh;
-   justify-content: baseline;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30vh;
+    justify-content: baseline;
 }
 
 .createNewSection {
-   width: 70%;
-   margin-left: auto;
-   margin-right: auto;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .createNewBtn {
-   width: 100%;
-   height: 50px;
-   font-size: 15px;
-   border-radius: 12px;
-   border: 3px solid #cfbc16;
-   padding: 10px;
-   line-height: 15px;
-   cursor: pointer;
-   background-color: transparent;
-   color: #cfbc16;
-   font-weight: 600;
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+    border-radius: 12px;
+    border: 3px solid #cfbc16;
+    padding: 10px;
+    line-height: 15px;
+    cursor: pointer;
+    background-color: transparent;
+    color: #cfbc16;
+    font-weight: 600;
 }
 
 .createNewBtn:hover {
-   filter: brightness(110%);
+    filter: brightness(110%);
 }
 
 @media (max-width: 768px) {
-   .left {
-      display: none;
-   }
-   .right {
-      width: 100%;
-      height: 100vh;
-   }
+    .left {
+        display: none;
+    }
+    .right {
+        width: 100%;
+        height: 100vh;
+    }
 }

@@ -111,12 +111,9 @@ function Login() {
                         </div>
                         <p className={styles.error}>{validationMsg.pass}</p>
                         {/* forgot password */}
-                        <div className={styles.forgotSection}>
-                            <a href="/#" className={styles.forgot} onClick={() => setOverlay2(true)}>
-                                Quên mật khẩu
-                            </a>
+                        <div className={styles.forgotSection} onClick={() => navigate('/passwordretrieval')}>
+                            <a className={styles.forgot}>Quên mật khẩu</a>
                         </div>
-                        {overlay2 ? <Forgot setOverlay2={setOverlay2} /> : ''}
                         {/* btn */}
                         <button type="submit" className="btnSubmit" onClick={handleSubmit}>
                             Đăng nhập

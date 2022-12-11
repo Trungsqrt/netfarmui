@@ -20,7 +20,7 @@ function ToolbarAdmin() {
                     <h5>Tạo tài khoản chuyên gia</h5>
                 </div>
 
-                <div className={styles.item} onClick={() => navigate('/')}>
+                <div className={styles.item} onClick={() => navigate('/changepassword')}>
                     <h5>Đổi mật khẩu</h5>
                 </div>
 

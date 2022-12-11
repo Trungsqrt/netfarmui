@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ChangePassword.module.css';
+import styles from './PassRetri.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import isEmpty from 'validator/lib/isEmpty';
@@ -7,7 +7,7 @@ import equals from 'validator/lib/equals';
 import { default as StaffHeader } from '../admin_farm/share/header/Header';
 import { default as FarmerHeader } from '../client_farm/share/header/Header';
 import axios from 'axios';
-function ChangePassword() {
+function PassRetri() {
     const [validationMsg, setValidationMsg] = useState({});
     const navigate = useNavigate();
     const [fname, setFname] = useState('');
@@ -24,16 +24,11 @@ function ChangePassword() {
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     const [userid, setUserid] = useState('');
-    const changePassUrl = 'https://localhost:44303/api/ChangePass/';
-
-    useEffect(() => {
-        if (getUser === null) {
-            navigate('/');
-        } else {
-            setUser(currentUser.roleName);
-            setUserid(currentUser.userId);
-        }
-    }, []);
+    const urlPhone = 'https://localhost:44303/api/ForgotPass?phone=';
+    const urlPhoneConfirm = 'https://localhost:44303/api/ForgotPass';
+    const [code, setCode] = useState('');
+    const [flag, setFlag] = useState(false);
+    const [confirmCode, setConfirmCode] = useState('');
 
     const validateAll = () => {
         const msg = {};
@@ -50,6 +45,9 @@ function ChangePassword() {
         if (equals(pass, repass) === false) {
             msg.repass = 'Hãy xác nhận đúng mật khẩu';
         }
+        if (isEmpty(code)) {
+            msg.code = 'Hãy nhập mã xác nhận!';
+        }
         setValidationMsg(msg);
         if (Object.keys(msg).length > 0) return false;
         return true;
@@ -60,26 +58,41 @@ function ChangePassword() {
         const isValid = validateAll();
         if (!isValid) return;
 
-        const currentU = {
-            currentPassword: uname,
-            newPassword: pass,
-            confirmPassword: pass,
-        };
-
-        const handle = async () => {
-            const res = await axios.put(changePassUrl + userid, currentU);
-            const response = res.data;
-            if (response.message === 'Your current password is wong!') {
-                alert('Mật khẩu hiện tại không đúng, vui lòng nhập lại!');
-            } else if (uname == pass) {
-                alert('Mật khẩu mới phải khác mật khẩu hiện tại');
-            } else if (response.status == true) {
-                alert('Thay đổi mật khẩu thành công!');
-                if (user == 'Admin' || user == 'Expert') {
-                    navigate('/adminHome');
+        if (confirmCode == code) {
+            const currentU = {
+                nameOrPhone: uname,
+                newPass: pass,
+                confirm: repass,
+            };
+            const handle = async () => {
+                const res = await axios.put(urlPhoneConfirm, currentU);
+                const response = res.data;
+                if (response.status == true) {
+                    alert('Đổi mật khẩu thành công!');
+                    navigate('/login');
                 } else {
-                    navigate('/');
+                    alert('Có lỗi xảy ra, xin vui lòng thử lại!');
                 }
+            };
+            handle();
+        } else {
+            alert('Mã xác nhận không đúng!');
+        }
+    };
+
+    const handleGetCode = (e) => {
+        e.preventDefault();
+        const handle = async () => {
+            const res = await axios.get(urlPhone + uname);
+            const response = res.data;
+            console.log('res: ' + response);
+            console.log('code: ' + response.code);
+            if (response.messStatus == true) {
+                setCode(response.code);
+                console.log(code);
+                setFlag(true);
+            } else {
+                alert('Có lỗi xảy ra, vui lòng kiểm tra số điện thoại của bạn');
             }
         };
         handle();
@@ -92,7 +105,7 @@ function ChangePassword() {
                     <section className={styles.registerContainer}>
                         <div className={styles.registerContainer2}>
                             <div className={styles.label}>
-                                <h5 className={styles.title}>Đổi mật khẩu</h5>
+                                <h5 className={styles.title}>Đặt lại mật khẩu</h5>
                             </div>
                             <form className={styles.form} autoComplete="off">
                                 <section className={styles.error2}>
@@ -101,11 +114,11 @@ function ChangePassword() {
                                 </section>
                                 <section className={styles.formContainer}>
                                     <input
-                                        type="password"
+                                        type="number"
                                         name="uname"
                                         id="uname"
                                         onChange={(e) => setUname(e.target.value)}
-                                        placeholder="Nhập mật khẩu cũ"
+                                        placeholder="Nhập số điện thoại"
                                         className={styles.inputField}
                                         value={uname}
                                     />
@@ -118,7 +131,7 @@ function ChangePassword() {
                                     <input
                                         type="password"
                                         name="pass"
-                                        placeholder="Mật khẩu"
+                                        placeholder="Mật khẩu mới"
                                         className={styles.inputField}
                                         value={pass}
                                         onChange={(e) => setPass(e.target.value)}
@@ -137,10 +150,37 @@ function ChangePassword() {
                                         onChange={(e) => setRepass(e.target.value)}
                                     />
                                 </section>
+
+                                <section className={styles.error2}>
+                                    <p className={styles.error}>{validationMsg.code}</p>
+                                </section>
                                 <section className={styles.formContainer}>
                                     <input
-                                        type="submit"
+                                        type="text"
+                                        name="code"
+                                        placeholder="Nhập mã xác nhận"
+                                        className={
+                                            flag ? `${styles.inputField}` : `${styles.inputField} ${styles.readonly}`
+                                        }
+                                        value={confirmCode}
+                                        onChange={(e) => setConfirmCode(e.target.value)}
+                                        readOnly={flag ? false : true}
+                                    />
+                                </section>
+
+                                <section className={styles.formContainer}>
+                                    <input
+                                        type="button"
+                                        name="phone"
+                                        value="Nhận mã xác nhận"
                                         className={styles.btnSubmit}
+                                        onClick={handleGetCode}
+                                    />
+                                    <input
+                                        type="submit"
+                                        className={
+                                            flag ? `${styles.btnSubmit}` : `${styles.btnSubmit} ${styles.btnReadOnly}`
+                                        }
                                         value="Xác nhận"
                                         onClick={handleSubmit}
                                     />
@@ -154,4 +194,4 @@ function ChangePassword() {
     );
 }
 
-export default ChangePassword;
+export default PassRetri;
