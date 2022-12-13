@@ -65,7 +65,7 @@ function Comment(props) {
                                 <section className={styles.commentItem} key={index}>
                                     <section className={styles.text}>
                                         <p>
-                                            <strong>User {cmt.userId}: </strong> {cmt.content}
+                                            <strong>{cmt.userName}: </strong> {cmt.content}
                                         </p>
                                     </section>
                                     {/* <section className={styles.icon}>
