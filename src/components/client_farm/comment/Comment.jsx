@@ -84,6 +84,7 @@ function Comment(props) {
                                     placeholder="Viết bình luận..."
                                     value={cmtContent}
                                     onChange={(e) => setCmtContent(e.target.value)}
+                                    required
                                 ></input>
                                 <button className={styles.buttonSubmit} onClick={handleSubmit}>
                                     Gửi bình luận
