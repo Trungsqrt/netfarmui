@@ -8,6 +8,10 @@ import convertHtmlToReact from '@hedgedoc/html-to-react';
 import Header from '../admin_farm/share/header/Header';
 import { useDatasContext } from '../../hooks';
 import articleAPI from '../../apis/articleAPI';
+import isEmpty from 'validator/lib/isEmpty';
+import isLength from 'validator/lib/isEmpty';
+import validator from 'validator';
+
 const parse = require('html-react-parser');
 
 const url = 'https://localhost:44303/api/Article';
@@ -30,7 +34,7 @@ function ArticleHandler() {
     const [user, setUser] = useState('');
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
-
+    const [validationMsg, setValidationMsg] = useState({});
     const fillCurrentDataArticle = async () => {
         const res = await articleAPI.getDetail(idArticle);
         const response = res.data;
@@ -48,7 +52,43 @@ function ArticleHandler() {
         }
     }, []);
 
-    const onClickHandler = () => {
+    const validateAll = () => {
+        const msg = {};
+        if (isEmpty(title, { ignore_whitespace: true })) {
+            msg.title = 'Không được bỏ trống';
+        }
+        if (isEmpty(thumbnail, { ignore_whitespace: true })) {
+            msg.thumbnail = 'Không được bỏ trống';
+        }
+        if (isEmpty(editorRef.current.getContent(), { ignore_whitespace: true })) {
+            msg.content = 'Không được bỏ trống';
+        }
+        const options = {
+            min: 50,
+            max: 120,
+        };
+        const options2 = {
+            min: 120,
+        };
+        if (validator.isLength(title, options)) {
+        } else {
+            msg.title = 'Tiêu đề phải từ 50 đến 120 kí tự';
+        }
+        if (validator.isLength(editorRef.current.getContent(), options2)) {
+        } else {
+            msg.content = 'Nội dung phải từ 120 kí tự';
+        }
+
+        setValidationMsg(msg);
+        if (Object.keys(msg).length > 0) return false;
+        return true;
+    };
+
+    const onClickHandler = (e) => {
+        e.preventDefault();
+        const isValid = validateAll();
+        if (!isValid) return;
+
         let postNew = {};
         if (idArticle) {
             postNew = {
@@ -98,6 +138,7 @@ function ArticleHandler() {
                         <div className={styles.label}>Đăng bài</div>
                         <div className={styles.textContainer}>
                             <p>Tiêu đề</p>
+                            <p className={styles.error}>{validationMsg.title}</p>
                             <input
                                 value={title}
                                 placeholder="Nhập tiêu đề..."
@@ -105,6 +146,8 @@ function ArticleHandler() {
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
                                 min={3}
+                                // onInvalid={(F) => F.target.setCustomValidity('Tiêu đề tối thiểu 3 kí tự')}
+                                // onInput={(F) => F.target.setCustomValidity('')}
                             ></input>
                             <div className={styles.comboboxContainer}>
                                 <div>
@@ -138,6 +181,8 @@ function ArticleHandler() {
                                     </select>
                                 </div>
                             </div>
+                            <p className={styles.error}>{validationMsg.content}</p>
+
                             <Editor
                                 onInit={(evt, editor) => (editorRef.current = editor)}
                                 init={{
@@ -194,6 +239,7 @@ function ArticleHandler() {
                             />
                             <br />
                             <p>Ảnh đại diện</p>
+                            <p className={styles.error}>{validationMsg.thumbnail}</p>
                             <input
                                 value={thumbnail}
                                 placeholder="Nhập đường dẫn ảnh..."
