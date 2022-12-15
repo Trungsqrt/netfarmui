@@ -11,7 +11,7 @@ function DSS() {
     const putWeatherUrl = 'https://localhost:44303/api/APIWether';
     const resultUrl = 'https://localhost:44303/api/APIResult';
     const weatherAPIURL =
-        'https://api.weatherbit.io/v2.0/forecast/daily?lat=16.0678&lon=108.2208&days=16&key=7d03912562a54245a4a9cc2cf0074bb3';
+        'https://api.weatherbit.io/v2.0/forecast/daily?lat=16.0678&lon=108.2208&days=16&key=456707019eeb42ea96bd8f604af5d75d';
 
     const [dataWeather, setDataWeather] = useState([]);
     const [cityName, setCityName] = useState('');

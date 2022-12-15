@@ -187,7 +187,7 @@ function AddSchedule() {
                         const postt = async () => {
                             scheduleTask[i].scheduleId = scheduleId;
                             scheduleTask[i].description = '';
-                            axios.post(TaskUrl, scheduleTask[i]);
+                            await axios.post(TaskUrl, scheduleTask[i]);
                             console.log(scheduleTask[i]);
                         };
                         postt();

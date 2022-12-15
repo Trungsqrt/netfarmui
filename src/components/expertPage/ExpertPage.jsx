@@ -51,12 +51,15 @@ function ExpertPage() {
         getSchedule();
     }, []);
 
+    useEffect(() => {
+        setCurrentPosts([...data]);
+    }, [data]);
+
     const PostHandler = () => {
         setRender(1);
         async function getData() {
             setData([]);
             const Dataset = await axios.get(articleUrl);
-
             Dataset.data.forEach((item) => {
                 const value = {
                     id: item.id,
@@ -93,11 +96,13 @@ function ExpertPage() {
     };
 
     const handleDeletePost = (index) => {
-        async function deleteHandler() {
-            await axios.delete(articleUrl + '/' + index);
-            PostHandler();
+        if (window.confirm('Xác nhận xoá!')) {
+            async function deleteHandler() {
+                await axios.delete(articleUrl + '/' + index);
+                PostHandler();
+            }
+            deleteHandler();
         }
-        deleteHandler();
     };
 
     // const [dataFil, setDataFil] = useState([]);
@@ -252,7 +257,11 @@ function ExpertPage() {
                                                     onChange={handleOnChangePostSearch}
                                                 ></input>
                                             </div>
-                                            <section id='alskdj' className={styles.tableContent}  style={{marginTop: '-7px' }}>
+                                            <section
+                                                id="alskdj"
+                                                className={styles.tableContent}
+                                                style={{ marginTop: '-7px' }}
+                                            >
                                                 <tr>
                                                     <th className={styles.th1} width="10%">
                                                         <strong>Id</strong>

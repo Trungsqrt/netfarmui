@@ -119,19 +119,23 @@ function AdminPage() {
     };
 
     const handleDeletePost = (index) => {
-        async function deleteHandler() {
-            await axios.delete(articleUrl + '/' + index);
-            PostHandler();
+        if (window.confirm('Xác nhận xoá!')) {
+            async function deleteHandler() {
+                await axios.delete(articleUrl + '/' + index);
+                PostHandler();
+            }
+            deleteHandler();
         }
-        deleteHandler();
     };
 
     const handleDeleteUser = (index) => {
-        async function deleteHandler() {
-            await axios.delete(userUrl + '/' + index);
-            UserHandler();
+        if (window.confirm('Xác nhận xoá!')) {
+            async function deleteHandler() {
+                await axios.delete(userUrl + '/' + index);
+                UserHandler();
+            }
+            deleteHandler();
         }
-        deleteHandler();
     };
 
     const handleDeleteSchedule = () => {
