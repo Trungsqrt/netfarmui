@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import isEmpty from 'validator/lib/isEmpty';
 import equals from 'validator/lib/equals';
-import { default as StaffHeader } from '../admin_farm/share/header/Header';
-import { default as FarmerHeader } from '../client_farm/share/header/Header';
 import axios from 'axios';
 function ChangePassword() {
     const [validationMsg, setValidationMsg] = useState({});

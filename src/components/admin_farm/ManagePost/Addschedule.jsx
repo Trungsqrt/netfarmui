@@ -29,6 +29,7 @@ function AddSchedule() {
             { type: 'date', label: 'Ngày kết thúc' },
         ],
     ]);
+    const [scheduleId, setScheduleId] = useState('');
 
     const [flag, setFlag] = useState(false);
     const [initTasks, setInitTasks] = useState([]);
@@ -84,7 +85,7 @@ function AddSchedule() {
     }, [lengthh]);
 
     var uuid = require('uuid');
-    const scheduleId = uuid.v4();
+    if (scheduleId === '') setScheduleId(uuid.v4());
     // console.log(scheduleId);
     function AddTask() {
         if (scheduleName === '') alert('Bạn phải nhập tên lịch thời vụ');
@@ -138,9 +139,9 @@ function AddSchedule() {
         // setTaskName();
     }
 
-    function saveHandler() {
+    const saveHandler = async () => {
         if (idSchedule) {
-            console.log('edit');
+            //edit
             if (scheduleName === '' || scheduleTask.length === 0) return;
             else {
                 const sched = {
@@ -153,14 +154,14 @@ function AddSchedule() {
                 if (lengthh !== 0) {
                     for (let i = 0; i < tasks.length; i++) {
                         console.log(TaskUrl + `/${tasks[i]}`);
-                        axios.delete(TaskUrl + `/${tasks[i]}`);
+                        await axios.delete(TaskUrl + `/${tasks[i]}`);
                     }
                 }
                 try {
                     for (var i = 0; i < tasksAdd.length; i++) {
                         tasksAdd[i].scheduleId = idSchedule;
                         tasksAdd[i].description = '';
-                        axios.post(TaskUrl, tasksAdd[i]);
+                        await axios.post(TaskUrl, tasksAdd[i]);
                     }
 
                     alert('Đăng lịch thành công');
@@ -172,7 +173,6 @@ function AddSchedule() {
             }
         } else {
             console.log('add');
-
             if (scheduleName === '' || scheduleTask.length === 0) return;
             else {
                 const sched = {
@@ -180,26 +180,22 @@ function AddSchedule() {
                     name: scheduleName,
                     description: description,
                 };
-
                 try {
-                    axios.post(scheduleUrl, sched);
-                    for (let i = 0; i < scheduleTask.length; i++) {
-                        const postt = async () => {
-                            scheduleTask[i].scheduleId = scheduleId;
-                            scheduleTask[i].description = '';
-                            await axios.post(TaskUrl, scheduleTask[i]);
-                            console.log(scheduleTask[i]);
-                        };
-                        postt();
+                    await axios.post(scheduleUrl, sched);
+                    for (var i = 0; i < scheduleTask.length; i++) {
+                        scheduleTask[i].scheduleId = scheduleId;
+                        scheduleTask[i].description = '';
+                        await axios.post(TaskUrl, scheduleTask[i]);
                     }
                     alert('Đăng lịch thành công');
-                    window.location.reload();
+
+                    // window.location.reload();
                 } catch (err) {
                     alert('có lỗi. Vui lòng thử lại');
                 }
             }
         }
-    }
+    };
 
     return (
         <div>
