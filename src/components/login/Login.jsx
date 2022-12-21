@@ -10,6 +10,7 @@ import { loginUser } from '../../redux/apiRequest';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useDatasContext } from '../../hooks';
+import validator from 'validator';
 //#endregion
 
 function Login() {
@@ -36,6 +37,9 @@ function Login() {
         }
         if (isEmpty(pass)) {
             msg.pass = 'Hãy nhập mật khẩu!';
+        } else if (validator.isMobilePhone(uname, 'vi-VN')) {
+        } else {
+            msg.uname = 'Vui lòng nhập đúng định dạng số điện thoại!';
         }
 
         setValidationMsg(msg);

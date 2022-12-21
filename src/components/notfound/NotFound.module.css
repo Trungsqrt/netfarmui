@@ -1,0 +1,44 @@
+.container {
+    margin: 0;
+    padding: 0;
+    background-color: #ceba08;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.text {
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.link:nth-child(1) {
+    border: 2px solid white;
+    padding: 10px;
+}
+
+.link:active {
+    color: #ceba08;
+    text-decoration: none;
+}
+
+.link:visited {
+    color: unset;
+    text-decoration: none;
+}
+
+.link:link {
+    color: unset;
+    text-decoration: none;
+}

@@ -36,6 +36,7 @@ import Footer from './components/client_farm/share/footer/Footer';
 import SaleReport from './components/admin_farm/ManageProduct/ManageReport/SaleReport';
 import ChangePassword from './components/changePassword/ChangePassword';
 import PassRetri from './components/forgot/PassRetri';
+import NotFound from './components/notfound/NotFound';
 function App() {
     return (
         <div className="App">
@@ -75,6 +76,7 @@ function App() {
                 <Route path="/report" element={<SaleReport />} />
                 <Route path="/changepassword" element={<ChangePassword />} />
                 <Route path="/passwordretrieval" element={<PassRetri />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer></Footer>
         </div>

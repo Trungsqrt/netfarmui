@@ -6,6 +6,7 @@ import equals from 'validator/lib/equals';
 import { registerUser } from '../../redux/apiRequest';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import validator from 'validator';
 //#endregion
 
 function Register({ setOverlay }) {
@@ -67,6 +68,9 @@ function Register({ setOverlay }) {
         }
         if (isEmpty(accept)) {
             msg.accept = 'Hãy đồng ý với điều khoản!';
+        } else if (validator.isMobilePhone(uname, 'vi-VN')) {
+        } else {
+            msg.uname = 'Vui lòng nhập đúng định dạng số điện thoại!';
         }
 
         setValidationMsg(msg);
