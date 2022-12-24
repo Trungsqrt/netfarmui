@@ -33,7 +33,6 @@ function DSS() {
         setDescription(value[0].weather.description);
         setTempt(value[0].temp);
         setIconState(value[0].weather.icon);
-        console.log(iconState);
         for (let i = 0; i < 8; ) {
             const postData = async () => {
                 const obj = {
@@ -47,12 +46,12 @@ function DSS() {
                     rain: value[i].precip,
                 };
 
-                await axios.put(`${putWeatherUrl}`, obj);
+                await axios.post(`${putWeatherUrl}`, obj);
+                // await axios.delete(`${putWeatherUrl}/${i}`);
             };
             postData();
             i += 1;
         }
-        // axios.delete(`${putWeatherUrl}/${i}`);
     };
     useEffect(() => {
         getData();
