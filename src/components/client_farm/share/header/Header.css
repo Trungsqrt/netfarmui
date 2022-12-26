@@ -46,10 +46,26 @@ ul li a:active {
 .search-input {
     width: 200px;
     height: 30px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.search-input:focus {
+    border: 1px solid #e7ca2a;
 }
 .btn-search {
     width: 30px;
     height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.btn-search:hover {
+    filter: brightness(70%);
 }
 .icon-search {
     color: green;

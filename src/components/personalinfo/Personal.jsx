@@ -5,6 +5,10 @@ import Header from '../client_farm/share/header/Header';
 import { default as StaffHeader } from '../admin_farm/share/header/Header';
 import { default as FarmerHeader } from '../client_farm/share/header/Header';
 import axios from 'axios';
+
+import isEmpty from 'validator/lib/isEmpty';
+import validator from 'validator';
+
 function Personal() {
     const [fullName, setFullName] = useState('');
     const [uname, setUname] = useState('');
@@ -24,6 +28,8 @@ function Personal() {
 
     const userId = JSON.parse(localStorage.getItem('user')).userId;
     const getUserByIdUrl = `https://localhost:44303/api/Users/${userId}`;
+
+    const [validationMsg, setValidationMsg] = useState({});
 
     useEffect(() => {
         const fillCurrentInfo = async () => {
@@ -60,10 +66,42 @@ function Personal() {
         console.log(res);
     };
 
-    const submitHandler = () => {
+    const submitHandler = (e) => {
+        e.preventDefault();
+        const isValid = validateAll();
+        if (!isValid) return;
         updateHandler();
         alert('Cập nhật thành công!');
         window.location.reload();
+    };
+
+    const validateAll = () => {
+        const msg = {};
+        if (isEmpty(uname)) {
+            msg.uname = 'Hãy nhập số điện thoại!';
+        }
+        if (isEmpty(fullName.trim())) {
+            msg.fullName = 'Hãy nhập họ và tên!';
+        }
+        if (isEmpty(cccd)) {
+            msg.cccd = 'Hãy nhập số CCCD!';
+        }
+        if (isEmpty(day)) {
+            msg.day = 'Hãy nhập ngày sinh!';
+        }
+        if (isEmpty(month)) {
+            msg.month = 'Hãy nhập tháng sinh!';
+        }
+        if (isEmpty(year)) {
+            msg.year = 'Hãy nhập năm sinh!';
+        } else if (validator.isMobilePhone(uname, 'vi-VN')) {
+        } else {
+            msg.uname = 'Vui lòng nhập đúng định dạng số điện thoại!';
+        }
+
+        setValidationMsg(msg);
+        if (Object.keys(msg).length > 0) return false;
+        return true;
     };
 
     return (
@@ -80,15 +118,17 @@ function Personal() {
                                     <section className={styles.inputForm}>
                                         <section>
                                             {/* NOTE: name */}
+                                            <p className={styles.error}>{validationMsg.fullName}</p>
                                             <div className={(styles.name, styles.formElement)}>
                                                 <p className={styles.titleContent}>Họ và tên</p>
                                                 <input
                                                     type="text"
                                                     name="fullName"
-                                                    placeholder="Họ lót"
+                                                    placeholder="Họ và tên"
                                                     className={(styles.inputField, styles.nameField)}
                                                     value={fullName}
                                                     onChange={(e) => setFullName(e.target.value)}
+                                                    autoComplete="none"
                                                 />
                                             </div>
 
@@ -104,6 +144,7 @@ function Personal() {
                                                     className={styles.inputField}
                                                     value={uname}
                                                     readOnly
+                                                    style={{ backgroundColor: '#C5C5C5' }}
                                                 />
                                             </div>
 
@@ -118,9 +159,11 @@ function Personal() {
                                                     placeholder="Email"
                                                     className={styles.inputField}
                                                     value={mail}
+                                                    autoComplete="none"
                                                 />
                                             </div>
                                             {/* NOTE: CCCD */}
+                                            <p className={styles.error}>{validationMsg.cccd}</p>
                                             <div className={(styles.name, styles.formElement)}>
                                                 <p className={styles.titleContent}>CCCD</p>
                                                 <input
@@ -131,9 +174,13 @@ function Personal() {
                                                     placeholder="CCCD"
                                                     className={styles.inputField}
                                                     value={cccd}
+                                                    autoComplete="none"
                                                 />
                                             </div>
                                             {/* NOTE: ngay thang nam sinh */}
+                                            <p className={styles.error}>{validationMsg.day}</p>
+                                            <p className={styles.error}>{validationMsg.month}</p>
+                                            <p className={styles.error}>{validationMsg.year}</p>
                                             <div className={(styles.name, styles.formElement)}>
                                                 <p className={styles.titleContent}>Ngày sinh</p>
                                                 <input
@@ -143,6 +190,7 @@ function Personal() {
                                                     onChange={(e) => setDay(e.target.value)}
                                                     placeholder="Ngày sinh"
                                                     className={styles.inputField}
+                                                    autoComplete="none"
                                                 />
                                                 <input
                                                     type="number"
@@ -151,6 +199,7 @@ function Personal() {
                                                     onChange={(e) => setMonth(e.target.value)}
                                                     placeholder="Tháng sinh"
                                                     className={styles.inputField}
+                                                    autoComplete="none"
                                                 />
 
                                                 <input
@@ -160,6 +209,7 @@ function Personal() {
                                                     onChange={(e) => setYear(e.target.value)}
                                                     placeholder="Năm sinh"
                                                     className={styles.inputField}
+                                                    autoComplete="none"
                                                 />
                                             </div>
 
@@ -176,6 +226,7 @@ function Personal() {
                                                             value="male"
                                                             onChange={(e) => setGender(true)}
                                                             defaultChecked
+                                                            autoComplete="none"
                                                         />
                                                     </section>
 
@@ -187,6 +238,7 @@ function Personal() {
                                                             name="gender"
                                                             value="female"
                                                             onChange={(e) => setGender(false)}
+                                                            autoComplete="none"
                                                         />
                                                     </section>
                                                 </section>
@@ -200,6 +252,7 @@ function Personal() {
                                             className={styles.btnSubmit}
                                             value="Xác nhận"
                                             onClick={submitHandler}
+                                            autoComplete="none"
                                         />
                                     </section>
                                 </form>

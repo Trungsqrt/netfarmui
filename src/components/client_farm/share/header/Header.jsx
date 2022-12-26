@@ -168,7 +168,7 @@ const Header = () => {
                             value={searchContent}
                         ></input>
                         <button className="btn-search">
-                            <i className="fa-solid fa-magnifying-glass icon-search"></i>
+                            <i className="icon-searchicon fa-solid fa-magnifying-glass icon-search"></i>
                         </button>
                     </form>
                     <div className="calling-info">
