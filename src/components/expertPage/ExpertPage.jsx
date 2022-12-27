@@ -199,7 +199,7 @@ function ExpertPage() {
     }, [postSearch]);
 
     function truncateString(str) {
-        if (str.length > 40) {
+        if (str?.length > 40) {
             return str.slice(0, 40) + '...';
         } else {
             return str;
@@ -207,7 +207,7 @@ function ExpertPage() {
     }
 
     function truncateString2(str) {
-        if (str.length > 5) {
+        if (str?.length > 5) {
             return str.slice(0, 5) + '...';
         } else {
             return str;
@@ -222,7 +222,7 @@ function ExpertPage() {
 
                     <div className={styles.body}>
                         <div className={styles.left}>
-                            <h3 className={styles.title}>Admin Page</h3>
+                            <h3 className={styles.title}>Expert Page</h3>
                             <ul className={styles.nav}>
                                 <li
                                     className={render == 1 ? styles.navItemSelected : styles.navItem}

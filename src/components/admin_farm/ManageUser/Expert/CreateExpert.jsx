@@ -4,6 +4,7 @@ import './CreateExpert.css';
 import styles from './CreateExpert.module.css';
 import isEmpty from 'validator/lib/isEmpty';
 import equals from 'validator/lib/equals';
+import validator from 'validator';
 import { registerUser } from '../../../../redux/apiRequest';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -60,6 +61,10 @@ function CreateExpert() {
         }
         if (isEmpty(year)) {
             msg.year = 'Hãy nhập năm sinh';
+        }
+        if (validator.isMobilePhone(uname, 'vi-VN')) {
+        } else {
+            msg.uname = 'Vui lòng nhập đúng định dạng số điện thoại!';
         }
 
         setValidationMsg(msg);

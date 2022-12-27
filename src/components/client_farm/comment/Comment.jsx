@@ -7,7 +7,8 @@ function Comment(props) {
     const [comment, setComment] = useState([]);
     const [newestComment, setNewestComment] = useState();
     const url = 'https://localhost:44303/api/Comment';
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         const currentComment = {
             content: cmtContent,
             userId: JSON.parse(localStorage.getItem('user')).userId,
@@ -17,10 +18,14 @@ function Comment(props) {
         const postHandler = async () => {
             const res = await axios.post(url, currentComment);
         };
-        postHandler();
-        setCmtContent('');
-        alert('Đã gửi bình luận!');
-        window.location.reload(false);
+        if (cmtContent) {
+            postHandler();
+            setCmtContent('');
+            alert('Đã gửi bình luận!');
+            window.location.reload(false);
+        } else {
+            alert('Không để trống');
+        }
     };
 
     useEffect(() => {

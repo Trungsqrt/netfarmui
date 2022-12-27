@@ -31,7 +31,7 @@
 
 .about-img {
     margin-top: -50px;
-    z-index: 9991;
+    z-index: 10;
     position: absolute;
     right: -100px;
     width: 100%;
@@ -42,7 +42,7 @@
     background-color: #fff;
     padding: 60px;
     position: relative;
-    z-index: 9992;
+    z-index: 10;
     margin-top: 50px;
     width: 90%;
 }

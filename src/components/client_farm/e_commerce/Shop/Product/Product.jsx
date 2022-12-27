@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../css/style.css';
 function Product(props) {
     const { product, index } = props;
+    const navigate = useNavigate();
     return (
         <div className="product_item" key={index}>
             <div className="product_box">
                 <div className="product_yt">Yêu thích</div>
-                <Link className="link_product" to={`product/detail/${product.id}`}>
+                <Link className="link_product" to={`/shop/product/detail/${product.id}`}>
                     <img src={product.image1} alt="" className="product_img" />
                     <h6 className="product_name">{product.name}</h6>
                     <h3 className="product_price">{product.price} Đ</h3>

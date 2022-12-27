@@ -7,6 +7,7 @@ import { registerUser } from '../../redux/apiRequest';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import validator from 'validator';
+import axios from 'axios';
 //#endregion
 
 function Register({ setOverlay }) {
@@ -28,6 +29,13 @@ function Register({ setOverlay }) {
     const navigate = useNavigate();
     // #region validate
     const [validationMsg, setValidationMsg] = useState({});
+
+    //get code
+    const urlPhone = 'https://localhost:44303/api/ForgotPass?phone=';
+    const urlPhoneConfirm = 'https://localhost:44303/api/ForgotPass';
+    const [code, setCode] = useState('');
+    const [flag, setFlag] = useState(false);
+    const [confirmCode, setConfirmCode] = useState('');
 
     const handleChange = (e) => {
         const checked = e.target.checked;
@@ -96,6 +104,26 @@ function Register({ setOverlay }) {
         };
         registerUser(newUser, dispatch, navigate);
     };
+
+    //Get code otp
+    const handleGetCode = (e) => {
+        e.preventDefault();
+        const handle = async () => {
+            const res = await axios.get(urlPhone + uname);
+            const response = res.data;
+            console.log('res: ' + response);
+            console.log('code: ' + response.code);
+            if (response.messStatus == true) {
+                setCode(response.code);
+                console.log(code);
+                setFlag(true);
+            } else {
+                alert('Có lỗi xảy ra, vui lòng kiểm tra số điện thoại của bạn');
+            }
+        };
+        handle();
+    };
+
     return (
         <div>
             <div className={styles.overlay}>
@@ -145,6 +173,7 @@ function Register({ setOverlay }) {
                                     className={styles.inputField}
                                     value={uname}
                                 />
+                                <button className={styles.btnSubmitt}>Nhận mã</button>
                             </section>
 
                             <section className={styles.error2}>
@@ -251,7 +280,9 @@ function Register({ setOverlay }) {
                             <section className={styles.formContainer}>
                                 <input
                                     type="submit"
-                                    className={styles.btnSubmit}
+                                    className={
+                                        flag ? `${styles.btnSubmit}` : `${styles.btnSubmit} ${styles.btnReadOnly}`
+                                    }
                                     value="Đăng ký"
                                     onClick={handleSubmit}
                                 />

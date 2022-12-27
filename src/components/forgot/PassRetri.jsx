@@ -55,28 +55,30 @@ function PassRetri() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const isValid = validateAll();
-        if (!isValid) return;
+        if (flag) {
+            const isValid = validateAll();
+            if (!isValid) return;
 
-        if (confirmCode == code) {
-            const currentU = {
-                nameOrPhone: uname,
-                newPass: pass,
-                confirm: repass,
-            };
-            const handle = async () => {
-                const res = await axios.put(urlPhoneConfirm, currentU);
-                const response = res.data;
-                if (response.status == true) {
-                    alert('Đổi mật khẩu thành công!');
-                    navigate('/login');
-                } else {
-                    alert('Có lỗi xảy ra, xin vui lòng thử lại!');
-                }
-            };
-            handle();
-        } else {
-            alert('Mã xác nhận không đúng!');
+            if (confirmCode == code) {
+                const currentU = {
+                    nameOrPhone: uname,
+                    newPass: pass,
+                    confirm: repass,
+                };
+                const handle = async () => {
+                    const res = await axios.put(urlPhoneConfirm, currentU);
+                    const response = res.data;
+                    if (response.status == true) {
+                        alert('Đổi mật khẩu thành công!');
+                        navigate('/login');
+                    } else {
+                        alert('Có lỗi xảy ra, xin vui lòng thử lại!');
+                    }
+                };
+                handle();
+            } else {
+                alert('Mã xác nhận không đúng!');
+            }
         }
     };
 
