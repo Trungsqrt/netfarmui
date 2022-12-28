@@ -107,37 +107,39 @@ function ExpertPage() {
 
     // const [dataFil, setDataFil] = useState([]);
     const handleDeleteSchedule = () => {
-        const dataFil = [];
-        axios
-            .get(scheduleUrl)
-            .then((res) => {
-                res.data.forEach((item) => {
-                    if (item.scheduleId == idHandle) dataFil.push(item.id);
-                });
+        if (window.confirm('Xác nhận xoá!')) {
+            const dataFil = [];
+            axios
+                .get(scheduleUrl)
+                .then((res) => {
+                    res.data.forEach((item) => {
+                        if (item.scheduleId == idHandle) dataFil.push(item.id);
+                    });
 
-                //delete tasks
-                dataFil.forEach((item) => {
-                    const dele = async () => {
-                        await axios.delete(scheduleUrl + '/' + item);
-                    };
-                    dele();
+                    //delete tasks
+                    dataFil.forEach((item) => {
+                        const dele = async () => {
+                            await axios.delete(scheduleUrl + '/' + item);
+                        };
+                        dele();
+                    });
+                })
+                .then(() => {
+                    //delete schedule
+                    axios.delete(ScheUrl + '/' + idHandle);
+                })
+                .then(() => {
+                    ScheduleHandler();
+                })
+                .then(() => {
+                    async function getSchedule() {
+                        const res = await axios.get('https://localhost:44303/api/Schedule');
+                        const data = res.data;
+                        setSchedule(data);
+                    }
+                    getSchedule();
                 });
-            })
-            .then(() => {
-                //delete schedule
-                axios.delete(ScheUrl + '/' + idHandle);
-            })
-            .then(() => {
-                ScheduleHandler();
-            })
-            .then(() => {
-                async function getSchedule() {
-                    const res = await axios.get('https://localhost:44303/api/Schedule');
-                    const data = res.data;
-                    setSchedule(data);
-                }
-                getSchedule();
-            });
+        }
     };
 
     const handleAddArticle = () => {

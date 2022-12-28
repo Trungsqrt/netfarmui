@@ -140,6 +140,26 @@ function AddSchedule() {
     }
 
     const saveHandler = async () => {
+        if (scheduleName === '') {
+            alert('Không được để trống Tiêu đề');
+            return;
+        }
+        if (scheduleName.length < 20 || scheduleName.length > 50) {
+            alert('Tiêu đề phải từ 20 kí tự đến 50 ');
+            return;
+        }
+        if (description === '') {
+            alert('Không được để trống Mô tả');
+            return;
+        }
+        if (description.length < 50) {
+            alert('Mô tả phải từ 50 kí tự');
+            return;
+        }
+        if (scheduleTask.length === 0) {
+            alert('Phải có ít nhất một thời vụ');
+            return;
+        }
         if (idSchedule) {
             //edit
             if (scheduleName === '' || scheduleTask.length === 0) return;
@@ -169,10 +189,8 @@ function AddSchedule() {
                 } catch (err) {
                     alert('có lỗi. Vui lòng thử lại');
                 }
-                // console.log(scheduleTask);
             }
         } else {
-            console.log('add');
             if (scheduleName === '' || scheduleTask.length === 0) return;
             else {
                 const sched = {
@@ -189,7 +207,7 @@ function AddSchedule() {
                     }
                     alert('Đăng lịch thành công');
 
-                    // window.location.reload();
+                    window.location.reload();
                 } catch (err) {
                     alert('có lỗi. Vui lòng thử lại');
                 }

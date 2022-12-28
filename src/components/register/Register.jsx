@@ -95,6 +95,7 @@ function Register({ setOverlay }) {
         if (flag) {
             const isValid = validateAll();
             if (!isValid) return;
+
             if (confirmCode == code) {
                 const dob = new Date(Number(year), Number(month) - 1, Number(day) + 1).toISOString();
 
@@ -119,7 +120,6 @@ function Register({ setOverlay }) {
         e.preventDefault();
         const handle = async () => {
             const res = await axios.get(urlPhone + uname);
-            console.log('url: ', urlPhone + uname);
             const response = res.data;
             console.log('res: ' + response);
             console.log('code: ' + response.code);
