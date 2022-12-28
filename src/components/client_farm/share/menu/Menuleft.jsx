@@ -37,7 +37,7 @@ const Menuleft = () => {
                         </Link>
                     </li>
                 </ul>
-                <img className="menulist_img" src="https://bom.so/0nAKIP"></img>
+                <img className="menulist_img" src="https://ttpcert.com.vn/wp-content/uploads/2021/01/Doc1.jpg"></img>
             </div>
         </div>
     );
