@@ -38,6 +38,7 @@ const Calendar = (props) => {
     return (
         <div className="schedule_container" key={index}>
             <div className="Mota">Mô tả:</div>
+            <div className='schedulename'>{schedule.name}</div>
             <br></br>
             <div className="Description"> {schedule.description}</div>
             <section className={styles.container}>

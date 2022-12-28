@@ -160,3 +160,9 @@
     word-break: keep-all;
     white-space: pre-line;
 }
+.schedulename{
+    width: 100%;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+}

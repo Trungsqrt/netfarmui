@@ -7,7 +7,7 @@ const About = () => {
                 <div className="containner">
                     <div className="row">
                         <div className="col-md-6">
-                            <img src="https://bom.so/yIP6Dg" alt="hop-tac-xa" className="about-img" />
+                            <img src="https://hdll.vn/FileUpload/Images/hoptacxa.jpg" alt="hop-tac-xa" className="about-img" />
                         </div>
                         <div className="col-md-6">
                             <div className="about-content">

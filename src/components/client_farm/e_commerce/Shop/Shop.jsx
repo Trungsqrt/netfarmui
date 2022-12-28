@@ -90,7 +90,7 @@ const Shop = () => {
                                 className={currentTab === 0 ? 'product_category_item_active' : 'product_category_item'}
                                 onClick={() => FilterList(0)}
                             >
-                                <img className="product_category_img" src="https://bom.so/hhjDCB"></img>
+                                <img className="product_category_img" src="https://inkythuatso.com/uploads/thumbnails/800/2022/01/nong-dan-vector-inkythuatso-03-10-22-22.jpg"></img>
                                 <div className="product_category_title">Tất cả</div>
                             </li>
                             {category

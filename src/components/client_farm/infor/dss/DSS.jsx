@@ -46,7 +46,7 @@ function DSS() {
                     rain: value[i].precip,
                 };
 
-                await axios.post(`${putWeatherUrl}`, obj);
+                await axios.put(`${putWeatherUrl}/${i}`, obj);
                 // await axios.delete(`${putWeatherUrl}/${i}`);
             };
             postData();

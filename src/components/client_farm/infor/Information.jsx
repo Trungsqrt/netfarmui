@@ -67,7 +67,7 @@ const Information = () => {
                                 <div className="menu_link">TƯ VẤN</div>
                             </li>
                         </ul>
-                        <img className="menulist_img" style={{ objectFit: 'cover' }} src="https://bom.so/0nAKIP"></img>
+                        <img className="menulist_img" style={{ objectFit: 'cover' }} src="https://ttpcert.com.vn/wp-content/uploads/2021/01/Doc1.jpg"></img>
                     </div>
 
                     <div className="infor_container">
