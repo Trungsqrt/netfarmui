@@ -26,6 +26,7 @@ const Header = () => {
     const [articles, setArticles] = useState([]);
     const [currentArticles, setCurrentArticles] = useState([]);
     let icon;
+
     useEffect(() => {
         axios.get(url).then((response) => {
             const res = response.data;
@@ -171,9 +172,10 @@ const Header = () => {
                             {user === 'Expert' && <Link to="/expert">Bài đăng</Link>}
                             {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
                         </li>
+
                         <li>
                             {user === 'Admin' && <Link to="/manageProduct">Bán hàng</Link>}
-                            {user === 'Expert' && <Link to="/manageProduct">Bán hàng</Link>}
+                            {/* {user === 'Expert' && <Link to="/manageProduct">Bán hàng</Link>} */}
                             {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
                         </li>
                     </ul>

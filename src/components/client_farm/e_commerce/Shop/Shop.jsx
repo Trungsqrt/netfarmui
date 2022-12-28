@@ -5,7 +5,9 @@ import productAPI from '../../../../apis/productAPI';
 import axios from 'axios';
 import Pagination from '../../../admin_farm/share/Pagination/Pagination.js';
 import '../css/style.css';
+import { useNavigate } from 'react-router-dom';
 let PageSize = 8;
+
 const Shop = () => {
     const categoryUrl = 'https://localhost:44303/api/Categories';
     const [products, setProducts] = useState([]); //all raw data
@@ -13,7 +15,15 @@ const Shop = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState([]);
     const [currentTab, setCurrentTab] = useState(0);
+
+    const [user, setUser] = useState('');
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
+
+    const navigate = useNavigate();
+
     useEffect(() => {
+        setUser(currentUser.roleName);
         const fetchData = async () => {
             //fetch raw data
             const response = await productAPI.getAPI();
@@ -26,6 +36,10 @@ const Shop = () => {
         };
         fetchData();
     }, []);
+
+    useEffect(() => {
+        if (user !== 'Farmer') navigate('/AdminHome');
+    }, [user]);
 
     const currentTableData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
@@ -90,7 +104,10 @@ const Shop = () => {
                                 className={currentTab === 0 ? 'product_category_item_active' : 'product_category_item'}
                                 onClick={() => FilterList(0)}
                             >
-                                <img className="product_category_img" src="https://inkythuatso.com/uploads/thumbnails/800/2022/01/nong-dan-vector-inkythuatso-03-10-22-22.jpg"></img>
+                                <img
+                                    className="product_category_img"
+                                    src="https://inkythuatso.com/uploads/thumbnails/800/2022/01/nong-dan-vector-inkythuatso-03-10-22-22.jpg"
+                                ></img>
                                 <div className="product_category_title">Tất cả</div>
                             </li>
                             {category
