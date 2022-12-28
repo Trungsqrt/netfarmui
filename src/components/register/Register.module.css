@@ -192,16 +192,16 @@ p a {
 }
 
 .btnSubmitt {
-    width: 30%;
+    width: 50%;
     height: 100%;
     font-size: 15px;
     border-radius: 12px;
-    border: none;
+
     padding: 18px;
     background-color: #049466;
     cursor: pointer;
     color: white;
-    border: none !important;
+    border: 1px solid #049466 !important;
     line-height: 1px;
     margin-right: 10px;
 }
@@ -221,5 +221,10 @@ p a {
     filter: brightness(100%);
 }
 
-.btnReadOnly:disabled {
+.inputFieldd:read-only {
+    background-color: gainsboro;
+}
+
+.inputFieldd {
+    width: 40% !important;
 }

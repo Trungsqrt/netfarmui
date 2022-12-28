@@ -80,6 +80,9 @@ function Register({ setOverlay }) {
         } else {
             msg.uname = 'Vui lòng nhập đúng định dạng số điện thoại!';
         }
+        if (isEmpty(code)) {
+            msg.code = 'Hãy nhập mã xác nhận!';
+        }
 
         setValidationMsg(msg);
         if (Object.keys(msg).length > 0) return false;
@@ -89,20 +92,26 @@ function Register({ setOverlay }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const isValid = validateAll();
-        if (!isValid) return;
-        const dob = new Date(Number(year), Number(month) - 1, Number(day) + 1).toISOString();
+        if (flag) {
+            const isValid = validateAll();
+            if (!isValid) return;
+            if (confirmCode == code) {
+                const dob = new Date(Number(year), Number(month) - 1, Number(day) + 1).toISOString();
 
-        const newUser = {
-            fullName: fname + ' ' + lname,
-            phone: uname,
-            passWord: pass,
-            gender: gender,
-            dayOfBirth: dob,
-            identifyCard: Math.floor(Math.random() * (9999 - 5 + 1) + 5).toString(),
-            roleId: 3,
-        };
-        registerUser(newUser, dispatch, navigate);
+                const newUser = {
+                    fullName: fname + ' ' + lname,
+                    phone: uname,
+                    passWord: pass,
+                    gender: gender,
+                    dayOfBirth: dob,
+                    identifyCard: Math.floor(Math.random() * (9999 - 5 + 1) + 5).toString(),
+                    roleId: 3,
+                };
+                registerUser(newUser, dispatch, navigate);
+            } else {
+                alert('Mã xác nhận không đúng!');
+            }
+        }
     };
 
     //Get code otp
@@ -110,6 +119,7 @@ function Register({ setOverlay }) {
         e.preventDefault();
         const handle = async () => {
             const res = await axios.get(urlPhone + uname);
+            console.log('url: ', urlPhone + uname);
             const response = res.data;
             console.log('res: ' + response);
             console.log('code: ' + response.code);
@@ -162,6 +172,7 @@ function Register({ setOverlay }) {
 
                             <section className={styles.error2}>
                                 <p className={styles.error}>{validationMsg.uname}</p>
+                                <p className={styles.error}>{validationMsg.code}</p>
                             </section>
                             <section className={styles.formContainer}>
                                 <input
@@ -173,7 +184,20 @@ function Register({ setOverlay }) {
                                     className={styles.inputField}
                                     value={uname}
                                 />
-                                <button className={styles.btnSubmitt}>Nhận mã</button>
+
+                                <input
+                                    type="text"
+                                    name="confirm"
+                                    id="confirm"
+                                    onChange={(e) => setConfirmCode(e.target.value)}
+                                    placeholder="Nhập mã"
+                                    className={styles.inputFieldd}
+                                    value={confirmCode}
+                                    readOnly={flag ? false : true}
+                                />
+                                <button className={styles.btnSubmitt} onClick={handleGetCode}>
+                                    Nhận mã
+                                </button>
                             </section>
 
                             <section className={styles.error2}>
