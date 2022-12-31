@@ -6,30 +6,33 @@ import axios from 'axios';
 import '../../css/style.css';
 
 function EditCategory(props) {
-    const [detail, setDetail] = useState({});
+    const [display, setDisplay] = useState('');
+    const [categorySlug, setCategorySlug] = useState('');
     const { id } = useParams();
     const url = `https://localhost:44303/api/Categories/${id}`;
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(url);
-            setDetail(response.data);
-            console.log(response.data);
+            setDisplay(response.data.display);
+            setCategorySlug(response.data.categorySlug);
         };
         fetchData();
     }, [id]);
 
-    const handleChange = (e) => {
-        const { value, name } = e.target;
-        setDetail({ ...detail, [name]: value });
-        console.log(detail);
-    };
-
     const onClickHandler = () => {
         try {
-            console.log('test', detail);
-            axios.put(url, detail);
-            alert('chỉnh sửa thành công!');
-            window.location.reload();
+            const data = {
+                categoryId: id,
+                display: display,
+                categorySlug: categorySlug,
+            };
+            if (data.display == '' || data.categorySlug == '') {
+                alert('Không được để trống');
+            } else {
+                axios.put(url, data);
+                alert('chỉnh sửa thành công!');
+                window.location.reload();
+            }
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
@@ -46,10 +49,10 @@ function EditCategory(props) {
                             <input
                                 className="product_input"
                                 type={Text}
-                                defaultValue={detail.display}
+                                value={display}
                                 placeholder="Nhập tên sản phẩm..."
                                 name="display"
-                                onChange={handleChange}
+                                onChange={(e) => setDisplay(e.target.value)}
                                 required
                             ></input>
                         </li>
@@ -57,10 +60,10 @@ function EditCategory(props) {
                             <div className="product_properties">Slug</div>
                             <input
                                 className="product_input"
-                                defaultValue={detail.categorySlug}
+                                value={categorySlug}
                                 placeholder="Nhập Slug"
                                 name="categorySlug"
-                                onChange={handleChange}
+                                onChange={(e) => setCategorySlug(e.target.value)}
                                 required
                             ></input>
                         </li>

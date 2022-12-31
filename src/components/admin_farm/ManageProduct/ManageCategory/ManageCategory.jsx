@@ -17,11 +17,13 @@ const ManageCategory = () => {
         fetchData();
     }, []);
     const handleDeleteCategory = (index) => {
-        async function deleteHandler() {
-            await axios.delete(`${categoryUrl}/${index}`);
-            CategoryHandler();
+        if (window.confirm('Xác nhận xoá') == true) {
+            async function deleteHandler() {
+                await axios.delete(`${categoryUrl}/${index}`);
+                CategoryHandler();
+            }
+            deleteHandler();
         }
-        deleteHandler();
     };
 
     const CategoryHandler = () => {

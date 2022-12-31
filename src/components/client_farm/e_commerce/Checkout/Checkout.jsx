@@ -49,12 +49,13 @@ const Checkout = () => {
         } else {
             var uuid = require('uuid');
             const order_id = uuid.v4();
+            var error = '';
             const postOrder = {
                 id: order_id,
                 userId: userId,
                 name: name,
                 address: address,
-                phone: phone,
+                phone: phone.match(/(84|0[3|5|7|8|9])+([0-9]{8})\b/) ? phone : '',
                 total: total,
                 status: false,
                 delivery: false,
@@ -63,29 +64,37 @@ const Checkout = () => {
                 cancel: false,
                 finishAt: null,
             };
+            if (postOrder.phone == '') {
+                error = 'Số điện thoại không đúng format';
+            }
+
             try {
-                await axios.post(orderUrl, postOrder);
-                var length = carts.length;
-                for (var i = 0; i < length; i++) {
-                    const postItem = {
-                        orderId: order_id,
-                        productId: carts[i].productId,
-                        quantity: carts[i].quantity,
-                        price: carts[i].price,
-                        image: carts[i].image,
-                        productName: carts[i].name,
-                        feedback: false,
-                    };
-                    try {
-                        await axios.post(itemUrl, postItem);
-                        await axios.delete(`${cartUrl}/${carts[i].id}`);
-                    } catch (err) {
-                        alert('có lỗi');
+                if (error == '') {
+                    await axios.post(orderUrl, postOrder);
+                    var length = carts.length;
+                    for (var i = 0; i < length; i++) {
+                        const postItem = {
+                            orderId: order_id,
+                            productId: carts[i].productId,
+                            quantity: carts[i].quantity,
+                            price: carts[i].price,
+                            image: carts[i].image,
+                            productName: carts[i].name,
+                            feedback: false,
+                        };
+                        try {
+                            await axios.post(itemUrl, postItem);
+                            await axios.delete(`${cartUrl}/${carts[i].id}`);
+                        } catch (err) {
+                            alert('có lỗi');
+                        }
                     }
+                    alert('Đặt hàng thành công!');
+                    localStorage.removeItem(checkList);
+                    navigate('/shop/orderlist');
+                } else {
+                    alert('Số điện thoại không đúng format');
                 }
-                alert('Đặt hàng thành công!');
-                localStorage.removeItem(checkList);
-                navigate('/shop/orderlist');
             } catch (err) {
                 alert('Có lỗi, xin vui lòng thử lại!');
             }

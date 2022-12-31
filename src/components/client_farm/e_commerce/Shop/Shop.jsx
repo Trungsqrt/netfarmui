@@ -37,9 +37,11 @@ const Shop = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        if (user !== 'Farmer') navigate('/AdminHome');
-    }, [user]);
+    // useEffect(() => {
+    //     if (user != 'Farmer') {
+    //         navigate('/AdminHome');
+    //     }
+    // }, [user]);
 
     const currentTableData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
@@ -92,74 +94,85 @@ const Shop = () => {
     return (
         <div>
             <Header></Header>
-            <div className="shop">
-                <div className="shop_block">
-                    <div className="shop_block_text">SHOP</div>
-                    <div className="shop_block_text_sm">NetFarm</div>
-                </div>
-                <div className="shop_content">
-                    <div className="product_category">
-                        <ul className="product_category_list">
-                            <li
-                                className={currentTab === 0 ? 'product_category_item_active' : 'product_category_item'}
-                                onClick={() => FilterList(0)}
-                            >
-                                <img
-                                    className="product_category_img"
-                                    src="https://inkythuatso.com/uploads/thumbnails/800/2022/01/nong-dan-vector-inkythuatso-03-10-22-22.jpg"
-                                ></img>
-                                <div className="product_category_title">Tất cả</div>
-                            </li>
-                            {category
-                                ? category.map((item, index) => (
-                                      <li
-                                          className={
-                                              currentTab === item.categoryId
-                                                  ? 'product_category_item_active'
-                                                  : 'product_category_item'
-                                          }
-                                          onClick={() => FilterList(item.categoryId)}
-                                          key={index}
-                                      >
-                                          <img className="product_category_img" src={item.categorySlug}></img>
-                                          <div className="product_category_title">{item.display}</div>
-                                      </li>
-                                  ))
-                                : ''}
-                        </ul>
+            {user === 'Farmer' ? (
+                <div className="shop">
+                    <div className="shop_block">
+                        <div className="shop_block_text">SHOP</div>
+                        <div className="shop_block_text_sm">NetFarm</div>
                     </div>
-                    <div className="sort_row">
-                        <div className="sort_text">Sắp xếp theo:</div>
-                        <select onChange={handlerSelected} className="sort_select">
-                            <option disabled selected>
-                                Giá
-                            </option>
-                            <option value="1">Giá: Thấp đến cao</option>
-                            <option value="2">Giá: Cao đến thấp</option>
-                        </select>
-                    </div>
-
-                    <div className="product_row">
-                        <div className="list_product">
-                            {currentData
-                                ? currentData.map((item, index) => (
-                                      <Product product={item} key={item.id} update={item.id} number={index}></Product>
-                                  ))
-                                : ''}
+                    <div className="shop_content">
+                        <div className="product_category">
+                            <ul className="product_category_list">
+                                <li
+                                    className={
+                                        currentTab === 0 ? 'product_category_item_active' : 'product_category_item'
+                                    }
+                                    onClick={() => FilterList(0)}
+                                >
+                                    <img
+                                        className="product_category_img"
+                                        src="https://inkythuatso.com/uploads/thumbnails/800/2022/01/nong-dan-vector-inkythuatso-03-10-22-22.jpg"
+                                    ></img>
+                                    <div className="product_category_title">Tất cả</div>
+                                </li>
+                                {category
+                                    ? category.map((item, index) => (
+                                          <li
+                                              className={
+                                                  currentTab === item.categoryId
+                                                      ? 'product_category_item_active'
+                                                      : 'product_category_item'
+                                              }
+                                              onClick={() => FilterList(item.categoryId)}
+                                              key={index}
+                                          >
+                                              <img className="product_category_img" src={item.categorySlug}></img>
+                                              <div className="product_category_title">{item.display}</div>
+                                          </li>
+                                      ))
+                                    : ''}
+                            </ul>
                         </div>
-                        <div></div>
-                    </div>
-                    <div className="pagination_line">
-                        <Pagination
-                            className="pagination-bar"
-                            currentPage={currentPage}
-                            totalCount={products.length}
-                            pageSize={PageSize}
-                            onPageChange={(page) => setCurrentPage(page)}
-                        />
+                        <div className="sort_row">
+                            <div className="sort_text">Sắp xếp theo:</div>
+                            <select onChange={handlerSelected} className="sort_select">
+                                <option disabled selected>
+                                    Giá
+                                </option>
+                                <option value="1">Giá: Thấp đến cao</option>
+                                <option value="2">Giá: Cao đến thấp</option>
+                            </select>
+                        </div>
+
+                        <div className="product_row">
+                            <div className="list_product">
+                                {currentData
+                                    ? currentData.map((item, index) => (
+                                          <Product
+                                              product={item}
+                                              key={item.id}
+                                              update={item.id}
+                                              number={index}
+                                          ></Product>
+                                      ))
+                                    : ''}
+                            </div>
+                            <div></div>
+                        </div>
+                        <div className="pagination_line">
+                            <Pagination
+                                className="pagination-bar"
+                                currentPage={currentPage}
+                                totalCount={products.length}
+                                pageSize={PageSize}
+                                onPageChange={(page) => setCurrentPage(page)}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                navigate('/AdminHome')
+            )}
         </div>
     );
 };

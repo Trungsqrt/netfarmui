@@ -9,17 +9,22 @@ const AddCategory = () => {
     const [display, setDisplay] = useState('');
     const [categorySlug, setCategorySlug] = useState('');
 
-    const onClickHandler = () => {
+    const onClickHandler = (e) => {
+        e.preventDefault();
         const postCategory = {
             display: display,
             categorySlug: categorySlug,
         };
-        try {
-            axios.post(url, postCategory);
-            alert('Thêm danh mục thành công!');
-            window.location.reload();
-        } catch (err) {
-            alert('Có lỗi, xin vui lòng thử lại!');
+        if (postCategory.display == '' || postCategory.categorySlug == '') {
+            alert('Không được để trống');
+        } else {
+            try {
+                axios.post(url, postCategory);
+                alert('Thêm danh mục thành công!');
+                window.location.reload();
+            } catch (err) {
+                alert('Có lỗi, xin vui lòng thử lại!');
+            }
         }
     };
     return (
@@ -37,7 +42,6 @@ const AddCategory = () => {
                                     type={Text}
                                     value={display}
                                     placeholder="Nhập tên danh mục..."
-                                    required
                                     onChange={(e) => setDisplay(e.target.value)}
                                     onInvalid={(e) => e.target.setCustomValidity('Vui lòng không để trống')}
                                     onInput={(e) => e.target.setCustomValidity('')}
@@ -51,7 +55,6 @@ const AddCategory = () => {
                                     value={categorySlug}
                                     placeholder="Nhập slug..."
                                     onChange={(e) => setCategorySlug(e.target.value)}
-                                    required
                                     onInvalid={(e) => e.target.setCustomValidity('Vui lòng không để trống')}
                                     onInput={(e) => e.target.setCustomValidity('')}
                                 ></input>

@@ -98,6 +98,12 @@ function Personal() {
         } else {
             msg.uname = 'Vui lòng nhập đúng định dạng số điện thoại!';
         }
+        if (cccd[0] == '0') {
+            msg.cccd = 'CCCD không bắt đầu bằng 0';
+        }
+        if (cccd.length < 8) {
+            msg.cccd = 'CCCD phải đủ 8 số';
+        }
 
         setValidationMsg(msg);
         if (Object.keys(msg).length > 0) return false;

@@ -19,7 +19,7 @@ import Manage from './ManageProduct/Manage';
 import SaleReport from './ManageReport/SaleReport';
 const ManageProduct = () => {
     const [render, setRender] = useState(1);
-    // localStorage.removeItem('currentTab');
+
     const currentTab = Number(localStorage.getItem('currentTab'));
     useEffect(() => {
         if (currentTab) {

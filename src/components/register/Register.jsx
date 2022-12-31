@@ -31,7 +31,7 @@ function Register({ setOverlay }) {
     const [validationMsg, setValidationMsg] = useState({});
 
     //get code
-    const urlPhone = 'https://localhost:44303/api/ForgotPass?phone=';
+    const urlPhone = 'https://localhost:44303/api/ChangePass?phone=';
     const urlPhoneConfirm = 'https://localhost:44303/api/ForgotPass';
     const [code, setCode] = useState('');
     const [flag, setFlag] = useState(false);
