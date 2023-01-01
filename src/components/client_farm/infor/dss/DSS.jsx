@@ -38,20 +38,21 @@ function DSS() {
                 const obj = {
                     id: i,
                     description: value[i].weather.description,
-                    dateTime: value[i].datetime,
+                    dateTime: new Date(value[i].datetime).toISOString(),
                     minTemp: value[i].min_temp,
                     maxTemp: value[i].max_temp,
                     humidity: value[i].rh,
                     wind: value[i].wind_spd,
                     rain: value[i].precip,
                 };
-
+                // console.log("obj: ",[i]," ", obj)
                 await axios.put(`${putWeatherUrl}/${i}`, obj);
                 // await axios.delete(`${putWeatherUrl}/${i}`);
             };
             postData();
             i += 1;
         }
+        
     };
     useEffect(() => {
         getData();

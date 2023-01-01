@@ -168,14 +168,19 @@ const Header = () => {
                             {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
                         </li>
                         <li>
-                            {user === 'Admin' && <Link to="/admin">Bài đăng</Link>}
-                            {user === 'Expert' && <Link to="/expert">Bài đăng</Link>}
+                            {user === 'Admin' && <Link to="/admin">Quản lý</Link>}
+                            {user === 'Expert' && <Link to="/expert">Quản lý</Link>}
                             {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
                         </li>
 
                         <li>
                             {user === 'Admin' && <Link to="/manageProduct">Bán hàng</Link>}
-                            {/* {user === 'Expert' && <Link to="/manageProduct">Bán hàng</Link>} */}
+                            {user === 'Expert' && <Link to="/inforPage">Thông tin</Link>}
+                            {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
+                        </li>
+                        
+                        <li>
+                            {user === 'Admin' && <Link to="/inforPage">Thông tin</Link>}
                             {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
                         </li>
                     </ul>
