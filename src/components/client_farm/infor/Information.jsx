@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { default as StaffHeader } from '../share/header/Header';
+import { default as StaffHeader } from '../../admin_farm/share/header/Header';
 import { default as FarmerHeader } from '../../client_farm/share/header/Header';
 import General from './general/General';
 import Schedule from './schedule/Schedule';
@@ -24,8 +24,8 @@ const Information = () => {
     return (
         <div>
             <div>
-                {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
-                {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />}
+                {(user === 'Admin' || user === 'Expert') ? <StaffHeader /> : <FarmerHeader />}
+                {/* {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />} */}
                 <div className="infor_main">
                     <div className="menu">
                         <div className="menu_header">NETFARM</div>

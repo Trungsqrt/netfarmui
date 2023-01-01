@@ -29,9 +29,9 @@ function AdminPage() {
     useEffect(() => {
         setUser(currentUser.roleName);
         async function getData() {
-            const Dataset = await axios.get(userUrl);
-
-            Dataset.data.forEach((item) => {
+            const d = await axios.get(userUrl);
+            const Dataset = d.data.filter(item => item["fullName"] !== "Admin")
+            Dataset.forEach((item) => {
                 const value = {
                     id: item.id,
                     name: item.fullName,
@@ -96,27 +96,7 @@ function AdminPage() {
         getData();
     };
 
-    const ScheduleHandler = () => {
-        setRender(3);
-        setData([]);
-
-        async function getData() {
-            setData([]);
-            const Dataset = await axios.get(scheduleUrl);
-
-            Dataset.data.forEach((item) => {
-                const value = {
-                    id: item.id,
-                    name: item.name,
-                    dateStart: item.dateStart.slice(0, 10),
-                    dateEnd: item.dateEnd.slice(0, 10),
-                };
-                setData((prevData) => [...prevData, value]);
-            });
-        }
-
-        // getData();
-    };
+    
 
     const handleDeletePost = (index) => {
         if (window.confirm('Xác nhận xoá!')) {
@@ -138,39 +118,7 @@ function AdminPage() {
         }
     };
 
-    const handleDeleteSchedule = () => {
-        const dataFil = [];
-        axios
-            .get(scheduleUrl)
-            .then((res) => {
-                res.data.forEach((item) => {
-                    if (item.scheduleId == idHandle) dataFil.push(item.id);
-                });
-
-                //delete tasks
-                dataFil.forEach((item) => {
-                    const dele = async () => {
-                        await axios.delete(scheduleUrl + '/' + item);
-                    };
-                    dele();
-                });
-            })
-            .then(() => {
-                //delete schedule
-                axios.delete(ScheUrl + '/' + idHandle);
-            })
-            .then(() => {
-                ScheduleHandler();
-            })
-            .then(() => {
-                async function getSchedule() {
-                    const res = await axios.get('https://localhost:44303/api/Schedule');
-                    const data = res.data;
-                    setSchedule(data);
-                }
-                getSchedule();
-            });
-    };
+    
 
     const handleAddArticle = () => {
         navigate('/ArticleHandler');
@@ -274,13 +222,7 @@ function AdminPage() {
                                     <i class="menuIconItem fa-regular fa-newspaper"></i>
                                     Posts
                                 </li>
-                                <li
-                                    className={render == 3 ? styles.navItemSelected : styles.navItem}
-                                    onClick={ScheduleHandler}
-                                >
-                                    <i class="menuIconItem fa-solid fa-calendar-days"></i>
-                                    Schedules
-                                </li>
+                               
                             </ul>
                         </div>
                         <div className={styles.right}>
@@ -390,76 +332,7 @@ function AdminPage() {
                                         </div>
                                     )}
 
-                                    {render == 3 && (
-                                        <div>
-                                            <div
-                                                className={styles.searchContainer}
-                                                style={{ marginTop: '8px', marginBottom: '-30px' }}
-                                            >
-                                                <button
-                                                    id={styles.iconAddd}
-                                                    onClick={handleAddSchedule}
-                                                    style={{ height: '30px' }}
-                                                >
-                                                    Thêm
-                                                </button>
-                                                {flag && (
-                                                    <button
-                                                        id={styles.iconDelete}
-                                                        onClick={handleDeleteSchedule}
-                                                        style={{ height: '30px' }}
-                                                    >
-                                                        Xóa
-                                                    </button>
-                                                )}
-                                                <select
-                                                    onChange={handlerChange}
-                                                    className="selectInput"
-                                                    style={{ paddingBottom: '1px' }}
-                                                >
-                                                    <option>Chọn loại cây</option>
-                                                    {schedule
-                                                        ? schedule.map((sche, index) => (
-                                                              <option value={sche.id} key={sche.id}>
-                                                                  {sche.name}
-                                                              </option>
-                                                          ))
-                                                        : ''}
-                                                </select>
-                                                {/* <tbody> */}
-                                            </div>
-
-                                            <section className={styles.tableContent}>
-                                                <tr className={styles.tableContainerDiv}>
-                                                    <th className={styles.th1} width="10%">
-                                                        <strong>Id</strong>
-                                                    </th>
-                                                    <th className={styles.th1} width="20%">
-                                                        <strong>Tên</strong>
-                                                    </th>
-                                                    <th className={styles.th1} width="40%">
-                                                        <strong>Bắt đầu</strong>
-                                                    </th>
-                                                    <th className={styles.th1} width="40%">
-                                                        <strong>Kết thúc</strong>
-                                                    </th>
-                                                    <th className={styles.th1} width="30%">
-                                                        <strong>Id lịch</strong>
-                                                    </th>
-                                                </tr>
-                                                {data.map((item) => (
-                                                    <tr key={item.id} style={{ minWidth: '100%' }}>
-                                                        <th width="10%">{item.id}</th>
-                                                        <th width="20%">{item.name}</th>
-                                                        <th width="30%">{item.dateStart}</th>
-                                                        <th width="30%">{item.dateEnd}</th>
-                                                        <th width="10%">{truncateString2(item.scheduleId)}</th>
-                                                    </tr>
-                                                ))}
-                                            </section>
-                                            {/* </tbody> */}
-                                        </div>
-                                    )}
+                                    
                                 </table>
                             </section>
                         </div>
