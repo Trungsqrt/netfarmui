@@ -94,7 +94,7 @@ const Shop = () => {
     return (
         <div>
             <Header></Header>
-            {user === 'Farmer' ? (
+            {(user === 'Farmer' || user === "")? (
                 <div className="shop">
                     <div className="shop_block">
                         <div className="shop_block_text">SHOP</div>
