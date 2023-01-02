@@ -99,7 +99,7 @@ tr:nth-child(even) {
 }
 
 .th1 {
-    background-color: #c5b30d;
+    background-color: rgb(197, 179, 13);
     overflow: hidden;
     position: sticky;
     table-layout: fixed;
@@ -207,7 +207,7 @@ tr {
 .left {
     width: 18%;
     height: 97vh;
-    background-color: #c5b30d;
+    background-color: rgb(197, 179, 13);
     border-radius: 20px;
     overflow: hidden;
     margin: 10px 0;
@@ -217,11 +217,10 @@ tr {
 
 .title {
     font-size: 25px;
-    font-weight: bold;
     text-align: center;
     padding: 20px;
     color: #008000;
-    background-color: #b4a414;
+    background-color: rgb(197, 179, 13);
 }
 
 .navItem {
