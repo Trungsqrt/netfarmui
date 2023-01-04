@@ -3,6 +3,7 @@ import dssImage from '../../../../assets/image/pngwing.com.png';
 import styles from '../DSS/DSS.module.css';
 import TemperatureChart from './TemperatureChart';
 import axios from 'axios';
+const parse = require('html-react-parser');
 function DSS() {
     const [loaicay, setLoaiCay] = useState([]);
     const [hoatdong, setHoatDong] = useState([]);
@@ -133,19 +134,9 @@ function DSS() {
             <section className={styles.container}>
                 <div className={styles.imageHuman}></div>
 
-                {/* <div className={styles.bubble}>
-                    <div className={styles.chat}>
-                        <div className={styles.text}>{message}</div>
-                    </div>
-                    <img src={dssImageChat} className={styles.chat}></img>
-
-                    <div className={styles.chart}>
-                        <TemperatureChart />
-                    </div>
-                </div> */}
                 <div className={styles.columnRight}>
                     <div className={styles.boxMessage}>
-                        <div className={styles.messageContent}>{message}</div>
+                        <div className={styles.messageContent}>{parse(String(message))}</div>
                     </div>
                     <div className={styles.chartContainer}>
                         <div className={styles.today}>
