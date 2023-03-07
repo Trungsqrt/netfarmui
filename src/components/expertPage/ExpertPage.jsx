@@ -4,11 +4,13 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '../admin_farm/share/header/Header';
 import './ExpertPage.css';
+import { string } from 'yup';
 
 function ExpertPage() {
     const articleUrl = 'https://localhost:44303/api/Article';
     const scheduleUrl = 'https://localhost:44303/api/ScheduleTask';
     const ScheUrl = 'https://localhost:44303/api/Schedule';
+    const standardUrl = 'https://localhost:44303/api/Standard';
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const [render, setRender] = useState(1); //1: Posts, 2: Schedule
@@ -95,6 +97,30 @@ function ExpertPage() {
         getData();
     };
 
+    const StandardHandler = () => {
+        setRender(3);
+        async function getData() {
+            setData([]);
+            const Dataset = await axios.get(standardUrl);
+
+            Dataset.data.forEach((item) => {
+                const value = {
+                    id: item.id,
+                    standardName: item.standardName,
+                    minTemp: item.minTemp,
+                    maxTemp: item.maxTemp,
+                    minhumidity: item.minhumidity,
+                    maxhumidity: item.maxhumidity,
+                    wind: item.wind,
+                    maxRain: item.maxRain,
+                    season: item.season,
+                };
+                setData((prevData) => [...prevData, value]);
+            });
+        }
+        getData();
+    };
+
     const handleDeletePost = (index) => {
         if (window.confirm('Xác nhận xoá!')) {
             async function deleteHandler() {
@@ -142,6 +168,17 @@ function ExpertPage() {
         }
     };
 
+    const handleDeleteSD = (index) => {
+        if (window.confirm('Xác nhận xoá!')) {
+            async function deleteHandler() {
+                await axios.delete(standardUrl + '/' + string(index));
+                StandardHandler();
+            }
+            deleteHandler();
+            console.log(standardUrl + '/' + index);
+        }
+    };
+
     const handleAddArticle = () => {
         navigate('/ArticleHandler');
     };
@@ -150,12 +187,20 @@ function ExpertPage() {
         navigate('/CalenderHandler');
     };
 
+    const handleAddStandard = () => {
+        navigate('/standardmanagement');
+    };
+
     const handleEditPost = (id) => {
         navigate(`/editArticle/${id}`);
     };
 
     const handleEditSchedule = () => {
         navigate(`/editSchedule/${idHandle}`);
+    };
+
+    const handleEditSD = (id) => {
+        navigate(`/standardmanagement/${id}`);
     };
 
     function handlerChange(e) {
@@ -239,6 +284,13 @@ function ExpertPage() {
                                 >
                                     <i class="menuIconItem fa-solid fa-calendar-days"></i>
                                     Schedules
+                                </li>{' '}
+                                <li
+                                    className={render == 3 ? styles.navItemSelected : styles.navItem}
+                                    onClick={StandardHandler}
+                                >
+                                    <i class="menuIconItem fa-solid fa-seedling"></i>
+                                    Standard
                                 </li>
                             </ul>
                         </div>
@@ -384,6 +436,87 @@ function ExpertPage() {
                                                         <th width="30%">{item.dateStart}</th>
                                                         <th width="30%">{item.dateEnd}</th>
                                                         <th width="10%">{truncateString2(item.scheduleId)}</th>
+                                                    </tr>
+                                                ))}
+                                            </section>
+                                            {/* </tbody> */}
+                                        </div>
+                                    )}
+
+                                    {render == 3 && (
+                                        <div>
+                                            {/* <tbody> */}
+                                            <div className={styles.searchContainer}>
+                                                <button id={styles.iconAdd} onClick={handleAddStandard}>
+                                                    Thêm
+                                                </button>
+                                                <input
+                                                    type="text"
+                                                    className={styles.searchBar}
+                                                    autoComplete="none"
+                                                    onChange={handleOnChangePostSearch}
+                                                ></input>
+                                            </div>
+                                            <section
+                                                id="alskdjj"
+                                                className={styles.tableContent}
+                                                style={{ marginTop: '-7px' }}
+                                            >
+                                                <tr>
+                                                    <th className={styles.th1} width="50%">
+                                                        <strong>Tên </strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Nhiệt cao nhất</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Nhiệt thấp nhất</strong>
+                                                    </th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Độ ẩm tối đa</strong>
+                                                    </th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Độ ẩm tối thiểu</strong>
+                                                    </th>{' '}
+                                                    <th className={styles.th1}>
+                                                        <strong>Sức gió</strong>
+                                                    </th>{' '}
+                                                    <th className={styles.th1}>
+                                                        <strong>Lượng mưa</strong>
+                                                    </th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Tháng</strong>
+                                                    </th>
+                                                    <th className={styles.th1}>
+                                                        <strong>Xoá</strong>
+                                                    </th>{' '}
+                                                    <th className={styles.th1}>
+                                                        <strong>Sửa</strong>
+                                                    </th>
+                                                </tr>
+
+                                                {currentPosts?.map((item) => (
+                                                    <tr key={item.id}>
+                                                        <th width="10%">{item.standardName}</th>
+                                                        <th width="10%">{item.maxTemp}</th>
+                                                        <th width="10%">{item.minTemp}</th>
+                                                        <th width="10%">{item.maxhumidity}</th>
+                                                        <th width="10%">{item.minhumidity}</th>
+                                                        <th width="10%">{item.wind}</th>
+                                                        <th width="10%">{item.maxRain}</th>
+                                                        <th width="20%">{item.season}</th>
+                                                        <th
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={() => handleDeleteSD(item.id)}
+                                                        >
+                                                            <i class="trashcan fa-solid fa-trash"></i>
+                                                        </th>
+                                                        <th
+                                                            style={{ cursor: 'pointer', color: 'blue' }}
+                                                            onClick={() => handleEditSD(item.id)}
+                                                        >
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </th>
                                                     </tr>
                                                 ))}
                                             </section>

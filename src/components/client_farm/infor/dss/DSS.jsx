@@ -12,7 +12,7 @@ function DSS() {
     const putWeatherUrl = 'https://localhost:44303/api/APIWether';
     const resultUrl = 'https://localhost:44303/api/APIResult';
     const weatherAPIURL =
-        'https://api.weatherbit.io/v2.0/forecast/daily?lat=16.0678&lon=108.2208&days=16&key=456707019eeb42ea96bd8f604af5d75d';
+        'https://api.weatherbit.io/v2.0/forecast/daily?lat=16.0678&lon=108.2208&days=16&key=2337ea0b9360459da666b275176403c7';
 
     const [dataWeather, setDataWeather] = useState([]);
     const [cityName, setCityName] = useState('');
@@ -46,14 +46,14 @@ function DSS() {
                     wind: value[i].wind_spd,
                     rain: value[i].precip,
                 };
-                // console.log("obj: ",[i]," ", obj)
+
                 await axios.put(`${putWeatherUrl}/${i}`, obj);
+                // await axios.post(`${putWeatherUrl}`, obj);
                 // await axios.delete(`${putWeatherUrl}/${i}`);
             };
             postData();
             i += 1;
         }
-        
     };
     useEffect(() => {
         getData();
