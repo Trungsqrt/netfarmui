@@ -5,12 +5,15 @@ import { useNavigate, Link } from 'react-router-dom';
 import Header from '../admin_farm/share/header/Header';
 import './ExpertPage.css';
 import { string } from 'yup';
+const parse = require('html-react-parser');
 
 function ExpertPage() {
     const articleUrl = 'https://localhost:44303/api/Article';
     const scheduleUrl = 'https://localhost:44303/api/ScheduleTask';
     const ScheUrl = 'https://localhost:44303/api/Schedule';
     const standardUrl = 'https://localhost:44303/api/Standard';
+    const stageDetailUrl = 'https://localhost:44303/api/StageDetail';
+
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const [render, setRender] = useState(1); //1: Posts, 2: Schedule
@@ -121,6 +124,28 @@ function ExpertPage() {
         getData();
     };
 
+    const StageDetailHandler = () => {
+        setRender(4);
+        async function getData() {
+            setData([]);
+            const Dataset = await axios.get(stageDetailUrl);
+
+            Dataset.data.forEach((item) => {
+                const value = {
+                    id: item.id,
+                    description: item.description,
+                    stageId: item.stageId,
+                    standardId: item.standardId,
+                    convertedContent: parse(String(item.description)),
+                    stageName: item.stageName,
+                    standardName: item.standardName,
+                };
+                setData((prevData) => [...prevData, value]);
+            });
+        }
+        getData();
+    };
+
     const handleDeletePost = (index) => {
         if (window.confirm('Xác nhận xoá!')) {
             async function deleteHandler() {
@@ -171,13 +196,15 @@ function ExpertPage() {
     const handleDeleteSD = (index) => {
         if (window.confirm('Xác nhận xoá!')) {
             async function deleteHandler() {
-                await axios.delete(standardUrl + '/' + string(index));
+                await axios.delete(standardUrl + '/' + index);
                 StandardHandler();
             }
             deleteHandler();
             console.log(standardUrl + '/' + index);
         }
     };
+
+    const handleDeleteSDetail = (index) => {};
 
     const handleAddArticle = () => {
         navigate('/ArticleHandler');
@@ -191,6 +218,10 @@ function ExpertPage() {
         navigate('/standardmanagement');
     };
 
+    const handleAddStageDetail = () => {
+        navigate('/stageDetailmanagement');
+    };
+
     const handleEditPost = (id) => {
         navigate(`/editArticle/${id}`);
     };
@@ -202,6 +233,8 @@ function ExpertPage() {
     const handleEditSD = (id) => {
         navigate(`/standardmanagement/${id}`);
     };
+
+    const handleEditSDetail = (id) => {};
 
     function handlerChange(e) {
         setData([]);
@@ -261,6 +294,24 @@ function ExpertPage() {
         }
     }
 
+    function convertHtmlToContent(str) {}
+
+    function clearSpecialChars(str) {
+        // Remove all HTML tags and their attributes
+        str = str.replace(/<\/?[a-z][^>]*>/gi, '');
+
+        // Replace all special characters with spaces
+        str = str.replace(/[^\w\s]/gi, ' ');
+
+        // Replace multiple spaces with a single space
+        str = str.replace(/\s+/g, ' ');
+
+        // Trim leading and trailing spaces
+        str = str.trim();
+
+        return str;
+    }
+
     return (
         <div>
             {user === 'Expert' && (
@@ -291,6 +342,13 @@ function ExpertPage() {
                                 >
                                     <i class="menuIconItem fa-solid fa-seedling"></i>
                                     Standard
+                                </li>
+                                <li
+                                    className={render == 4 ? styles.navItemSelected : styles.navItem}
+                                    onClick={StageDetailHandler}
+                                >
+                                    <i class="menuIconItem fa-solid fa-leaf"></i>
+                                    Standard Detail
                                 </li>
                             </ul>
                         </div>
@@ -514,6 +572,71 @@ function ExpertPage() {
                                                         <th
                                                             style={{ cursor: 'pointer', color: 'blue' }}
                                                             onClick={() => handleEditSD(item.id)}
+                                                        >
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </th>
+                                                    </tr>
+                                                ))}
+                                            </section>
+                                            {/* </tbody> */}
+                                        </div>
+                                    )}
+
+                                    {render == 4 && (
+                                        <div>
+                                            {/* <tbody> */}
+                                            <div className={styles.searchContainer}>
+                                                <button id={styles.iconAdd} onClick={handleAddStageDetail}>
+                                                    Thêm
+                                                </button>
+                                                <input
+                                                    type="text"
+                                                    className={styles.searchBar}
+                                                    autoComplete="none"
+                                                    onChange={handleOnChangePostSearch}
+                                                ></input>
+                                            </div>
+                                            <section
+                                                id="alskdjjj"
+                                                className={styles.tableContent}
+                                                style={{ marginTop: '-7px' }}
+                                            >
+                                                <tr>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Tên cây trồng </strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="20%">
+                                                        <strong>Tên giai đoạn</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="50%">
+                                                        <strong>Nội dung</strong>
+                                                    </th>
+                                                    <th className={styles.th1} width="10%">
+                                                        <strong>Xoá</strong>
+                                                    </th>{' '}
+                                                    <th className={styles.th1} width="10%">
+                                                        <strong>Sửa</strong>
+                                                    </th>
+                                                </tr>
+
+                                                {currentPosts?.map((item) => (
+                                                    <tr key={item.id}>
+                                                        <th width="20%">{item.standardName}</th>
+                                                        <th width="20%">{item.stageName}</th>
+                                                        <th width="50%" style={{ textAlign: 'left' }}>
+                                                            {item.convertedContent}
+                                                        </th>
+                                                        <th
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={() => handleDeleteSDetail(item.id)}
+                                                            width="10%"
+                                                        >
+                                                            <i class="trashcan fa-solid fa-trash"></i>
+                                                        </th>
+                                                        <th
+                                                            style={{ cursor: 'pointer', color: 'blue' }}
+                                                            onClick={() => handleEditSDetail(item.id)}
+                                                            width="10%"
                                                         >
                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                         </th>

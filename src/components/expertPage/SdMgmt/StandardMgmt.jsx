@@ -3,7 +3,8 @@ import styles from './StandardMgmt.module.css';
 import isEmpty from 'validator/lib/isEmpty';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { number } from 'react-admin';
+import Header from '../../admin_farm/share/header/Header';
+// import { number } from 'react-admin';
 
 function StandardMgmt() {
     const url = 'https://localhost:44303/api/Standard';
@@ -41,8 +42,8 @@ function StandardMgmt() {
         setSdName(String(response.standardName));
         setMinTemp(String(response.minTemp));
         setMaxTemp(String(response.maxTemp));
-        setMinhumidity(String(response.minhumidity));
-        setMaxhumidity(String(response.maxhumidity));
+        setMinhumidity(String(response.minHumidity));
+        setMaxhumidity(String(response.maxHumidity));
         setWind(String(response.wind));
         setMaxRain(String(response.maxRain));
         setSeason(String(response.season));
@@ -114,113 +115,127 @@ function StandardMgmt() {
     };
 
     return (
-        <div className={styles.container}>
-            <form autoComplete="off">
-                <div className={styles.inputContainer}>
-                    <input
-                        id="sdName"
-                        type="text"
-                        name="sdName"
-                        placeholder="Hãy nhập tên của chuẩn cây trồng"
-                        className={styles.inputField}
-                        value={sdName}
-                        onChange={(e) => setSdName(e.target.value)}
-                    />
-                    <p className={styles.error}>{validationMsg.sdName}</p>
-                </div>{' '}
-                <div className={styles.inputContainer}>
-                    <input
-                        id="minTemp"
-                        type="number"
-                        name="minTemp"
-                        placeholder="Hãy nhập nhiệt độ thấp nhất"
-                        className={styles.inputField}
-                        value={minTemp}
-                        onChange={(e) => setMinTemp(e.target.value)}
-                    />
+        <div>
+            {(user === 'Expert' || user === 'Admin') && (
+                <>
+                    <Header />
+                    <div className={styles.container}>
+                        <form autoComplete="off">
+                            <div className={styles.inputContainer}>
+                                <input
+                                    id="sdName"
+                                    type="text"
+                                    name="sdName"
+                                    placeholder="Hãy nhập tên của chuẩn cây trồng"
+                                    className={styles.inputField}
+                                    value={sdName}
+                                    onChange={(e) => setSdName(e.target.value)}
+                                />
+                                <p className={styles.error}>{validationMsg.sdName}</p>
+                            </div>{' '}
+                            <div className={styles.inputContainer}>
+                                <input
+                                    id="minTemp"
+                                    type="number"
+                                    name="minTemp"
+                                    placeholder="Hãy nhập nhiệt độ thấp nhất"
+                                    className={styles.inputField}
+                                    value={minTemp}
+                                    onChange={(e) => setMinTemp(e.target.value)}
+                                />
 
-                    <p className={styles.error}>{validationMsg.minTemp}</p>
-                </div>{' '}
-                <div className={styles.inputContainer}>
-                    <input
-                        id="maxTemp"
-                        type="number"
-                        name="maxTemp"
-                        placeholder="Hãy nhập nhiệt cao nhất"
-                        className={styles.inputField}
-                        value={maxTemp}
-                        onChange={(e) => setMaxTemp(e.target.value)}
-                    />
+                                <p className={styles.error}>{validationMsg.minTemp}</p>
+                            </div>{' '}
+                            <div className={styles.inputContainer}>
+                                <input
+                                    id="maxTemp"
+                                    type="number"
+                                    name="maxTemp"
+                                    placeholder="Hãy nhập nhiệt cao nhất"
+                                    className={styles.inputField}
+                                    value={maxTemp}
+                                    onChange={(e) => setMaxTemp(e.target.value)}
+                                />
 
-                    <p className={styles.error}>{validationMsg.maxTemp}</p>
-                </div>{' '}
-                <div className={styles.inputContainer}>
-                    <input
-                        id="minhumidity"
-                        type="number"
-                        name="minhumidity"
-                        placeholder="Hãy nhập độ ẩm tối thiểu"
-                        className={styles.inputField}
-                        value={minhumidity}
-                        onChange={(e) => setMinhumidity(e.target.value)}
-                    />
+                                <p className={styles.error}>{validationMsg.maxTemp}</p>
+                            </div>{' '}
+                            <div className={styles.inputContainer}>
+                                <input
+                                    id="minhumidity"
+                                    type="number"
+                                    name="minhumidity"
+                                    placeholder="Hãy nhập độ ẩm tối thiểu"
+                                    className={styles.inputField}
+                                    value={minhumidity}
+                                    onChange={(e) => setMinhumidity(e.target.value)}
+                                />
 
-                    <p className={styles.error}>{validationMsg.minhumidity}</p>
-                </div>{' '}
-                <div className={styles.inputContainer}>
-                    <input
-                        id="maxhumidity"
-                        type="number"
-                        name="maxhumidity"
-                        placeholder="Hãy nhập độ ẩm tối đa"
-                        className={styles.inputField}
-                        value={maxhumidity}
-                        onChange={(e) => setMaxhumidity(e.target.value)}
-                    />
+                                <p className={styles.error}>{validationMsg.minhumidity}</p>
+                            </div>{' '}
+                            <div className={styles.inputContainer}>
+                                <input
+                                    id="maxhumidity"
+                                    type="number"
+                                    name="maxhumidity"
+                                    placeholder="Hãy nhập độ ẩm tối đa"
+                                    className={styles.inputField}
+                                    value={maxhumidity}
+                                    onChange={(e) => setMaxhumidity(e.target.value)}
+                                />
 
-                    <p className={styles.error}>{validationMsg.maxhumidity}</p>
-                </div>{' '}
-                <div className={styles.inputContainer}>
-                    <input
-                        id="wind"
-                        type="number"
-                        name="wind"
-                        placeholder="Hãy nhập sức gió"
-                        className={styles.inputField}
-                        value={wind}
-                        onChange={(e) => setWind(e.target.value)}
-                    />
+                                <p className={styles.error}>{validationMsg.maxhumidity}</p>
+                            </div>{' '}
+                            <div className={styles.inputContainer}>
+                                <input
+                                    id="wind"
+                                    type="number"
+                                    name="wind"
+                                    placeholder="Hãy nhập sức gió"
+                                    className={styles.inputField}
+                                    value={wind}
+                                    onChange={(e) => setWind(e.target.value)}
+                                />
 
-                    <p className={styles.error}>{validationMsg.wind}</p>
-                </div>{' '}
-                <div className={styles.inputContainer}>
-                    <input
-                        id="maxRain"
-                        type="number"
-                        name="maxRain"
-                        placeholder="Hãy nhập độ lượng mưa"
-                        className={styles.inputField}
-                        value={maxRain}
-                        onChange={(e) => setMaxRain(e.target.value)}
-                    />
-                    <p className={styles.error}>{validationMsg.maxRain}</p>
-                </div>{' '}
-                <div className={styles.inputContainer}>
-                    <input
-                        id="season"
-                        type="text"
-                        name="season"
-                        placeholder="Hãy nhập tháng, ví dụ 4,5,10,11"
-                        className={styles.inputField}
-                        value={season}
-                        onChange={(e) => setSeason(e.target.value)}
-                    />
-                    <p className={styles.error}>{validationMsg.season}</p>
-                </div>
-                <button type="submit" className="btnSubmit" onClick={handleSubmit} style={{ marginTop: '10px' }}>
-                    Xác nhận
-                </button>
-            </form>
+                                <p className={styles.error}>{validationMsg.wind}</p>
+                            </div>{' '}
+                            <div className={styles.inputContainer}>
+                                <input
+                                    id="maxRain"
+                                    type="number"
+                                    name="maxRain"
+                                    placeholder="Hãy nhập độ lượng mưa"
+                                    className={styles.inputField}
+                                    value={maxRain}
+                                    onChange={(e) => setMaxRain(e.target.value)}
+                                />
+                                <p className={styles.error}>{validationMsg.maxRain}</p>
+                            </div>{' '}
+                            <div className={styles.inputContainer}>
+                                <input
+                                    id="season"
+                                    type="text"
+                                    name="season"
+                                    placeholder="Hãy nhập tháng, ví dụ 4,5,10,11"
+                                    className={styles.inputField}
+                                    value={season}
+                                    onChange={(e) => setSeason(e.target.value)}
+                                />
+                                <p className={styles.error}>{validationMsg.season}</p>
+                            </div>
+                            <button
+                                type="submit"
+                                className="btnSubmit"
+                                onClick={handleSubmit}
+                                style={{ marginTop: '10px' }}
+                            >
+                                Xác nhận
+                            </button>
+                        </form>
+                    </div>
+                </>
+            )}
+            {user === 'Admin' && navigate('/AdminHome')}
+            {user === 'Farmer' && navigate('/')}
         </div>
     );
 }

@@ -31,6 +31,7 @@ import SaleReport from './components/admin_farm/ManageProduct/ManageReport/SaleR
 import ChangePassword from './components/changePassword/ChangePassword';
 import PassRetri from './components/forgot/PassRetri';
 import NotFound from './components/notfound/NotFound';
+import StageDetail from './components/expertPage/StMgmt/StageDetail';
 
 import StandardMgmt from './components/expertPage/SdMgmt/StandardMgmt';
 function App() {
@@ -71,6 +72,8 @@ function App() {
 
                 <Route path="/standardmanagement" element={<StandardMgmt />} />
                 <Route path="/standardmanagement/:id" element={<StandardMgmt />} />
+                <Route path="/stageDetailmanagement/:id" element={<StageDetail />} />
+                <Route path="/stageDetailmanagement" element={<StageDetail />} />
             </Routes>
             <Footer></Footer>
         </div>
