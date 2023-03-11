@@ -37,6 +37,7 @@ const StageDetail = () => {
         const response = res.data;
         setCurrentDescription(response.description);
         setStandardId(response.standardId);
+        setStageId(response.stageId);
     };
 
     useEffect(() => {
@@ -61,36 +62,17 @@ const StageDetail = () => {
         setStandardId(listSD[0]?.id);
     }, [listSD]);
 
-    useEffect(() => {
-        console.log('st: ', stageId);
-        console.log('sd: ', standardId);
-    }, [standardId, stageId]);
-
     const validateAll = () => {
         const msg = {};
-        if (isEmpty(currentDescription, { ignore_whitespace: true })) {
+        if (isEmpty(editorRef.current.getContent(), { ignore_whitespace: true })) {
             msg.description = 'Không được bỏ trống';
         }
-        if (isEmpty(stageId, { ignore_whitespace: true })) {
-            msg.stageId = 'Không được bỏ trống';
-        }
-        if (isEmpty(editorRef.current.getContent(), { ignore_whitespace: true })) {
-            msg.content = 'Không được bỏ trống';
-        }
-        const options = {
-            min: 50,
-            max: 120,
-        };
         const options2 = {
-            min: 120,
+            min: 50,
         };
-        if (validator.isLength(currentDescription, options)) {
-        } else {
-            msg.title = 'Tiêu đề phải từ 50 đến 120 kí tự';
-        }
         if (validator.isLength(editorRef.current.getContent(), options2)) {
         } else {
-            msg.content = 'Nội dung phải từ 120 kí tự';
+            msg.description = 'Nội dung phải từ 50 kí tự';
         }
 
         setValidationMsg(msg);
@@ -100,8 +82,8 @@ const StageDetail = () => {
 
     const onClickHandler = (e) => {
         e.preventDefault();
-        // const isValid = validateAll();
-        // if (!isValid) return;
+        const isValid = validateAll();
+        if (!isValid) return;
 
         let postNew = {};
         if (idStageDetail) {
@@ -180,15 +162,15 @@ const StageDetail = () => {
                                     </select>
                                 </div>
                             </div>
-                            <p className={styles.error}>{validationMsg.content}</p>
 
+                            <p className={styles.error}>{validationMsg.description}</p>
                             <Editor
                                 onInit={(evt, editor) => (editorRef.current = editor)}
                                 init={{
                                     selector: 'textarea',
                                     plugins: ['advlist', 'lists'],
                                     toolbar:
-                                        'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor',
+                                        'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor',
                                     menubar: false,
                                     textcolor_map: [
                                         '000000',
@@ -311,7 +293,8 @@ const StageDetail = () => {
                     </div>
                 </>
             )}
-            {!(user === 'Expert' || user === 'Admin') && navigate('/')}
+            {user === 'Admin' && navigate('/AdminHome')}
+            {user === 'Farmer' && navigate('/')}
         </div>
     );
 };

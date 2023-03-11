@@ -27,7 +27,9 @@ function ExpertPage() {
 
     const [postSearch, setPostSearch] = useState('');
     const [currentPosts, setCurrentPosts] = useState([]);
-
+    const [standardSearch, setStandardSearch] = useState('');
+    const [stageDetailSearch, setStageDetailSearch] = useState('');
+    const [dataStorage, setDataStorage] = useState([]);
     useEffect(() => {
         setUser(currentUser.roleName);
         async function getData() {
@@ -122,6 +124,7 @@ function ExpertPage() {
             });
         }
         getData();
+        setDataStorage([...data]);
     };
 
     const StageDetailHandler = () => {
@@ -200,11 +203,18 @@ function ExpertPage() {
                 StandardHandler();
             }
             deleteHandler();
-            console.log(standardUrl + '/' + index);
         }
     };
 
-    const handleDeleteSDetail = (index) => {};
+    const handleDeleteStageDetail = (index) => {
+        if (window.confirm('Xác nhận xoá!')) {
+            async function deleteHandler() {
+                await axios.delete(stageDetailUrl + '/' + index);
+                StageDetailHandler();
+            }
+            deleteHandler();
+        }
+    };
 
     const handleAddArticle = () => {
         navigate('/ArticleHandler');
@@ -234,7 +244,9 @@ function ExpertPage() {
         navigate(`/standardmanagement/${id}`);
     };
 
-    const handleEditSDetail = (id) => {};
+    const handleEditStageDetail = (id) => {
+        navigate(`/stageDetailmanagement/${id}`);
+    };
 
     function handlerChange(e) {
         setData([]);
@@ -268,6 +280,12 @@ function ExpertPage() {
     const handleOnChangePostSearch = (e) => {
         setPostSearch(e.target.value);
     };
+    const handleOnChangeStandardSearch = (e) => {
+        setStandardSearch(e.target.value);
+    };
+    const handleOnChangeStageDetailSearch = (e) => {
+        setStageDetailSearch(e.target.value);
+    };
 
     useEffect(() => {
         if (postSearch !== '') {
@@ -277,6 +295,28 @@ function ExpertPage() {
             setCurrentPosts([...data]);
         }
     }, [postSearch]);
+
+    useEffect(() => {
+        if (standardSearch !== '') {
+            const resultArray = data.filter((item) =>
+                item.standardName.toLowerCase().includes(standardSearch.toLowerCase()),
+            );
+            setCurrentPosts([...resultArray]);
+        } else if (standardSearch === '') {
+            setCurrentPosts([...data]);
+        }
+    }, [standardSearch]);
+
+    useEffect(() => {
+        if (stageDetailSearch !== '') {
+            const resultArray = data.filter((item) =>
+                item.standardName.toLowerCase().includes(stageDetailSearch.toLowerCase()),
+            );
+            setCurrentPosts([...resultArray]);
+        } else if (stageDetailSearch === '') {
+            setCurrentPosts([...data]);
+        }
+    }, [stageDetailSearch]);
 
     function truncateString(str) {
         if (str?.length > 40) {
@@ -292,24 +332,6 @@ function ExpertPage() {
         } else {
             return str;
         }
-    }
-
-    function convertHtmlToContent(str) {}
-
-    function clearSpecialChars(str) {
-        // Remove all HTML tags and their attributes
-        str = str.replace(/<\/?[a-z][^>]*>/gi, '');
-
-        // Replace all special characters with spaces
-        str = str.replace(/[^\w\s]/gi, ' ');
-
-        // Replace multiple spaces with a single space
-        str = str.replace(/\s+/g, ' ');
-
-        // Trim leading and trailing spaces
-        str = str.trim();
-
-        return str;
     }
 
     return (
@@ -512,7 +534,7 @@ function ExpertPage() {
                                                     type="text"
                                                     className={styles.searchBar}
                                                     autoComplete="none"
-                                                    onChange={handleOnChangePostSearch}
+                                                    onChange={handleOnChangeStandardSearch}
                                                 ></input>
                                             </div>
                                             <section
@@ -593,7 +615,7 @@ function ExpertPage() {
                                                     type="text"
                                                     className={styles.searchBar}
                                                     autoComplete="none"
-                                                    onChange={handleOnChangePostSearch}
+                                                    onChange={handleOnChangeStageDetailSearch}
                                                 ></input>
                                             </div>
                                             <section
@@ -628,14 +650,14 @@ function ExpertPage() {
                                                         </th>
                                                         <th
                                                             style={{ cursor: 'pointer' }}
-                                                            onClick={() => handleDeleteSDetail(item.id)}
+                                                            onClick={() => handleDeleteStageDetail(item.id)}
                                                             width="10%"
                                                         >
                                                             <i class="trashcan fa-solid fa-trash"></i>
                                                         </th>
                                                         <th
                                                             style={{ cursor: 'pointer', color: 'blue' }}
-                                                            onClick={() => handleEditSDetail(item.id)}
+                                                            onClick={() => handleEditStageDetail(item.id)}
                                                             width="10%"
                                                         >
                                                             <i class="fa-solid fa-pen-to-square"></i>

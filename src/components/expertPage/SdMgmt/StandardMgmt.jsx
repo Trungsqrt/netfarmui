@@ -116,7 +116,7 @@ function StandardMgmt() {
 
     return (
         <div>
-            {(user === 'Expert' || user === 'Admin') && (
+            {user === 'Expert' && (
                 <>
                     <Header />
                     <div className={styles.container}>
