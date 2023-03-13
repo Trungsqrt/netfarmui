@@ -15,6 +15,7 @@
     "axios": "^1.1.2",
     "ckeditor5": "^35.2.1",
     "classnames": "^2.3.2",
+    "file-selector": "^0.6.0",
     "formik": "^2.2.9",
     "html-react-parser": "^3.0.4",
     "html2canvas": "^1.4.1",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import '../../ManageProduct/ManageProduct/Manage.css';
 
 const ManageCategory = () => {
     const categoryUrl = 'https://localhost:44303/api/Categories';
@@ -36,6 +37,14 @@ const ManageCategory = () => {
         };
         fetchData();
     };
+
+    function truncateString(str) {
+        if (str?.length > 15) {
+            return str.slice(0, 15) + '...';
+        } else {
+            return str;
+        }
+    }
     return (
         <section>
             <div className="products_table_container">
@@ -69,20 +78,22 @@ const ManageCategory = () => {
                                   <tr className="text_center" key={index}>
                                       <td className="text_center">{item.categoryId}</td>
                                       <td className="text_center">{item.display}</td>
-                                      <td className="text_center">{item.categorySlug}</td>
+                                      <td className="text_center">
+                                          <img src={item.categorySlug} alt="" width="100px" />
+                                      </td>
                                       <td className="text_center">
                                           <a
                                               className="reset-anchor remove_cart"
                                               style={{ cursor: 'pointer' }}
                                               onClick={() => handleDeleteCategory(item.categoryId)}
                                           >
-                                              <i className="fas fa-trash-alt small text-muted"></i>
+                                              <i className="trashcan fas fa-trash-alt small text-muted"></i>
                                           </a>
                                       </td>
                                       <td className="text_center">
                                           <Link to={`/category/edit/${item.categoryId}`}>
                                               <p className="reset-anchor " style={{ cursor: 'pointer' }}>
-                                                  <i className="fa-solid fa-pen-to-square"></i>
+                                                  <i className="iconEdit fa-solid fa-pen-to-square"></i>
                                               </p>
                                           </Link>
                                       </td>

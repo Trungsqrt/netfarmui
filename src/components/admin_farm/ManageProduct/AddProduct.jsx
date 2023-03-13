@@ -3,6 +3,9 @@ import Header from '../share/header/Header';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/style.css';
+import styles from './AddProduct.module.css';
+import { uploadCloudinary } from './UploadCloudinary';
+
 const url = 'https://localhost:44303/api/Products';
 const categoryUrl = 'https://localhost:44303/api/Categories';
 const AddProduct = () => {
@@ -14,11 +17,42 @@ const AddProduct = () => {
     const [placeProduce, setPlaceProduce] = useState('');
     const [invetory, setInventory] = useState('');
     const [description, setDescription] = useState('');
-    const [imgUrl1, setimgUrl1] = useState('');
-    const [imgUrl2, setimgUrl2] = useState('');
-    const [imgUrl3, setimgUrl3] = useState('');
-    const [imgUrl4, setimgUrl4] = useState('');
+    const [imageList, SetImageList] = useState([]);
     const [cost, setCost] = useState('');
+
+    const [loading, setLoading] = useState(false);
+    const [files, setFiles] = useState([]);
+    const [fileItem, setFileItem] = useState([]);
+
+    const handleFileChange = (event) => {
+        setFiles([...event.target.files]);
+    };
+
+    const handleDelete = (index) => {
+        setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    };
+
+    const handleUpload = async () => {
+        try {
+            let arr = [];
+            setLoading(true);
+            for (let i = 0; i < files.length; i++) {
+                const dt = await uploadCloudinary(files[i]);
+                arr.push(dt);
+            }
+            setLoading(false);
+            setFileItem(arr);
+
+            return {
+                isSuccessfull: true,
+            };
+        } catch (error) {
+            return {
+                isSuccessfull: false,
+            };
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(categoryUrl);
@@ -27,34 +61,50 @@ const AddProduct = () => {
         fetchData();
     }, []);
 
-    const onClickHandler = () => {
-        if (name === '' || imgUrl1 === '' || unit === '' || price === '' || cost === '' || invetory === '') {
+    const onClickHandler = async () => {
+        if (name === '' || files[0] === '' || unit === '' || price === '' || cost === '' || invetory === '') {
             alert('Bạn phản nhập đầy đủ thông tin !!');
             return;
         }
-        const postProduct = {
-            name: name,
-            image1: imgUrl1,
-            image2: imgUrl2,
-            image3: imgUrl3,
-            image4: imgUrl4,
-            unit: unit,
-            placeProduce: placeProduce,
-            price: price,
-            cost: cost,
-            inventoryNumber: invetory,
-            description: description,
-            category_ID: category,
+
+        await handleUpload();
+
+        const newImages = [];
+
+        const fillImage = async () => {
+            fileItem.forEach((item) => {
+                newImages.push(item.url);
+            });
+            if (newImages.length !== 0) {
+                return true;
+            }
         };
-        try {
-            console.log(postProduct);
-            axios.post(url, postProduct);
-            alert('Đăng thành công!');
-            // window.location.reload();
-        } catch (err) {
-            alert('Có lỗi, xin vui lòng thử lại!');
+
+        if ((await fillImage()) && newImages.length !== 0) {
+            const postProduct = {
+                name: name,
+                unit: unit,
+                placeProduce: placeProduce,
+                price: price,
+                cost: cost,
+                inventoryNumber: invetory,
+                description: description,
+                category_ID: category,
+                images: newImages,
+            };
+            try {
+                console.log(postProduct);
+                axios.post(url, postProduct);
+                alert('Đăng thành công!');
+                window.location.reload();
+            } catch (err) {
+                alert('Có lỗi xảy ra khi tạo sản phẩm, xin vui lòng thử lại!');
+            }
+        } else {
+            // alert('Vui lòng đợi 3-5s để tải ảnh lên!');
         }
     };
+
     return (
         <div>
             <Header></Header>
@@ -156,52 +206,51 @@ const AddProduct = () => {
                             ></input>
                         </li>
                         <li className="addProduct_row">
-                            <div className="product_properties">Link ảnh 1</div>
-                            <input
-                                className="product_input"
-                                type={Text}
-                                value={imgUrl1}
-                                placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                                onChange={(e) => setimgUrl1(e.target.value)}
-                                required
-                            ></input>
+                            <div className="product_properties">Ảnh sản phẩm</div>
+                            <div className="uploadFile">
+                                <div>
+                                    {/* <label htmlFor="fileupload" className={styles.customFileUpload}>
+                                        <i className="fa fa-cloud-upload"></i> Custom Upload
+                                    </label> */}
+                                    {/* <input
+                                        className="product_input"
+                                        id="fileupload"
+                                        type="file"
+                                        // value={currentImage}
+                                        // onChange={(e) => setCurrentImage(e.target.files[0])}
+                                        required
+                                    /> */}
+                                    <div>
+                                        <h4 styles={{}}>Upload Images</h4>
+                                        <input
+                                            type="file"
+                                            onChange={handleFileChange}
+                                            multiple={true}
+                                            style={{ padding: '12px' }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </li>
-                        <li className="addProduct_row">
-                            <div className="product_properties">Link ảnh 2</div>
-                            <input
-                                className="product_input"
-                                type={URL}
-                                value={imgUrl2}
-                                placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                                onChange={(e) => setimgUrl2(e.target.value)}
-                                required
-                            ></input>
-                        </li>
-                        <li className="addProduct_row">
-                            <div className="product_properties">Link ảnh 3</div>
-                            <input
-                                className="product_input"
-                                type={URL}
-                                value={imgUrl3}
-                                placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                                onChange={(e) => setimgUrl3(e.target.value)}
-                            ></input>
-                        </li>
-                        <li className="addProduct_row">
-                            <div className="product_properties">Link ảnh 4</div>
-                            <input
-                                className="product_input"
-                                type={URL}
-                                value={imgUrl4}
-                                placeholder="Nhập đường dẫn ảnh sản phẩm..."
-                                onChange={(e) => setimgUrl4(e.target.value)}
-                                required
-                            ></input>
-                        </li>
+                        <div className={styles.imageSection}>
+                            <div className={styles.box1}>Các ảnh</div>
+                            <div className={styles.box2}>
+                                {files.map((file, index) => (
+                                    <div key={index} className={styles.wrap}>
+                                        <div className={styles.fileItems}>
+                                            <p className={styles.fileItem}>{file.name}</p>
+                                            <button onClick={() => handleDelete(index)} className={styles.deleteBtn}>
+                                                x
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </ul>
                     <div className="addProduct_btn_line">
                         <button className="add_new_product" onClick={onClickHandler}>
-                            Thêm mới
+                            {loading ? 'Đang tải ảnh' : 'Thêm mới'}
                         </button>
                     </div>
                 </div>
