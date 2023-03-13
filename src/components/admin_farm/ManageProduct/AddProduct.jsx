@@ -17,13 +17,13 @@ const AddProduct = () => {
     const [placeProduce, setPlaceProduce] = useState('');
     const [invetory, setInventory] = useState('');
     const [description, setDescription] = useState('');
-    const [imageList, SetImageList] = useState([]);
     const [cost, setCost] = useState('');
 
     const [loading, setLoading] = useState(false);
     const [files, setFiles] = useState([]);
     const [fileItem, setFileItem] = useState([]);
-
+    const [done, setDone] = useState(false);
+    const [newImages, setNewImages] = useState([]);
     const handleFileChange = (event) => {
         setFiles([...event.target.files]);
     };
@@ -36,20 +36,17 @@ const AddProduct = () => {
         try {
             let arr = [];
             setLoading(true);
+
             for (let i = 0; i < files.length; i++) {
                 const dt = await uploadCloudinary(files[i]);
                 arr.push(dt);
             }
-            setLoading(false);
+
             setFileItem(arr);
 
-            return {
-                isSuccessfull: true,
-            };
+            return 1;
         } catch (error) {
-            return {
-                isSuccessfull: false,
-            };
+            return 2;
         }
     };
 
@@ -67,20 +64,27 @@ const AddProduct = () => {
             return;
         }
 
-        await handleUpload();
+        const re = await handleUpload();
+    };
 
-        const newImages = [];
+    useEffect(() => {
+        fileItem.forEach((item) => {
+            setNewImages((prev) => [...prev, item.url]);
+        });
+    }, [fileItem]);
 
-        const fillImage = async () => {
-            fileItem.forEach((item) => {
-                newImages.push(item.url);
-            });
-            if (newImages.length !== 0) {
-                return true;
-            }
-        };
+    useEffect(() => {
+        if (newImages.length === files.length && newImages.length > 0) {
+            console.log('ni', newImages.length);
+            console.log('fl', files.length);
+            console.log(newImages);
+            setLoading(false);
+            setDone(true);
+        }
+    }, [newImages]);
 
-        if ((await fillImage()) && newImages.length !== 0) {
+    useEffect(() => {
+        if (done === true) {
             const postProduct = {
                 name: name,
                 unit: unit,
@@ -101,9 +105,9 @@ const AddProduct = () => {
                 alert('Có lỗi xảy ra khi tạo sản phẩm, xin vui lòng thử lại!');
             }
         } else {
-            // alert('Vui lòng đợi 3-5s để tải ảnh lên!');
+            // alert('Có lỗi xảy ra!');
         }
-    };
+    }, [done]);
 
     return (
         <div>
@@ -116,7 +120,6 @@ const AddProduct = () => {
                             <div className="product_properties">Tên sản phẩm</div>
                             <input
                                 className="product_input"
-                                type={Text}
                                 value={name}
                                 placeholder="Nhập tên sản phẩm..."
                                 onChange={(e) => setName(e.target.value)}
@@ -149,16 +152,16 @@ const AddProduct = () => {
                             <input
                                 className="product_input"
                                 value={price}
-                                placeholder="Nhập gia sản phẩm"
+                                placeholder="Nhập giá sản phẩm"
                                 onChange={(e) => setPrice(e.target.value)}
                                 required
+                                type="number"
                             ></input>
                         </li>
                         <li className="addProduct_row">
                             <div className="product_properties">Đơn vị tính</div>
                             <input
                                 className="product_input"
-                                type={Text}
                                 value={unit}
                                 placeholder="Nhập đơn vị tính ..."
                                 onChange={(e) => setUnit(e.target.value)}
@@ -169,7 +172,6 @@ const AddProduct = () => {
                             <div className="product_properties">Nơi sản xuất</div>
                             <input
                                 className="product_input"
-                                type={Text}
                                 value={placeProduce}
                                 placeholder="Nhập nơi sản xuất ..."
                                 onChange={(e) => setPlaceProduce(e.target.value)}
@@ -183,6 +185,7 @@ const AddProduct = () => {
                                 placeholder="Nhập số lượng sản phẩm có sẵn ..."
                                 onChange={(e) => setInventory(e.target.value)}
                                 required
+                                type="number"
                             ></input>
                         </li>
                         <li className="addProduct_row">
@@ -193,6 +196,7 @@ const AddProduct = () => {
                                 placeholder="Nhập chi phí gốc của sản phẩm ..."
                                 onChange={(e) => setCost(e.target.value)}
                                 required
+                                type="number"
                             ></input>
                         </li>
                         <li className="addProduct_row">
@@ -249,7 +253,7 @@ const AddProduct = () => {
                         </div>
                     </ul>
                     <div className="addProduct_btn_line">
-                        <button className="add_new_product" onClick={onClickHandler}>
+                        <button className="add_new_product" onClick={onClickHandler} disabled={loading}>
                             {loading ? 'Đang tải ảnh' : 'Thêm mới'}
                         </button>
                     </div>
