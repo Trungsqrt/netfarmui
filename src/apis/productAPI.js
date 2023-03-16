@@ -24,6 +24,16 @@ const productAPI = {
         return axiosClient.get(url);
     },
 
+    stopSelling: (id) => {
+        const url = `Products/stop-selling?product=${id}`;
+        return axiosClient.post(url);
+    },
+
+    reStock: (id) => {
+        const url = `Products/restock?product=${id}`;
+        return axiosClient.post(url);
+    },
+
     patch: (id, data) => {
         axiosClient.patch(`/${id}`, data, {
             headers: {

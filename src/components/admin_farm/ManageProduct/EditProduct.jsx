@@ -12,6 +12,7 @@ function EditProduct(props) {
     const [detail, setDetail] = useState({});
     const { id } = useParams();
     const [catList, setCatList] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(categoryUrl);

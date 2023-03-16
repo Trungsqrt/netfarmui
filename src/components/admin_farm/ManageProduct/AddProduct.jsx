@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../css/style.css';
 import styles from './AddProduct.module.css';
 import { uploadCloudinary } from './UploadCloudinary';
+import { useParams } from 'react-router-dom';
 
 const url = 'https://localhost:44303/api/Products';
 const categoryUrl = 'https://localhost:44303/api/Categories';
@@ -18,12 +19,17 @@ const AddProduct = () => {
     const [invetory, setInventory] = useState('');
     const [description, setDescription] = useState('');
     const [cost, setCost] = useState('');
+    const [isAvailable, setIsAvailable] = useState();
 
     const [loading, setLoading] = useState(false);
     const [files, setFiles] = useState([]);
     const [fileItem, setFileItem] = useState([]);
     const [done, setDone] = useState(false);
     const [newImages, setNewImages] = useState([]);
+
+    const prop = useParams();
+    const idProduct = prop.id;
+
     const handleFileChange = (event) => {
         setFiles([...event.target.files]);
     };
@@ -55,8 +61,43 @@ const AddProduct = () => {
             const response = await axios.get(categoryUrl);
             setCatList(response.data);
         };
+
+        const fetchCurrentData = async () => {
+            const { data } = await axios.get(`https://localhost:44303/api/Products/${idProduct}`);
+            setName(data.name);
+            setUnit(data.unit);
+            setPlaceProduce(data.placeProduce);
+            setPrice(data.price);
+            setIsAvailable(data.isAvailable);
+            setCost(data.cost);
+            setInventory(data.cost);
+            setDescription(data.description);
+            setCategory(data.category_ID);
+            console.log('data: ', data);
+        };
+
         fetchData();
+        if (idProduct) {
+            fetchCurrentData();
+            const postProduct = {
+                name: name,
+                unit: unit,
+                placeProduce: placeProduce,
+                price: price,
+                cost: cost,
+                inventoryNumber: invetory,
+                description: description,
+                category_ID: category,
+                images: newImages,
+            };
+            console.log(postProduct);
+            console.log(isAvailable);
+        }
     }, []);
+
+    useEffect(() => {
+        console.log(isAvailable);
+    }, [isAvailable]);
 
     const onClickHandler = async () => {
         if (name === '' || files[0] === '' || unit === '' || price === '' || cost === '' || invetory === '') {
@@ -75,9 +116,6 @@ const AddProduct = () => {
 
     useEffect(() => {
         if (newImages.length === files.length && newImages.length > 0) {
-            console.log('ni', newImages.length);
-            console.log('fl', files.length);
-            console.log(newImages);
             setLoading(false);
             setDone(true);
         }
@@ -97,7 +135,6 @@ const AddProduct = () => {
                 images: newImages,
             };
             try {
-                console.log(postProduct);
                 axios.post(url, postProduct);
                 alert('Đăng thành công!');
                 window.location.reload();
@@ -199,6 +236,27 @@ const AddProduct = () => {
                                 type="number"
                             ></input>
                         </li>
+                        {idProduct && (
+                            <li className="addProduct_row">
+                                <div className="product_properties">Có sẵn?</div>
+                                <div className="product_input product_input_select ">
+                                    <select
+                                        name="isAvailable"
+                                        id="isAvailable"
+                                        className={'product_input'}
+                                        onChange={(e) => setIsAvailable(e.target.value)}
+                                        value={isAvailable}
+                                    >
+                                        <option value={true} key="akjsdhkasjhd">
+                                            Có sẵn
+                                        </option>
+                                        <option value={false} key="asdayu@#@#">
+                                            Ngừng bán
+                                        </option>
+                                    </select>
+                                </div>
+                            </li>
+                        )}
                         <li className="addProduct_row">
                             <div className="product_properties">Mô tả</div>
                             <input

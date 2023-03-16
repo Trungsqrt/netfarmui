@@ -54,14 +54,6 @@ const Manage = () => {
         currentTableData();
     };
 
-    const handleDeleteProduct = (index) => {
-        async function deleteHandler() {
-            await productAPI.delete(index);
-            ProductHandler();
-        }
-        deleteHandler();
-    };
-
     function FilterList(id) {
         const fetchData = async () => {
             setCurrentTab(id);
@@ -87,6 +79,33 @@ const Manage = () => {
             return str;
         }
     }
+
+    const reStock = async (id) => {
+        const res = await productAPI.reStock(id);
+        const fetchData = async () => {
+            const response = await productAPI.getAPI();
+            const dataset = response.data;
+            const firstPageIndex = (currentPage - 1) * PageSize;
+            const lastPageIndex = firstPageIndex + PageSize;
+            setFirstData(dataset.slice(firstPageIndex, lastPageIndex));
+            setData(dataset);
+        };
+        fetchData();
+    };
+
+    const stopSelling = async (id) => {
+        // const res = await productAPI.stopSelling(id);
+        await productAPI.stopSelling(id);
+        const fetchData = async () => {
+            const response = await productAPI.getAPI();
+            const dataset = response.data;
+            const firstPageIndex = (currentPage - 1) * PageSize;
+            const lastPageIndex = firstPageIndex + PageSize;
+            setFirstData(dataset.slice(firstPageIndex, lastPageIndex));
+            setData(dataset);
+        };
+        fetchData();
+    };
 
     return (
         <div>
@@ -152,7 +171,7 @@ const Manage = () => {
                             </th>
                             <th className="border-0 th1" scope="col">
                                 {' '}
-                                <strong className="text-small text-uppercase">Xóa</strong>
+                                <strong className="text-small text-uppercase">Tuỳ chỉnh</strong>
                             </th>
                             <th className="border-0 th1" scope="col">
                                 {' '}
@@ -172,12 +191,18 @@ const Manage = () => {
                                           <img src={product.images[0]?.url} alt="" width="100px" />
                                       </td>
                                       <td className="text_center">
-                                          <p
-                                              className="reset-anchor remove_cart"
-                                              style={{ cursor: 'pointer' }}
-                                              onClick={() => handleDeleteProduct(product.id)}
-                                          >
-                                              <i className="trashcan fas fa-trash-alt small text-muted"></i>
+                                          <p className="reset-anchor remove_cart" style={{ cursor: 'pointer' }}>
+                                              {product.isAvailable ? (
+                                                  <i
+                                                      class="green-red fa-solid fa-circle-dot"
+                                                      onClick={() => stopSelling(product.id)}
+                                                  ></i>
+                                              ) : (
+                                                  <i
+                                                      class="red-red fa-solid fa-circle-dot"
+                                                      onClick={() => reStock(product.id)}
+                                                  ></i>
+                                              )}
                                           </p>
                                       </td>
                                       <td className="text_center">

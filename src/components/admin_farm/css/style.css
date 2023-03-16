@@ -769,3 +769,11 @@ button:disabled:hover {
     opacity: 1;
     transform: scale(1);
 }
+
+.green-red {
+    color: green;
+}
+
+.red-red {
+    color: red;
+}
