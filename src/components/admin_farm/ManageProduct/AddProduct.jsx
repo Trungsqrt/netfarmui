@@ -19,7 +19,6 @@ const AddProduct = () => {
     const [invetory, setInventory] = useState('');
     const [description, setDescription] = useState('');
     const [cost, setCost] = useState('');
-    const [isAvailable, setIsAvailable] = useState();
 
     const [loading, setLoading] = useState(false);
     const [files, setFiles] = useState([]);
@@ -68,12 +67,11 @@ const AddProduct = () => {
             setUnit(data.unit);
             setPlaceProduce(data.placeProduce);
             setPrice(data.price);
-            setIsAvailable(data.isAvailable);
             setCost(data.cost);
             setInventory(data.cost);
             setDescription(data.description);
             setCategory(data.category_ID);
-            console.log('data: ', data);
+            setNewImages([]);
         };
 
         fetchData();
@@ -88,23 +86,26 @@ const AddProduct = () => {
                 inventoryNumber: invetory,
                 description: description,
                 category_ID: category,
-                images: newImages,
             };
             console.log(postProduct);
-            console.log(isAvailable);
         }
     }, []);
 
-    useEffect(() => {
-        console.log(isAvailable);
-    }, [isAvailable]);
-
     const onClickHandler = async () => {
-        if (name === '' || files[0] === '' || unit === '' || price === '' || cost === '' || invetory === '') {
-            alert('Bạn phản nhập đầy đủ thông tin !!');
+        console.log(fileItem.length);
+        if (
+            name === '' ||
+            files[0] === '' ||
+            unit === '' ||
+            price === '' ||
+            cost === '' ||
+            invetory === ''
+            // ||             newImages.length === 0
+        ) {
+            alert('Bạn phải nhập đầy đủ thông tin !!');
             return;
         }
-
+        // don't remove it
         const re = await handleUpload();
     };
 
@@ -112,7 +113,12 @@ const AddProduct = () => {
         fileItem.forEach((item) => {
             setNewImages((prev) => [...prev, item.url]);
         });
+        console.log('fileItem: ', fileItem);
     }, [fileItem]);
+
+    useEffect(() => {
+        console.log(files);
+    }, [files]);
 
     useEffect(() => {
         if (newImages.length === files.length && newImages.length > 0) {
@@ -135,9 +141,15 @@ const AddProduct = () => {
                 images: newImages,
             };
             try {
-                axios.post(url, postProduct);
-                alert('Đăng thành công!');
-                window.location.reload();
+                if (idProduct) {
+                    axios.put(`${url}/${idProduct}`, postProduct);
+                    alert('Đăng thành công!');
+                    window.location.reload();
+                } else {
+                    axios.post(url, postProduct);
+                    alert('Đăng thành công!');
+                    window.location.reload();
+                }
             } catch (err) {
                 alert('Có lỗi xảy ra khi tạo sản phẩm, xin vui lòng thử lại!');
             }
@@ -236,27 +248,7 @@ const AddProduct = () => {
                                 type="number"
                             ></input>
                         </li>
-                        {idProduct && (
-                            <li className="addProduct_row">
-                                <div className="product_properties">Có sẵn?</div>
-                                <div className="product_input product_input_select ">
-                                    <select
-                                        name="isAvailable"
-                                        id="isAvailable"
-                                        className={'product_input'}
-                                        onChange={(e) => setIsAvailable(e.target.value)}
-                                        value={isAvailable}
-                                    >
-                                        <option value={true} key="akjsdhkasjhd">
-                                            Có sẵn
-                                        </option>
-                                        <option value={false} key="asdayu@#@#">
-                                            Ngừng bán
-                                        </option>
-                                    </select>
-                                </div>
-                            </li>
-                        )}
+
                         <li className="addProduct_row">
                             <div className="product_properties">Mô tả</div>
                             <input
@@ -312,7 +304,7 @@ const AddProduct = () => {
                     </ul>
                     <div className="addProduct_btn_line">
                         <button className="add_new_product" onClick={onClickHandler} disabled={loading}>
-                            {loading ? 'Đang tải ảnh' : 'Thêm mới'}
+                            {loading ? 'Đang tải ảnh' : 'Xác nhận'}
                         </button>
                     </div>
                 </div>
