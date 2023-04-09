@@ -7,6 +7,7 @@ function ReviewTable(props) {
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState([]);
     const [data, setData] = useState([]);
+    const [filter, setFilter] = useState('all');
     useEffect(() => {
         const fetchData = async () => {
             if (reviews) {
@@ -26,8 +27,33 @@ function ReviewTable(props) {
         return data.slice(firstPageIndex, lastPageIndex);
     }, [currentPage, data]);
 
+    const selectFilter = (e) => {
+        setFilter(e.target.value);
+        var list = [];
+        if (e.target.value === 'pos') {
+            list = reviews.filter((fb) => fb['sentiment'] === 'Positive');
+        } else if (e.target.value === 'nev') {
+            list = reviews.filter((fb) => fb['sentiment'] === 'Negative');
+        } else if (e.target.value === 'neu') {
+            list = reviews.filter((fb) => fb['sentiment'] === 'Neutral');
+        } else {
+            list = reviews;
+        }
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        setCurrentData(list.slice(firstPageIndex, lastPageIndex));
+        setData(list);
+    };
     return (
         <div>
+            <div className="reviewtable_selection">
+                <select name="" id="" value={filter} onChange={selectFilter}>
+                    <option value="all">Tất cả</option>
+                    <option value="pos">Tích cực</option>
+                    <option value="nev">Tiêu cực</option>
+                    <option value="neu">Trung tích</option>
+                </select>
+            </div>
             <table className="table_fb">
                 <thead>
                     <tr>

@@ -558,3 +558,10 @@
     font-size: 18px;
     font-weight: 600;
 }
+
+.reviewtable_selection {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+}
