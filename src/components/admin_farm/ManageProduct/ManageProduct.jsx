@@ -17,6 +17,8 @@ import ManageCategory from './ManageCategory/ManageCategory';
 import ManageOrder from './ManageOrder/ManageOrder';
 import Manage from './ManageProduct/Manage';
 import SaleReport from './ManageReport/SaleReport';
+import Radio from '../ManageFeedback/Radio';
+import Demo from '../ManageFeedback/Demo';
 const ManageProduct = () => {
     const [render, setRender] = useState(1);
 
@@ -54,10 +56,20 @@ const ManageProduct = () => {
         localStorage.setItem('currentTab', 5);
     };
 
+    const FeedbackHandler = () => {
+        setRender(6);
+        localStorage.setItem('currentTab', 6);
+    };
+
+    const DemoHandler = () => {
+        setRender(7);
+        localStorage.setItem('currentTab', 7);
+    };
+
     return (
         <div>
             <Header></Header>
-            <div className="manageContainer">
+            <div className="manageContainer ">
                 {/* <div className="MenuProduct">
                     <div className="manageProduct_container">
                         <ul className="menulist">
@@ -119,16 +131,16 @@ const ManageProduct = () => {
                                             <span className="border">Báo cáo</span>
                                         </a>
                                     </li>
-                                    <li className={render === 6 ? 'active' : 'none'} onClick={() => setRender(6)}>
+                                    <li className={render === 6 ? 'active' : 'none'} onClick={FeedbackHandler}>
                                         <a href="#">
                                             <AiOutlineMessage />
-                                            <span className="border">Tin nhắn</span>
+                                            <span className="border">Phản hồi</span>
                                         </a>
                                     </li>
-                                    <li className={render === 7 ? 'active' : 'none'} onClick={() => setRender(7)}>
+                                    <li className={render === 7 ? 'active' : 'none'} onClick={DemoHandler}>
                                         <a href="#">
                                             <AiOutlineSetting />
-                                            <span className="border">Cài đặt</span>
+                                            <span className="border">Demo mode</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -142,6 +154,8 @@ const ManageProduct = () => {
                     {render == 3 && <ManageOrder></ManageOrder>}
                     {render == 4 && <Dashboard></Dashboard>}
                     {render == 5 && <SaleReport></SaleReport>}
+                    {render == 6 && <Radio></Radio>}
+                    {render == 7 && <Demo></Demo>}
                 </div>
             </div>
         </div>
@@ -152,8 +166,8 @@ export default ManageProduct;
 const Section = styled.section`
     // position: fixed;
     left: 0;
-    background-color: #f8f9ef;
-    height: 150vh;
+    background-color: #fff;
+    height: 90%;
     width: 18vw;
     display: flex;
     flex-direction: column;
@@ -161,6 +175,8 @@ const Section = styled.section`
     justify-content: space-between;
     padding: 2rem 0;
     gap: 2rem;
+    border: 1px solid #ccc;
+    margin-top: 20px;
     .top {
         display: flex;
         flex-direction: column;
@@ -204,7 +220,7 @@ const Section = styled.section`
                         text-decoration: none;
                         display: flex;
                         gap: 1rem;
-                        color: grey;
+                        color: black;
                         svg {
                             font-size: 1.4rem;
                         }

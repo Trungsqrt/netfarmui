@@ -2,6 +2,7 @@
     width: 100%;
     padding: 10px 36px;
     display: flex;
+    background-color: #f8f9ef;
 }
 
 .manage_content {

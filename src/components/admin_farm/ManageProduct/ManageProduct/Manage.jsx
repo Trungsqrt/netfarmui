@@ -116,7 +116,7 @@ const Manage = () => {
                         className={currentTab === 0 ? 'product_category_item_active_ad' : 'product_category_item_ad'}
                         onClick={() => FilterList(0)}
                     >
-                        {/* <img className="product_category_img" src="https://bom.so/hhjDCB"></img> */}
+                        <img className="product_category_img" src="https://bom.so/hhjDCB"></img>
                         <div className="product_category_title">Tất cả</div>
                     </li>
                     {category
@@ -188,7 +188,7 @@ const Manage = () => {
                                       <td className="text_center">{product.category_ID}</td>
                                       <td className="text_center">{product.price}</td>
                                       <td className="text_center">
-                                          <img src={product.images[0]?.url} alt="" width="100px" />
+                                          {/* <img src={product.images[0]?.url} alt="" width="100px" /> */}
                                       </td>
                                       <td className="text_center">
                                           <p className="reset-anchor remove_cart" style={{ cursor: 'pointer' }}>

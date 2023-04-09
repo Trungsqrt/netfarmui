@@ -8,7 +8,7 @@ import _ from 'lodash';
 const FeedbackProduct = () => {
     const { id } = useParams();
     const url = `https://localhost:44303/api/OrderDetail/${id}`;
-    const feedbackUrl = 'https://localhost:44303/api/Feedbacks';
+    const feedbackUrl = 'http://127.0.0.1:8000/feedback/analyze/';
     const [product, setProduct] = useState({});
     const [star, setStar] = useState(5);
     const [text, setText] = useState('Tuyệt vời');
@@ -75,23 +75,25 @@ const FeedbackProduct = () => {
         textChange(value);
     };
 
-    function handerFeedback() {
+    const handerFeedback = async () => {
         product.feedback = true;
         const postFeedback = {
             contents: content,
             star: star,
             productId: product.productId,
             userId: userId,
+            sentiment: '',
+            userName: '',
         };
         try {
-            axios.post(feedbackUrl, postFeedback);
-            axios.put(url, product);
+            await axios.post(feedbackUrl, postFeedback);
+            await axios.put(url, product);
             alert('Đăng thành công!');
             navigate('/manage/Feedback');
         } catch (err) {
             alert('Có lỗi, xin vui lòng thử lại!');
         }
-    }
+    };
     return (
         <div className="container">
             <div className="feedback_wrapper">

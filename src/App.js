@@ -32,8 +32,8 @@ import ChangePassword from './components/changePassword/ChangePassword';
 import PassRetri from './components/forgot/PassRetri';
 import NotFound from './components/notfound/NotFound';
 import StageDetail from './components/expertPage/StMgmt/StageDetail';
-
 import StandardMgmt from './components/expertPage/SdMgmt/StandardMgmt';
+import Radio from './components/admin_farm/ManageFeedback/Radio';
 function App() {
     return (
         <div className="App">
@@ -75,6 +75,7 @@ function App() {
                 <Route path="/standardmanagement/:id" element={<StandardMgmt />} />
                 <Route path="/stageDetailmanagement/:id" element={<StageDetail />} />
                 <Route path="/stageDetailmanagement" element={<StageDetail />} />
+                <Route path="/feedback/radio" element={<Radio />} />
             </Routes>
             <Footer></Footer>
         </div>
