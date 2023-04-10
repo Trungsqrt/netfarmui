@@ -1,0 +1,65 @@
+.container {
+    width: 100%;
+    min-height: 80vh;
+    justify-content: center;
+    align-items: center;
+    /* background-image: url('../../../../assets/image/loginImage.jpg'); */
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1920px 1080px;
+    overflow: hidden;
+    text-align: center;
+    padding-top: 2%;
+    margin-bottom: 20px;
+}
+.containerBox{
+    width: 'fit-content';
+    margin:'0 auto';
+    background:'#F2F6F7';
+    padding:'10px';
+    border-radius:'2%';
+}
+.content{
+    text-align: center;
+    display: block;
+}
+.checkIcon{
+    padding: 20px 20px;
+}
+.informationPay{
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    width: 800px;
+    align-items: center;
+}
+.informationRow{
+    justify-content: space-between;
+    display: flex;
+    padding: 10px;
+}
+.informationRowMoney{
+    justify-content: space-between;
+    display: flex;
+    padding: 20px 10px;
+    font-weight: bold;
+}
+.buttonWayBack{
+    justify-content: end;
+    display: flex;
+    padding: 40px 10px;
+    color: aliceblue;
+    font-weight: bold;
+}
+.buttonWayBackCart{
+    justify-content: center;
+    display: flex;
+    padding: 90px 10px;
+    color: aliceblue;
+    font-weight: bold;
+}
+.notificationSytem{
+    padding: 20px;
+    color: #B52B2E;
+}

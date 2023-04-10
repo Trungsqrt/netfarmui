@@ -1,8 +1,8 @@
 /* Css shop */
 .shop_block {
-    height: 200px;
+    height: 60px;
     background-color: #f8f9fa;
-    margin: 10px 10px;
+    margin: 0px 10px 10px 0px;
     display: flex;
     justify-content: space-between;
     vertical-align: middle;
@@ -15,8 +15,9 @@
 
 .shop_block_text {
     padding: 0 20px;
-    font-size: 30px;
+    font-size: 20px;
     font-style: italic;
+    font-weight: bold;
 }
 
 .shop_block_text_sm {
@@ -24,6 +25,7 @@
     font-size: 20px;
     font-style: italic;
     color: #444;
+    font-weight: bold;
 }
 
 .shop_content {
@@ -410,7 +412,7 @@
 }
 
 .shopping_cart {
-    padding: 20px;
+    /* padding: 20px;    */
     width: 75%;
     background-color: #ededed;
     border-radius: 10px;

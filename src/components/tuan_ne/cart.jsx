@@ -5,10 +5,8 @@ import { Content } from 'antd/es/layout/layout';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { productAPI } from '../../../../apis';
-// import { productAPI } from '../../apis';
-import imaginecartempty from '../../../../assets/image/cart-empty.png';
-import Header from '../../share/header/Header';
+import { productAPI } from '../../apis';
+import imaginecartempty from '../../assets/image/cart-empty.png';
 
 const Cart = () => {
     localStorage.removeItem('checklist');
@@ -108,7 +106,7 @@ const Cart = () => {
                 listcart.push(Number(checkboxs[i].name));
             }
         }
-        if (listcart.length === 0) notificationSuccess('warning');
+        if (listcart.length === 0) return;
         else {
             setCheckList(listcart);
             localStorage.removeItem('checklist');
@@ -127,16 +125,10 @@ const Cart = () => {
     const [api, contextHolder] = notification.useNotification();
     const notificationSuccess = (type) => {
         let message = '';
-        switch (type) {
-            case 'success':
-                message = 'Xóa sản phẩm thành công';
-                break;
-            case 'warning':
-                message = 'Vui lòng chọn ít nhất một sản phẩm';
-                break;
-            default:
-                message = 'Có lỗi, xin vui lòng thử lại!';
-                break;
+        if (type == 'success') {
+            message = 'Xóa sản phẩm thành công';
+        } else {
+            message = 'Có lỗi, xin vui lòng thử lại!';
         }
         api[type]({
             message: message,
@@ -158,13 +150,11 @@ const Cart = () => {
     const handleCancel = () => {
         setOpen(false);
     };
-    
     return (
         <>
-        <Header></Header>
-            <Grid style={{ height: '80vh', padding: '40px' }} className="space-align-container">
+            <Grid style={{ height: 'auto', padding: '40px' }} className="space-align-container">
                 <Row span={24}>
-                    <Col span={12} offset={2}>
+                    <Col span={11} offset={5}>
                         <Grid>
                             <Space size={20}>
                                 <h3>
@@ -179,10 +169,10 @@ const Cart = () => {
                             {carts ? (
                                 carts.map((cart, index) => (
                                     <Card style={{ width: '100%', height: 'auto', marginBottom: '10px' }}>
-                                        <Row style={{ display: 'flex', justifyContent: 'right' }}>
+                                        <Row style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                             <Button type="link">
                                                 <CloseOutlined
-                                                    style={{ color: 'red'}}
+                                                    style={{ color: 'red' }}
                                                     onClick={() => showModal(cart.id)}
                                                 />
                                             </Button>
@@ -265,9 +255,9 @@ const Cart = () => {
                             <Button primary>Tiếp tục mua sắm</Button>
                         </Link>
                     </Col>
-                    <Col span={6} offset={3} style={{ background: '#FAFAFA', padding: '10px 20px' }}>
+                    <Col span={5} offset={3} style={{ background: '#FAFAFA', padding: '10px 20px' }}>
                         {carts.map((cart, index) => (
-                            <Row align="middle" span={16} style={{ marginBottom: '20px' }}>
+                            <Row align="middle" span={16} style={{ marginBottom: '10px' }}>
                                 <Col span={4}>
                                     <Badge count={cart.quantity}>
                                         <Image width={60} src={cart.image} />
@@ -276,13 +266,28 @@ const Cart = () => {
                                 <Col span={8} offset={3}>
                                     <Content>{cart.name}</Content>
                                 </Col>
-                                <Col span={4} offset={2}>
-                                    <Space>{cart.quantity * cart.price} VND</Space>    
+                                <Col span={4} offset={3}>
+                                    {cart.quantity * cart.price}
                                 </Col>
                             </Row>
                         ))}
 
                         <hr />
+                        <Row span={24}>
+                            <Form layout="inline" style={{ padding: '20px 0' }}>
+                                <Col span={16}>
+                                    <Form.Item>
+                                        <Input placeholder="Mã giảm giá"></Input>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={8}>
+                                    <Form.Item>
+                                        <Button type="primary">Áp dụng</Button>
+                                    </Form.Item>
+                                </Col>
+                            </Form>
+                        </Row>
+                        <Divider />
                         <Row align="middle" span={24} layout="inline">
                             <Col span={12} style={{ padding: '10px 0px' }}>
                                 Tạm tính
