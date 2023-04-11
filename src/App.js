@@ -34,10 +34,12 @@ import NotFound from './components/notfound/NotFound';
 import StageDetail from './components/expertPage/StMgmt/StageDetail';
 import StandardMgmt from './components/expertPage/SdMgmt/StandardMgmt';
 import Radio from './components/admin_farm/ManageFeedback/Radio';
+import Chatbot from './components/chatbot_ui/chatbot'; 
 function App() {
     return (
         <div className="App">
             <Routes>
+            <Route path="/chatbot" element={<Chatbot />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/personal" element={<Personal />} />
                 <Route path="/createexpert" element={<CreateExpert />} />
