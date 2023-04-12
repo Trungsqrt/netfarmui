@@ -10,7 +10,8 @@ export default function Message(props) {
           display: "flex",
           flexFlow: "row",
           justifyContent: props.isCustomer ? "right" : "left",
-        }}
+        }
+      }
       >
         {!props.isCustomer && (
           <Avatar sx={{mr: 1, bgcolor: "primary.main"}}>
@@ -25,7 +26,7 @@ export default function Message(props) {
             <img src={props.image} alt="Bot response" style={{width: "100%"}}/>
           )}
           {!props.isCustomer && props.choices && (
-            <Box sx={{mt: 1}}>
+            <Box sx={{mt: 1,}} >
               {props.choices.map((choice, index) => (
                 <Chip
                   key={index}
