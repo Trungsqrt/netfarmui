@@ -101,7 +101,7 @@ function DSS() {
 
     return (
         <div>
-            {/* <section className={styles.selectBox}>
+            <section className={styles.selectBox}>
                 <div className={styles.dsstitle}>Đối tượng tư vấn: </div>
                 <select onChange={handlerChangeLoaiCay} className={styles.selectElement}>
                     <option selected disabled>
@@ -130,13 +130,15 @@ function DSS() {
                 <button className={styles.ConfirmBtn} onClick={handlerSubmit}>
                     Xác nhận
                 </button>
-            </section> */}
+            </section>
 
             <section className={styles.container}>
                 <div className={styles.imageHuman}></div>
 
                 <div className={styles.columnRight}>
-                    <TempChat></TempChat>
+                    <div className={styles.boxMessage}>
+                        <div className={styles.messageContent}>{parse(String(message))}</div>
+                    </div>
                     <div className={styles.chartContainer}>
                         <div className={styles.today}>
                             <div className={styles.title}>hôm nay</div>
