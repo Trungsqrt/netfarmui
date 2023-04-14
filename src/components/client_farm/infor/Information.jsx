@@ -29,7 +29,7 @@ const Information = () => {
                 <div className="infor_main">
                     <div className="menu">
                         <div className="menu_header">NETFARM</div>
-                        <ul className="infor_menulist">
+                        <ul className="infor_menulist" style={{ paddingLeft: 'unset' }}>
                             <li
                                 className={render === 0 ? 'infor_MenuItem_active' : 'infor_MenuItem'}
                                 onClick={() => setRender(0)}

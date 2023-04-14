@@ -116,7 +116,7 @@ const Manage = () => {
                         className={currentTab === 0 ? 'product_category_item_active_ad' : 'product_category_item_ad'}
                         onClick={() => FilterList(0)}
                     >
-                        <img className="product_category_img" src="https://bom.so/hhjDCB"></img>
+                        {/* <img className="product_category_img" src="https://bom.so/hhjDCB"></img> */}
                         <div className="product_category_title">Tất cả</div>
                     </li>
                     {category

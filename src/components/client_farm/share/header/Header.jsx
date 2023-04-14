@@ -156,6 +156,9 @@ const Header = () => {
                         <li className="navbarTask_item">
                             <Link to="/shop">Mua hàng</Link>
                         </li>
+                        <li className="navbarTask_item">
+                            <Link to="/MyComponent">Nhận diện</Link>
+                        </li>
                     </ul>
                     <form className="form-search" onSubmit={handleSubmit}>
                         <input

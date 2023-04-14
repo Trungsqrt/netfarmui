@@ -145,6 +145,7 @@ const Header = () => {
                             src={`http://openweathermap.org/img/wn/${iconState}@2x.png`}
                             alt=""
                             className={styles.iconWeather}
+                            style={{ verticalAlign: 'unset' }}
                         />
                         <span className={styles.temperature}>Da Nang, {data}°C</span>
                     </div>
@@ -178,10 +179,13 @@ const Header = () => {
                             {user === 'Expert' && <Link to="/inforPage">Thông tin</Link>}
                             {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
                         </li>
-                        
+
                         <li>
                             {user === 'Admin' && <Link to="/inforPage">Thông tin</Link>}
                             {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
+                        </li>
+                        <li>
+                            <Link to="/MyComponent">Nhận diện cây trồng</Link>
                         </li>
                     </ul>
                     <form className="form-search">
