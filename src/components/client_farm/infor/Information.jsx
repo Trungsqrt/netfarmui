@@ -8,6 +8,7 @@ import Policy from './policy/Policy';
 import Manual from './manual/Manual';
 import Footer from '../share/footer/Footer';
 import DSS from '../../client_farm/infor/DSS/DSS';
+import MyComponent from '../../client_farm/infor/checkPlant/plantapi';
 import './InforPage.css';
 import './css/style1.css';
 const Information = () => {
@@ -24,7 +25,7 @@ const Information = () => {
     return (
         <div>
             <div>
-                {(user === 'Admin' || user === 'Expert') ? <StaffHeader /> : <FarmerHeader />}
+                {user === 'Admin' || user === 'Expert' ? <StaffHeader /> : <FarmerHeader />}
                 {/* {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />} */}
                 <div className="infor_main">
                     <div className="menu">
@@ -66,8 +67,18 @@ const Information = () => {
                             >
                                 <div className="menu_link">TƯ VẤN</div>
                             </li>
+                            <li
+                                className={render === 6 ? 'infor_MenuItem_active' : 'infor_MenuItem'}
+                                onClick={() => setRender(6)}
+                            >
+                                <div className="menu_link">NHẬN DIỆN CÂY TRỒNG</div>
+                            </li>
                         </ul>
-                        <img className="menulist_img" style={{ objectFit: 'cover' }} src="https://ttpcert.com.vn/wp-content/uploads/2021/01/Doc1.jpg"></img>
+                        <img
+                            className="menulist_img"
+                            style={{ objectFit: 'cover' }}
+                            src="https://ttpcert.com.vn/wp-content/uploads/2021/01/Doc1.jpg"
+                        ></img>
                     </div>
 
                     <div className="infor_container">
@@ -77,6 +88,7 @@ const Information = () => {
                         {render === 3 && <Manual></Manual>}
                         {render === 4 && <Policy></Policy>}
                         {render === 5 && <DSS></DSS>}
+                        {render === 6 && <MyComponent></MyComponent>}
                     </div>
                 </div>
             </div>

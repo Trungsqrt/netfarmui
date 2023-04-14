@@ -36,6 +36,11 @@ const Menuleft = () => {
                             TƯ VẤN
                         </Link>
                     </li>
+                    <li className="MenuItem">
+                        <Link to="/inforPage/DSS" className="menu_link">
+                            NHẬN DIỆN CÂY TRỒNG
+                        </Link>
+                    </li>
                 </ul>
                 <img className="menulist_img" src="https://ttpcert.com.vn/wp-content/uploads/2021/01/Doc1.jpg"></img>
             </div>
