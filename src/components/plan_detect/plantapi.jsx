@@ -1,11 +1,14 @@
+
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import image from '../../assets/image/add-photo-icon-19.jpg';
+import { Row, Col, Table } from 'react-bootstrap';
+import { getPlant } from '../../apis/plant-id';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import image from '../../../../assets/image/add-photo-icon-19.jpg';
-import { Row, Col, Table } from 'react-bootstrap';
-import { getPlant } from '../../../../apis/plant-id';
 const MyComponent = () => {
+
     const [base64Image, setBase64Image] = useState([]);
     const [file, setFile] = useState(image);
     const [result, setResult] = useState();
@@ -35,6 +38,7 @@ const MyComponent = () => {
     console.log(result);
     return (
         <div>
+        
             <Row className="justify-content-center">
                 <Card className="align-content-center" style={{ width: '18rem' }}>
                     <Card.Img variant="top" src={file} style={{ width: '16.5rem', height: '15rem' }} />
@@ -67,7 +71,7 @@ const MyComponent = () => {
                 result['suggestions'] &&
                 result['suggestions'].slice(0, 3).map((data) => (
                     <Row bg={'Light'} className="justify-content-center mb-0">
-                        <Col md="15" xl="5">
+                        <Col md="15" xl="10">
                             <Card className="shadow-0 border rounded-3 mt-2 mb-3">
                                 <Card.Body>
                                     <Row>

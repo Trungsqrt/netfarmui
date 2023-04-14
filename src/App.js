@@ -34,6 +34,7 @@ import NotFound from './components/notfound/NotFound';
 import StageDetail from './components/expertPage/StMgmt/StageDetail';
 import StandardMgmt from './components/expertPage/SdMgmt/StandardMgmt';
 import Radio from './components/admin_farm/ManageFeedback/Radio';
+import MyComponent from './components/plan_detect/plantapi';
 function App() {
     return (
         <div className="App">
@@ -76,6 +77,8 @@ function App() {
                 <Route path="/stageDetailmanagement/:id" element={<StageDetail />} />
                 <Route path="/stageDetailmanagement" element={<StageDetail />} />
                 <Route path="/feedback/radio" element={<Radio />} />
+                <Route path="/MyComponent" element={<MyComponent />} />
+
             </Routes>
             <Footer></Footer>
         </div>
