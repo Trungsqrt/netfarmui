@@ -12,7 +12,7 @@ function MyComponent() {
     const [file, setFile] = useState(image);
     const [result, setResult] = useState();
     const [handle, sethandle] = useState('Tải lên hình ảnh loại cây bạn cần tìm hiểu');
-
+    const [isLoading, setIsLoading] = useState(true);
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
@@ -43,8 +43,10 @@ function MyComponent() {
         (async () => {
             await getPlant(base64Image).then((res) => setResult(res));
         })();
+        setIsLoading(false);
     }, [base64Image]);
     console.log(result);
+
     return (
         <div>
             {user === 'Admin' || user === 'Expert' ? <StaffHeader /> : <FarmerHeader />}
@@ -214,9 +216,6 @@ function MyComponent() {
                                 </Col>
                             </Row>
                         ))}
-                    {!result && (
-                        <h3 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Loading...</h3>
-                    )}
                 </div>
             </div>
         </div>
