@@ -4,7 +4,9 @@ import styles from '../DSS/DSS.module.css';
 import TemperatureChart from './TemperatureChart';
 import axios from 'axios';
 import TempChat from '../../../chatbot_ui/chatbot';
+import Chatbot from '../../../testBot/Chatbot';
 const parse = require('html-react-parser');
+
 function DSS() {
     const [loaicay, setLoaiCay] = useState([]);
     const [hoatdong, setHoatDong] = useState([]);
@@ -145,7 +147,7 @@ function DSS() {
 
     return (
         <div>
-            <section className={styles.selectBox}>
+            {/* <section className={styles.selectBox}>
                 <div className={styles.dsstitle}>Đối tượng tư vấn: </div>
                 <select onChange={handlerChangeLoaiCay} className={styles.selectElement}>
                     <option selected disabled>
@@ -205,7 +207,8 @@ function DSS() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
+            <Chatbot />
         </div>
     );
 }

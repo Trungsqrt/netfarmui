@@ -13,7 +13,7 @@ html {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: var(--body-bg);
+    /* background-image: var(--body-bg); */
     font-family: Helvetica, sans-serif;
 }
 .msger {
