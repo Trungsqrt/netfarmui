@@ -176,9 +176,9 @@ function DSS() {
                 <button className={styles.ConfirmBtn} onClick={handlerSubmit}>
                     Xác nhận
                 </button>
-            </section>
+            </section> */}
 
-            <section className={styles.container}>
+            {/* <section className={styles.container}>
                 <div className={styles.imageHuman}></div>
 
                 <div className={styles.columnRight}>
