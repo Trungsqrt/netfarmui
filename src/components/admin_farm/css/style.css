@@ -2,6 +2,7 @@
     width: 100%;
     padding: 10px 36px;
     display: flex;
+    background-color: #f8f9ef;
 }
 
 .manage_content {
@@ -31,12 +32,13 @@
 }
 
 .products_table th {
-    background-color: rgb(216, 201, 201);
+    background-color: rgb(76, 187, 23);
 }
 
 .products_table th,
 .products_table td {
-    border: 1px solid #555;
+    border: none;
+    border-right: 0.5px solid #555;
 }
 
 .Banner {
@@ -98,19 +100,21 @@
 
 .add_new_product {
     height: 50px;
-    font-size: 24px;
+    font-size: 20px;
     text-decoration: none;
     margin: 10px;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
     padding: 8px;
     color: #000;
-    line-height: 34px;
+    line-height: 28px;
     text-align: center;
-    border-radius: 4px;
-    box-shadow: 2px 2px 4px #555;
+    border-radius: 5px;
+    border: none;
     background-color: rgb(18, 125, 18);
     color: #fff;
     transition: transform 0.2s;
+    padding: 10px;
+    cursor: pointer;
 }
 
 .add_new_product:hover {
@@ -177,7 +181,7 @@
 
 .product_properties {
     width: 20%;
-    font-size: 24px;
+    font-size: 18px;
     height: 40px;
 }
 
@@ -195,6 +199,9 @@
 
 .product_input {
     width: 70%;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
 }
 
 .text_center {
@@ -435,11 +442,11 @@
 
 .OrderList_item {
     margin: 2px;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 50px;
     text-align: center;
     width: 100%;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
     border-radius: 4px;
     background-color: rgb(203, 243, 197);
     box-shadow: 2px 2px 4px #343a40;
@@ -458,11 +465,11 @@
     color: yellow;
     cursor: pointer;
     margin: 2px;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 50px;
     text-align: center;
     width: 100%;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
     border-radius: 4px;
     box-shadow: 2px 2px 4px #343a40;
 }
@@ -485,7 +492,7 @@
     line-height: 40px;
     color: #000;
     background-color: rgb(108, 207, 105);
-    border: 2px solid #555;
+    /* border: 2px solid #555; */
     box-shadow: 2px 2px 4px #555;
     text-align: center;
     padding: 6px 0;
@@ -497,7 +504,7 @@
 .product_category_item_ad:hover {
     color: yellow;
     background-color: green;
-    border: 2px solid #000;
+    /* border: 2px solid #000; */
     transform: scale(1.05);
 }
 
@@ -509,7 +516,7 @@
     line-height: 40px;
     color: yellow;
     background-color: green;
-    border: 2px solid #000;
+    /* border: 2px solid #000; */
     box-shadow: 2px 2px 4px #555;
     text-align: center;
     padding: 6px 0;
@@ -739,4 +746,35 @@
 .ProductCategory {
     width: 100%;
     height: 40px;
+}
+
+.button {
+}
+
+/* input[type='file'] {
+    display: none;
+} */
+
+.uploadFile {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+button:disabled {
+    background-color: gray;
+    cursor: unset;
+}
+
+button:disabled:hover {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.green-red {
+    color: green;
+}
+
+.red-red {
+    color: red;
 }

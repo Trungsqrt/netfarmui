@@ -11,6 +11,9 @@ import Grid from 'antd/es/card/Grid';
 import { Content } from 'antd/es/layout/layout';
 import { Option } from 'antd/es/mentions';
 import { useCallAPI } from '../../share/common/useCallAPI';
+import tinh_tp from './address/tinh_tp.json';
+import quan_huyen from './address/quan_huyen.json';
+import xa_phuong from './address/xa_phuong.json';
 
 const Checkout = () => {
     const cartUrl = 'https://localhost:44303/api/Carts';
@@ -18,7 +21,7 @@ const Checkout = () => {
     const itemUrl = 'https://localhost:44303/api/OrderDetail';
     const productUrl = 'https://localhost:44303/api/Products';
     const UserUrl = 'https://localhost:44303/api/Users';
-
+    const PaymentUrl="https://localhost:44303/api/Payment/request-payment";
     var checkList = localStorage.getItem('checklist').split(',');
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -31,8 +34,31 @@ const Checkout = () => {
     const [phone, setPhone] = useState('');
     const [status, setStatus] = useState();
     const [delivery, setDelivery] = useState();
-    const { data: userInfor, loading, error } = useCallAPI(`${UserUrl}/${userId}`);
-  
+    const {
+        data: userInfor,
+        loading,
+        error,
+    } = useCallAPI(`${UserUrl}/${userId}`, (data) => {
+        var uuid = require('uuid');
+        const order_id = uuid.v4();
+        form.setFieldsValue({
+            id: order_id,
+            name: data.fullName,
+            email: data.email,
+            phone: data.phone,
+            type_payment: 'a',
+            userId: userId,
+            address: address,
+            total: total,
+            status: false,
+            delivery: false,
+            createAt: new Date().toISOString(),
+            finish: false,
+            cancel: false,
+            finishAt: null,
+        });
+    });
+
     //form
     const [form] = Form.useForm();
 
@@ -43,6 +69,7 @@ const Checkout = () => {
             const data = response.data;
             const filter = data.filter((item) => item['userId'] === userId);
             const filter2 = filter.filter((item) => checkList.includes(`${item['id']}`));
+
             setCart(filter2);
             if (filter2.length !== 0) {
                 var result = 0;
@@ -56,74 +83,73 @@ const Checkout = () => {
         fetchData();
     }, []);
 
-    const handlerSubmit = async () => {
-        if (name === '' || address === '' || phone === '') {
-            alert('Bạn phải nhập đầy đủ thông tin');
-        } else {
-            var uuid = require('uuid');
-            const order_id = uuid.v4();
-            var error = '';
-            const postOrder = {
-                id: order_id,
-                userId: userId,
-                name: name,
-                address: address,
-                phone: phone.match(/(84|0[3|5|7|8|9])+([0-9]{8})\b/) ? phone : '',
-                total: total,
-                status: false,
-                delivery: false,
-                createAt: new Date().toISOString(),
-                finish: false,
-                cancel: false,
-                finishAt: null,
-            };
-            if (postOrder.phone == '') {
-                error = 'Số điện thoại không đúng format';
-            }
+    // const handlerSubmit = async () => {
+    //     if (name === '' || address === '' || phone === '') {
+    //         alert('Bạn phải nhập đầy đủ thông tin');
+    //     } else {
+    //         var uuid = require('uuid');
+    //         const order_id = uuid.v4();
+    //         var error = '';
+    //         const postOrder = {
+    //             id: order_id,
+    //             userId: userId,
+    //             name: name,
+    //             address: address,
+    //             phone: phone.match(/(84|0[3|5|7|8|9])+([0-9]{8})\b/) ? phone : '',
+    //             total: total,
+    //             status: false,
+    //             delivery: false,
+    //             createAt: new Date().toISOString(),
+    //             finish: false,
+    //             cancel: false,
+    //             finishAt: null,
+    //         };
+    //         if (postOrder.phone == '') {
+    //             error = 'Số điện thoại không đúng format';
+    //         }
 
-            try {
-                if (error == '') {
-                    await axios.post(orderUrl, postOrder);
-                    var length = carts.length;
-                    for (var i = 0; i < length; i++) {
-                        const postItem = {
-                            orderId: order_id,
-                            productId: carts[i].productId,
-                            quantity: carts[i].quantity,
-                            price: carts[i].price,
-                            image: carts[i].image,
-                            productName: carts[i].name,
-                            feedback: false,
-                        };
-                        try {
-                            await axios.post(itemUrl, postItem);
-                            await axios.delete(`${cartUrl}/${carts[i].id}`);
-                        } catch (err) {
-                            alert('có lỗi');
-                        }
-                    }
-                    alert('Đặt hàng thành công!');
-                    localStorage.removeItem(checkList);
-                    navigate('/shop/orderlist');
-                } else {
-                    alert('Số điện thoại không đúng format');
-                }
-            } catch (err) {
-                alert('Có lỗi, xin vui lòng thử lại!');
-            }
-            for (var i = 0; i < length; i++) {
-                const sl = carts[i].quantity;
-                const id = carts[i].productId;
-                handlerProduct(sl, id);
-            }
-        }
-    };
+    //         try {
+    //             if (error == '') {
+    //                 await axios.post(orderUrl, postOrder);
+    //                 var length = carts.length;
+    //                 for (var i = 0; i < length; i++) {
+    //                     const postItem = {
+    //                         orderId: order_id,
+    //                         productId: carts[i].productId,
+    //                         quantity: carts[i].quantity,
+    //                         price: carts[i].price,
+    //                         image: carts[i].image,
+    //                         productName: carts[i].name,
+    //                         feedback: false,
+    //                     };
+    //                     try {
+    //                         await axios.post(itemUrl, postItem);
+    //                         await axios.delete(`${cartUrl}/${carts[i].id}`);
+    //                     } catch (err) {
+    //                         alert('có lỗi');
+    //                     }
+    //                 }
+    //                 alert('Đặt hàng thành công!');
+    //                 localStorage.removeItem(checkList);
+    //                 navigate('/shop/orderlist');
+    //             } else {
+    //                 alert('Số điện thoại không đúng format');
+    //             }
+    //         } catch (err) {
+    //             alert('Có lỗi, xin vui lòng thử lại!');
+    //         }
+    //         for (var i = 0; i < length; i++) {
+    //             const sl = carts[i].quantity;
+    //             const id = carts[i].productId;
+    //             handlerProduct(sl, id);
+    //         }
+    //     }
+    // };
     function handlerProduct(sl, id) {
         const fetchData = async () => {
             const product = await productAPI.getDetail(id);
             const oldnum = product.data.inventoryNumber;
             product.data.inventoryNumber = oldnum - sl;
-            console.log(product.data);
             try {
                 axios.put(`${productUrl}/${id}`, product.data);
             } catch (err) {
@@ -140,9 +166,111 @@ const Checkout = () => {
     }
 
     //handle submit form
-    const onFinish = (values) => {
+    const onFinish = async(values) => {
         console.log('Received values of form:', values);
-      };
+        console.log('form:', form);
+        console.log("id :", form.getFieldValue('id'));
+        
+            let postOrder = {
+                id: form.getFieldValue('id'),
+                userId: userId,
+                name: values.name,
+                address: values.address,
+                phone: values.phone,
+                total: total,
+                status: false,
+                delivery: false,
+                createAt: new Date().toISOString(),
+                finish: false,
+                cancel: false,
+                finishAt: null,
+            };
+
+            await axios.post(orderUrl, postOrder);
+
+            try {
+                if (form.type_payment == 'a') {
+                    var length = carts.length;
+                    for (var i = 0; i < length; i++) {
+                        const postItem = {
+                            orderId: form.getFieldValue('id'),
+                            productId: carts[i].productId,
+                            quantity: carts[i].quantity,
+                            price: carts[i].price,
+                            image: carts[i].image,
+                            productName: carts[i].name,
+                            feedback: false,
+                        };
+                        try {
+                            await axios.post(itemUrl, postItem);
+                            await axios.delete(`${cartUrl}/${carts[i].id}`);
+                        } catch (err) {
+                            alert('có lỗi');
+                        }
+                    }
+                } else {
+                    console.log("vao day");
+                    const object = {
+                        paymentType: 'string',
+                        paymentDescription: 'string',
+                        orderId: form.getFieldValue('id'),
+                    };
+                    const x= await axios.post(PaymentUrl, object);
+                    console.log("🚀 ~ file: Checkout.jsx:219 ~ onFinish ~ x:", x)
+                    window.open(x.data);
+                }
+                alert('Đặt hàng thành công!');
+                // localStorage.removeItem(checkList);
+                // navigate('/shop/orderlist');
+                for (var i = 0; i < length; i++) {
+                    const sl = carts[i].quantity;
+                    const id = carts[i].productId;
+                    handlerProduct(sl, id);
+                }
+            } catch (err) {
+                alert('Có lỗi, xin vui lòng thử lại!');
+            }
+
+  
+    };
+
+    const [tinh, setTinh] = useState(
+        Object.keys(tinh_tp).map((key) => {
+            return { name: Number(key), value: tinh_tp[key].name };
+        }),
+    );
+    const [quan, setQuan] = useState();
+    const [xa, setXa] = useState();
+
+    // handleChangeProvince
+    const handleChangeProvince = (key, value) => {
+        let tmp = [];
+        Object.keys(quan_huyen).filter((key1) => {
+            if (quan_huyen[key1].parent_code == value.name) {
+                tmp.push(quan_huyen[key1]);
+            }
+        });
+        setQuan(
+            tmp.map((e) => {
+                return { name: e.code, value: e.name };
+            }),
+        );
+    };
+
+    // handleChangeDistricts
+    const handleChangeDistricts = (key, value) => {
+        let tmp = [];
+        Object.keys(xa_phuong).filter((key1) => {
+            if (xa_phuong[key1].parent_code == value.name) {
+                tmp.push(xa_phuong[key1]);
+            }
+        });
+        setXa(
+            tmp.map((e) => {
+                return { name: e.code, value: e.name };
+            }),
+        );
+    }
     return (
         <div>
             <Header></Header>
@@ -315,10 +443,7 @@ const Checkout = () => {
                                                 },
                                             ]}
                                         >
-                                            <Input
-                                                placeholder="Họ và tên người nhận"
-                                                defaultValue={userInfor?.fullName}
-                                            />
+                                            <Input placeholder="Họ và tên người nhận" />
                                         </Form.Item>
                                         <Row span={24}>
                                             <Col span={12}>
@@ -335,7 +460,7 @@ const Checkout = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="Email" defaultValue={userInfor?.email} />
+                                                    <Input placeholder="Email" />
                                                 </Form.Item>
                                             </Col>
                                             <Col span={11} offset={1}>
@@ -352,18 +477,23 @@ const Checkout = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input
-                                                        placeholder="Số điện thoại"
-                                                        defaultValue={userInfor?.phone}
-                                                    />
+                                                    <Input placeholder="Số điện thoại" />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
-                                        <Form.Item name="address">
-                                            <Input placeholder="Địa chỉ" defaultValue={userInfor?.address} />
+                                        <Form.Item
+                                            name="address"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Vui lòng nhập địa chỉ nhận!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder="Địa chỉ" />
                                         </Form.Item>
-                                        <Form.Item name="type-payment" label="Hình thức thanh toán">
-                                            <Radio.Group defaultValue={'a'}>
+                                        <Form.Item name="type_payment" label="Hình thức thanh toán">
+                                            <Radio.Group>
                                                 <Radio value="a" defaultChecked>
                                                     Thanh toán ngay khi nhận hàng
                                                 </Radio>
@@ -376,34 +506,31 @@ const Checkout = () => {
                                                 name="provinces"
                                                 label="Tỉnh/ thành"
                                                 // hasFeedback
-                                                rules={[{ required: true, message: 'Please select your country!' }]}
+                                                rules={[{ required: true, message: 'chọn tỉnh/ thành phố!' }]}
                                             >
-                                                <Select placeholder="tỉnh thành">
-                                                    <Option value="china">China</Option>
-                                                    <Option value="usa">U.S.A</Option>
-                                                </Select>
+                                                <Select
+                                                    placeholder="tỉnh thành"
+                                                    onChange={handleChangeProvince}
+                                                    options={tinh}
+                                                />
                                             </Form.Item>
                                             <Form.Item
                                                 name="districts"
                                                 label="Quận/ huyện"
-                                                hasFeedback
-                                                rules={[{ required: true, message: 'Please select your country!' }]}
+                                                // rules={[{ required: true, message: 'chọn quận/ huyện!' }]}
                                             >
-                                                <Select placeholder="chọn quận huyện">
-                                                    <Option value="china">China</Option>
-                                                    <Option value="usa">U.S.A</Option>
-                                                </Select>
+                                                <Select
+                                                    placeholder="chọn quận huyện"
+                                                    options={quan}
+                                                    onChange={handleChangeDistricts}
+                                                />
                                             </Form.Item>
                                             <Form.Item
                                                 name="wards"
                                                 label="Phường/ xã"
-                                                hasFeedback
-                                                rules={[{ required: true, message: 'Please select your country!' }]}
+                                                // rules={[{ required: true, message: 'chọn phường/ xã!' }]}
                                             >
-                                                <Select placeholder="chọn phường xã">
-                                                    <Option value="china">China</Option>
-                                                    <Option value="usa">U.S.A</Option>
-                                                </Select>
+                                                <Select placeholder="chọn phường xã" options={xa} />
                                             </Form.Item>
                                         </Space>
                                         <Form.Item>
@@ -426,7 +553,7 @@ const Checkout = () => {
                         {carts.map((cart, index) => (
                             <Row align="middle" span={16} style={{ marginBottom: '10px' }}>
                                 <Col span={4}>
-                                    <Badge count={5}>
+                                    <Badge count={cart.quantity}>
                                         <Image width={60} src={cart.image} />
                                     </Badge>
                                 </Col>

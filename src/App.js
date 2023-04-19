@@ -32,12 +32,12 @@ import ChangePassword from './components/changePassword/ChangePassword';
 import PassRetri from './components/forgot/PassRetri';
 import NotFound from './components/notfound/NotFound';
 import StageDetail from './components/expertPage/StMgmt/StageDetail';
-
 import StandardMgmt from './components/expertPage/SdMgmt/StandardMgmt';
 import ResultPaymentComponent from './components/client_farm/e_commerce/Payment/ResultPaymentComponent';
 import Test from './components/tuan_ne/test';
 import CartNe from './components/tuan_ne/cart';
 import 'antd/dist/reset.css';
+import Radio from './components/admin_farm/ManageFeedback/Radio';
 function App() {
     return (
         <div className="App">
@@ -58,7 +58,8 @@ function App() {
                 <Route path="/manageproduct" element={<ManageProduct />} />
                 <Route path="/AdminHome" element={<AdminHome />} />
                 <Route path="/manageProduct/admin/addNewProduct" element={<AddProduct />} />
-                <Route path="/product/edit/:id" element={<EditProduct />} />
+                {/* <Route path="/product/edit/:id" element={<EditProduct />} /> */}
+                <Route path="/product/edit/:id" element={<AddProduct />} />
                 <Route path="/shop/checkout" element={<Checkout />} />
                 <Route path="/shop/orderlist" element={<OrderList />} />
                 <Route path="/expert" element={<ExpertPage />} />
@@ -73,7 +74,7 @@ function App() {
                 <Route path="/changepassword" element={<ChangePassword />} />
                 <Route path="/passwordretrieval" element={<PassRetri />} />
                 <Route path="*" element={<NotFound />} />
-                <Route path="/shop/cart/payment" element={<ResultPaymentComponent/>} />
+                <Route path="/shop/cart/Resultpayment" element={<ResultPaymentComponent/>} />
 
                 <Route path="/standardmanagement" element={<StandardMgmt />} />
                 <Route path="/standardmanagement/:id" element={<StandardMgmt />} />
@@ -83,6 +84,7 @@ function App() {
                 <Route path="/test" element={<Test />} />
                 <Route path="/cartne" element={<CartNe />} />
 
+                <Route path="/feedback/radio" element={<Radio />} />
             </Routes>
             <Footer></Footer>
         </div>

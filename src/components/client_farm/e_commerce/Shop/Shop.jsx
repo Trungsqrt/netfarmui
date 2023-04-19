@@ -16,17 +16,15 @@ const Shop = () => {
     const [currentData, setCurrentData] = useState([]);
     const [currentTab, setCurrentTab] = useState(0);
 
-
-	const [user, setUser] = useState('');
+    const [user, setUser] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-
-		const getUser = localStorage.getItem('user');
-		if(getUser){
-			const currentUser = JSON.parse(getUser);
-			setUser(currentUser.roleName? currentUser.roleName : "");
-		}
+        const getUser = localStorage.getItem('user');
+        if (getUser) {
+            const currentUser = JSON.parse(getUser);
+            setUser(currentUser.roleName ? currentUser.roleName : '');
+        }
 
         const fetchData = async () => {
             //fetch raw data
@@ -98,7 +96,7 @@ const Shop = () => {
     return (
         <div>
             <Header></Header>
-            {(user === 'Farmer' || user === "") ? (
+            {user === 'Farmer' || user === '' ? (
                 <div className="shop">
                     <div className="shop_block">
                         <div className="shop_block_text">SHOP</div>

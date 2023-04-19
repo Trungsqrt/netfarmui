@@ -30,6 +30,7 @@ const Cart = () => {
         const fetchData = async () => {
             const response = await axios.get(cartUrl);
             const data = response.data;
+            console.log("🚀 ~ file: Cart.jsx:34 ~ fetchData ~ data:", data)
             const filter = data.filter((item) => item['userId'] === userId);
             setCart(filter);
             const inputData = [];

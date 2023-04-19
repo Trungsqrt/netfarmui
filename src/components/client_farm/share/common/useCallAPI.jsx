@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-export const useCallAPI = (url) => {
+export const useCallAPI = (url, callback) => {
     const [data, setData] = useState();
 
     const [loading, setLoading] = useState(true);
@@ -14,6 +14,7 @@ export const useCallAPI = (url) => {
                 const data = await axios.get(url);
                 setData(data.data);
                 setLoading(false);
+                callback(data.data)
             } catch (error) {
                 setLoading(false);
                 setError(error);

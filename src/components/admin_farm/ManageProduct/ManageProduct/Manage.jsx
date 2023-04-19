@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Pagination from '../../share/Pagination/Pagination';
 import productAPI from '../../../../apis/productAPI';
 import axios from 'axios';
+import './Manage.css';
 
 let PageSize = 6;
 const Manage = () => {
@@ -53,14 +54,6 @@ const Manage = () => {
         currentTableData();
     };
 
-    const handleDeleteProduct = (index) => {
-        async function deleteHandler() {
-            await productAPI.delete(index);
-            ProductHandler();
-        }
-        deleteHandler();
-    };
-
     function FilterList(id) {
         const fetchData = async () => {
             setCurrentTab(id);
@@ -78,6 +71,42 @@ const Manage = () => {
         };
         fetchData();
     }
+
+    function truncateString(str) {
+        if (str?.length > 15) {
+            return str.slice(0, 15) + '...';
+        } else {
+            return str;
+        }
+    }
+
+    const reStock = async (id) => {
+        const res = await productAPI.reStock(id);
+        const fetchData = async () => {
+            const response = await productAPI.getAPI();
+            const dataset = response.data;
+            const firstPageIndex = (currentPage - 1) * PageSize;
+            const lastPageIndex = firstPageIndex + PageSize;
+            setFirstData(dataset.slice(firstPageIndex, lastPageIndex));
+            setData(dataset);
+        };
+        fetchData();
+    };
+
+    const stopSelling = async (id) => {
+        // const res = await productAPI.stopSelling(id);
+        await productAPI.stopSelling(id);
+        const fetchData = async () => {
+            const response = await productAPI.getAPI();
+            const dataset = response.data;
+            const firstPageIndex = (currentPage - 1) * PageSize;
+            const lastPageIndex = firstPageIndex + PageSize;
+            setFirstData(dataset.slice(firstPageIndex, lastPageIndex));
+            setData(dataset);
+        };
+        fetchData();
+    };
+
     return (
         <div>
             {' '}
@@ -87,7 +116,7 @@ const Manage = () => {
                         className={currentTab === 0 ? 'product_category_item_active_ad' : 'product_category_item_ad'}
                         onClick={() => FilterList(0)}
                     >
-                        {/* <img className="product_category_img" src="https://bom.so/hhjDCB"></img> */}
+                        <img className="product_category_img" src="https://bom.so/hhjDCB"></img>
                         <div className="product_category_title">Tất cả</div>
                     </li>
                     {category
@@ -120,31 +149,31 @@ const Manage = () => {
                 <table className="products_table">
                     <thead className="bg-light">
                         <tr className="text-center">
-                            <th className="border-0" scope="col">
+                            <th className="border-0 th1" scope="col">
                                 {' '}
                                 <strong className="text-small text-uppercase">ID</strong>
                             </th>
-                            <th className="border-0" scope="col">
+                            <th className="border-0 th1" scope="col">
                                 {' '}
                                 <strong className="text-small text-uppercase">Tên sản phẩm</strong>
                             </th>
-                            <th className="border-0" scope="col">
+                            <th className="border-0 th1" scope="col">
                                 {' '}
                                 <strong className="text-small text-uppercase">Danh mục</strong>
                             </th>
-                            <th className="border-0" scope="col">
+                            <th className="border-0 th1" scope="col">
                                 {' '}
                                 <strong className="text-small text-uppercase">Giá</strong>
                             </th>
-                            <th className="border-0" scope="col">
+                            <th className="border-0 th1" scope="col">
                                 {' '}
                                 <strong className="text-small text-uppercase">Ảnh</strong>
                             </th>
-                            <th className="border-0" scope="col">
+                            <th className="border-0 th1" scope="col">
                                 {' '}
-                                <strong className="text-small text-uppercase">Xóa</strong>
+                                <strong className="text-small text-uppercase">Tuỳ chỉnh</strong>
                             </th>
-                            <th className="border-0" scope="col">
+                            <th className="border-0 th1" scope="col">
                                 {' '}
                                 <strong className="text-small text-uppercase">Sửa</strong>
                             </th>
@@ -155,25 +184,31 @@ const Manage = () => {
                             ? firstData.map((product, index) => (
                                   <tr className="text_center" key={index}>
                                       <td className="text_center">{product.id}</td>
-                                      <td className="text_center">{product.name}</td>
+                                      <td className="text_center">{truncateString(product.name)}</td>
                                       <td className="text_center">{product.category_ID}</td>
                                       <td className="text_center">{product.price}</td>
                                       <td className="text_center">
-                                          <img src={product.image1} alt="" width="100px" />
+                                          {/* <img src={product.images[0]?.url} alt="" width="100px" /> */}
                                       </td>
                                       <td className="text_center">
-                                          <p
-                                              className="reset-anchor remove_cart"
-                                              style={{ cursor: 'pointer' }}
-                                              onClick={() => handleDeleteProduct(product.id)}
-                                          >
-                                              <i className="fas fa-trash-alt small text-muted"></i>
+                                          <p className="reset-anchor remove_cart" style={{ cursor: 'pointer' }}>
+                                              {product.isAvailable ? (
+                                                  <i
+                                                      class="green-red fa-solid fa-circle-dot"
+                                                      onClick={() => stopSelling(product.id)}
+                                                  ></i>
+                                              ) : (
+                                                  <i
+                                                      class="red-red fa-solid fa-circle-dot"
+                                                      onClick={() => reStock(product.id)}
+                                                  ></i>
+                                              )}
                                           </p>
                                       </td>
                                       <td className="text_center">
                                           <Link to={`/product/edit/${product.id}`}>
                                               <p className="reset-anchor " style={{ cursor: 'pointer' }}>
-                                                  <i className="fa-solid fa-pen-to-square"></i>
+                                                  <i className="iconEdit fa-solid fa-pen-to-square"></i>
                                               </p>
                                           </Link>
                                       </td>

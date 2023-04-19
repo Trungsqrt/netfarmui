@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../css/style.css';
 function Product(props) {
@@ -10,7 +9,7 @@ function Product(props) {
             <div className="product_box">
                 <div className="product_yt">Yêu thích</div>
                 <Link className="link_product" to={`/shop/product/detail/${product.id}`}>
-                    <img src={product.image1} alt="" className="product_img" />
+                    <img src={product.images[0].url} alt="" className="product_img" />
                     <h6 className="product_name">{product.name}</h6>
                     <h3 className="product_price">{product.price} Đ</h3>
                 </Link>
