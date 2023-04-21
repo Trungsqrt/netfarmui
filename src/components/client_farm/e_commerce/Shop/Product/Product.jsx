@@ -4,12 +4,21 @@ import '../../css/style.css';
 function Product(props) {
     const { product, index } = props;
     const navigate = useNavigate();
+
+    function truncateString(str, num) {
+        if (str.length > num) {
+            return str.slice(0, num) + '...';
+        } else {
+            return str;
+        }
+    }
+
     return (
         <div className="product_item" key={index}>
             <div className="product_box">
                 <div className="product_yt">Yêu thích</div>
                 <Link className="link_product" to={`/shop/product/detail/${product.id}`}>
-                    <img src={product.image1} alt="" className="product_img" />
+                    <img src={product.images[0].url} alt="" className="product_img" />
                     <h6 className="product_name">{product.name}</h6>
                     <h3 className="product_price">{product.price} Đ</h3>
                 </Link>
@@ -33,7 +42,7 @@ function Product(props) {
                     </ul>
                     <div className="list-inline">
                         <i className="fa-solid fa-location-dot product_location_icon"></i>
-                        <div className="product_location">{product.placeProduce}</div>
+                        <div className="product_location">{truncateString(product.placeProduce, 10)}</div>
                     </div>
                 </div>
                 {/* <button className="Add_btn">Xem thêm</button> */}

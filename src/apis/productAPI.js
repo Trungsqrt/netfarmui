@@ -19,6 +19,10 @@ const productAPI = {
         return result.data;
     },
 
+    getAllAvailable: async () => {
+        return axiosClient.get('/Products/available-product');
+    },
+
     getDetail: (id) => {
         const url = `/Products/${id}`;
         return axiosClient.get(url);

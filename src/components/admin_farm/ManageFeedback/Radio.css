@@ -240,8 +240,12 @@
 }
 
 .product_img {
-    width: 100px;
-    height: 140px;
+    /* width: 100px;
+    height: 140px; */
+    object-fit: contain;
+    width: 100%;
+    max-height: 200px;
+    height: 200px;
 }
 
 .pr_name {
