@@ -15,7 +15,7 @@ function DSS() {
     const putWeatherUrl = 'https://localhost:44303/api/APIWether';
     const resultUrl = 'https://localhost:44303/api/APIResult';
     const weatherAPIURL =
-        'https://api.weatherbit.io/v2.0/forecast/daily?&lat=16.0678&lon=108.2208&days=5&key=c0cea0e19d244952b70dc7d5fec68df4';
+        'https://api.weatherbit.io/v2.0/forecast/daily?&lat=16.0678&lon=108.2208&days=7&key=c0cea0e19d244952b70dc7d5fec68df4&fbclid=IwAR3busa2LmNNAlQJYddwNcEpyvoz-ovEdPuGxK_jIeoJopZz_1c6JV5VDvY';
 
     const [dataWeather, setDataWeather] = useState([]);
     const [cityName, setCityName] = useState('');
@@ -176,9 +176,9 @@ function DSS() {
                 <button className={styles.ConfirmBtn} onClick={handlerSubmit}>
                     Xác nhận
                 </button>
-            </section>
+            </section> */}
 
-            <section className={styles.container}>
+            {/* <section className={styles.container}>
                 <div className={styles.imageHuman}></div>
 
                 <div className={styles.columnRight}>
