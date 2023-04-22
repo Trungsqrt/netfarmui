@@ -25,7 +25,13 @@ const Ad = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const radioResponse = await axios.get(feedbackRadioUrl);
-            setFeedbackRadio(radioResponse.data);
+            setFeedbackRadio({
+                positive: (radioResponse.data.positive * 100).toFixed(2),
+                negative: (radioResponse.data.negative * 100).toFixed(2),
+                neutral: (radioResponse.data.neutral * 100).toFixed(2),
+            });
+
+            console.log((radioResponse.data.positive * 100).toFixed(2));
 
             const fblistRespone = await axios.get(fbListUrl);
             setFbList(fblistRespone.data);
@@ -110,9 +116,9 @@ const Ad = (props) => {
                                     <div className="popup_product_feedback">
                                         <div className="popup_product_feedback_title">Tỉ lệ phản hồi:</div>
                                         <div className="popup_product_feedback_radio">
-                                            <div className="green">Tích cực: {feedbackRadio.positive * 100} %</div>
-                                            <div className="red">Tiêu cực: {feedbackRadio.negative * 100} %</div>
-                                            <div className="blue">Trung tính: {feedbackRadio.neutral * 100} %</div>
+                                            <div className="green">Tích cực: {feedbackRadio.positive} %</div>
+                                            <div className="red">Tiêu cực: {feedbackRadio.negative} %</div>
+                                            <div className="blue">Trung tính: {feedbackRadio.neutral} %</div>
                                         </div>
                                     </div>
                                     <div className="">

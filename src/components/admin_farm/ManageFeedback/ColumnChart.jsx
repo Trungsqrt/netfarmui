@@ -5,7 +5,7 @@ const ColumnChart = ({ data }) => {
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF1919'];
     return (
         <div className="chart_container">
-            <BarChart width={500} height={300} data={data}>
+            <BarChart width={500} height={350} data={data}>
                 <CartesianGrid strokeDasharray="4 4" />
                 <XAxis dataKey="name" label={{ value: 'Sao', position: 'insideBottomRight', offset: -10 }} />
                 <YAxis tickCount={4} label={{ value: 'Số lượng', angle: -90, position: 'insideLeft' }} />

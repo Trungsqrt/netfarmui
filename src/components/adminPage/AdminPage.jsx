@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './AdminPage.module.css';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '../admin_farm/share/header/Header';
 import './AdminPage.css';
 
@@ -9,7 +9,6 @@ function AdminPage() {
     const userUrl = 'https://localhost:44303/api/Users';
     const articleUrl = 'https://localhost:44303/api/Article';
     const scheduleUrl = 'https://localhost:44303/api/ScheduleTask';
-    const ScheUrl = 'https://localhost:44303/api/Schedule';
 
     const [data, setData] = useState([]);
     const navigate = useNavigate();
@@ -30,7 +29,7 @@ function AdminPage() {
         setUser(currentUser.roleName);
         async function getData() {
             const d = await axios.get(userUrl);
-            const Dataset = d.data.filter(item => item["fullName"] !== "Admin")
+            const Dataset = d.data.filter((item) => item['fullName'] !== 'Admin');
             Dataset.forEach((item) => {
                 const value = {
                     id: item.id,
@@ -96,8 +95,6 @@ function AdminPage() {
         getData();
     };
 
-    
-
     const handleDeletePost = (index) => {
         if (window.confirm('Xác nhận xoá!')) {
             async function deleteHandler() {
@@ -118,8 +115,6 @@ function AdminPage() {
         }
     };
 
-    
-
     const handleAddArticle = () => {
         navigate('/ArticleHandler');
     };
@@ -132,7 +127,7 @@ function AdminPage() {
         setData([]);
         const id = e.target.value;
 
-        if (id == 'Chọn loại cây') {
+        if (id === 'Chọn loại cây') {
             setFlag(false);
         } else {
             setFlag(true);
@@ -209,26 +204,25 @@ function AdminPage() {
                             <h3 className={styles.title}>Admin Page</h3>
                             <ul className={styles.nav}>
                                 <li
-                                    className={render == 1 ? styles.navItemSelected : styles.navItem}
+                                    className={render === 1 ? styles.navItemSelected : styles.navItem}
                                     onClick={UserHandler}
                                 >
                                     <i class="menuIconItem fa-regular fa-user"></i>
                                     Users
                                 </li>
                                 <li
-                                    className={render == 2 ? styles.navItemSelected : styles.navItem}
+                                    className={render === 2 ? styles.navItemSelected : styles.navItem}
                                     onClick={PostHandler}
                                 >
                                     <i class="menuIconItem fa-regular fa-newspaper"></i>
                                     Posts
                                 </li>
-                               
                             </ul>
                         </div>
                         <div className={styles.right}>
                             <section className={styles.bodyContainer}>
                                 <table className={styles.tableContainerr}>
-                                    {render == 1 && (
+                                    {render === 1 && (
                                         <div>
                                             {/* <tbody> */}
                                             <div className={styles.searchContainer}>
@@ -280,7 +274,7 @@ function AdminPage() {
                                             {/* </tbody> */}
                                         </div>
                                     )}
-                                    {render == 2 && (
+                                    {render === 2 && (
                                         <div>
                                             {/* <tbody> */}
                                             <div className={styles.searchContainer}>
@@ -331,8 +325,6 @@ function AdminPage() {
                                             {/* </tbody> */}
                                         </div>
                                     )}
-
-                                    
                                 </table>
                             </section>
                         </div>

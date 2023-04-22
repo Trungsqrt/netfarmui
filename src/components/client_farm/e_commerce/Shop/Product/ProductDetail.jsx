@@ -89,7 +89,7 @@ function ProductDetail(props) {
     }, []);
 
     function AddToCartHandler() {
-        if (user == null) navigate('/login');
+        if (user === null) navigate('/login');
         else {
             const userId = user.userId;
             if (carts.length !== 0) {
@@ -181,7 +181,7 @@ function ProductDetail(props) {
     }
 
     function AddToCartHandler2() {
-        if (user == null) navigate('/login');
+        if (user === null) navigate('/login');
         else {
             const userId = user.userId;
             if (carts.length !== 0) {

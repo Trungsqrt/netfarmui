@@ -7,7 +7,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { DatasContextProvider } from './contexts';
 import store from './redux/store';
-import Parcer from 'html-react-parser';
 
 // import Parser from 'html-react-parser/dist/html-react-parser';
 const root = ReactDOM.createRoot(document.getElementById('root'));

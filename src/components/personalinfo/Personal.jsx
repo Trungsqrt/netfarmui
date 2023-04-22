@@ -98,7 +98,7 @@ function Personal() {
         } else {
             msg.uname = 'Vui lòng nhập đúng định dạng số điện thoại!';
         }
-        if (cccd[0] == '0') {
+        if (cccd[0] === '0') {
             msg.cccd = 'CCCD không bắt đầu bằng 0';
         }
         if (cccd.length < 8) {

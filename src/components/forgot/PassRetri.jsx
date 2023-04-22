@@ -59,7 +59,7 @@ function PassRetri() {
             const isValid = validateAll();
             if (!isValid) return;
 
-            if (confirmCode == code) {
+            if (confirmCode === code) {
                 const currentU = {
                     nameOrPhone: uname,
                     newPass: pass,
@@ -68,7 +68,7 @@ function PassRetri() {
                 const handle = async () => {
                     const res = await axios.put(urlPhoneConfirm, currentU);
                     const response = res.data;
-                    if (response.status == true) {
+                    if (response.status === true) {
                         alert('Đổi mật khẩu thành công!');
                         navigate('/login');
                     } else {
@@ -89,7 +89,7 @@ function PassRetri() {
             const response = res.data;
             console.log('res: ' + response);
             console.log('code: ' + response.code);
-            if (response.messStatus == true) {
+            if (response.messStatus === true) {
                 setCode(response.code);
                 console.log(code);
                 setFlag(true);

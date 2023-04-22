@@ -167,7 +167,7 @@ function ExpertPage() {
                 .get(scheduleUrl)
                 .then((res) => {
                     res.data.forEach((item) => {
-                        if (item.scheduleId == idHandle) dataFil.push(item.id);
+                        if (item.scheduleId === idHandle) dataFil.push(item.id);
                     });
 
                     //delete tasks
@@ -252,7 +252,7 @@ function ExpertPage() {
         setData([]);
         const id = e.target.value;
 
-        if (id == 'Chọn loại cây') {
+        if (id === 'Chọn loại cây') {
             setFlag(false);
         } else {
             setFlag(true);
@@ -345,28 +345,28 @@ function ExpertPage() {
                             <h3 className={styles.title}>Expert Page</h3>
                             <ul className={styles.nav}>
                                 <li
-                                    className={render == 1 ? styles.navItemSelected : styles.navItem}
+                                    className={render === 1 ? styles.navItemSelected : styles.navItem}
                                     onClick={PostHandler}
                                 >
                                     <i class="menuIconItem fa-regular fa-newspaper"></i>
                                     Posts
                                 </li>
                                 <li
-                                    className={render == 2 ? styles.navItemSelected : styles.navItem}
+                                    className={render === 2 ? styles.navItemSelected : styles.navItem}
                                     onClick={ScheduleHandler}
                                 >
                                     <i class="menuIconItem fa-solid fa-calendar-days"></i>
                                     Schedules
                                 </li>{' '}
                                 <li
-                                    className={render == 3 ? styles.navItemSelected : styles.navItem}
+                                    className={render === 3 ? styles.navItemSelected : styles.navItem}
                                     onClick={StandardHandler}
                                 >
                                     <i class="menuIconItem fa-solid fa-seedling"></i>
                                     Standard
                                 </li>
                                 <li
-                                    className={render == 4 ? styles.navItemSelected : styles.navItem}
+                                    className={render === 4 ? styles.navItemSelected : styles.navItem}
                                     onClick={StageDetailHandler}
                                 >
                                     <i class="menuIconItem fa-solid fa-leaf"></i>
@@ -377,7 +377,7 @@ function ExpertPage() {
                         <div className={styles.right}>
                             <section className={styles.bodyContainer}>
                                 <table className={styles.tableContainerr}>
-                                    {render == 1 && (
+                                    {render === 1 && (
                                         <div>
                                             {/* <tbody> */}
                                             <div className={styles.searchContainer}>
@@ -442,7 +442,7 @@ function ExpertPage() {
                                         </div>
                                     )}
 
-                                    {render == 2 && (
+                                    {render === 2 && (
                                         <div>
                                             <div
                                                 className={styles.searchContainer}
@@ -523,7 +523,7 @@ function ExpertPage() {
                                         </div>
                                     )}
 
-                                    {render == 3 && (
+                                    {render === 3 && (
                                         <div>
                                             {/* <tbody> */}
                                             <div className={styles.searchContainer}>
@@ -604,7 +604,7 @@ function ExpertPage() {
                                         </div>
                                     )}
 
-                                    {render == 4 && (
+                                    {render === 4 && (
                                         <div>
                                             {/* <tbody> */}
                                             <div className={styles.searchContainer}>

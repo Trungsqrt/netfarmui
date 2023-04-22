@@ -26,7 +26,7 @@ function EditCategory(props) {
                 display: display,
                 categorySlug: categorySlug,
             };
-            if (data.display == '' || data.categorySlug == '') {
+            if (data.display === '' || data.categorySlug === '') {
                 alert('Không được để trống');
             } else {
                 axios.put(url, data);

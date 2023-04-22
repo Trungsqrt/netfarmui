@@ -15,7 +15,7 @@ const AddCategory = () => {
             display: display,
             categorySlug: categorySlug,
         };
-        if (postCategory.display == '' || postCategory.categorySlug == '') {
+        if (postCategory.display === '' || postCategory.categorySlug === '') {
             alert('Không được để trống');
         } else {
             try {

@@ -46,7 +46,6 @@ const Feedback = () => {
                 };
                 currentfblist.push(responsefb);
             }
-            console.log('current', currentfblist);
             // console.log('fb', fb);
             setCurrentFB(currentfblist);
         }, 5000);

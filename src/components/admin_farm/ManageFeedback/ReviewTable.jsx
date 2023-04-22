@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Pagination from '../share/Pagination/Pagination';
-let PageSize = 10;
+let PageSize = 6;
 
 function ReviewTable(props) {
     const reviews = props.reviews;
@@ -55,20 +55,22 @@ function ReviewTable(props) {
                 </select>
             </div>
             <table className="table_fb">
-                <thead>
+                <thead className="table_fb_header">
                     <tr>
-                        <th>Tên người dùng</th>
-                        <th>Nội dung</th>
-                        <th>Số sao</th>
+                        {/* <th>Tên người dùng</th> */}
+                        <th colSpan="3">Nội dung</th>
+                        <th>sao</th>
                         {/* <th>ID sản phẩm</th> */}
                         <th>Sắc thái</th>
                     </tr>
                 </thead>
                 <tbody>
                     {currentData.map((review, index) => (
-                        <tr key={index}>
-                            <td>{review.userName}</td>
-                            <td>{review.contents}</td>
+                        <tr key={index} className="contentfb_resize">
+                            {/* <td>{review.userName}</td> */}
+                            <td colSpan="3">
+                                <div>{review.contents}</div>
+                            </td>
                             <td>
                                 {review.star}
                                 <i className="fas fa-star star_icon"></i>

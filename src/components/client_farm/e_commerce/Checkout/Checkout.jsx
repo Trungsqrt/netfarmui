@@ -64,12 +64,12 @@ const Checkout = () => {
                 cancel: false,
                 finishAt: null,
             };
-            if (postOrder.phone == '') {
+            if (postOrder.phone === '') {
                 error = 'Số điện thoại không đúng format';
             }
 
             try {
-                if (error == '') {
+                if (error === '') {
                     await axios.post(orderUrl, postOrder);
                     var length = carts.length;
                     for (var i = 0; i < length; i++) {

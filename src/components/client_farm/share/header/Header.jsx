@@ -106,7 +106,7 @@ const Header = () => {
                 item.title.toLowerCase().includes(searchContent.toLowerCase()),
             );
             setCurrentArticles([...resultArray]);
-        } else if (searchContent == '') {
+        } else if (searchContent === '') {
             setCurrentArticles([]);
         }
     }, [searchContent]);

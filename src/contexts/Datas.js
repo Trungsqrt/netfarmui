@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { API_URL, articleAPI, productAPI } from '../apis';
+import { articleAPI, productAPI } from '../apis';
 import { useState, useEffect, createContext } from 'react';
 
 // Context
