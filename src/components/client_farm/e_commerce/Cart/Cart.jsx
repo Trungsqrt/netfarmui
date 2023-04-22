@@ -163,7 +163,7 @@ const Cart = () => {
     return (
         <>
         <Header></Header>
-            <Grid style={{ height: '80vh', padding: '40px' }} className="space-align-container">
+            <Grid style={{  padding: '40px' ,display:'block'}} >
                 <Row span={24}>
                     <Col span={12} offset={2}>
                         <Grid>
