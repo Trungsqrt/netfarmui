@@ -9,6 +9,7 @@ import { productAPI } from '../../../../apis';
 // import { productAPI } from '../../apis';
 import imaginecartempty from '../../../../assets/image/cart-empty.png';
 import Header from '../../share/header/Header';
+import Notification from '../../share/notification/Notification';
 
 const Cart = () => {
     localStorage.removeItem('checklist');
@@ -30,7 +31,6 @@ const Cart = () => {
         const fetchData = async () => {
             const response = await axios.get(cartUrl);
             const data = response.data;
-            console.log("🚀 ~ file: Cart.jsx:34 ~ fetchData ~ data:", data)
             const filter = data.filter((item) => item['userId'] === userId);
             setCart(filter);
             const inputData = [];
@@ -61,7 +61,10 @@ const Cart = () => {
                 try {
                     axios.put(`${cartUrl}/${getCart.id}`, getCart);
                 } catch (err) {
-                    alert('Có lỗi, xin vui lòng thử lại!');
+                    Notification({
+                        message :'Vui lòng chọn ít nhất một sản phẩm',
+                        type:'error',
+                    })
                 }
                 window.location.reload();
             }
@@ -86,7 +89,10 @@ const Cart = () => {
             axios.put(`${cartUrl}/${getCart.id}`, getCart);
             window.location.reload();
         } catch (err) {
-            alert('Có lỗi, xin vui lòng thử lại!');
+            Notification({
+                message :'Vui lòng chọn ít nhất một sản phẩm',
+                type:'error',
+            })
         }
     }
     // xử lý checkbox
@@ -109,7 +115,11 @@ const Cart = () => {
                 listcart.push(Number(checkboxs[i].name));
             }
         }
-        if (listcart.length === 0) notificationSuccess('warning');
+        if (listcart.length === 0)
+        Notification({
+            message :'Vui lòng chọn ít nhất một sản phẩm',
+            type:'warning',
+        })
         else {
             setCheckList(listcart);
             localStorage.removeItem('checklist');
@@ -125,32 +135,20 @@ const Cart = () => {
         setCartIdDelete(cartid);
         setOpen(true);
     };
-    const [api, contextHolder] = notification.useNotification();
-    const notificationSuccess = (type) => {
-        let message = '';
-        switch (type) {
-            case 'success':
-                message = 'Xóa sản phẩm thành công';
-                break;
-            case 'warning':
-                message = 'Vui lòng chọn ít nhất một sản phẩm';
-                break;
-            default:
-                message = 'Có lỗi, xin vui lòng thử lại!';
-                break;
-        }
-        api[type]({
-            message: message,
-        });
-    };
     const handleOk = () => {
         async function deleteHandler() {
             try {
                 await axios.delete(`${cartUrl}/${cartIdDelete}`);
                 window.location.reload();
-                notificationSuccess('success');
+                Notification({
+                    message :'Xóa sản phẩm thành công',
+                    type:'success',
+                })
             } catch (err) {
-                notificationSuccess('error');
+                Notification({
+                    message :'Có lỗi, xin vui lòng thử lại!',
+                    type:'error',
+                })
             }
             setOpen(false);
         }
@@ -316,7 +314,6 @@ const Cart = () => {
                 onOk={handleOk}
                 onCancel={handleCancel}
             ></Modal>
-            {contextHolder}
         </>
     );
 };

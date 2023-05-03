@@ -3,26 +3,63 @@ import { Button } from 'antd';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Header from '../../share/header/Header';
 import styles from './ResultPayment.module.css';
+import axios from 'axios';
+import { useCallAPI } from '../../share/common/useCallAPI';
 
 const ResultPaymentComponent = () => {
-    const [user, setUser] = useState('');
-    const getUser = localStorage.getItem('user');
-    const currentUser = JSON.parse(getUser);
+
+    const [vnp_Amount, setVnp_Amount] = useState();
+    const [vnp_TmnCode, setVnp_TmnCode] = useState();
+    const [vnp_BankCode, setVnp_BankCode] = useState();
+    const [vnp_OrderInfo, setVnp_OrderInfo] = useState();
+
+    const useURL = "https://localhost:44303/api/Users";
+    const orderURL ='https://localhost:44303/api/Order';
+    const orderID = localStorage.getItem('idOrder');
+    const [user, setUser] = useState();
+    const [orderInfor, setOrderInfor] = useState()
+    const {
+        data: order,
+        loading,
+        error,
+    } = useCallAPI(`${orderURL}/${orderID}`, (data) => {
+        setOrderInfor(data);
+    });
+
     const navigate = useNavigate();
-    const [paymentStatus, setPaymentStatus] = useState(false);
+    const [paymentStatus, setPaymentStatus] = useState(true);
+
+    const fetchData= async(userID)=>{
+
+        const userData =await axios.get(`${useURL}/${userID}`);
+        setUser(userData?.data);
+
+        const orderinforma =await axios.get(`${orderURL}/${orderID}`);
+        let tmp = orderinforma?.data;
+        
+        if(vnp_Amount===null || vnp_BankCode ===null|| vnp_TmnCode === null){
+            setPaymentStatus(false);
+        }else{
+            tmp.status ='true';
+            await axios.put(`${orderURL}/${orderID}`,tmp);
+            setOrderInfor(tmp);
+        }
+    }    
     useEffect(() => {
-        setUser(currentUser.roleName);
-        // if (idEdit) {
-        //     fillCurrentData();
-        // }
+        const getUser = JSON.parse(localStorage.getItem('user'));
+        const userID = getUser.userId;
+        setVnp_Amount((new URLSearchParams(window.location.search)).get("vnp_Amount"));
+        setVnp_TmnCode((new URLSearchParams(window.location.search)).get("vnp_TmnCode"));
+        setVnp_BankCode((new URLSearchParams(window.location.search)).get("vnp_BankCode"));
+        fetchData(userID);
     }, []);
 
     return (
         <div>
-            {paymentStatus === true && user === 'Farmer' ? (
+            {paymentStatus === true ? (
                 <>
                     <Header />
                     <div className={styles.container}>
@@ -41,23 +78,27 @@ const ResultPaymentComponent = () => {
                         <div className={styles.informationPay}>
                             <div className={styles.informationRow}>
                                 <div>Hình thức thanh toán</div>
-                                <div>Thanh toán qua VNpay</div>
+                                <div>thanh toán qua vnPay</div>
+                            </div>
+                            <div className={styles.informationRow}>
+                                <div>Ngân Hàng</div>
+                                <div>{vnp_BankCode}</div>
                             </div>
                             <div className={styles.informationRow}>
                                 <div>Địa chỉ nhận hàng</div>
-                                <div>Da Nang</div>
+                                <div>{orderInfor?.address}</div>
                             </div>
                             <div className={styles.informationRow}>
                                 <div>Số điện thoại</div>
-                                <div>09324557548</div>
+                                <div>{orderInfor?.phone}</div>
                             </div>
                             <div className={styles.informationRowMoney}>
                                 <div>Số tiền</div>
-                                <div>175.000 VND</div>
+                                <div>{vnp_Amount}</div>
                             </div>
                             <div className={styles.informationRow}>
                                 <div>Mã giao dịch</div>
-                                <div>dfnhgasvuwqkqwbd</div>
+                                <div>{vnp_TmnCode}</div>
                             </div>
                             <div className={styles.buttonWayBack}>
                                 <Button type="primary" danger>
@@ -95,8 +136,8 @@ const ResultPaymentComponent = () => {
                         </div>
                     </div>
                 </>
-            )}
-            {/* {user === 'Admin' && navigate('/AdminHome')}
+            )} 
+             {/* {user === 'Admin' && navigate('/AdminHome')}
     {user === 'Farmer' && navigate('/')} */}
         </div>
     );
