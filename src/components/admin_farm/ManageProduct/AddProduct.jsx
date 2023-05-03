@@ -177,7 +177,7 @@ const AddProduct = () => {
                         </li>
                         <li className="addProduct_row">
                             <div className="product_properties">Danh mục</div>
-                            <div className="product_input product_input_select ">
+                            <div className="product_input product_input_select " style={{ marginLeft: 'unset' }}>
                                 <select
                                     name="category"
                                     id="category"

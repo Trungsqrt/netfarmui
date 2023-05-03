@@ -106,7 +106,7 @@ const Header = () => {
                 item.title.toLowerCase().includes(searchContent.toLowerCase()),
             );
             setCurrentArticles([...resultArray]);
-        } else if (searchContent == '') {
+        } else if (searchContent === '') {
             setCurrentArticles([]);
         }
     }, [searchContent]);
@@ -155,6 +155,9 @@ const Header = () => {
                         </li>
                         <li className="navbarTask_item">
                             <Link to="/shop">Mua hàng</Link>
+                        </li>
+                        <li className="navbarTask_item">
+                            <Link to="/MyComponent">Nhận diện</Link>
                         </li>
                     </ul>
                     <form className="form-search" onSubmit={handleSubmit}>

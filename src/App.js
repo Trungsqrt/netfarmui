@@ -38,6 +38,8 @@ import Test from './components/tuan_ne/test';
 import CartNe from './components/tuan_ne/cart';
 import 'antd/dist/reset.css';
 import Radio from './components/admin_farm/ManageFeedback/Radio';
+import MyComponent from './components/plan_detect/plantapi';
+import Chatbot from './components/testBot/Chatbot';
 function App() {
     return (
         <div className="App">
@@ -85,6 +87,8 @@ function App() {
                 <Route path="/cartne" element={<CartNe />} />
 
                 <Route path="/feedback/radio" element={<Radio />} />
+                <Route path="/MyComponent" element={<MyComponent />} />
+                <Route path="/test" element={<Chatbot />} />
             </Routes>
             <Footer></Footer>
         </div>

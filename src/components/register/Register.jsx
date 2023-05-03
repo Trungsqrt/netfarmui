@@ -96,7 +96,7 @@ function Register({ setOverlay }) {
             const isValid = validateAll();
             if (!isValid) return;
 
-            if (confirmCode == code) {
+            if (confirmCode === code) {
                 const dob = new Date(Number(year), Number(month) - 1, Number(day) + 1).toISOString();
 
                 const newUser = {
@@ -123,7 +123,7 @@ function Register({ setOverlay }) {
             const response = res.data;
             console.log('res: ' + response);
             console.log('code: ' + response.code);
-            if (response.messStatus == true) {
+            if (response.messStatus === true) {
                 setCode(response.code);
                 console.log(code);
                 setFlag(true);

@@ -1,9 +1,23 @@
 .SelectRadio {
     display: flex;
     height: 40px;
-    width: 40%;
     justify-items: center;
     line-height: 40px;
+    padding: 0 10px;
+}
+
+.SelectRadio_title {
+    padding: 0 20px 0 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #4515bd;
+}
+
+.SelectRadio_title_demo {
+    padding: 10px 20px 10px 0;
+    font-size: 22px;
+    font-weight: 500;
+    color: #000;
 }
 
 .select_optional {
@@ -129,7 +143,7 @@
 .numOfFb_midlle {
     padding: 20px 20px;
     justify-content: space-between;
-    height: 120px;
+    height: 136px;
 }
 
 .icon_fb {
@@ -137,7 +151,7 @@
 }
 
 .NumFB {
-    font-size: 60px;
+    font-size: 50px;
     line-height: 60px;
 }
 
@@ -195,6 +209,19 @@
 
 .table_fb {
     width: 100%;
+    border: 1px solid #666;
+}
+
+.table_fb_header {
+    background-color: #20c997;
+}
+
+.contentfb_resize td:first-child {
+    width: 200px;
+}
+.table_fb td {
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .fb_chart {
@@ -240,8 +267,12 @@
 }
 
 .product_img {
-    width: 100px;
-    height: 140px;
+    /* width: 100px;
+    height: 140px; */
+    object-fit: contain;
+    width: 100%;
+    max-height: 200px;
+    height: 200px;
 }
 
 .pr_name {
@@ -258,7 +289,7 @@
 }
 
 .popup {
-    width: 700px;
+    width: 900px;
     height: 94%;
     position: fixed;
     top: 50%;
@@ -439,6 +470,13 @@
 }
 
 /* Demo mode CSS */
+.chart_demo {
+    display: flex;
+    margin: 0 auto;
+    width: 50%;
+    justify-content: center;
+}
+
 .Demo_container {
     padding: 20px;
     background-color: #fff;

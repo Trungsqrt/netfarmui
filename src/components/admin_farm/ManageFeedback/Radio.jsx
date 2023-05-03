@@ -2196,9 +2196,9 @@ const Radio = () => {
     const productUrl = 'https://localhost:44303/api/Products';
     const starRadioUrl = 'http://127.0.0.1:8000/star/radio/';
     const [catList, setCatList] = useState([]);
-    const [category, setCategory] = useState('1');
+    const [category, setCategory] = useState('0');
     const [productList, setProductList] = useState([]);
-    const [product, setProduct] = useState('1');
+    const [product, setProduct] = useState('0');
     const [data, setData] = useState([]);
     const [starData, setStarData] = useState([]);
     const [feedbacks, setFeedbacks] = useState([]);
@@ -2208,9 +2208,9 @@ const Radio = () => {
             const radio = await axios.get(feadbackRadio);
             const radioData = radio.data;
             setData([
-                { name: 'Positive', value: radioData.positive },
-                { name: 'Negative', value: radioData.negative },
-                { name: 'Neutral', value: radioData.neutral },
+                { name: 'Positive', value: parseFloat((radioData.positive * 100).toFixed(2)) },
+                { name: 'Negative', value: parseFloat((radioData.negative * 100).toFixed(2)) },
+                { name: 'Neutral', value: parseFloat((radioData.neutral * 100).toFixed(2)) },
             ]);
 
             const radioStar = await axios.get(starRadioUrl);
@@ -2270,9 +2270,9 @@ const Radio = () => {
             const radio = await axios.get(feadbackRadio);
             const radioData = radio.data;
             setData([
-                { name: 'Positive', value: radioData.positive },
-                { name: 'Negative', value: radioData.negative },
-                { name: 'Neutral', value: radioData.neutral },
+                { name: 'Positive', value: parseFloat((radioData.positive * 100).toFixed(2)) },
+                { name: 'Negative', value: parseFloat((radioData.negative * 100).toFixed(2)) },
+                { name: 'Neutral', value: parseFloat((radioData.neutral * 100).toFixed(2)) },
             ]);
             const radioStar = await axios.get(starRadioUrl);
             const radioStarData = radioStar.data;
@@ -2313,9 +2313,9 @@ const Radio = () => {
         const radio = await axios.get(`${feadbackRadio}category/${CatID}`);
         const radioData = radio.data;
         setData([
-            { name: 'Positive', value: radioData.positive },
-            { name: 'Negative', value: radioData.negative },
-            { name: 'Neutral', value: radioData.neutral },
+            { name: 'Positive', value: parseFloat((radioData.positive * 100).toFixed(2)) },
+            { name: 'Negative', value: parseFloat((radioData.negative * 100).toFixed(2)) },
+            { name: 'Neutral', value: parseFloat((radioData.neutral * 100).toFixed(2)) },
         ]);
 
         const fbrespone = await axios.get(`http://127.0.0.1:8000/feedback/get/${CatID}`);
@@ -2345,9 +2345,9 @@ const Radio = () => {
         const radio = await axios.get(`${feadbackRadio}productID/${productID}`);
         const radioData = radio.data;
         setData([
-            { name: 'Positive', value: radioData.positive },
-            { name: 'Negative', value: radioData.negative },
-            { name: 'Neutral', value: radioData.neutral },
+            { name: 'Positive', value: parseFloat((radioData.positive * 100).toFixed(2)) },
+            { name: 'Negative', value: parseFloat((radioData.negative * 100).toFixed(2)) },
+            { name: 'Neutral', value: parseFloat((radioData.neutral * 100).toFixed(2)) },
         ]);
 
         const fbrespone = await axios.get(`http://127.0.0.1:8000/feedback/get/product/${productID}`);
@@ -2382,7 +2382,7 @@ const Radio = () => {
         <div className="radioContainer">
             <div className="selectSection">
                 <div className="SelectRadio">
-                    <div>Chọn loại biểu đồ:</div>
+                    <div className="SelectRadio_title">Chọn loại biểu đồ:</div>
                     <div>
                         <select name="chart" id="chartID" onChange={selectHandle}>
                             <option value="All">Tất cả</option>
@@ -2392,10 +2392,13 @@ const Radio = () => {
                     </div>
                 </div>
                 <div className="SelectRadio select_hiden" id="selectCategory">
-                    <div>Chọn danh mục:</div>
+                    <div className="SelectRadio_title">Chọn danh mục:</div>
                     <div className="">
                         <select name="category" id="category" value={category} onChange={categorySelected}>
                             {' '}
+                            <option disabled selected value="0">
+                                Chọn danh mục
+                            </option>
                             {catList
                                 ? catList.map((cat, index) => (
                                       <option value={cat.categoryId} key={index}>
@@ -2407,10 +2410,13 @@ const Radio = () => {
                     </div>
                 </div>
                 <div className="SelectRadio select_hiden" id="selectProduct">
-                    <div>Chọn sản phẩm :</div>
+                    <div className="SelectRadio_title">Chọn sản phẩm :</div>
                     <div className="">
                         <select name="product" id="product" value={product} onChange={productSelected}>
                             {' '}
+                            <option disabled selected value="0">
+                                Chọn sản phẩm
+                            </option>
                             {productList
                                 ? productList.map((product, index) => (
                                       <option value={product.id} key={index}>
@@ -2464,7 +2470,7 @@ const Radio = () => {
                 <div className="chart_table display_flex">
                     <div className="column_2">
                         <div className="fb_chart hov_Scale">
-                            <PieChart width={540} height={250}>
+                            <PieChart width={540} height={300}>
                                 <Pie
                                     data={data}
                                     dataKey="value"

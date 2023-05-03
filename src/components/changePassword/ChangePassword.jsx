@@ -69,11 +69,11 @@ function ChangePassword() {
             const response = res.data;
             if (response.message === 'Your current password is wong!') {
                 alert('Mật khẩu hiện tại không đúng, vui lòng nhập lại!');
-            } else if (uname == pass) {
+            } else if (uname === pass) {
                 alert('Mật khẩu mới phải khác mật khẩu hiện tại');
-            } else if (response.status == true) {
+            } else if (response.status === true) {
                 alert('Thay đổi mật khẩu thành công!');
-                if (user == 'Admin' || user == 'Expert') {
+                if (user === 'Admin' || user === 'Expert') {
                     navigate('/adminHome');
                 } else {
                     navigate('/');

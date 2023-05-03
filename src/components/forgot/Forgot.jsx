@@ -21,7 +21,7 @@ function Forgot() {
             const response = res.data;
             console.log('res: ' + response);
             console.log('code: ' + response.code);
-            if (response.messStatus == true) {
+            if (response.messStatus === true) {
                 setCode(response.code);
                 console.log(code);
                 setFlag(true);
@@ -34,7 +34,7 @@ function Forgot() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (confirmCode == code) {
+        if (confirmCode === code) {
             localStorage.setItem('recoverPass', phone);
             navigate('/passwordRetrieval');
         } else {

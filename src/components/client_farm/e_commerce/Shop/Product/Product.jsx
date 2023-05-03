@@ -4,6 +4,15 @@ import '../../css/style.css';
 function Product(props) {
     const { product, index } = props;
     const navigate = useNavigate();
+
+    function truncateString(str, num) {
+        if (str.length > num) {
+            return str.slice(0, num) + '...';
+        } else {
+            return str;
+        }
+    }
+
     return (
         <div className="product_item" key={index}>
             <div className="product_box">
@@ -33,7 +42,7 @@ function Product(props) {
                     </ul>
                     <div className="list-inline">
                         <i className="fa-solid fa-location-dot product_location_icon"></i>
-                        <div className="product_location">{product.placeProduce}</div>
+                        <div className="product_location">{truncateString(product.placeProduce, 10)}</div>
                     </div>
                 </div>
                 {/* <button className="Add_btn">Xem thêm</button> */}

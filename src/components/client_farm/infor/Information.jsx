@@ -24,12 +24,12 @@ const Information = () => {
     return (
         <div>
             <div>
-                {(user === 'Admin' || user === 'Expert') ? <StaffHeader /> : <FarmerHeader />}
+                {user === 'Admin' || user === 'Expert' ? <StaffHeader /> : <FarmerHeader />}
                 {/* {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />} */}
                 <div className="infor_main">
                     <div className="menu">
                         <div className="menu_header">NETFARM</div>
-                        <ul className="infor_menulist">
+                        <ul className="infor_menulist" style={{ paddingLeft: 'unset' }}>
                             <li
                                 className={render === 0 ? 'infor_MenuItem_active' : 'infor_MenuItem'}
                                 onClick={() => setRender(0)}
@@ -67,7 +67,11 @@ const Information = () => {
                                 <div className="menu_link">TƯ VẤN</div>
                             </li>
                         </ul>
-                        <img className="menulist_img" style={{ objectFit: 'cover' }} src="https://ttpcert.com.vn/wp-content/uploads/2021/01/Doc1.jpg"></img>
+                        <img
+                            className="menulist_img"
+                            style={{ objectFit: 'cover' }}
+                            src="https://ttpcert.com.vn/wp-content/uploads/2021/01/Doc1.jpg"
+                        ></img>
                     </div>
 
                     <div className="infor_container">

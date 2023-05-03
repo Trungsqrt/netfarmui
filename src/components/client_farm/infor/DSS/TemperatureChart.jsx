@@ -17,7 +17,7 @@ import axios from 'axios';
 
 const TemperatureChart = () => {
     const weatherAPIURL =
-        'https://api.weatherbit.io/v2.0/forecast/daily?lat=16.0678&lon=108.2208&days=16&key=456707019eeb42ea96bd8f604af5d75d';
+        'https://api.weatherbit.io/v2.0/forecast/daily?&lat=16.0678&lon=108.2208&days=5&key=c0cea0e19d244952b70dc7d5fec68df4';
 
     const [dataWeather, setDataWeather] = useState([]);
     const [cityName, setCityName] = useState('');

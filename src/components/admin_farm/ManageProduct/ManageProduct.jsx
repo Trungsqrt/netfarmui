@@ -149,13 +149,13 @@ const ManageProduct = () => {
                     </Section>
                 </div>
                 <div className="manage_content">
-                    {render == 1 && <Manage></Manage>}
-                    {render == 2 && <ManageCategory></ManageCategory>}
-                    {render == 3 && <ManageOrder></ManageOrder>}
-                    {render == 4 && <Dashboard></Dashboard>}
-                    {render == 5 && <SaleReport></SaleReport>}
-                    {render == 6 && <Radio></Radio>}
-                    {render == 7 && <Demo></Demo>}
+                    {render === 1 && <Manage></Manage>}
+                    {render === 2 && <ManageCategory></ManageCategory>}
+                    {render === 3 && <ManageOrder></ManageOrder>}
+                    {render === 4 && <Dashboard></Dashboard>}
+                    {render === 5 && <SaleReport></SaleReport>}
+                    {render === 6 && <Radio></Radio>}
+                    {render === 7 && <Demo></Demo>}
                 </div>
             </div>
         </div>

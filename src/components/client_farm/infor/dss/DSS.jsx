@@ -3,7 +3,10 @@ import dssImage from '../../../../assets/image/pngwing.com.png';
 import styles from '../DSS/DSS.module.css';
 import TemperatureChart from './TemperatureChart';
 import axios from 'axios';
+import TempChat from '../../../chatbot_ui/chatbot';
+import Chatbot from '../../../testBot/Chatbot';
 const parse = require('html-react-parser');
+
 function DSS() {
     const [loaicay, setLoaiCay] = useState([]);
     const [hoatdong, setHoatDong] = useState([]);
@@ -12,7 +15,7 @@ function DSS() {
     const putWeatherUrl = 'https://localhost:44303/api/APIWether';
     const resultUrl = 'https://localhost:44303/api/APIResult';
     const weatherAPIURL =
-        'https://api.weatherbit.io/v2.0/forecast/daily?lat=16.0678&lon=108.2208&days=16&key=2337ea0b9360459da666b275176403c7';
+        'https://api.weatherbit.io/v2.0/forecast/daily?&lat=16.0678&lon=108.2208&days=7&key=c0cea0e19d244952b70dc7d5fec68df4&fbclid=IwAR3busa2LmNNAlQJYddwNcEpyvoz-ovEdPuGxK_jIeoJopZz_1c6JV5VDvY';
 
     const [dataWeather, setDataWeather] = useState([]);
     const [cityName, setCityName] = useState('');
@@ -26,29 +29,29 @@ function DSS() {
     const [description, setDescription] = useState('');
     const [tempt, setTempt] = useState('');
     //set temporary data
-    const getData = async () => {
+    /*const getData = async () => {
         const res = await axios.get(weatherAPIURL);
         const value = res.data.data;
         setDataWeather(res.data.data);
         setLocation(res.data.city_name);
-        setDescription(value[0].weather.description);
+        setDescription(value[0]?.weather?.description);
         setTempt(value[0].temp);
-        setIconState(value[0].weather.icon);
+        setIconState(value[0]?.weather?.icon);
         for (let i = 0; i < 8; ) {
             const postData = async () => {
                 const obj = {
                     id: i,
-                    description: value[i].weather.description,
-                    dateTime: new Date(value[i].datetime).toISOString(),
-                    minTemp: value[i].min_temp,
-                    maxTemp: value[i].max_temp,
-                    humidity: value[i].rh,
-                    wind: value[i].wind_spd,
-                    rain: value[i].precip,
+                    description: value[i]?.weather?.description,
+                    dateTime: new Date(value[i]?.datetime).toISOString(),
+                    minTemp: value[i]?.min_temp,
+                    maxTemp: value[i]?.max_temp,
+                    humidity: value[i]?.rh,
+                    wind: value[i]?.wind_spd,
+                    rain: value[i]?.precip,
                 };
 
-                await axios.put(`${putWeatherUrl}/${i}`, obj);
-                // await axios.post(`${putWeatherUrl}`, obj);
+                // await axios.put(`${putWeatherUrl}/${i}`, obj);
+                await axios.post(`${putWeatherUrl}`, obj);
                 // await axios.delete(`${putWeatherUrl}/${i}`);
             };
             postData();
@@ -57,7 +60,49 @@ function DSS() {
     };
     useEffect(() => {
         getData();
+    }, []);*/
+
+    const postData = async (value, i) => {
+        const obj = {
+            id: i,
+            description: value[i]?.weather?.description,
+            dateTime: new Date(value[i]?.datetime)?.toISOString(),
+            minTemp: value[i]?.min_temp,
+            maxTemp: value[i]?.max_temp,
+            humidity: value[i]?.rh,
+            wind: value[i]?.wind_spd,
+            rain: value[i]?.precip,
+        };
+        try {
+            await axios.put(`${putWeatherUrl}/${i}`, obj);
+            // await axios.post(`${putWeatherUrl}`, obj);
+            // await axios.delete(`${putWeatherUrl}/${i}`);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const getData = async () => {
+        try {
+            const res = await axios.get(weatherAPIURL);
+            const value = res.data.data;
+            setDataWeather(value);
+            setLocation(res.data.city_name);
+            setDescription(value[0]?.weather?.description);
+            setTempt(value[0].temp);
+            setIconState(value[0]?.weather?.icon);
+            for (let i = 0; i < 8; i++) {
+                await postData(value, i);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        getData();
     }, []);
+
     useEffect(() => {
         const getData = async () => {
             const res = await axios.get(standardURL);
@@ -80,9 +125,11 @@ function DSS() {
 
     const handlerChangeLoaiCay = (e) => {
         setSelectedType(e.target.value);
+        console.log(e.target.value);
     };
     const handlerChangeHoatDong = (e) => {
         setSelectedAction(e.target.value);
+        console.log(e.target.value);
     };
 
     function handlerSubmit() {
@@ -100,7 +147,7 @@ function DSS() {
 
     return (
         <div>
-            <section className={styles.selectBox}>
+            {/* <section className={styles.selectBox}>
                 <div className={styles.dsstitle}>Đối tượng tư vấn: </div>
                 <select onChange={handlerChangeLoaiCay} className={styles.selectElement}>
                     <option selected disabled>
@@ -129,9 +176,9 @@ function DSS() {
                 <button className={styles.ConfirmBtn} onClick={handlerSubmit}>
                     Xác nhận
                 </button>
-            </section>
+            </section> */}
 
-            <section className={styles.container}>
+            {/* <section className={styles.container}>
                 <div className={styles.imageHuman}></div>
 
                 <div className={styles.columnRight}>
@@ -160,7 +207,8 @@ function DSS() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
+            <Chatbot />
         </div>
     );
 }

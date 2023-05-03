@@ -28,7 +28,7 @@ const Shop = () => {
 
         const fetchData = async () => {
             //fetch raw data
-            const response = await productAPI.getAPI();
+            const response = await productAPI.getAllAvailable();
             const data = response.data;
             setProducts(data);
 
