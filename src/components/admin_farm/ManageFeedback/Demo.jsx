@@ -95,7 +95,7 @@ const Demo = () => {
     };
     return (
         <>
-            <Card style={{ height: 'auto' }}>
+            <Card style={{ height: '95%' }}>
                 <Row>
                     <Col span={24}>
                         <h2>Phân tích sắc thái phản hồi của người tiêu dùng</h2>
@@ -112,7 +112,7 @@ const Demo = () => {
                             style={{ width: '80%' }}
                             onChange={productSelected}
                         />
-                        {product && (
+                        {product.length>0 && (
                             <>
                                 <br></br>
                                 <div className="SelectRadio_title_demo"> Bình luận sản phẩm</div>
@@ -136,9 +136,9 @@ const Demo = () => {
                         )}
                     </Col>
                     <Col span={9}>
-                        {product ? (
+                        {product.length>0 ? (
                             <>
-                                <Image width={400} src={product[0]?.images[0]?.url} style={{ padding: '40px 0' }} />
+                                <Image width={400} height={400} src={product[0]?.images[0]?.url} style={{ padding: '40px 0' }} />
                                 <Space>
                                     <b>Đánh giá</b>
                                     <Rate tooltips={desc} onChange={setValue} value={value} />

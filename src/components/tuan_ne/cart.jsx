@@ -1,30 +1,12 @@
 import { CloseOutlined, MinusSquareOutlined, PlusSquareOutlined, RightOutlined } from '@ant-design/icons';
-import {
-    Typography,
-    Badge,
-    Button,
-    Card,
-    Col,
-    Divider,
-    Form,
-    Image,
-    Input,
-    Modal,
-    notification,
-    Row,
-    Space,
-} from 'antd';
+import { Badge, Button, Card, Col, Divider, Form, Image, Input, Modal, notification, Row, Space } from 'antd';
 import Grid from 'antd/es/card/Grid';
 import { Content } from 'antd/es/layout/layout';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { productAPI } from '../../../../apis';
-// import { productAPI } from '../../apis';
-import imaginecartempty from '../../../../assets/image/cart-empty.png';
-import Header from '../../share/header/Header';
-import Notification from '../../share/notification/Notification';
-const { Title } = Typography;
+import { productAPI } from '../../apis';
+import imaginecartempty from '../../assets/image/cart-empty.png';
 
 const Cart = () => {
     localStorage.removeItem('checklist');
@@ -76,10 +58,7 @@ const Cart = () => {
                 try {
                     axios.put(`${cartUrl}/${getCart.id}`, getCart);
                 } catch (err) {
-                    Notification({
-                        message: 'Vui lòng chọn ít nhất một sản phẩm',
-                        type: 'error',
-                    });
+                    alert('Có lỗi, xin vui lòng thử lại!');
                 }
                 window.location.reload();
             }
@@ -104,10 +83,7 @@ const Cart = () => {
             axios.put(`${cartUrl}/${getCart.id}`, getCart);
             window.location.reload();
         } catch (err) {
-            Notification({
-                message: 'Vui lòng chọn ít nhất một sản phẩm',
-                type: 'error',
-            });
+            alert('Có lỗi, xin vui lòng thử lại!');
         }
     }
     // xử lý checkbox
@@ -130,11 +106,7 @@ const Cart = () => {
                 listcart.push(Number(checkboxs[i].name));
             }
         }
-        if (listcart.length === 0)
-            Notification({
-                message: 'Vui lòng chọn ít nhất một sản phẩm',
-                type: 'warning',
-            });
+        if (listcart.length === 0) return;
         else {
             setCheckList(listcart);
             localStorage.removeItem('checklist');
@@ -150,20 +122,26 @@ const Cart = () => {
         setCartIdDelete(cartid);
         setOpen(true);
     };
+    const [api, contextHolder] = notification.useNotification();
+    const notificationSuccess = (type) => {
+        let message = '';
+        if (type == 'success') {
+            message = 'Xóa sản phẩm thành công';
+        } else {
+            message = 'Có lỗi, xin vui lòng thử lại!';
+        }
+        api[type]({
+            message: message,
+        });
+    };
     const handleOk = () => {
         async function deleteHandler() {
             try {
                 await axios.delete(`${cartUrl}/${cartIdDelete}`);
                 window.location.reload();
-                Notification({
-                    message: 'Xóa sản phẩm thành công',
-                    type: 'success',
-                });
+                notificationSuccess('success');
             } catch (err) {
-                Notification({
-                    message: 'Có lỗi, xin vui lòng thử lại!',
-                    type: 'error',
-                });
+                notificationSuccess('error');
             }
             setOpen(false);
         }
@@ -172,13 +150,11 @@ const Cart = () => {
     const handleCancel = () => {
         setOpen(false);
     };
-
     return (
         <>
-            <Header></Header>
-            <Grid style={{ padding: '40px', display: 'block' }}>
+            <Grid style={{ height: 'auto', padding: '40px' }} className="space-align-container">
                 <Row span={24}>
-                    <Col span={12} offset={2}>
+                    <Col span={11} offset={5}>
                         <Grid>
                             <Space size={20}>
                                 <h3>
@@ -193,7 +169,7 @@ const Cart = () => {
                             {carts ? (
                                 carts.map((cart, index) => (
                                     <Card style={{ width: '100%', height: 'auto', marginBottom: '10px' }}>
-                                        <Row style={{ display: 'flex', justifyContent: 'right' }}>
+                                        <Row style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                             <Button type="link">
                                                 <CloseOutlined
                                                     style={{ color: 'red' }}
@@ -219,8 +195,8 @@ const Cart = () => {
                                                         alignItems: 'center',
                                                     }}
                                                 >
-                                                    <Title level={5}>{cart.price} VND</Title>
-                                                    <Title level={5}>Số lượng :</Title>
+                                                    <h4> {cart.price} VND</h4>
+                                                    <h4>Số lượng :</h4>
                                                     <Space
                                                         style={{
                                                             justifyContent: 'flex-start',
@@ -245,7 +221,7 @@ const Cart = () => {
                                                             onClick={() => handlerUp(cart)}
                                                         ></Button>
                                                     </Space>
-                                                    <h5>{cart.quantity * cart.price} VND</h5>
+                                                    <h4>{cart.quantity * cart.price} VND</h4>
                                                     <input
                                                         className="checkbox"
                                                         type="checkbox"
@@ -279,9 +255,9 @@ const Cart = () => {
                             <Button primary>Tiếp tục mua sắm</Button>
                         </Link>
                     </Col>
-                    <Col span={6} offset={3} style={{ background: '#FAFAFA', padding: '10px 20px' }}>
+                    <Col span={5} offset={3} style={{ background: '#FAFAFA', padding: '10px 20px' }}>
                         {carts.map((cart, index) => (
-                            <Row align="middle" span={16} style={{ marginBottom: '20px' }}>
+                            <Row align="middle" span={16} style={{ marginBottom: '10px' }}>
                                 <Col span={4}>
                                     <Badge count={cart.quantity}>
                                         <Image width={60} src={cart.image} />
@@ -290,13 +266,28 @@ const Cart = () => {
                                 <Col span={8} offset={3}>
                                     <Content>{cart.name}</Content>
                                 </Col>
-                                <Col span={4} offset={2}>
-                                    <Space>{cart.quantity * cart.price} VND</Space>
+                                <Col span={4} offset={3}>
+                                    {cart.quantity * cart.price}
                                 </Col>
                             </Row>
                         ))}
 
                         <hr />
+                        <Row span={24}>
+                            <Form layout="inline" style={{ padding: '20px 0' }}>
+                                <Col span={16}>
+                                    <Form.Item>
+                                        <Input placeholder="Mã giảm giá"></Input>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={8}>
+                                    <Form.Item>
+                                        <Button type="primary">Áp dụng</Button>
+                                    </Form.Item>
+                                </Col>
+                            </Form>
+                        </Row>
+                        <Divider />
                         <Row align="middle" span={24} layout="inline">
                             <Col span={12} style={{ padding: '10px 0px' }}>
                                 Tạm tính
@@ -310,7 +301,7 @@ const Cart = () => {
                         <Divider />
                         <Row align="middle" span={24}>
                             <Col span={12}>
-                                <Title level={4}>Tổng cộng</Title>
+                                <h3>Tổng cộng</h3>
                             </Col>
                             <Col span={12}>{total} VND</Col>
                         </Row>
@@ -329,6 +320,7 @@ const Cart = () => {
                 onOk={handleOk}
                 onCancel={handleCancel}
             ></Modal>
+            {contextHolder}
         </>
     );
 };

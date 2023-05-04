@@ -12,6 +12,7 @@ export const loginUser = async (user, dispatch, navigate) => {
         localStorage.setItem('user', JSON.stringify(res.data));
         const getUser = localStorage.getItem('user');
         const user = JSON.parse(getUser);
+        console.log("🚀 ~ file: apiRequest.js:15 ~ user:", user)
         console.log(user);
         if (user.roleName === 'Admin') navigate('/AdminHome');
         else if (user.roleName === 'Expert') navigate('/expert');
