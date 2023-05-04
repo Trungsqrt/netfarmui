@@ -239,9 +239,9 @@ const Checkout = () => {
         );
     };
     return (
-        <div>
+        <>
             <Header></Header>
-            <Grid style={{ height: '570px', padding: '40px' }} className="space-align-container">
+            <Grid style={{ height: '100%', padding: '40px' }} className="space-align-container">
                 <Row>
                     <Col span={12} offset={3}>
                         <Grid>
@@ -426,7 +426,7 @@ const Checkout = () => {
                     </Col>
                 </Row>
             </Grid>
-        </div>
+        </>
     );
 };
 

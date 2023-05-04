@@ -1,5 +1,19 @@
 import { CloseOutlined, MinusSquareOutlined, PlusSquareOutlined, RightOutlined } from '@ant-design/icons';
-import { Badge, Button, Card, Col, Divider, Form, Image, Input, Modal, notification, Row, Space } from 'antd';
+import {
+    Typography,
+    Badge,
+    Button,
+    Card,
+    Col,
+    Divider,
+    Form,
+    Image,
+    Input,
+    Modal,
+    notification,
+    Row,
+    Space,
+} from 'antd';
 import Grid from 'antd/es/card/Grid';
 import { Content } from 'antd/es/layout/layout';
 import axios from 'axios';
@@ -10,6 +24,7 @@ import { productAPI } from '../../../../apis';
 import imaginecartempty from '../../../../assets/image/cart-empty.png';
 import Header from '../../share/header/Header';
 import Notification from '../../share/notification/Notification';
+const { Title } = Typography;
 
 const Cart = () => {
     localStorage.removeItem('checklist');
@@ -62,9 +77,9 @@ const Cart = () => {
                     axios.put(`${cartUrl}/${getCart.id}`, getCart);
                 } catch (err) {
                     Notification({
-                        message :'Vui lòng chọn ít nhất một sản phẩm',
-                        type:'error',
-                    })
+                        message: 'Vui lòng chọn ít nhất một sản phẩm',
+                        type: 'error',
+                    });
                 }
                 window.location.reload();
             }
@@ -90,9 +105,9 @@ const Cart = () => {
             window.location.reload();
         } catch (err) {
             Notification({
-                message :'Vui lòng chọn ít nhất một sản phẩm',
-                type:'error',
-            })
+                message: 'Vui lòng chọn ít nhất một sản phẩm',
+                type: 'error',
+            });
         }
     }
     // xử lý checkbox
@@ -116,10 +131,10 @@ const Cart = () => {
             }
         }
         if (listcart.length === 0)
-        Notification({
-            message :'Vui lòng chọn ít nhất một sản phẩm',
-            type:'warning',
-        })
+            Notification({
+                message: 'Vui lòng chọn ít nhất một sản phẩm',
+                type: 'warning',
+            });
         else {
             setCheckList(listcart);
             localStorage.removeItem('checklist');
@@ -141,14 +156,14 @@ const Cart = () => {
                 await axios.delete(`${cartUrl}/${cartIdDelete}`);
                 window.location.reload();
                 Notification({
-                    message :'Xóa sản phẩm thành công',
-                    type:'success',
-                })
+                    message: 'Xóa sản phẩm thành công',
+                    type: 'success',
+                });
             } catch (err) {
                 Notification({
-                    message :'Có lỗi, xin vui lòng thử lại!',
-                    type:'error',
-                })
+                    message: 'Có lỗi, xin vui lòng thử lại!',
+                    type: 'error',
+                });
             }
             setOpen(false);
         }
@@ -157,11 +172,11 @@ const Cart = () => {
     const handleCancel = () => {
         setOpen(false);
     };
-    
+
     return (
         <>
-        <Header></Header>
-            <Grid style={{  padding: '40px' ,display:'block'}} >
+            <Header></Header>
+            <Grid style={{ padding: '40px', display: 'block' }}>
                 <Row span={24}>
                     <Col span={12} offset={2}>
                         <Grid>
@@ -181,7 +196,7 @@ const Cart = () => {
                                         <Row style={{ display: 'flex', justifyContent: 'right' }}>
                                             <Button type="link">
                                                 <CloseOutlined
-                                                    style={{ color: 'red'}}
+                                                    style={{ color: 'red' }}
                                                     onClick={() => showModal(cart.id)}
                                                 />
                                             </Button>
@@ -204,8 +219,8 @@ const Cart = () => {
                                                         alignItems: 'center',
                                                     }}
                                                 >
-                                                    <h4> {cart.price} VND</h4>
-                                                    <h4>Số lượng :</h4>
+                                                    <Title level={5}>{cart.price} VND</Title>
+                                                    <Title level={5}>Số lượng :</Title>
                                                     <Space
                                                         style={{
                                                             justifyContent: 'flex-start',
@@ -230,7 +245,7 @@ const Cart = () => {
                                                             onClick={() => handlerUp(cart)}
                                                         ></Button>
                                                     </Space>
-                                                    <h4>{cart.quantity * cart.price} VND</h4>
+                                                    <h5>{cart.quantity * cart.price} VND</h5>
                                                     <input
                                                         className="checkbox"
                                                         type="checkbox"
@@ -276,7 +291,7 @@ const Cart = () => {
                                     <Content>{cart.name}</Content>
                                 </Col>
                                 <Col span={4} offset={2}>
-                                    <Space>{cart.quantity * cart.price} VND</Space>    
+                                    <Space>{cart.quantity * cart.price} VND</Space>
                                 </Col>
                             </Row>
                         ))}
@@ -295,7 +310,7 @@ const Cart = () => {
                         <Divider />
                         <Row align="middle" span={24}>
                             <Col span={12}>
-                                <h3>Tổng cộng</h3>
+                                <Title level={4}>Tổng cộng</Title>
                             </Col>
                             <Col span={12}>{total} VND</Col>
                         </Row>
