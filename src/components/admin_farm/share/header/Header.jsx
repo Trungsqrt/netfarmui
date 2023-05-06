@@ -7,8 +7,11 @@ import ToolbarAdmin from '../../../detailBar/toolbarAdmin/ToolbarAdmin';
 import ToolbarExpert from '../../../detailBar/toolbarExpert/ToolbarExpert';
 import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
 import { Link, useNavigate } from 'react-router-dom';
+import { Menu, Space } from 'antd';
+import {  Layout } from 'antd';
 
 const Header = () => {
+    const { NavMenu, Content, Sider } = Layout;
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3';
     const navigate = useNavigate();
     const [data, setData] = useState(null);
@@ -158,36 +161,66 @@ const Header = () => {
                         <span>Mon - Sat 8:00 - 18:30, Sunday</span>
                     </div>
                 </div>
-                <nav className="navbar">
+                <Space align="center" size={4} style={{ width: '100%', justifyContent: 'center' }}>
                     <Link to="/adminHome">
                         <img className="logo" src={navbarImage} alt="logo"></img>
                     </Link>
-                    <ul className="navbarTask">
-                        <li>
-                            {user === 'Admin' && <Link to="/adminHome">Trang chủ</Link>}
-                            {user === 'Expert' && <Link to="/adminHome">Trang chủ</Link>}
-                            {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
-                        </li>
-                        <li>
-                            {user === 'Admin' && <Link to="/admin">Quản lý</Link>}
-                            {user === 'Expert' && <Link to="/expert">Quản lý</Link>}
-                            {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
-                        </li>
+                    <Menu
+                        // defaultSelectedKeys={['1']}
+                        style={{
+                            minWidth: '650px',
+                            alignItems: 'center',
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            color: 'black',
+                            textDecoration:'none'
+                        }}
+                        mode="horizontal"
+                    >
+                        {user === 'Admin' && (
+                            <>
+                                <Menu.Item key={1}>
+                                    <Link to="/adminHome">Trang chủ</Link>
+                                </Menu.Item>
 
-                        <li>
-                            {user === 'Admin' && <Link to="/manageProduct">Bán hàng</Link>}
-                            {user === 'Expert' && <Link to="/inforPage">Thông tin</Link>}
-                            {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
-                        </li>
+                                <Menu.Item key={2}>
+                                    <Link to="/admin">Quản lý</Link>
+                                </Menu.Item>
 
-                        <li>
-                            {user === 'Admin' && <Link to="/inforPage">Thông tin</Link>}
-                            {user === 'Farmer' && <Link to="/">Trang chủ</Link>}
-                        </li>
-                        <li>
+                                <Menu.Item key={3}>
+                                    <Link to="/manageProduct">Bán hàng</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key={4}>
+                                    <Link to="/inforPage">Thông tin</Link>
+                                </Menu.Item>
+                            </>
+                        )}
+                        {/* {user === 'Expert' && (
+                            <>
+                                <Menu.Item key={1}>
+                                    <Link to="/adminHome">Trang chủ</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key={2}>
+                                    <Link to="/expert">Quản lý</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key={3}>
+                                    <Link to="/inforPage">Thông tin</Link>
+                                </Menu.Item>
+                            </>
+                        )}
+                        {user === 'Farmer' && (
+                            <Menu.Item key={5}>
+                                <Link to="/">Trang chủ</Link>
+                            </Menu.Item>
+                        )} */}
+
+                        <Menu.Item key={5}>
                             <Link to="/MyComponent">Nhận diện cây trồng</Link>
-                        </li>
-                    </ul>
+                        </Menu.Item>
+                    </Menu>
                     <form className="form-search">
                         <input
                             type="text"
@@ -227,7 +260,9 @@ const Header = () => {
                             </Link>
                         )}
                     </div>
-                </nav>
+                </Space>
+                {/* </nav> */}
+
                 {currentArticles.length > 0 && (
                     <div className={styles.searchContainer}>
                         <section className={styles.itemWrap}>
