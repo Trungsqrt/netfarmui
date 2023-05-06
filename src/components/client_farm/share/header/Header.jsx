@@ -6,6 +6,7 @@ import navbarImage from '../../../../assets/image/logonetfarm.png';
 import ToolbarFarmer from '../../../detailBar/toolbarFarmer/ToolbarFarmer';
 import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
 import { Link, useNavigate } from 'react-router-dom';
+import { Menu, Space } from 'antd';
 const Header = () => {
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3';
     const CartURL = 'https://localhost:44303/api/Carts';
@@ -73,7 +74,6 @@ const Header = () => {
 
     function cartHandler() {
         const user = JSON.parse(localStorage.getItem('user'));
-        // console.log('user', user);
         if (user === null) return navigate('/login');
         return navigate('/shop/cart');
     }
@@ -142,24 +142,36 @@ const Header = () => {
                         <span>Mon - Sat 8:00 - 18:30, Sunday</span>
                     </div>
                 </div>
-                <nav className="navbar">
+                <Space align="center" size={4} style={{ width: '100%', justifyContent: 'center',alignItems:'center' }}>
                     <Link to="/">
                         <img className="logo" src={navbarImage} alt="logo"></img>
                     </Link>
-                    <ul className="navbarTask">
-                        <li className="navbarTask_item">
+                    <Menu
+                        defaultSelectedKeys={['1']}
+                        style={{
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            color: 'black',
+                            minWidth:'650px'
+                        }}
+                        mode="horizontal"
+                    >
+                        <Menu.Item>
                             <Link to="/">Trang chủ</Link>
-                        </li>
-                        <li className="navbarTask_item">
+                        </Menu.Item>
+
+                        <Menu.Item>
                             <Link to="/inforPage">Thông tin</Link>
-                        </li>
-                        <li className="navbarTask_item">
+                        </Menu.Item>
+
+                        <Menu.Item>
                             <Link to="/shop">Mua hàng</Link>
-                        </li>
-                        <li className="navbarTask_item">
-                            <Link to="/MyComponent">Nhận diện</Link>
-                        </li>
-                    </ul>
+                        </Menu.Item>
+
+                        <Menu.Item>
+                            <Link to="/MyComponent">Nhận diện cây trồng</Link>
+                        </Menu.Item>
+                    </Menu>
                     <form className="form-search" onSubmit={handleSubmit}>
                         <input
                             type="text"
@@ -205,7 +217,7 @@ const Header = () => {
                             </Link>
                         )}
                     </div>
-                </nav>
+                </Space>
                 {currentArticles.length > 0 && (
                     <div className={styles.searchContainer}>
                         <section className={styles.itemWrap}>

@@ -16,19 +16,21 @@ const ClientHome = () => {
         setUser(currentUser.roleName);
     }, []);
     return (
-        <div>
+        <>
             {(user === 'Expert' || user === 'Admin') && (
-                <div className="homepage_container">
+                <>
+                {/* <div className="homepage_container"> */}
                     <Header></Header>
                     <Slide></Slide>
                     <About></About>
                     <div className="news">
                         <News></News>
                     </div>
-                </div>
+                {/* </div> */}
+                </>
             )}
             {!(user === 'Expert' || user === 'Admin') && navigate('/')}
-        </div>
+        </>
     );
 };
 

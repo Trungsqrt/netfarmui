@@ -34,8 +34,6 @@ import NotFound from './components/notfound/NotFound';
 import StageDetail from './components/expertPage/StMgmt/StageDetail';
 import StandardMgmt from './components/expertPage/SdMgmt/StandardMgmt';
 import ResultPaymentComponent from './components/client_farm/e_commerce/Payment/ResultPaymentComponent';
-import Test from './components/tuan_ne/test';
-import CartNe from './components/tuan_ne/cart';
 import 'antd/dist/reset.css';
 import Radio from './components/admin_farm/ManageFeedback/Radio';
 import MyComponent from './components/plan_detect/plantapi';
@@ -82,9 +80,6 @@ function App() {
                 <Route path="/standardmanagement/:id" element={<StandardMgmt />} />
                 <Route path="/stageDetailmanagement/:id" element={<StageDetail />} />
                 <Route path="/stageDetailmanagement" element={<StageDetail />} />
-
-                <Route path="/test" element={<Test />} />
-                <Route path="/cartne" element={<CartNe />} />
 
                 <Route path="/feedback/radio" element={<Radio />} />
                 <Route path="/MyComponent" element={<MyComponent />} />
