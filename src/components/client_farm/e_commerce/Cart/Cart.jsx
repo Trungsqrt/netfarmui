@@ -180,11 +180,10 @@ const Cart = () => {
                 <Row span={24}>
                     <Col span={12} offset={2}>
                         <Grid>
-                            <Space size={20}>
-                                <h3>
-                                    {' '}
-                                    Trang chủ <RightOutlined /> Giỏ hàng
-                                </h3>
+                            <Space size={10} style={{alignItems:'center',display:'flex', fontSize: 20}}>
+                                <Link to={'/'}>Trang chủ </Link>
+                                <RightOutlined style={{marginBottom:5}}/> 
+                                <Link to={'/shop/cart'}>Giỏ hàng</Link>
                             </Space>
                             <br />
                             <Space>

@@ -1,0 +1,34 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(20, 75, 41, 0.293);
+    color: #1021dc;
+    opacity: 0.8;
+    width: 100%;
+    height: 100px;
+    position: fixed;
+    top: 0px;
+    z-index: 1000;
+    padding: 0 30px;
+  }
+  ul {
+    display: flex;
+  }
+  li {
+    list-style-type: none;
+    padding: 10px;
+  }
+  a {
+    text-decoration: none;
+  }
+  .navbar a {
+    color: white;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.5;
+  }
+  .navbar .log {
+    font-weight: 400;
+  }
+  

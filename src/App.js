@@ -38,6 +38,7 @@ import 'antd/dist/reset.css';
 import Radio from './components/admin_farm/ManageFeedback/Radio';
 import MyComponent from './components/plan_detect/plantapi';
 import Chatbot from './components/testBot/Chatbot';
+import NewClientHome from './components/client_farm/home/NewClientHome';
 function App() {
     return (
         <div className="App">
@@ -84,6 +85,11 @@ function App() {
                 <Route path="/feedback/radio" element={<Radio />} />
                 <Route path="/MyComponent" element={<MyComponent />} />
                 <Route path="/test" element={<Chatbot />} />
+
+
+
+
+                <Route path="/newHomePage" element={<NewClientHome />} />
             </Routes>
             <Footer></Footer>
         </div>
