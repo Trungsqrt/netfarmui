@@ -9,7 +9,6 @@
   position: absolute;
   top: 0px;
   margin-top: 130px;
-  margin: '0 auto';
 }
 .search__container{
   text-align: center;
@@ -30,7 +29,10 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:400,700,900");
 
 /* Base styling */
-
+.form-search{
+  display: flex;
+  justify-content: center;
+}
 .search__input {
   width: 30%;
   padding: 12px 24px;

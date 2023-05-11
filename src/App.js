@@ -39,6 +39,7 @@ import Radio from './components/admin_farm/ManageFeedback/Radio';
 import MyComponent from './components/plan_detect/plantapi';
 import Chatbot from './components/testBot/Chatbot';
 import NewClientHome from './components/client_farm/home/NewClientHome';
+import FooterNew from './components/client_farm/share/newfooter/FooterNew';
 function App() {
     return (
         <div className="App">
@@ -49,7 +50,7 @@ function App() {
                 <Route path="/articlehandler" element={<ArticleHandler />} />
                 <Route path="/calenderhandler" element={<AddSchedule />} />
                 <Route path="/admin" element={<AdminPage />} />
-                <Route path="/" element={<ClientHome />} />
+                {/* <Route path="/" element={<ClientHome />} /> */}
                 <Route path="/detail/:id" element={<DetailArticle />} />
                 <Route path="/editArticle/:id" element={<ArticleHandler />} />
                 <Route path="/editSchedule/:id" element={<AddSchedule />} />
@@ -75,7 +76,7 @@ function App() {
                 <Route path="/changepassword" element={<ChangePassword />} />
                 <Route path="/passwordretrieval" element={<PassRetri />} />
                 <Route path="*" element={<NotFound />} />
-                <Route path="/shop/cart/Resultpayment" element={<ResultPaymentComponent/>} />
+                <Route path="/shop/cart/Resultpayment" element={<ResultPaymentComponent />} />
 
                 <Route path="/standardmanagement" element={<StandardMgmt />} />
                 <Route path="/standardmanagement/:id" element={<StandardMgmt />} />
@@ -86,12 +87,9 @@ function App() {
                 <Route path="/MyComponent" element={<MyComponent />} />
                 <Route path="/test" element={<Chatbot />} />
 
-
-
-
-                <Route path="/newHomePage" element={<NewClientHome />} />
+                <Route path="/" element={<NewClientHome />} />
             </Routes>
-            <Footer></Footer>
+            <FooterNew></FooterNew>
         </div>
     );
 }

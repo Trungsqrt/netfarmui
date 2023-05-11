@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Header from '../../share/header/Header';
-import { useParams } from 'react-router-dom';
+import { Layout } from 'antd';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import NewHeader from '../../share/newheader/NewHeader';
 import '../css/style.css';
 import Feedback from './Feedback';
 const FeedbackList = (props) => {
@@ -40,7 +41,9 @@ const FeedbackList = (props) => {
 
     return (
         <div>
-            <Header></Header>
+            <Layout style={{ display: 'block', marginBottom: '100px' }}>
+                <NewHeader></NewHeader>
+            </Layout>
             <div className="feedList_container">
                 {detailOrder
                     ? detailOrder.map((item, index) => (

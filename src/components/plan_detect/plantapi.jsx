@@ -1,11 +1,10 @@
+import { Layout } from 'antd';
 import React, { useEffect, useState } from 'react';
-import image from '../../assets/image/add-photo-icon-19.jpg';
-import { Row, Col, Table, Card, Form } from 'react-bootstrap';
+import { Card, Col, Form, Row, Table } from 'react-bootstrap';
 import { getPlant } from '../../apis/plant-id';
-// import 'bootstrap/dist/css/bootstrap.css';
+import image from '../../assets/image/add-photo-icon-19.jpg';
+import NewHeader from '../client_farm/share/newheader/NewHeader';
 import styles from './plantapi.module.css';
-import { default as StaffHeader } from '../admin_farm/share/header/Header';
-import { default as FarmerHeader } from '../client_farm/share/header/Header';
 
 function MyComponent() {
     const [base64Image, setBase64Image] = useState([]);
@@ -49,7 +48,9 @@ function MyComponent() {
 
     return (
         <div>
-            {user === 'Admin' || user === 'Expert' ? <StaffHeader /> : <FarmerHeader />}
+            <Layout style={{ display: 'block', marginBottom: '100px' }}>
+                <NewHeader></NewHeader>
+            </Layout>
             <div style={{ backgroundColor: '#c3d3d8', overflow: 'auto', height: '100vh' }}>
                 <div>
                     <Row style={{ justifyContent: 'center' }}>

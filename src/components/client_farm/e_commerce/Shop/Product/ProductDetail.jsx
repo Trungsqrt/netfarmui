@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import productAPI from '../../../../../apis/productAPI';
-import Product from './Product';
-import Header from '../../../share/header/Header';
+import { Layout } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import productAPI from '../../../../../apis/productAPI';
+import NewHeader from '../../../share/newheader/NewHeader';
+import Product from './Product';
 
 function ProductDetail(props) {
     //id params cho từng sản phẩm
@@ -195,7 +196,9 @@ function ProductDetail(props) {
 
     return (
         <div>
-            <Header></Header>
+            <Layout style={{ display: 'block', marginBottom: '100px' }}>
+                <NewHeader></NewHeader>
+            </Layout>
             <div className="productDetail_wrapper">
                 {detail && (
                     <div className="detail_wrapper" key={id}>

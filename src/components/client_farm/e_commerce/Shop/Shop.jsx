@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import Header from '../../share/header/Header';
-import Product from './Product/Product';
-import productAPI from '../../../../apis/productAPI';
+import { Layout } from 'antd';
 import axios from 'axios';
-import Pagination from '../../../admin_farm/share/Pagination/Pagination.js';
-import '../css/style.css';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import productAPI from '../../../../apis/productAPI';
+import Pagination from '../../../admin_farm/share/Pagination/Pagination.js';
+import NewHeader from '../../share/newheader/NewHeader';
+import '../css/style.css';
+import Product from './Product/Product';
 let PageSize = 8;
 
 const Shop = () => {
@@ -95,7 +96,9 @@ const Shop = () => {
     }
     return (
         <div>
-            <Header></Header>
+            <Layout style={{ display: 'block', marginBottom: '100px' }}>
+                <NewHeader></NewHeader>
+            </Layout>
             {user === 'Farmer' || user === '' ? (
                 <div className="shop">
                     <div className="shop_block">

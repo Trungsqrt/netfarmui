@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import Order from './Order';
-import Header from '../../share/header/Header';
+import { Layout } from 'antd';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import NewHeader from '../../share/newheader/NewHeader';
 import '../css/style.css';
+import Order from './Order';
 const OrderList = () => {
     const orderURL = 'https://localhost:44303/api/Order';
     const userId = JSON.parse(localStorage.getItem('user')).userId;
@@ -77,7 +78,9 @@ const OrderList = () => {
 
     return (
         <div>
-            <Header />
+            <Layout style={{ display: 'block', marginBottom: '100px' }}>
+                <NewHeader></NewHeader>
+            </Layout>
             <div className="orderList_container">
                 <div className="OrderList_category">
                     <ul className="OrderList_type">

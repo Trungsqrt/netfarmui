@@ -1,64 +1,215 @@
-import React from 'react';
-import { CloudFilled, MailFilled } from "@ant-design/icons";
-import { Button, Image, Space } from "antd";
-import logo from "../../../../assets/image/logonetfarm.png";
-import "./header.css";
+import { CloudFilled, MenuOutlined } from '@ant-design/icons';
+import { Button, Image, Space } from 'antd';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../../../assets/image/logonetfarm.png';
+import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
+import ToolbarFarmer from '../../../detailBar/toolbarFarmer/ToolbarFarmer';
+import './header.css';
 
 const NewHeader = () => {
-  return (
-    <div>
-    <div id="main-navbar" className="navbar">
-      <Image src={logo} style={{ height: "60px" }} />
-      <div style={{ textAlign: "center", color: "black" }}>
-        <CloudFilled
-          style={{ color: "#00CCFF", fontSize: 40, paddingTop: 30 }}
-        />
-        <h4 style={{ color: "white" }}>Da Nang, 30°C</h4>
-      </div>
-      {/* <div
-        style={{
-          alignItems: "center",
-          textAlign: "center",
-          alignContent: "center",
-          display: "flex",
-          justifyContent: "center",
-          color: "black",
-        }}
-      >
-        <MailFilled
-          style={{ color: "#FFF", fontSize: 20, paddingRight: 10 }}
-        />
-        <p style={{ color: "#FFF", fontSize: 20 }}>needhelp@company.com</p>
-      </div> */}
-      <nav>
-        <ul>
-          <li>
-            <a href="/home">Trang chủ</a>
-          </li>
-          <li>
-            <a href="/home">Thông tin</a>
-          </li>
-          <li>
-            <a href="/home">Mua hàng</a>
-          </li>
-          <li>
-            <a href="/home">Nhận diện cây trồng</a>
-          </li>
-          <li>
-            <Space wrap>
-              <Button type="primary" shape="round" size="medium" danger>
-                Đăng nhập
-              </Button>
-              <Button type="primary" shape="round" size="medium" danger>
-                Đăng ký
-              </Button>
-            </Space>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-  )
-}
+    const url = 'https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3';
+    const CartURL = 'https://localhost:44303/api/Carts';
+    const navigate = useNavigate();
+    const [data, setData] = useState(null);
+    const [error, setError] = useState('');
+    const [loaded, setLoaded] = useState(false);
+    const [iconState, setIconState] = useState('');
+    const [timee, setTimee] = useState();
+    const [notification, setNotification] = useState(false);
+    const [toolbar, setToolbar] = useState(false);
+    const [isLoggin, setIsLoggin] = useState(false);
+    const [searchContent, setSearchContent] = useState('');
+    const [articles, setArticles] = useState([]);
+    const [currentArticles, setCurrentArticles] = useState([]);
+    const [count, setCount] = useState(0);
 
-export default NewHeader
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(CartURL);
+            const data = response.data;
+            const user = JSON.parse(localStorage.getItem('user'));
+            var userId = '';
+            if (user) {
+                userId = user.userId;
+                const filter = data.filter((item) => item['userId'] === userId);
+                setCount(filter.length);
+            }
+        };
+        fetchData();
+    }, []);
+
+    let icon;
+    useEffect(() => {
+        axios.get(url).then((response) => {
+            const res = response.data;
+            const result = res.main.temp - 273.15;
+            setData(Math.round(result));
+            icon = [...res.weather];
+            icon = icon[0].icon;
+            setIconState(icon);
+        });
+    }, []);
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        user ? setIsLoggin(true) : setIsLoggin(false);
+    }, [isLoggin]);
+
+    function showNotificationHandler() {
+        notification ? setNotification(false) : setNotification(true);
+    }
+
+    function hideNotificationHandler() {
+        setNotification(false);
+    }
+
+    function showToolbar() {
+        toolbar ? setToolbar(false) : setToolbar(true);
+    }
+
+    function hideToolbar() {
+        setToolbar(false);
+    }
+
+    function cartHandler() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user === null) return navigate('/login');
+        return navigate('/shop/cart');
+    }
+
+    let settingIcon = (
+        <>
+            <MenuOutlined onClick={showToolbar} style={{ color: 'black', fontWeight: 'bold' }} />
+            {toolbar && <ToolbarFarmer />}
+        </>
+    );
+
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
+    const [render, setRender] = useState(0);
+    const [user, setUser] = useState('');
+
+    useEffect(() => {
+        if (currentUser) setUser(currentUser.roleName);
+        const getData = async () => {
+            const res = await axios.get('https://localhost:44303/api/Article');
+            const response = res.data;
+            setArticles([...response]);
+        };
+        getData();
+    }, []);
+
+    useEffect(() => {
+        if (searchContent != '') {
+            const resultArray = articles.filter((item) =>
+                item.title.toLowerCase().includes(searchContent.toLowerCase()),
+            );
+            setCurrentArticles([...resultArray]);
+        } else if (searchContent === '') {
+            setCurrentArticles([]);
+        }
+    }, [searchContent]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
+    function truncate(str, n) {
+        return str.length > n ? str.slice(0, n - 1) + '...' : str;
+    }
+
+    return (
+        <div>
+            <div id="main-navbar" className="navbar">
+                <Image src={logo} style={{ height: '60px' }} />
+                <div style={{ textAlign: 'center', color: 'black' }}>
+                    <CloudFilled style={{ color: '#00CCFF', fontSize: 40, paddingTop: 30 }} />
+                    <h4 style={{ color: 'white' }}>Da Nang, {data}°C</h4>
+                </div>
+                <nav>
+                    <ul>
+                        {user === 'Admin' ? (
+                            <>
+                                <li>
+                                    <Link to="/adminHome">Trang chủ</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/admin">Quản lý</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/manageProduct">Bán hàng</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/inforPage">Thông tin</Link>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    <Link to="/">Trang chủ</Link>
+                                </li>
+                                <li>
+                                    <Link to="/inforPage">Thông tin</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/shop">Mua hàng</Link>
+                                </li>
+                                <li>
+                                    <Link to="/MyComponent">Nhận diện cây trồng</Link>
+                                </li>
+                            </>
+                        )}
+
+                        <li>
+                            <Space wrap>
+                                <section className="notificationBox">
+                                    <button className="button-setting" onClick={cartHandler}>
+                                        <i className="fa-solid fa-cart-shopping"></i>
+                                        <div className="cartNum">{count}</div>
+                                    </button>
+                                </section>
+                                <section className="notificationBox">
+                                    <button className="button-setting" onClick={showNotificationHandler}>
+                                        <i className="fa-solid fa-bell settings"></i>
+                                    </button>
+                                    {notification && <NotificationDetail />}
+                                </section>
+                                {isLoggin && settingIcon}
+                                {!isLoggin && (
+                                    <>
+                                        <Button
+                                            type="primary"
+                                            onClick={() => navigate('/login')}
+                                            shape="round"
+                                            size="medium"
+                                            danger
+                                        >
+                                            Đăng nhập
+                                        </Button>
+                                        <Button
+                                            type="primary"
+                                            onClick={() => navigate('/login')}
+                                            shape="round"
+                                            size="medium"
+                                            danger
+                                        >
+                                            Đăng ký
+                                        </Button>
+                                    </>
+                                )}
+                            </Space>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    );
+};
+
+export default NewHeader;

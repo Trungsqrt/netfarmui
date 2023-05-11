@@ -10,6 +10,8 @@ import Footer from '../share/footer/Footer';
 import DSS from '../../client_farm/infor/DSS/DSS';
 import './InforPage.css';
 import './css/style1.css';
+import { Layout } from 'antd';
+import NewHeader from '../share/newheader/NewHeader';
 const Information = () => {
     // lấy dữ liệu toàn bộ các bài đăng
     const getUser = localStorage.getItem('user');
@@ -24,8 +26,11 @@ const Information = () => {
     return (
         <div>
             <div>
-                {user === 'Admin' || user === 'Expert' ? <StaffHeader /> : <FarmerHeader />}
+                {/* {user === 'Admin' || user === 'Expert' ? <StaffHeader /> : <FarmerHeader />} */}
                 {/* {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />} */}
+                <Layout style={{ display: 'block', marginBottom: '150px' }}>
+                    <NewHeader></NewHeader>
+                </Layout>
                 <div className="infor_main">
                     <div className="menu">
                         <div className="menu_header">NETFARM</div>

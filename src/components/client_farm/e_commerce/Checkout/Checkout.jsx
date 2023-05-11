@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { productAPI } from '../../../../apis';
 import moment from 'moment';
 import { RightOutlined } from '@ant-design/icons';
-import { Badge, Button, Col, Divider, Form, Image, Input, Radio, Row, Select, Space } from 'antd';
+import { Badge, Button, Col, Divider, Form, Image, Input, Layout, Radio, Row, Select, Space } from 'antd';
 import Grid from 'antd/es/card/Grid';
 import { Content } from 'antd/es/layout/layout';
 import { Option } from 'antd/es/mentions';
@@ -15,6 +15,7 @@ import tinh_tp from './address/tinh_tp.json';
 import quan_huyen from './address/quan_huyen.json';
 import xa_phuong from './address/xa_phuong.json';
 import Notification from '../../share/notification/Notification';
+import NewHeader from '../../share/newheader/NewHeader';
 
 const Checkout = () => {
     const cartUrl = 'https://localhost:44303/api/Carts';
@@ -240,7 +241,9 @@ const Checkout = () => {
     };
     return (
         <>
-            <Header></Header>
+            <Layout style={{display:'block',marginBottom:'100px'}}>
+                    <NewHeader></NewHeader>
+            </Layout>
             <Grid style={{ height: '100%', padding: '40px' }} className="space-align-container">
                 <Row>
                     <Col span={12} offset={3}>
