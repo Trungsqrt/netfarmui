@@ -6,3 +6,10 @@ export const getPlant = async (data)=>{
       return error
     });
   };
+  export const getPlantHealth = async (data)=>{
+    return await axios.post('https://localhost:44303/api/HealthAssessment',data)
+    .then(response => response.data.health_assessment)
+    .catch((error) => {
+      return error
+    });
+  };
