@@ -101,7 +101,9 @@ const ResultPaymentComponent = () => {
                                 <div>{vnp_TmnCode}</div>
                             </div>
                             <div className={styles.buttonWayBack}>
-                                <Button type="primary" danger>
+                                <Button type="primary" danger onClick={()=>{
+                                    navigate('/shop')
+                                }}>
                                     Tiếp tục mua sắm
                                 </Button>
                             </div>
@@ -128,7 +130,9 @@ const ResultPaymentComponent = () => {
                         </div>
                         <div className={styles.informationPay}>
                             <div className={styles.buttonWayBackCart}>
-                                <Button type="primary" danger>
+                                <Button type="primary" danger onClick={()=>{
+                                   navigate('/shop')
+                                }}>
                                     Quay lại giỏ hàng
                                 </Button>
                             </div>
