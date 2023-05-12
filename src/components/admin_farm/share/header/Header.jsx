@@ -8,7 +8,7 @@ import ToolbarExpert from '../../../detailBar/toolbarExpert/ToolbarExpert';
 import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, Space } from 'antd';
-import {  Layout } from 'antd';
+import { Layout } from 'antd';
 
 const Header = () => {
     const { NavMenu, Content, Sider } = Layout;
@@ -173,7 +173,7 @@ const Header = () => {
                             fontSize: 16,
                             fontWeight: 'bold',
                             color: 'black',
-                            textDecoration:'none'
+                            textDecoration: 'none',
                         }}
                         mode="horizontal"
                     >
@@ -219,6 +219,10 @@ const Header = () => {
 
                         <Menu.Item key={5}>
                             <Link to="/MyComponent">Nhận diện cây trồng</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key={6}>
+                            <Link to="/healthPlant">Nhận diện bệnh</Link>
                         </Menu.Item>
                     </Menu>
                     <form className="form-search">

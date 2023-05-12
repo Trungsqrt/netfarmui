@@ -142,7 +142,11 @@ const Header = () => {
                         <span>Mon - Sat 8:00 - 18:30, Sunday</span>
                     </div>
                 </div>
-                <Space align="center" size={4} style={{ width: '100%', justifyContent: 'center',alignItems:'center' }}>
+                <Space
+                    align="center"
+                    size={4}
+                    style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}
+                >
                     <Link to="/">
                         <img className="logo" src={navbarImage} alt="logo"></img>
                     </Link>
@@ -152,7 +156,7 @@ const Header = () => {
                             fontSize: 16,
                             fontWeight: 'bold',
                             color: 'black',
-                            minWidth:'650px'
+                            minWidth: '650px',
                         }}
                         mode="horizontal"
                     >
@@ -169,7 +173,11 @@ const Header = () => {
                         </Menu.Item>
 
                         <Menu.Item>
-                            <Link to="/MyComponent">Nhận diện cây trồng</Link>
+                            <Link to="/MyComponent">Nhận diện cây</Link>
+                        </Menu.Item>
+
+                        <Menu.Item>
+                            <Link to="/healthPlant">Nhận diện bệnh</Link>
                         </Menu.Item>
                     </Menu>
                     <form className="form-search" onSubmit={handleSubmit}>
