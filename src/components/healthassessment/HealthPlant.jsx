@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { GoogleTranslator } from '@translate-tools/core/translators/GoogleTranslator';
+
 import image from '../../assets/image/add-photo-icon-19.jpg';
 
 import { Row, Col, Table, Card, Form } from 'react-bootstrap';
@@ -9,7 +12,7 @@ import { default as FarmerHeader } from '../client_farm/share/header/Header';
 
 function HealthPlant() {
     const [base64Image, setBase64Image] = useState([]);
-    const [file, setFile] = useState(image);
+    const [file, setFile] = useState();
     const [result, setResult] = useState();
     const [handle, sethandle] = useState('Tải lên hình ảnh loại cây bạn cần tìm hiểu');
     const [isLoading, setIsLoading] = useState(true);
@@ -17,6 +20,11 @@ function HealthPlant() {
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
     const [user, setUser] = useState('');
+
+    const [translateData, setTranslateData] = useState([]);
+    const [rawData, setRawData] = useState([]);
+
+    const translator = new GoogleTranslator();
 
     useEffect(() => {
         if (currentUser) setUser(currentUser.roleName);
@@ -26,7 +34,6 @@ function HealthPlant() {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
         const file = e.target.files[0];
         if (file && allowedTypes.includes(file.type)) {
-            console.log(file);
             setFile(URL.createObjectURL(file));
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -45,7 +52,76 @@ function HealthPlant() {
         })();
         setIsLoading(false);
     }, [base64Image]);
-    console.log(result);
+
+    const translate = async (text) => {
+        const dataTranslated = await translator.translate(text, 'en', 'vi');
+        return dataTranslated;
+    };
+
+    useEffect(() => {
+        if (result !== undefined) {
+            const clonedDiseases = result?.diseases?.slice(0, 3) || [];
+
+            const run = async (disease) => {
+                const detail = disease?.disease_details;
+
+                const description = detail?.description;
+                const local_name = detail?.local_name;
+                const biological = detail?.treatment.biological.slice();
+                const chemical = detail?.treatment.chemical.slice();
+                const prevention = detail?.treatment.prevention.slice();
+                const url = detail?.url;
+                const image = disease.similar_images[0]?.url;
+
+                const translatedDescription = await translate(description);
+                const translatedLocal_name = await translate(local_name);
+
+                const translatedBiological = await Promise.all(
+                    biological.map(async (item) => {
+                        const translatedItem = await translate(item);
+                        return translatedItem;
+                    }),
+                );
+
+                const translatedChemical = await Promise.all(
+                    chemical.map(async (item) => {
+                        const translatedItem = await translate(item);
+                        return translatedItem;
+                    }),
+                );
+
+                const translatedPrevention = await Promise.all(
+                    prevention.map(async (item) => {
+                        const translatedItem = await translate(item);
+                        return translatedItem;
+                    }),
+                );
+
+                return {
+                    description: translatedDescription,
+                    name: translatedLocal_name,
+                    biological: translatedBiological,
+                    chemical: translatedChemical,
+                    prevention: translatedPrevention,
+                    url: url,
+                    image: image,
+                    isHealth: result.is_healthy,
+                    isDiseases: result.diseases !== null,
+                };
+            };
+
+            const promises = clonedDiseases.map((disease) => run(disease));
+            Promise.all(promises).then((dataTranslated) => {
+                setRawData((prev) => [...prev, dataTranslated]);
+            });
+        }
+    }, [result]);
+
+    useEffect(() => {
+        if (rawData.length > 1) {
+            setTranslateData([...rawData[1]]);
+        }
+    }, [rawData]);
 
     return (
         <div>
@@ -84,90 +160,75 @@ function HealthPlant() {
                             </label>
                         </Form.Group>
                     </Row>
-                    {result && result['diseases'] && !result['is_healthy'] ? (
-                        result['diseases'].slice(0, 3).map((data) => (
-                            <Row bg={'Light'} className="justify-content-center mb-0">
-                                <Col md="20" lg="7">
-                                    <Card className="shadow-0 border rounded-3 mt-2 mb-3">
-                                        <Card.Body>
-                                            <Row>
-                                                <Col md="12" lg="4" className="mb-4 mb-lg-0">
-                                                    <Card.Img
-                                                        src={data.similar_images[0].url}
-                                                        fluid
-                                                        className="w-100"
-                                                    />
-                                                </Col>
-                                                <Col md="8" className="text-center">
-                                                    <h5>Loại bệnh : {data.name} </h5>
-                                                    <p>{data.disease_details.description}</p>
-                                                    <h5>Giải pháp</h5>
-                                                    <Table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="col-2">
-                                                                    <strong>Giải pháp sinh học</strong>
-                                                                </td>
+                    {translateData?.map((data, index) => (
+                        <Row bg={'Light'} className="justify-content-center mb-0">
+                            <Col md="20" lg="7">
+                                <Card className="shadow-0 border rounded-3 mt-2 mb-3">
+                                    <Card.Body>
+                                        <Row>
+                                            <Col md="12" lg="4" className="mb-4 mb-lg-0">
+                                                <Card.Img src={data?.image} fluid className="w-100" />
+                                            </Col>
+                                            <Col md="8" className="text-center">
+                                                <h5>Loại bệnh : {data?.name} </h5>
+                                                <p>{data?.description}</p>
+                                                <h5>Giải pháp</h5>
+                                                <Table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="col-2">
+                                                                <strong>Giải pháp sinh học</strong>
+                                                            </td>
 
-                                                                <td class="text-wrap col-10">
-                                                                    {data.disease_details.treatment.biological &&
-                                                                        data.disease_details.treatment.biological.map(
-                                                                            (treatment) => (
-                                                                                <>
-                                                                                    <p>- {treatment}</p>
-                                                                                </>
-                                                                            ),
-                                                                        )}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="col-2">
-                                                                    <strong>Giải pháp hóa học</strong>
-                                                                </td>
-                                                                <td class="text-wrap col-10">
-                                                                    {data.disease_details.treatment.chemical != null &&
-                                                                        data.disease_details.treatment.chemical.map(
-                                                                            (treatment) => (
-                                                                                <>
-                                                                                    <p style={{ width: '18rem' }}>
-                                                                                        - {treatment}
-                                                                                    </p>
-                                                                                </>
-                                                                            ),
-                                                                        )}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="col-2">
-                                                                    <strong>Giải pháp phòng ngừa</strong>
-                                                                </td>
-                                                                <td class="text-wrap col-10">
-                                                                    {data.disease_details.treatment.prevention !=
-                                                                        null &&
-                                                                        data.disease_details.treatment.prevention.map(
-                                                                            (treatment) => (
-                                                                                <>
-                                                                                    <p>- {treatment}</p>
-                                                                                </>
-                                                                            ),
-                                                                        )}
-                                                                </td>
-                                                            </tr>
-                                                            <span>Nhấn vào </span>
-                                                            <a href={data.disease_details.url}>đây</a>
-                                                            <span> để xem thêm </span>
-                                                        </tbody>
-                                                    </Table>
-                                                </Col>
-                                            </Row>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        ))
-                    ) : (
-                        <p>Cây khỏe mạnh</p>
-                    )}
+                                                            <td class="text-wrap col-10">
+                                                                {data?.biological &&
+                                                                    data?.biological?.map((treatment) => (
+                                                                        <>
+                                                                            <p>- {treatment}</p>
+                                                                        </>
+                                                                    ))}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-2">
+                                                                <strong>Giải pháp hóa học</strong>
+                                                            </td>
+                                                            <td class="text-wrap col-10">
+                                                                {data?.chemical &&
+                                                                    data?.chemical?.map((treatment) => (
+                                                                        <>
+                                                                            <p style={{ width: '18rem' }}>
+                                                                                - {treatment}
+                                                                            </p>
+                                                                        </>
+                                                                    ))}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-2">
+                                                                <strong>Giải pháp phòng ngừa</strong>
+                                                            </td>
+                                                            <td class="text-wrap col-10">
+                                                                {data?.prevention &&
+                                                                    data?.prevention?.map((treatment) => (
+                                                                        <>
+                                                                            <p>- {treatment}</p>
+                                                                        </>
+                                                                    ))}
+                                                            </td>
+                                                        </tr>
+                                                        <span>Nhấn vào </span>
+                                                        <a href={data.url}>đây</a>
+                                                        <span> để xem thêm </span>
+                                                    </tbody>
+                                                </Table>
+                                            </Col>
+                                        </Row>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
+                    ))}
                 </div>
             </div>
         </div>
