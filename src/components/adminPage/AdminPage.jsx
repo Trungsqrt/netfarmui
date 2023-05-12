@@ -202,7 +202,7 @@ function AdminPage() {
                     <div className={styles.body}>
                         <div className={styles.left}>
                             <h3 className={styles.title}>Admin Page</h3>
-                            <ul className={styles.nav}>
+                            <ul className={styles.nav} style={{paddingLeft:0}}>
                                 <li
                                     className={render === 1 ? styles.navItemSelected : styles.navItem}
                                     onClick={UserHandler}

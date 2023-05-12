@@ -78,7 +78,7 @@
 }
 
 .buttonSubmit {
-    width: 100px;
+    width: fit-content;
     height: 30px;
     margin-top: 10px;
 }
