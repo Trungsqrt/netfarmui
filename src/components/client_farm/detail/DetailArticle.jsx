@@ -8,6 +8,8 @@ import { default as StaffHeader } from '../../admin_farm/share/header/Header';
 import { default as FarmerHeader } from '../share/header/Header';
 import styles from './DetailArticle.module.css';
 import './DetailArticle.css';
+import { Layout } from 'antd';
+import NewHeader from '../share/newheader/NewHeader';
 const parse = require('html-react-parser');
 
 function DetailArticle(props) {
@@ -49,10 +51,9 @@ function DetailArticle(props) {
             <div className={styles.wrapper}>
                 {detail && (
                     <div>
-                        <section>
-                            {(userr === 'Admin' || userr === 'Expert') && <StaffHeader />}
-                            {!(userr === 'Admin' || userr === 'Expert') && <FarmerHeader />}
-                        </section>
+                        <Layout style={{ display: 'block', marginBottom: '100px' }}>
+                            <NewHeader></NewHeader>
+                        </Layout>
                         <div className="DetailBanner"></div>
                         <div className={styles.main}>
                             <div className={styles.right}>
