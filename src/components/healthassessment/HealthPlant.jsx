@@ -171,48 +171,48 @@ function HealthPlant() {
                                             </Col>
                                             <Col md="8" className="text-center">
                                                 <h5>Loại bệnh : {data?.name} </h5>
-                                                <p>{data?.description}</p>
+                                                <p style={{ textAlign: 'left' }}>{data?.description}</p>
                                                 <h5>Giải pháp</h5>
                                                 <Table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                                     <tbody>
                                                         <tr>
-                                                            <td class="col-2">
+                                                            <td class="col-2" style={{ textAlign: 'left' }}>
                                                                 <strong>Giải pháp sinh học</strong>
                                                             </td>
 
-                                                            <td class="text-wrap col-10">
+                                                            <td class="text-wrap col-10" style={{ textAlign: 'left' }}>
                                                                 {data?.biological &&
                                                                     data?.biological?.map((treatment) => (
                                                                         <>
-                                                                            <p>- {treatment}</p>
+                                                                            <p>{treatment}</p>
                                                                         </>
                                                                     ))}
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="col-2">
+                                                            <td class="col-2" style={{ textAlign: 'left' }}>
                                                                 <strong>Giải pháp hóa học</strong>
                                                             </td>
-                                                            <td class="text-wrap col-10">
+                                                            <td class="text-wrap col-10" style={{ textAlign: 'left' }}>
                                                                 {data?.chemical &&
                                                                     data?.chemical?.map((treatment) => (
                                                                         <>
                                                                             <p style={{ width: '18rem' }}>
-                                                                                - {treatment}
+                                                                                {treatment}
                                                                             </p>
                                                                         </>
                                                                     ))}
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="col-2">
+                                                            <td class="col-2" style={{ textAlign: 'left' }}>
                                                                 <strong>Giải pháp phòng ngừa</strong>
                                                             </td>
-                                                            <td class="text-wrap col-10">
+                                                            <td class="text-wrap col-10" style={{ textAlign: 'left' }}>
                                                                 {data?.prevention &&
                                                                     data?.prevention?.map((treatment) => (
                                                                         <>
-                                                                            <p>- {treatment}</p>
+                                                                            <p>{treatment}</p>
                                                                         </>
                                                                     ))}
                                                             </td>
