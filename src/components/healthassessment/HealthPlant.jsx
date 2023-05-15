@@ -47,10 +47,12 @@ function HealthPlant() {
         }
     }
     useEffect(() => {
+        setRawData([]);
         (async () => {
             await getPlantHealth(base64Image).then((res) => setResult(res));
         })();
         setIsLoading(false);
+        
     }, [base64Image]);
 
     const translate = async (text) => {
@@ -118,8 +120,9 @@ function HealthPlant() {
     }, [result]);
 
     useEffect(() => {
-        if (rawData.length > 1) {
-            setTranslateData([...rawData[1]]);
+        console.log(rawData )
+        if (rawData.length > 0) {
+            setTranslateData([...rawData[0]]);
         }
     }, [rawData]);
 
