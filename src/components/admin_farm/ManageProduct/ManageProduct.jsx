@@ -19,6 +19,8 @@ import Manage from './ManageProduct/Manage';
 import SaleReport from './ManageReport/SaleReport';
 import Radio from '../ManageFeedback/Radio';
 import Demo from '../ManageFeedback/Demo';
+import { Layout } from 'antd';
+import NewHeader from '../../client_farm/share/newheader/NewHeader';
 const ManageProduct = () => {
     const [render, setRender] = useState(1);
 
@@ -68,7 +70,9 @@ const ManageProduct = () => {
 
     return (
         <div>
-            <Header></Header>
+            <Layout style={{ display: 'block', marginBottom: '150px' }}>
+                <NewHeader></NewHeader>
+            </Layout>
             <div className="manageContainer ">
                 {/* <div className="MenuProduct">
                     <div className="manageProduct_container">

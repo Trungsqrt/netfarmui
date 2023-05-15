@@ -3,7 +3,9 @@ import styles from './AdminPage.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../admin_farm/share/header/Header';
+import NewHeader from '../client_farm/share/newheader/NewHeader';
 import './AdminPage.css';
+import { Layout } from 'antd';
 
 function AdminPage() {
     const userUrl = 'https://localhost:44303/api/Users';
@@ -198,7 +200,9 @@ function AdminPage() {
         <div>
             {user === 'Admin' && (
                 <>
-                    <Header />
+                    <Layout style={{ display: 'block', marginBottom: '150px' }}>
+                        <NewHeader></NewHeader>
+                    </Layout>
                     <div className={styles.body}>
                         <div className={styles.left}>
                             <h3 className={styles.title}>Admin Page</h3>

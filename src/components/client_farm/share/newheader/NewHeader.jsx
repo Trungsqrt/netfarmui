@@ -7,6 +7,8 @@ import logo from '../../../../assets/image/logonetfarm.png';
 import NotificationDetail from '../../../detailBar/notificationDetail/NotificationDetail';
 import ToolbarFarmer from '../../../detailBar/toolbarFarmer/ToolbarFarmer';
 import './header.css';
+import ToolbarExpert from '../../../detailBar/toolbarExpert/ToolbarExpert';
+import ToolbarAdmin from '../../../detailBar/toolbarAdmin/ToolbarAdmin';
 
 const NewHeader = () => {
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=danang&appid=69424b95ee94abbbe370a393829f81e3';
@@ -24,6 +26,11 @@ const NewHeader = () => {
     const [articles, setArticles] = useState([]);
     const [currentArticles, setCurrentArticles] = useState([]);
     const [count, setCount] = useState(0);
+
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
+    const [render, setRender] = useState(0);
+    const [user, setUser] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -82,14 +89,22 @@ const NewHeader = () => {
     let settingIcon = (
         <>
             <MenuOutlined onClick={showToolbar} style={{ color: 'black', fontWeight: 'bold' }} />
-            {toolbar && <ToolbarFarmer />}
+            {toolbar &&
+                (user === 'Admin' ? (
+                    <>
+                        <ToolbarAdmin />
+                    </>
+                ) : user === 'Expert' ? (
+                    <>
+                        <ToolbarExpert />
+                    </>
+                ) : (
+                    <>
+                        <ToolbarFarmer />
+                    </>
+                ))}
         </>
     );
-
-    const getUser = localStorage.getItem('user');
-    const currentUser = JSON.parse(getUser);
-    const [render, setRender] = useState(0);
-    const [user, setUser] = useState('');
 
     useEffect(() => {
         if (currentUser) setUser(currentUser.roleName);
@@ -147,6 +162,26 @@ const NewHeader = () => {
                                 <li>
                                     <Link to="/inforPage">Thông tin</Link>
                                 </li>
+                                <li>
+                                    <Link to="/MyComponent">Nhận diện cây trồng</Link>
+                                </li>
+                            </>
+                        ) : user === 'Expert' ? (
+                            <>
+                                <li>
+                                    <Link to="/adminHome">Trang chủ</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/expert">Quản lý</Link>
+                                </li>
+
+                                <li>
+                                    <Link to="/inforPage">Thông tin</Link>
+                                </li>
+                                <li>
+                                    <Link to="/MyComponent">Nhận diện cây trồng</Link>
+                                </li>
                             </>
                         ) : (
                             <>
@@ -168,12 +203,18 @@ const NewHeader = () => {
 
                         <li>
                             <Space wrap>
-                                <section className="notificationBox">
-                                    <button className="button-setting" onClick={cartHandler}>
-                                        <i className="fa-solid fa-cart-shopping"></i>
-                                        <div className="cartNum">{count}</div>
-                                    </button>
-                                </section>
+                                {user === 'Admin' || user === 'Expert' ? (
+                                    <></>
+                                ) : (
+                                    <>
+                                        <section className="notificationBox">
+                                            <button className="button-setting" onClick={cartHandler}>
+                                                <i className="fa-solid fa-cart-shopping"></i>
+                                                <div className="cartNum">{count}</div>
+                                            </button>
+                                        </section>
+                                    </>
+                                )}
                                 <section className="notificationBox">
                                     <button className="button-setting" onClick={showNotificationHandler}>
                                         <i className="fa-solid fa-bell settings"></i>

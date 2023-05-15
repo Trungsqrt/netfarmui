@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Header from '../admin_farm/share/header/Header';
 import './ExpertPage.css';
 import { string } from 'yup';
+import NewHeader from '../client_farm/share/newheader/NewHeader';
 const parse = require('html-react-parser');
 
 function ExpertPage() {
@@ -338,9 +339,8 @@ function ExpertPage() {
         <div>
             {user === 'Expert' && (
                 <>
-                    <Header />
-
-                    <div className={styles.body}>
+                    <NewHeader />
+                    <div className={styles.body} style={{paddingTop:120}}>
                         <div className={styles.left}>
                             <h3 className={styles.title}>Expert Page</h3>
                             <ul className={styles.nav}>

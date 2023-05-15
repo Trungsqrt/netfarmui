@@ -25,7 +25,6 @@ const NewClientHome = () => {
             setArticles(data);
         };
         fetchData();
-        console.log(articles);
     }, []);
 
     function getText(html) {
