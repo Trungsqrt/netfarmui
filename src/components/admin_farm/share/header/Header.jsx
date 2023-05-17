@@ -196,7 +196,7 @@ const Header = () => {
                                 </Menu.Item>
                             </>
                         )}
-                        {/* {user === 'Expert' && (
+                        {user === 'Expert' && (
                             <>
                                 <Menu.Item key={1}>
                                     <Link to="/adminHome">Trang chủ</Link>
@@ -215,7 +215,7 @@ const Header = () => {
                             <Menu.Item key={5}>
                                 <Link to="/">Trang chủ</Link>
                             </Menu.Item>
-                        )} */}
+                        )}
                     </Menu>
                     <form className="form-search">
                         <input

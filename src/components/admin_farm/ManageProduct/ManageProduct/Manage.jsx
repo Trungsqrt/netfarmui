@@ -188,7 +188,7 @@ const Manage = () => {
                                       <td className="text_center">{product.category_ID}</td>
                                       <td className="text_center">{product.price}</td>
                                       <td className="text_center">
-                                          {/* <img src={product.images[0]?.url} alt="" width="100px" /> */}
+                                          <img src={product.images[0]?.url} alt="" width="100px" />
                                       </td>
                                       <td className="text_center">
                                           <p className="reset-anchor remove_cart" style={{ cursor: 'pointer' }}>

@@ -19,13 +19,21 @@ import Manage from './ManageProduct/Manage';
 import SaleReport from './ManageReport/SaleReport';
 import Radio from '../ManageFeedback/Radio';
 import Demo from '../ManageFeedback/Demo';
+import { useNavigate } from 'react-router-dom';
 const ManageProduct = () => {
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
+    const navigate = useNavigate();
+
     const [render, setRender] = useState(1);
 
     const currentTab = Number(localStorage.getItem('currentTab'));
     useEffect(() => {
         if (currentTab) {
             setRender(currentTab);
+        }
+        if (currentUser.roleName !== 'Admin') {
+            navigate('*');
         }
     }, []);
 
@@ -98,7 +106,7 @@ const ManageProduct = () => {
                                 <span>NETFARM Pro</span>
                             </div>
                             <div className="links">
-                                <ul style={{paddingLeft:0}} >
+                                <ul style={{ paddingLeft: 0 }}>
                                     <li className={render === 1 ? 'active' : 'none'} onClick={ProductHandler}>
                                         <a href="#">
                                             <AiOutlineShopping />
@@ -164,7 +172,6 @@ const ManageProduct = () => {
 
 export default ManageProduct;
 const Section = styled.section`
-    
     left: 0;
     background-color: #fff;
     height: 90%;
