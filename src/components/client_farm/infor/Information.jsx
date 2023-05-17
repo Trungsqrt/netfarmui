@@ -10,13 +10,13 @@ import Footer from '../share/footer/Footer';
 import DSS from '../../client_farm/infor/DSS/DSS';
 import './InforPage.css';
 import './css/style1.css';
+
 const Information = () => {
     // lấy dữ liệu toàn bộ các bài đăng
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
     const [user, setUser] = useState('');
-
     useEffect(() => {
         if (currentUser) setUser(currentUser.roleName);
     }, []);
@@ -60,12 +60,14 @@ const Information = () => {
                             >
                                 <div className="infor_menu_link">CHÍNH SÁCH</div>
                             </li>
-                            <li
-                                className={render === 5 ? 'infor_MenuItem_active' : 'infor_MenuItem'}
-                                onClick={() => setRender(5)}
-                            >
-                                <div className="menu_link">TƯ VẤN</div>
-                            </li>
+                            {user === 'Farmer' && (
+                                <li
+                                    className={render === 5 ? 'infor_MenuItem_active' : 'infor_MenuItem'}
+                                    onClick={() => setRender(5)}
+                                >
+                                    <div className="menu_link">TƯ VẤN</div>
+                                </li>
+                            )}
                         </ul>
                         <img
                             className="menulist_img"

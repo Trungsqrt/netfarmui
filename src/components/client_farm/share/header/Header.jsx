@@ -173,7 +173,7 @@ const Header = () => {
                         </Menu.Item>
 
                         <Menu.Item>
-                            <Link to="/MyComponent">Nhận diện cây</Link>
+                            <Link to="/PlantDetect">Nhận diện cây</Link>
                         </Menu.Item>
 
                         <Menu.Item>

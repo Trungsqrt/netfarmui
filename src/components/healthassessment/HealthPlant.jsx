@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { GoogleTranslator } from '@translate-tools/core/translators/GoogleTranslator';
 
 import image from '../../assets/image/add-photo-icon-19.jpg';
@@ -25,10 +26,17 @@ function HealthPlant() {
     const [rawData, setRawData] = useState([]);
 
     const translator = new GoogleTranslator();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (currentUser) setUser(currentUser.roleName);
     }, []);
+
+    useEffect(() => {
+        if (currentUser.roleName !== 'Farmer') {
+            navigate('/*');
+        }
+    }, [user]);
 
     function handleChange(e) {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
@@ -52,7 +60,6 @@ function HealthPlant() {
             await getPlantHealth(base64Image).then((res) => setResult(res));
         })();
         setIsLoading(false);
-        
     }, [base64Image]);
 
     const translate = async (text) => {
@@ -120,7 +127,7 @@ function HealthPlant() {
     }, [result]);
 
     useEffect(() => {
-        console.log(rawData )
+        console.log(rawData);
         if (rawData.length > 0) {
             setTranslateData([...rawData[0]]);
         }

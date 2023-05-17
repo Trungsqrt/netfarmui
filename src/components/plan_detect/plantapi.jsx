@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import image from '../../assets/image/add-photo-icon-19.jpg';
 import { Row, Col, Table, Card, Form } from 'react-bootstrap';
 import { getPlant } from '../../apis/plant-id';
@@ -19,9 +21,17 @@ function MyComponent() {
     const [render, setRender] = useState(0);
     const [user, setUser] = useState('');
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (currentUser) setUser(currentUser.roleName);
     }, []);
+
+    useEffect(() => {
+        if (currentUser.roleName !== 'Farmer') {
+            navigate('/*');
+        }
+    }, [user]);
 
     function handleChange(e) {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];

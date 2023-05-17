@@ -81,6 +81,8 @@
 // export default Chatbot;
 
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Chatbot.css';
 import $ from 'jquery';
 const parse = require('html-react-parser');
@@ -88,6 +90,22 @@ const parse = require('html-react-parser');
 // import personImg from 'https://image.flaticon.com/icons/svg/145/145867.svg';
 
 const Chatbot = () => {
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
+    const [user, setUser] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (currentUser) setUser(currentUser.roleName);
+        // if(currentUser && currentUser.roleName != "Farmer")
+    }, []);
+
+    useEffect(() => {
+        if (currentUser.roleName !== 'Farmer') {
+            navigate('*');
+        }
+    }, [user]);
+
     const [messages, setMessages] = useState([]);
     const baseURL = 'http://127.0.0.1:5000/get';
 

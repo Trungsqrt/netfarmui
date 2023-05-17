@@ -76,7 +76,7 @@ function App() {
                 <Route path="/changepassword" element={<ChangePassword />} />
                 <Route path="/passwordretrieval" element={<PassRetri />} />
                 <Route path="*" element={<NotFound />} />
-                <Route path="/shop/cart/Resultpayment" element={<ResultPaymentComponent/>} />
+                <Route path="/shop/cart/Resultpayment" element={<ResultPaymentComponent />} />
 
                 <Route path="/standardmanagement" element={<StandardMgmt />} />
                 <Route path="/standardmanagement/:id" element={<StandardMgmt />} />
@@ -84,8 +84,9 @@ function App() {
                 <Route path="/stageDetailmanagement" element={<StageDetail />} />
 
                 <Route path="/feedback/radio" element={<Radio />} />
-                <Route path="/MyComponent" element={<MyComponent />} />
-                <Route path="/test" element={<Chatbot />} />
+                <Route path="/PlantDetect" element={<MyComponent />} />
+                {/* Chatbot integrated in DSS not a specific route */}
+                {/* <Route path="/chatbot" element={<Chatbot />} /> */}
                 <Route path="/healthPlant" element={<HealthPlant />} />
             </Routes>
             <Footer></Footer>
