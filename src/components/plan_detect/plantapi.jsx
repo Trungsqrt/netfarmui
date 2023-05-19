@@ -19,7 +19,7 @@ function MyComponent() {
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState();
 
     const navigate = useNavigate();
 
@@ -28,8 +28,8 @@ function MyComponent() {
     }, []);
 
     useEffect(() => {
-        if (currentUser.roleName !== 'Farmer') {
-            navigate('/*');
+        if (user !== 'Farmer') {
+            if (user !== undefined) navigate('/*');
         }
     }, [user]);
 

@@ -13,20 +13,20 @@ const ClientHome = () => {
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     useEffect(() => {
-        setUser(currentUser.roleName);
+        setUser(currentUser?.roleName);
     }, []);
     return (
         <>
             {(user === 'Expert' || user === 'Admin') && (
                 <>
-                {/* <div className="homepage_container"> */}
+                    {/* <div className="homepage_container"> */}
                     <Header></Header>
                     <Slide></Slide>
                     <About></About>
                     <div className="news">
                         <News></News>
                     </div>
-                {/* </div> */}
+                    {/* </div> */}
                 </>
             )}
             {!(user === 'Expert' || user === 'Admin') && navigate('/')}
