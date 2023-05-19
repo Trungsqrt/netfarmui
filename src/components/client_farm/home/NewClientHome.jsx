@@ -11,6 +11,7 @@ import tuanNe from '../../../assets/avatar/tuanne.jpg';
 import ContentNew from '../share/newcontent/ContentNew';
 import NewHeader from '../share/newheader/NewHeader';
 import SliderShow from '../share/slidershow/SliderShow';
+import Title from 'antd/es/typography/Title';
 const NewClientHome = () => {
     const [articles, setArticles] = useState([]);
     const [minValue, setMinValue] = useState();
@@ -41,21 +42,51 @@ const NewClientHome = () => {
                 <Paragraph
                     style={{
                         padding: '0',
-                        margin: '60px ',
+                        margin: '30px',
                         height: 'auto',
                         textAlign: 'center',
                     }}
                 >
-                    <Row style={{ textAlign: 'center' }} align={'middle'}>
-                        <Col span={16}>
-                            <Image
-                                src="https://hdll.vn/FileUpload/Images/hoptacxa.jpg"
-                                style={{ borderRadius: '18px' }}
-                            />
-                        </Col>
-                        <Col span={6}>
+                    <Row style={{ justifyContent: 'center', display: 'flex' }}>
+                        <Col span={13}>
                             <Card
-                                title="GIỚI THIỆU"
+                                hoverable
+                                bodyStyle={{ padding: '0px' }}
+                                type="inner"
+                                style={{
+                                    height: '100%',
+                                    boxSizing: 'border-box',
+                                    padding: '0',
+                                    width: '100%',
+                                }}
+                                cover={
+                                    <Image
+                                        src="https://hdll.vn/FileUpload/Images/hoptacxa.jpg"
+                                        style={{
+                                            height: '100%',
+                                        }}
+                                    />
+                                }
+                            ></Card>
+                        </Col>
+                        <Col span={8} offset={1}>
+                            <Card
+                                bodyStyle={{ padding: '0px 15px' }}
+                                hoverable
+                                // type="inner"
+                                title={
+                                    <Title
+                                        level={2}
+                                        style={{
+                                            height: '100%',
+                                            boxSizing: 'border-box',
+                                            paddingTop: '10px',
+                                            width: '100%',
+                                        }}
+                                    >
+                                        GIỚI THIỆU
+                                    </Title>
+                                }
                                 extra={
                                     <Button type="primary" shape="round">
                                         Đọc thêm
@@ -67,7 +98,7 @@ const NewClientHome = () => {
                                     textAlign: 'start',
                                 }}
                             >
-                                <p style={{ fontSize: 16 }}>
+                                <p style={{ fontSize: 25, textAlign: 'justify' }}>
                                     Hợp tác xã nông nghiệp Bình Dương được thành lập năm 2016, với 45 thành viên tham
                                     gia. Thời gian đầu, các thành viên của hợp tác xã chỉ trồng các giống tiêu truyền
                                     thống. Cùng với giá cả bấp bênh, dịch bệnh, cách canh tác tiêu lạc hậu nên đa số
@@ -88,27 +119,41 @@ const NewClientHome = () => {
                             articles.slice(minValue, maxValue).map((value) => (
                                 <>
                                     <Link to={`/detail/${value.id}`} className="news_link">
-                                        <Card style={{ padding: '0 60px' }}>
+                                        <Card style={{ padding: '0 0px' }}>
                                             <Row style={{ textAlign: 'start', alignItems: 'center' }}>
-                                                <Col span={12}>
-                                                    <Image
-                                                        src={value.imageURL}
-                                                        style={{ height: '50%', padding: '0 20px' }}
-                                                    ></Image>
+                                                <Col span={9} offset={1}>
+                                                    <Card
+                                                        hoverable
+                                                        bodyStyle={{ padding: '0px' }}
+                                                        type="inner"
+                                                        style={{
+                                                            height: '100%',
+                                                            boxSizing: 'border-box',
+                                                            padding: '0',
+                                                            width: '100%',
+                                                        }}
+                                                        cover={
+                                                            <Image
+                                                                src={value.imageURL}
+                                                                style={{ height: '100%' }}
+                                                            ></Image>
+                                                        }
+                                                    ></Card>
                                                 </Col>
-                                                <Col span={12} style={{ textAlign: 'start' }}>
-                                                    <h4>{value.title}</h4>
+                                                <Col offset={1} span={13} style={{ textAlign: 'start' }}>
+                                                    <h4 style={{ fontSize: 32 }}>{value.title}</h4>
                                                     <p
                                                         style={{
-                                                            WebkitLineClamp: 10,
+                                                            WebkitLineClamp: 6,
                                                             WebkitBoxOrient: 'vertical',
                                                             margin: '30px 0',
-                                                            fontSize: '16px',
-                                                            lineHeight: '22px',
+                                                            fontSize: '22px',
+                                                            // lineHeight: '26px',
                                                             display: '-webkit-box',
-                                                            height: '16px * 1.3 * 3',
+                                                            height: '16px * 1.3 * 2',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
+                                                            textAlign: 'justify',
                                                         }}
                                                     >
                                                         {getText(value.content)}
@@ -128,7 +173,7 @@ const NewClientHome = () => {
                                 setMinValue((value - 1) * numEachPage);
                                 setMaxValue(value * numEachPage);
                             }}
-                            total={articles.length + 5} //total number of card data available
+                            total={articles.length} //total number of card data available
                         />
                     </Card>
                     <Divider></Divider>

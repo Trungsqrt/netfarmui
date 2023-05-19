@@ -10,14 +10,16 @@
     position: fixed;
     top: 0px;
     z-index: 1000;
-    padding: 0 30px;
+    padding: 0 10px;
   }
   ul {
     display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: end;
   }
   li {
     list-style-type: none;
-    padding: 10px;
   }
   a {
     text-decoration: none;

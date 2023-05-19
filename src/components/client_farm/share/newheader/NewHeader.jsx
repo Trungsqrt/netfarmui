@@ -1,5 +1,5 @@
 import { CloudFilled, MenuOutlined } from '@ant-design/icons';
-import { Button, Image, Space } from 'antd';
+import { Button, Image, Layout, Space } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -136,14 +136,14 @@ const NewHeader = () => {
     }
 
     return (
-        <div>
+        <Layout>
             <div id="main-navbar" className="navbar">
                 <Image src={logo} style={{ height: '60px' }} />
                 <div style={{ textAlign: 'center', color: 'black' }}>
                     <CloudFilled style={{ color: '#00CCFF', fontSize: 40, paddingTop: 30 }} />
                     <h4 style={{ color: 'white' }}>Da Nang, {data}°C</h4>
                 </div>
-                <nav>
+                <Space no-wrap>
                     <ul>
                         {user === 'Admin' ? (
                             <>
@@ -202,7 +202,7 @@ const NewHeader = () => {
                         )}
 
                         <li>
-                            <Space wrap>
+                            <Space>
                                 {user === 'Admin' || user === 'Expert' ? (
                                     <></>
                                 ) : (
@@ -247,9 +247,9 @@ const NewHeader = () => {
                             </Space>
                         </li>
                     </ul>
-                </nav>
+                </Space>
             </div>
-        </div>
+        </Layout>
     );
 };
 

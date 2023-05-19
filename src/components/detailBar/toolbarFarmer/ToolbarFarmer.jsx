@@ -13,8 +13,6 @@ function ToolbarFarmer() {
         logoutUser(dispatch, navigate);
     };
     return (
-        <div>
-            <div>
                 <div className={styles.container}>
                     <div className={styles.item} onClick={() => navigate('/personal')}>
                         <h5>Thay đổi thông tin</h5>
@@ -33,8 +31,6 @@ function ToolbarFarmer() {
                         <h5>Đăng xuất</h5>
                     </div>
                 </div>
-            </div>
-        </div>
     );
 }
 
