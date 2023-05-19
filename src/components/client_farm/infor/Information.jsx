@@ -1,24 +1,20 @@
+import { Layout } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { default as StaffHeader } from '../../admin_farm/share/header/Header';
-import { default as FarmerHeader } from '../../client_farm/share/header/Header';
-import General from './general/General';
-import Schedule from './schedule/Schedule';
-import News from './news/News';
-import Policy from './policy/Policy';
-import Manual from './manual/Manual';
-import Footer from '../share/footer/Footer';
 import DSS from '../../client_farm/infor/DSS/DSS';
+import NewHeader from '../share/newheader/NewHeader';
 import './InforPage.css';
 import './css/style1.css';
-import { Layout } from 'antd';
-import NewHeader from '../share/newheader/NewHeader';
+import General from './general/General';
+import Manual from './manual/Manual';
+import News from './news/News';
+import Policy from './policy/Policy';
+import Schedule from './schedule/Schedule';
 const Information = () => {
     // lấy dữ liệu toàn bộ các bài đăng
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
     const [user, setUser] = useState('');
-
     useEffect(() => {
         if (currentUser) setUser(currentUser.roleName);
     }, []);
@@ -65,12 +61,14 @@ const Information = () => {
                             >
                                 <div className="infor_menu_link">CHÍNH SÁCH</div>
                             </li>
-                            <li
-                                className={render === 5 ? 'infor_MenuItem_active' : 'infor_MenuItem'}
-                                onClick={() => setRender(5)}
-                            >
-                                <div className="menu_link">TƯ VẤN</div>
-                            </li>
+                            {user === 'Farmer' && (
+                                <li
+                                    className={render === 5 ? 'infor_MenuItem_active' : 'infor_MenuItem'}
+                                    onClick={() => setRender(5)}
+                                >
+                                    <div className="menu_link">TƯ VẤN</div>
+                                </li>
+                            )}
                         </ul>
                         <img
                             className="menulist_img"

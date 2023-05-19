@@ -40,6 +40,8 @@ import MyComponent from './components/plan_detect/plantapi';
 import Chatbot from './components/testBot/Chatbot';
 import NewClientHome from './components/client_farm/home/NewClientHome';
 import FooterNew from './components/client_farm/share/newfooter/FooterNew';
+import HealthPlant from './components/healthassessment/HealthPlant';
+
 function App() {
     return (
         <div className="App">
@@ -84,10 +86,14 @@ function App() {
                 <Route path="/stageDetailmanagement" element={<StageDetail />} />
 
                 <Route path="/feedback/radio" element={<Radio />} />
-                <Route path="/MyComponent" element={<MyComponent />} />
+                {/* <Route path="/MyComponent" element={<MyComponent />} /> */}
                 <Route path="/test" element={<Chatbot />} />
 
                 <Route path="/" element={<NewClientHome />} />
+                <Route path="/PlantDetect" element={<MyComponent />} />
+                {/* Chatbot integrated in DSS not a specific route */}
+                {/* <Route path="/chatbot" element={<Chatbot />} /> */}
+                <Route path="/healthPlant" element={<HealthPlant />} />
             </Routes>
             <FooterNew></FooterNew>
         </div>

@@ -1,10 +1,14 @@
 import { Layout } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Form, Row, Table } from 'react-bootstrap';
-import { getPlant } from '../../apis/plant-id';
+import { useNavigate } from 'react-router-dom';
+
 import image from '../../assets/image/add-photo-icon-19.jpg';
-import NewHeader from '../client_farm/share/newheader/NewHeader';
+import { Row, Col, Table, Card, Form } from 'react-bootstrap';
+import { getPlant } from '../../apis/plant-id';
+// import 'bootstrap/dist/css/bootstrap.css';
+import noImage from '../../assets/image/noImage.png';
 import styles from './plantapi.module.css';
+import NewHeader from '../client_farm/share/newheader/NewHeader';
 
 function MyComponent() {
     const [base64Image, setBase64Image] = useState([]);
@@ -17,9 +21,17 @@ function MyComponent() {
     const [render, setRender] = useState(0);
     const [user, setUser] = useState('');
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (currentUser) setUser(currentUser.roleName);
     }, []);
+
+    useEffect(() => {
+        if (currentUser.roleName !== 'Farmer') {
+            navigate('/*');
+        }
+    }, [user]);
 
     function handleChange(e) {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
@@ -43,6 +55,7 @@ function MyComponent() {
             await getPlant(base64Image).then((res) => setResult(res));
         })();
         setIsLoading(false);
+        console.log(base64Image);
     }, [base64Image]);
     console.log(result);
 
@@ -52,172 +65,123 @@ function MyComponent() {
                 <NewHeader></NewHeader>
             </Layout>
             <div style={{ backgroundColor: '#c3d3d8', overflow: 'auto', height: '100vh' }}>
-                <div>
-                    <Row style={{ justifyContent: 'center' }}>
-                        <Card style={{ alignContent: 'center' }}>
-                            <Card.Img variant="top" src={file} style={{ width: '16.5rem', height: '15rem' }} />
-                            <Card.Body>
-                                <Card.Text>{handle}</Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Row>
-                    <Row className={styles['justify-content-md-center']}>
-                        <Form.Group
-                            style={{ width: '18rem' }}
-                            controlId="formFile"
-                            className={`${styles['d-flex']} ${styles['justify-content-center']}`}
+                <Row className="justify-content-center">
+                    <Card className="align-content-center" style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src={file} style={{ width: '16.5rem', height: '15rem' }} />
+                        <Card.Body>
+                            <Card.Text>{handle}</Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Form.Group
+                        style={{ width: '18rem' }}
+                        controlId="formFile"
+                        className="d-flex justify-content-center"
+                    >
+                        <Form.Control type="file" id="upload" style={{ display: 'none' }} onChange={handleChange} />
+                        <label
+                            htmlFor="upload"
+                            style={{
+                                display: 'inline-block',
+                                backgroundColor: 'green',
+                                color: 'black',
+                                padding: '0.5rem',
+                                fontFamily: 'sans-serif',
+                                borderRadius: '1rem',
+                                cursor: 'pointer',
+                                marginTop: '1rem',
+                            }}
                         >
-                            <Form.Control type="file" id="upload" style={{ display: 'none' }} onChange={handleChange} />
-                            <label
-                                htmlFor="upload"
-                                style={{
-                                    display: 'inline-block',
-                                    backgroundColor: 'green',
-                                    color: 'black',
-                                    padding: '0.5rem',
-                                    fontFamily: 'sans-serif',
-                                    borderRadius: '1rem',
-                                    cursor: 'pointer',
-                                    marginTop: '1rem',
-                                }}
-                            >
-                                Tải ảnh lên
-                            </label>
-                        </Form.Group>
-                    </Row>
-                    {result &&
-                        result['suggestions'] &&
-                        result['suggestions'].slice(0, 3).map((data) => (
-                            <Row
-                                bg={'Light'}
-                                className={`${styles['justify-content-center']} ${styles['mb-0']} ${styles['d-flex']}`}
-                                style={{ paddingBottom: '5%' }}
-                            >
-                                <Col md="15" xl="10">
-                                    <Card
-                                        className={`${styles['shadow-0']} ${styles['border']} ${styles['rounded-3']} ${styles['mt-2']} ${styles['mb-3']}`}
-                                        style={{ backgroundColor: 'white' }}
-                                    >
-                                        <Card.Body>
-                                            <Row>
-                                                <Col
-                                                    md="12"
-                                                    lg="3"
-                                                    className={`${styles['mb-4']} ${styles['mb-lg-0']}`}
-                                                    style={{ display: 'flex', justifyContent: 'center' }}
-                                                >
+                            Tải ảnh lên
+                        </label>
+                    </Form.Group>
+                </Row>
+                {result &&
+                    result['suggestions'] &&
+                    result['suggestions'].slice(0, 3).map((data) => (
+                        <Row bg={'Light'} className="justify-content-center mb-0">
+                            <Col md="15" lg="7">
+                                <Card className="shadow-0 border rounded-3 mt-2 mb-3">
+                                    <Card.Body>
+                                        <Row>
+                                            {data.similar_images ? (
+                                                <Col md="12" lg="4" className="mb-4 mb-lg-0">
                                                     <Card.Img
                                                         src={data.similar_images[0].url}
                                                         fluid
-                                                        // className={`${styles['w-100']}`}
-                                                        style={{ width: '40%' }}
+                                                        className="w-100"
                                                     />
                                                 </Col>
-                                                <Col md="8" style={{ textAlign: 'center' }}>
-                                                    <h4>Tên khoa học : {data.plant_details.scientific_name} </h4>
-                                                    <span>---</span>
-                                                    {data.plant_details.common_names &&
-                                                        data.plant_details.common_names.map((name) => (
-                                                            <>
-                                                                <span
-                                                                    className={`${styles['text-danger']}`}
-                                                                    style={{ fontSize: '20px' }}
-                                                                >
-                                                                    {' '}
-                                                                    {name}
-                                                                </span>
-                                                                <span> -</span>
-                                                            </>
-                                                        ))}
-                                                    <span>--</span>
-                                                    <Row
-                                                        style={{
-                                                            display: 'flex !important',
-                                                            justifyContent: 'space-around',
-                                                        }}
-                                                    >
-                                                        <Col
-                                                            md="6"
-                                                            style={{ display: 'flex', justifyContent: 'center' }}
-                                                        >
-                                                            <Table striped="columns">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th></th>
-                                                                        <th></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody
-                                                                    style={{
-                                                                        border: '1px solid #D3D3D3',
-                                                                        borderRadius: '50px',
-                                                                    }}
-                                                                >
-                                                                    <tr>
-                                                                        <td>Chi</td>
-                                                                        <td>{data.plant_details.taxonomy.genus}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Họ</td>
-                                                                        <td>{data.plant_details.taxonomy.family}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Bộ</td>
-                                                                        <td>{data.plant_details.taxonomy.order}</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </Table>
-                                                        </Col>
-                                                        <Col
-                                                            md="6"
-                                                            style={{ display: 'flex', justifyContent: 'center' }}
-                                                        >
-                                                            <Table striped="columns">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th></th>
-                                                                        <th></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody
-                                                                    style={{
-                                                                        border: '1px solid #D3D3D3',
-                                                                        borderRadius: '50px',
-                                                                    }}
-                                                                >
-                                                                    <tr>
-                                                                        <td>Lớp</td>
-                                                                        <td>{data.plant_details.taxonomy.class}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Ngành</td>
-                                                                        <td>{data.plant_details.taxonomy.phylum}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Giới</td>
-                                                                        <td>{data.plant_details.taxonomy.kingdom}</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </Table>
-                                                        </Col>
-                                                    </Row>
-                                                    <br />
-                                                    <ReadMore>{data.plant_details.wiki_description.value}</ReadMore>
-                                                    <span>Nhấn vào </span>
-                                                    <a href={data.plant_details.url} target="_blank">
-                                                        <strong>ĐÂY</strong>
-                                                    </a>
-                                                    <span> để xem thêm </span>
-                                                    <br />
-                                                    <br />
+                                            ) : (
+                                                <Col md="12" lg="4" className="mb-4 mb-lg-0">
+                                                    <Card.Img src={noImage} fluid className="w-100" />
                                                 </Col>
-                                            </Row>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        ))}
-                </div>
+                                            )}
+                                            <Col md="8" className="text-center">
+                                                <h5>Tên khoa học : {data.plant_details.scientific_name} </h5>
+                                                <span>---</span>
+                                                {data.plant_details.common_names &&
+                                                    data.plant_details.common_names.map((name) => (
+                                                        <>
+                                                            <span className="text-danger"> {name}</span>
+                                                            <span> -</span>
+                                                        </>
+                                                    ))}
+                                                <span>--</span>
+                                                <Row>
+                                                    <Col md="6">
+                                                        <Table striped="columns">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Chi</td>
+                                                                    <td>{data.plant_details.taxonomy.genus}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Họ</td>
+                                                                    <td>{data.plant_details.taxonomy.family}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Bộ</td>
+                                                                    <td>{data.plant_details.taxonomy.order}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </Table>
+                                                    </Col>
+                                                    <Col md="6">
+                                                        <Table striped="columns">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Lớp</td>
+                                                                    <td>{data.plant_details.taxonomy.class}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Ngành</td>
+                                                                    <td>{data.plant_details.taxonomy.phylum}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Giới</td>
+                                                                    <td>{data.plant_details.taxonomy.kingdom}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </Table>
+                                                    </Col>
+                                                </Row>
+
+                                                {data.plant_details.wiki_description &&
+                                                    data.plant_details.wiki_description.value && (
+                                                        <ReadMore>{data.plant_details.wiki_description.value}</ReadMore>
+                                                    )}
+                                                <span>Nhấn vào </span>
+                                                <a href={data.plant_details.url}>đây</a>
+                                                <span> để xem thêm </span>
+                                            </Col>
+                                        </Row>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
+                    ))}
             </div>
         </div>
     );

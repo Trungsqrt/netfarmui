@@ -21,13 +21,21 @@ import Radio from '../ManageFeedback/Radio';
 import Demo from '../ManageFeedback/Demo';
 import { Layout } from 'antd';
 import NewHeader from '../../client_farm/share/newheader/NewHeader';
+import { useNavigate } from 'react-router-dom';
 const ManageProduct = () => {
+    const getUser = localStorage.getItem('user');
+    const currentUser = JSON.parse(getUser);
+    const navigate = useNavigate();
+
     const [render, setRender] = useState(1);
 
     const currentTab = Number(localStorage.getItem('currentTab'));
     useEffect(() => {
         if (currentTab) {
             setRender(currentTab);
+        }
+        if (currentUser.roleName !== 'Admin') {
+            navigate('*');
         }
     }, []);
 
@@ -102,49 +110,49 @@ const ManageProduct = () => {
                                 <span>NETFARM Pro</span>
                             </div>
                             <div className="links">
-                                <ul>
+                                <ul style={{ paddingLeft: 0 }}>
                                     <li className={render === 1 ? 'active' : 'none'} onClick={ProductHandler}>
                                         <a href="#">
                                             <AiOutlineShopping />
-                                            <span className="border">Mặt hàng</span>
+                                            <span className="">Mặt hàng</span>
                                         </a>
                                     </li>
                                     <li className={render === 2 ? 'active' : 'none'} onClick={CategoryHandler}>
                                         <a href="#">
                                             <AiOutlinePieChart />
-                                            <span className="border">Danh mục</span>
+                                            <span className="">Danh mục</span>
                                         </a>
                                     </li>
 
                                     <li className={render === 3 ? 'active' : 'none'} onClick={OrderHandler}>
                                         <a href="#">
                                             <AiOutlineShoppingCart />
-                                            <span className="border">Đơn hàng</span>
+                                            <span className="">Đơn hàng</span>
                                         </a>
                                     </li>
                                     <li className={render === 4 ? 'active' : 'none'} onClick={DashboardHandler}>
                                         <a href="#">
                                             <AiOutlineAppstore />
-                                            <span className="border">Thống kê</span>
+                                            <span className="">Thống kê</span>
                                         </a>
                                     </li>
 
                                     <li className={render === 5 ? 'active' : 'none'} onClick={ReportHandler}>
                                         <a href="#">
                                             <AiOutlineUsergroupAdd />
-                                            <span className="border">Báo cáo</span>
+                                            <span className="">Báo cáo</span>
                                         </a>
                                     </li>
                                     <li className={render === 6 ? 'active' : 'none'} onClick={FeedbackHandler}>
                                         <a href="#">
                                             <AiOutlineMessage />
-                                            <span className="border">Phản hồi</span>
+                                            <span className="">Phản hồi</span>
                                         </a>
                                     </li>
                                     <li className={render === 7 ? 'active' : 'none'} onClick={DemoHandler}>
                                         <a href="#">
                                             <AiOutlineSetting />
-                                            <span className="border">Demo mode</span>
+                                            <span className="">Demo mode</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -168,7 +176,6 @@ const ManageProduct = () => {
 
 export default ManageProduct;
 const Section = styled.section`
-    // position: fixed;
     left: 0;
     background-color: #fff;
     height: 90%;

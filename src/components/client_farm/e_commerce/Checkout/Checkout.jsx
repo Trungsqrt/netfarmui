@@ -167,10 +167,6 @@ const Checkout = () => {
                     };
                     try {
                         await axios.post(itemUrl, postItem);
-                        const orderinforma = await axios.get(`${orderUrl}/${idOrder}`);
-                        if(orderinforma?.data.status==='true'){
-                            await axios.delete(`${cartUrl}/${carts[i].id}`);  
-                        }
                         listCartIdOrder.push(carts[i].id);
                     } catch (err) {
                         Notification({
