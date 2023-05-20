@@ -163,7 +163,7 @@ const NewHeader = () => {
                                     <Link to="/inforPage">Thông tin</Link>
                                 </li>
                                 <li>
-                                    <Link to="/healthPlant">Nhận diện cây trồng</Link>
+                                    <Link to="/PlantDetect">Nhận diện cây trồng</Link>
                                 </li>
                             </>
                         ) : user === 'Expert' ? (
@@ -180,7 +180,7 @@ const NewHeader = () => {
                                     <Link to="/inforPage">Thông tin</Link>
                                 </li>
                                 <li>
-                                    <Link to="/healthPlant">Nhận diện cây trồng</Link>
+                                    <Link to="/PlantDetect">Nhận diện cây trồng</Link>
                                 </li>
                             </>
                         ) : (
@@ -196,7 +196,7 @@ const NewHeader = () => {
                                     <Link to="/shop">Mua hàng</Link>
                                 </li>
                                 <li>
-                                    <Link to="/healthPlant">Nhận diện cây trồng</Link>
+                                    <Link to="/PlantDetect">Nhận diện cây trồng</Link>
                                 </li>
                             </>
                         )}

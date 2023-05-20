@@ -19,7 +19,6 @@
     content: '';
     position: absolute;
     border-width: 10px;
-    border-style: solid;
     border-color: transparent transparent rgb(254, 253, 253) transparent;
     top: -20px;
     right: 4.5px;

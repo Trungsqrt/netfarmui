@@ -217,7 +217,7 @@ const Header = () => {
                         )}
 
                         <Menu.Item key={5}>
-                            <Link to="/MyComponent">Nhận diện cây trồng</Link>
+                            <Link to="/PlantDetect">Nhận diện cây trồng</Link>
                         </Menu.Item>
                     </Menu>
                     <form className="form-search">

@@ -17,15 +17,15 @@ function ToolbarExpert() {
         <div>
             <div className={styles.container}>
                 <div className={styles.item} onClick={() => navigate('/personal')}>
-                    <h5>Thay đổi thông tin</h5>
+                    <h5 style={{fontSize:14}}>Thay đổi thông tin</h5>
                 </div>
 
                 <div className={styles.item} onClick={() => navigate('/changepassword')}>
-                    <h5>Đổi mật khẩu</h5>
+                    <h5 style={{fontSize:14}}>Đổi mật khẩu</h5>
                 </div>
 
                 <div className={styles.item} onClick={handleLogout}>
-                    <h5>Đăng xuất</h5>
+                    <h5 style={{fontSize:14}}>Đăng xuất</h5>
                 </div>
             </div>
         </div>
