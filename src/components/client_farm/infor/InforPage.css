@@ -4,7 +4,14 @@
     display: block;
     background-color: rgb(225, 216, 40);
 }
-
+.menu ul li{
+    width: auto;
+    border: none;   
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+}
 .col-2 {
     width: 50%;
     border: 1 solid #000;
@@ -51,6 +58,5 @@
 }
 
 .PolicyRow {
-    /* display: flex; */
     justify-content: space-between;
 }

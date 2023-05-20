@@ -31,7 +31,7 @@
     text-align: center;
     width: 100%;
     border: 1px solid rgb(243, 226, 70);
-    padding: 5px;
+    /* padding: 5px; */
     background-color: rgb(197, 179, 13);
 }
 
@@ -48,9 +48,9 @@
     line-height: 40px;
     height: 50px;
     text-align: center;
-    width: 100%;
+    /* width: 100%; */
     border: 1px solid rgb(243, 226, 70);
-    padding: 5px;
+    /* padding: 5px; */
     background-color: #000;
     color: #fff;
 }
