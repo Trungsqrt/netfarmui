@@ -64,7 +64,7 @@ function MyComponent() {
             <Layout style={{ display: 'block', marginBottom: '100px' }}>
                 <NewHeader></NewHeader>
             </Layout>
-            <div style={{ backgroundColor: '#c3d3d8', overflow: 'auto', height: '100vh' }}>
+            <div style={{ backgroundColor: '#EEEEEE', overflow: 'auto', height: '100vh' }}>
                 <Row className="justify-content-center">
                     <Card className="align-content-center" style={{ width: '18rem' }}>
                         <Card.Img variant="top" src={file} style={{ width: '16.5rem', height: '15rem' }} />

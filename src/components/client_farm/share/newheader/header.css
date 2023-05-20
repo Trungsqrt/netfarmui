@@ -10,13 +10,14 @@
     position: fixed;
     top: 0px;
     z-index: 1000;
-    padding: 0 10px;
+    flex-wrap: unset;
+    /* padding: 0 10px; */
   }
   ul {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-start;
   }
   li {
     list-style-type: none;

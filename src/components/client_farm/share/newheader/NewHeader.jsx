@@ -139,9 +139,9 @@ const NewHeader = () => {
         <Layout>
             <div id="main-navbar" className="navbar">
                 <Image src={logo} style={{ height: '60px' }} />
-                <div style={{ textAlign: 'center', color: 'black' }}>
-                    <CloudFilled style={{ color: '#00CCFF', fontSize: 40, paddingTop: 30 }} />
-                    <h4 style={{ color: 'white' }}>Da Nang, {data}°C</h4>
+                <div style={{ textAlign: 'center', color: 'black',flexWrap:'nowrap' }}>
+                    <CloudFilled style={{ color: '#00CCFF', fontSize: 40 }} />
+                    <h4 style={{ color: 'white',fontSize:20 }}>Da Nang, {data}°C</h4>
                 </div>
                 <Space no-wrap>
                     <ul>
@@ -182,6 +182,9 @@ const NewHeader = () => {
                                 <li>
                                     <Link to="/PlantDetect">Nhận diện cây trồng</Link>
                                 </li>
+                                <li>
+                                    <Link to="/healthPlant">Nhận diện bệnh</Link>
+                                </li>
                             </>
                         ) : (
                             <>
@@ -197,6 +200,9 @@ const NewHeader = () => {
                                 </li>
                                 <li>
                                     <Link to="/PlantDetect">Nhận diện cây trồng</Link>
+                                </li>
+                                <li>
+                                    <Link to="/healthPlant">Nhận diện bệnh</Link>
                                 </li>
                             </>
                         )}
