@@ -22,7 +22,7 @@ function HealthPlant() {
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     const [render, setRender] = useState(0);
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState();
 
     const [translateData, setTranslateData] = useState([]);
     const [rawData, setRawData] = useState([]);
@@ -35,8 +35,8 @@ function HealthPlant() {
     }, []);
 
     useEffect(() => {
-        if (currentUser.roleName !== 'Farmer') {
-            navigate('/*');
+        if (user !== 'Farmer') {
+            if (user !== undefined) navigate('/*');
         }
     }, [user]);
 
