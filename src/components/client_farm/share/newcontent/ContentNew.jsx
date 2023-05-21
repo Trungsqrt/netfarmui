@@ -1,34 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import './content.css';
 import { Avatar, List, message } from 'antd';
+import axios from 'axios';
 import VirtualList from 'rc-virtual-list';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './content.css';
 
 const ContentNew = () => {
     const [searchContent, setSearchContent] = useState('');
+    const [articles, setArticles] = useState([]);
+    const navigate = useNavigate();
+    const [currentArticles, setCurrentArticles] = useState([]);
     const handleSubmit = (e) => {
         e.preventDefault();
     };
-    const fakeDataUrl =
-  'https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo';
-const ContainerHeight = 180;
-  const [data, setData] = useState([]);
-  const appendData = () => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((body) => {
-        setData(data.concat(body.results));
-        message.success(`${body.results.length} more items loaded!`);
-      });
-  };
-  useEffect(() => {
-    appendData();
-  }, []);
-  
-  const onScroll = (e) => {
-    if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
-      appendData();
-    }
-  };
+    const fakeDataUrl = 'https://localhost:44303/api/Article';
+    const ContainerHeight = 180;
+    const [data, setData] = useState([]);
+    const appendData = async () => {
+        if (searchContent != '') {
+            const res = await axios.get(fakeDataUrl);
+            const response = res.data;
+            const resultArray = response.filter((item) =>
+                item.title.toLowerCase().includes(searchContent.toLowerCase()),
+            );
+            setData([...resultArray]);
+            message.success(`${resultArray.length} more items loaded!`);
+        } else if (searchContent == '') {
+            setData([]);
+            return;
+        }
+    };
+
+    const onScroll = (e) => {
+        // if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
+        //     appendData();
+        // }
+        
+    };
+    useEffect(() => {
+        appendData();
+    }, [searchContent]);
     return (
         <>
             <div className="container">
@@ -44,21 +55,39 @@ const ContainerHeight = 180;
                             value={searchContent}
                         />
                     </form>
-                    <List size='small' style={{zIndex:1000,background:'#FFFFF',justifyContent:'center',display:'flex',paddingTop:'10px',borderRadius:'90px'}}>
+                    <List
+                        size="small"
+                        style={{
+                            zIndex: 1000,
+                            background: '#FFFFF',
+                            justifyContent: 'center',
+                            display: 'flex',
+                            paddingTop: '10px',
+                            borderRadius: '90px',
+                        }}
+                    >
                         <VirtualList
-                        style={{zIndex: 1000,background:'#FFFFF',width:400}}
+                            style={{ zIndex: 1000, background: '#FFFFF', width: 400 }}
                             data={data}
-                            height={ContainerHeight}   
+                            height={ContainerHeight}
                             itemHeight={47}
                             itemKey="email"
                             onScroll={onScroll}
                         >
                             {(item) => (
-                                <List.Item key={item.email} style={{zIndex:1000,background:'white',width:400}}>
+                                <List.Item key={item.title} style={{ zIndex: 1000, background: 'white', width: 400 }}>
                                     <List.Item.Meta
-                                        avatar={<Avatar src={item.picture.large} />}
-                                        title={<a href="https://ant.design">{item.name.last}</a>}
-                                        description={item.email}
+                                        avatar={<Avatar src={item.imageURL} />}
+                                        title={
+                                            <p
+                                                onClick={() => {
+                                                    navigate(`/detail/${item.id}`);
+                                                }}
+                                            >
+                                                {item.title}
+                                            </p>
+                                        }
+                                        // description={item.title}
                                     />
                                 </List.Item>
                             )}
