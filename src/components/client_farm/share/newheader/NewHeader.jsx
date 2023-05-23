@@ -138,13 +138,15 @@ const NewHeader = () => {
     return (
         <Layout>
             <div id="main-navbar" className="navbar">
-                <Image src={logo} style={{ height: '60px' }} />
-                <div style={{ textAlign: 'center', color: 'black',flexWrap:'nowrap' }}>
-                    <CloudFilled style={{ color: '#00CCFF', fontSize: 40 }} />
-                    <h4 style={{ color: 'white',fontSize:20 }}>Da Nang, {data}°C</h4>
+                <div style={{display:'flex',justifyContent:'space-around'}}>
+                    <Image src={logo} style={{ height: '60px' }} />
+                    <div style={{ textAlign: 'center', color: 'black', flexWrap: 'nowrap' }}>
+                        <CloudFilled style={{ color: '#00CCFF', fontSize: 40 }} />
+                        <h4 style={{ color: 'white', fontSize: 20 }}>Da Nang, {data}°C</h4>
+                    </div>
                 </div>
                 <Space no-wrap>
-                    <ul>
+                    <ul className={user == 'Admin' ? 'ul-admin' : ''}>
                         {user === 'Admin' ? (
                             <>
                                 <li>
@@ -162,9 +164,9 @@ const NewHeader = () => {
                                 <li>
                                     <Link to="/inforPage">Thông tin</Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link to="/PlantDetect">Nhận diện cây trồng</Link>
-                                </li>
+                                </li> */}
                             </>
                         ) : user === 'Expert' ? (
                             <>

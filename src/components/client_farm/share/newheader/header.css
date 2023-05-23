@@ -13,11 +13,18 @@
     flex-wrap: unset;
     /* padding: 0 10px; */
   }
+
   ul {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: flex-start;
+  }
+  ul-admin{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: start;
   }
   li {
     list-style-type: none;

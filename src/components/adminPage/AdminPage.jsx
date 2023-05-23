@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import styles from './AdminPage.module.css';
+import { ProfileOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../admin_farm/share/header/Header';
 import NewHeader from '../client_farm/share/newheader/NewHeader';
 import './AdminPage.css';
-import { Layout } from 'antd';
+import styles from './AdminPage.module.css';
 
 function AdminPage() {
     const userUrl = 'https://localhost:44303/api/Users';
@@ -206,27 +206,46 @@ function AdminPage() {
                     <div className={styles.body}>
                         <div className={styles.left}>
                             <h3 className={styles.title}>Admin Page</h3>
-                            <ul className={styles.nav} style={{paddingLeft:0}}>
-                                <li
-                                    className={render === 1 ? styles.navItemSelected : styles.navItem}
-                                    onClick={UserHandler}
-                                >
-                                    <i class="menuIconItem fa-regular fa-user"></i>
-                                    Users
-                                </li>
-                                <li
-                                    className={render === 2 ? styles.navItemSelected : styles.navItem}
-                                    onClick={PostHandler}
-                                >
-                                    <i class="menuIconItem fa-regular fa-newspaper"></i>
-                                    Posts
-                                </li>
-                            </ul>
+                            <Menu
+                                // theme="dark"
+                                mode="vertical"
+                                style={{
+                                    display: 'block',
+                                    padding: '30px 0px',
+                                    border: 'none',
+                                    alignItems: 'center',
+                                    backgroundColor: 'rgb(197, 179, 13)',
+                                }}
+                                defaultSelectedKeys={['1']}
+                                items={[
+                                    {
+                                        key: '1',
+                                        label: (
+                                            <span
+                                                style={{ fontSize: '18px', textAlign: 'center' }}
+                                                onClick={UserHandler}
+                                            >
+                                                Users
+                                            </span>
+                                        ),
+                                        icon: <UserOutlined style={{ fontSize: '1.5em' }} />,
+                                    },
+                                    {
+                                        key: '2',
+                                        label: (
+                                            <span style={{ fontSize: '18px' }} onClick={PostHandler}>
+                                                Post
+                                            </span>
+                                        ),
+                                        icon: <ProfileOutlined style={{ fontSize: '1.5em' }} />,
+                                    },
+                                ]}
+                            />
                         </div>
                         <div className={styles.right}>
                             <section className={styles.bodyContainer}>
                                 <table className={styles.tableContainerr}>
-                                    {render === 1 && (
+                                    {render == 1 && (
                                         <div>
                                             {/* <tbody> */}
                                             <div className={styles.searchContainer}>
@@ -278,7 +297,7 @@ function AdminPage() {
                                             {/* </tbody> */}
                                         </div>
                                     )}
-                                    {render === 2 && (
+                                    {render == 2 && (
                                         <div>
                                             {/* <tbody> */}
                                             <div className={styles.searchContainer}>

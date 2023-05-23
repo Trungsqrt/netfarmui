@@ -43,7 +43,7 @@ const InforPage = () => {
     return (
         <div>
             <div>
-            {(user === 'Admin' || user === 'Expert') ? <StaffHeader /> : <FarmerHeader />}
+                {user === 'Admin' || user === 'Expert' ? <StaffHeader /> : <FarmerHeader />}
                 <div className="infor_main">
                     {/* <div className="menu">
                         <Menuleft></Menuleft>

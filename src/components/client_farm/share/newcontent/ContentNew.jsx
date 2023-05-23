@@ -24,7 +24,7 @@ const ContentNew = () => {
                 item.title.toLowerCase().includes(searchContent.toLowerCase()),
             );
             setData([...resultArray]);
-            message.success(`${resultArray.length} more items loaded!`);
+            // message.success(`${resultArray.length} more items loaded!`);
         } else if (searchContent == '') {
             setData([]);
             return;

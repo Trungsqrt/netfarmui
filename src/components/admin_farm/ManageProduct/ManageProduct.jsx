@@ -1,32 +1,31 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import '../css/style.css';
-import Header from '../share/header/Header';
-import styled from 'styled-components';
+import { Col, Layout, Menu, Row } from 'antd';
+import React, { useEffect, useState } from 'react';
 import {
-    AiOutlineAppstore,
     AiFillCodeSandboxCircle,
-    AiOutlineShoppingCart,
-    AiOutlineUsergroupAdd,
-    AiOutlineShopping,
+    AiOutlineAppstore,
     AiOutlineMessage,
     AiOutlinePieChart,
     AiOutlineSetting,
+    AiOutlineShopping,
+    AiOutlineShoppingCart,
+    AiOutlineUsergroupAdd,
 } from 'react-icons/ai';
-import Dashboard from './ManageStatistical/Dashboard';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import NewHeader from '../../client_farm/share/newheader/NewHeader';
+import Demo from '../ManageFeedback/Demo';
+import Radio from '../ManageFeedback/Radio';
+import '../css/style.css';
 import ManageCategory from './ManageCategory/ManageCategory';
 import ManageOrder from './ManageOrder/ManageOrder';
 import Manage from './ManageProduct/Manage';
 import SaleReport from './ManageReport/SaleReport';
-import Radio from '../ManageFeedback/Radio';
-import Demo from '../ManageFeedback/Demo';
-import { Layout } from 'antd';
-import NewHeader from '../../client_farm/share/newheader/NewHeader';
-import { useNavigate } from 'react-router-dom';
+import Dashboard from './ManageStatistical/Dashboard';
 const ManageProduct = () => {
     const getUser = localStorage.getItem('user');
     const currentUser = JSON.parse(getUser);
     const navigate = useNavigate();
-
+    const [user, setUser] = useState('');
     const [render, setRender] = useState(1);
 
     const currentTab = Number(localStorage.getItem('currentTab'));
@@ -38,139 +37,94 @@ const ManageProduct = () => {
             navigate('*');
         }
     }, []);
-
-    const ProductHandler = () => {
-        setRender(1);
-        localStorage.setItem('currentTab', 1);
-    };
-
-    // Phần này lấy dữ liệu cho category
-    const CategoryHandler = () => {
-        setRender(2);
-        localStorage.setItem('currentTab', 2);
-    };
-
-    // Phần này lấy dữ liệu cho order
-    const OrderHandler = () => {
-        setRender(3);
-        localStorage.setItem('currentTab', 3);
-    };
-
-    const DashboardHandler = () => {
-        setRender(4);
-        localStorage.setItem('currentTab', 4);
-    };
-
-    const ReportHandler = () => {
-        setRender(5);
-        localStorage.setItem('currentTab', 5);
-    };
-
-    const FeedbackHandler = () => {
-        setRender(6);
-        localStorage.setItem('currentTab', 6);
-    };
-
-    const DemoHandler = () => {
-        setRender(7);
-        localStorage.setItem('currentTab', 7);
+    const changeTag = (e) => {
+        setRender(e.key);
+        localStorage.setItem('currentTab', e.key);
     };
 
     return (
-        <div>
+        <Layout>
             <Layout style={{ display: 'block', marginBottom: '150px' }}>
                 <NewHeader></NewHeader>
             </Layout>
-            <div className="manageContainer ">
-                {/* <div className="MenuProduct">
-                    <div className="manageProduct_container">
-                        <ul className="menulist">
-                            <li className="MenuItem" onClick={ProductHandler}>
-                                <p className="menu_link">MẶT HÀNG</p>
-                            </li>
-                            <li className="MenuItem" onClick={CategoryHandler}>
-                                <p className="menu_link">DANH MỤC</p>
-                            </li>
-                            <li className="MenuItem" onClick={OrderHandler}>
-                                <p className="menu_link">ĐƠN HÀNG</p>
-                            </li>
-                            <li className="MenuItem">
-                                <p href="" className="menu_link">
-                                    THỐNG KÊ
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-                </div> */}
-                <div className="MenuProduct">
-                    <Section>
-                        <div className="top">
-                            <div className="brand">
-                                <AiFillCodeSandboxCircle />
-                                <span>NETFARM Pro</span>
+            <Layout style={{ paddingBottom: '40px' }}>
+                <Row>
+                    <Col span={4} offset={1}>
+                        <Layout style={{ background: '#000022', height: '100%', borderRadius: '10px' }}>
+                            <div className="brand" style={{ padding: '20px 0px' }}>
+                                <AiFillCodeSandboxCircle color="white" fontSize="4em" />
+                                <span style={{ color: 'white', fontSize: '28px' }}>NETFARM Pro</span>
                             </div>
-                            <div className="links">
-                                <ul style={{ paddingLeft: 0 }}>
-                                    <li className={render === 1 ? 'active' : 'none'} onClick={ProductHandler}>
-                                        <a href="#">
-                                            <AiOutlineShopping />
-                                            <span className="">Mặt hàng</span>
-                                        </a>
-                                    </li>
-                                    <li className={render === 2 ? 'active' : 'none'} onClick={CategoryHandler}>
-                                        <a href="#">
-                                            <AiOutlinePieChart />
-                                            <span className="">Danh mục</span>
-                                        </a>
-                                    </li>
-
-                                    <li className={render === 3 ? 'active' : 'none'} onClick={OrderHandler}>
-                                        <a href="#">
-                                            <AiOutlineShoppingCart />
-                                            <span className="">Đơn hàng</span>
-                                        </a>
-                                    </li>
-                                    <li className={render === 4 ? 'active' : 'none'} onClick={DashboardHandler}>
-                                        <a href="#">
-                                            <AiOutlineAppstore />
-                                            <span className="">Thống kê</span>
-                                        </a>
-                                    </li>
-
-                                    <li className={render === 5 ? 'active' : 'none'} onClick={ReportHandler}>
-                                        <a href="#">
-                                            <AiOutlineUsergroupAdd />
-                                            <span className="">Báo cáo</span>
-                                        </a>
-                                    </li>
-                                    <li className={render === 6 ? 'active' : 'none'} onClick={FeedbackHandler}>
-                                        <a href="#">
-                                            <AiOutlineMessage />
-                                            <span className="">Phản hồi</span>
-                                        </a>
-                                    </li>
-                                    <li className={render === 7 ? 'active' : 'none'} onClick={DemoHandler}>
-                                        <a href="#">
-                                            <AiOutlineSetting />
-                                            <span className="">Demo mode</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <Menu
+                                theme="dark"
+                                mode="vertical"
+                                style={{
+                                    display: 'block',
+                                    padding: '30px 0px',
+                                    border: 'none',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    color: 'white',
+                                }}
+                                defaultSelectedKeys={[`${currentTab}`]}
+                                onClick={changeTag}
+                                items={[
+                                    {
+                                        key: '1',
+                                        label: <span style={{ fontSize: '18px' }}>Mặt hàng</span>,
+                                        icon: <AiOutlineShopping style={{ color: 'white', fontSize: '2em' }} />,
+                                    },
+                                    {
+                                        key: '2',
+                                        label: <span style={{ fontSize: '18px' }}>Danh mục</span>,
+                                        icon: <AiOutlinePieChart style={{ color: 'white', fontSize: '2em' }} />,
+                                    },
+                                    {
+                                        key: '3',
+                                        label: <span style={{ fontSize: '18px' }}>Đơn hàng</span>,
+                                        icon: <AiOutlineShoppingCart style={{ color: 'white', fontSize: '2em' }} />,
+                                    },
+                                    {
+                                        key: '4',
+                                        label: <span style={{ fontSize: '18px' }}>Thống kê</span>,
+                                        icon: <AiOutlineAppstore style={{ color: 'white', fontSize: '2em' }} />,
+                                    },
+                                    {
+                                        key: '5',
+                                        label: <span style={{ fontSize: '18px' }}>Báo cáo</span>,
+                                        icon: <AiOutlineUsergroupAdd style={{ color: 'white', fontSize: '2em' }} />,
+                                    },
+                                    {
+                                        key: '6',
+                                        label: <span style={{ fontSize: '18px' }}>Phản hồi</span>,
+                                        icon: <AiOutlineMessage style={{ color: 'white', fontSize: '2em' }} />,
+                                    },
+                                    {
+                                        key: '7',
+                                        label: <span style={{ fontSize: '18px' }}>Demo mode</span>,
+                                        icon: <AiOutlineSetting style={{ color: 'white', fontSize: '2em' }} />,
+                                    },
+                                ]}
+                            />
+                        </Layout>
+                    </Col>
+                    <Col span={18}>
+                        <div className="manage_content" style={{ height: '100%' }}>
+                            {render == 1 && <Manage></Manage>}
+                            {render == 2 && <ManageCategory></ManageCategory>}
+                            {render == 3 && <ManageOrder></ManageOrder>}
+                            {render == 4 && <Dashboard></Dashboard>}
+                            {render == 5 && <SaleReport></SaleReport>}
+                            {render == 6 && <Radio></Radio>}
+                            {render == 7 && <Demo></Demo>}
                         </div>
-                    </Section>
-                </div>
-                <div className="manage_content">
-                    {render === 1 && <Manage></Manage>}
-                    {render === 2 && <ManageCategory></ManageCategory>}
-                    {render === 3 && <ManageOrder></ManageOrder>}
-                    {render === 4 && <Dashboard></Dashboard>}
-                    {render === 5 && <SaleReport></SaleReport>}
-                    {render === 6 && <Radio></Radio>}
-                    {render === 7 && <Demo></Demo>}
-                </div>
-            </div>
-        </div>
+                    </Col>
+                </Row>
+            </Layout>
+            {user === 'Expert' && navigate('/adminHome')}
+            {user === 'Farmer' && navigate('/')}
+        </Layout>
+        
     );
 };
 

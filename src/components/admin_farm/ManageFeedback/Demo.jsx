@@ -95,7 +95,7 @@ const Demo = () => {
     };
     return (
         <>
-            <Card style={{ height: '95%' }}>
+            <Card style={{ height: '100%' }}>
                 <Row>
                     <Col span={24}>
                         <h2>Phân tích sắc thái phản hồi của người tiêu dùng</h2>
