@@ -59,17 +59,18 @@ const ResultPaymentComponent = () => {
         const orderinforma = await axios.get(`${orderURL}/${orderID}`);
         let tmp = orderinforma?.data;
 
+
         if (vnp_Amount === null || vnp_BankCode === null || vnp_TmnCode === null) {
             setPaymentStatus(false);
         } else {
-            tmp.status = 'true';
+            tmp.status = true;
             setPaymentStatus(true);
-            await axios.put(`${orderURL}/${orderID}`, tmp);
+            await axios.put(orderURL+`/${orderID}`, tmp);
             setOrderInfor(tmp);
 
             localStorage.removeItem('checkList');
         }
-        window.location.reload();
+        
     };
     useEffect(() => {
         fetchData();
@@ -110,7 +111,7 @@ const ResultPaymentComponent = () => {
                                 </div>
                                 <div className={styles.informationRow}>
                                     <div>Ngân Hàng</div>
-                                    <div>{vnp_BankCode}</div>
+                                    <div>{vnp_TmnCode}</div>
                                 </div>
                                 <div className={styles.informationRow}>
                                     <div>Địa chỉ nhận hàng</div>
@@ -126,7 +127,7 @@ const ResultPaymentComponent = () => {
                                 </div>
                                 <div className={styles.informationRow}>
                                     <div>Mã giao dịch</div>
-                                    <div>{vnp_TmnCode}</div>
+                                    <div>{vnp_BankCode}</div>
                                 </div>
                                 <div className={styles.buttonWayBack}>
                                     <Button

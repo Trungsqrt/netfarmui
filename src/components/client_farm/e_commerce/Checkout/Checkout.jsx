@@ -169,10 +169,7 @@ const Checkout = () => {
                         await axios.post(itemUrl, postItem);
                         listCartIdOrder.push(carts[i].id);
                     } catch (err) {
-                        Notification({
-                            message: 'Có lỗi xảy ra vui lòng thử lại sau !',
-                            type: 'error',
-                        });
+                        console.log(err);          
                     }
                 }
                 const object = {
@@ -181,21 +178,19 @@ const Checkout = () => {
                     orderId: form.getFieldValue('id'),
                 };
                 const x = await axios.post(PaymentUrl, object);
-                window.close();
-                window.open(x.data);
+                await window.open(x.data);
+                await window.close();
                 localStorage.setItem('cartIdOrder', listCartIdOrder);
             }
         } catch (err) {
-            Notification({
-                message: 'Có lỗi xảy ra vui lòng thử lại sau !',
-                type: 'error',
-            });
+            console.log(err);
         }
         for (var i = 0; i < length; i++) {
             const sl = carts[i].quantity;
             const id = carts[i].productId;
             handlerProduct(sl, id);
         }
+        navigate('/shop/orderlist');
     };
 
     const [tinh, setTinh] = useState(
