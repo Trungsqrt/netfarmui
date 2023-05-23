@@ -146,7 +146,7 @@ const NewHeader = () => {
                     </div>
                 </div>
                 <Space no-wrap>
-                    <ul className={user == 'Admin' ? 'ul-admin' : ''}>
+                    <ul className={user !== 'Farmer'? 'ul-admin' : ''}>
                         {user === 'Admin' ? (
                             <>
                                 <li>
@@ -181,12 +181,12 @@ const NewHeader = () => {
                                 <li>
                                     <Link to="/inforPage">Thông tin</Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link to="/PlantDetect">Nhận diện cây trồng</Link>
                                 </li>
                                 <li>
                                     <Link to="/healthPlant">Nhận diện bệnh</Link>
-                                </li>
+                                </li> */}
                             </>
                         ) : (
                             <>

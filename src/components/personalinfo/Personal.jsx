@@ -5,9 +5,10 @@ import Header from '../client_farm/share/header/Header';
 import { default as StaffHeader } from '../admin_farm/share/header/Header';
 import { default as FarmerHeader } from '../client_farm/share/header/Header';
 import axios from 'axios';
-
+import { Layout } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 import validator from 'validator';
+import NewHeader from '../client_farm/share/newheader/NewHeader'
 
 function Personal() {
     const [fullName, setFullName] = useState('');
@@ -112,8 +113,11 @@ function Personal() {
 
     return (
         <div>
-            {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
-            {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />}
+            {/* {(user === 'Admin' || user === 'Expert') && <StaffHeader />}
+            {!(user === 'Admin' || user === 'Expert') && <FarmerHeader />} */}
+            <Layout style={{ display: 'block', marginBottom: '100px' }}>
+                <NewHeader></NewHeader>
+            </Layout>
             <div className={styles.body}>
                 <div className={styles.container}>
                     <section className={styles.title}>Cập nhật thông tin cá nhân</section>

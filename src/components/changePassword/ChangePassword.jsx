@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import isEmpty from 'validator/lib/isEmpty';
 import equals from 'validator/lib/equals';
 import axios from 'axios';
+import { Button } from 'antd';
+import Link from 'antd/es/typography/Link';
 function ChangePassword() {
     const [validationMsg, setValidationMsg] = useState({});
     const navigate = useNavigate();
@@ -143,6 +145,7 @@ function ChangePassword() {
                                         onClick={handleSubmit}
                                     />
                                 </section>
+                                <Link href="/" style={{display:'block',textAlign:'center',paddingTop:'50px',fontSize:16,fontWeight:'bold',textDecoration:'underline'}}>Quay lại trang chủ</Link>
                             </form>
                         </div>
                     </section>

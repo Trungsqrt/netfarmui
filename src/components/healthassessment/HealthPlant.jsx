@@ -137,7 +137,6 @@ function HealthPlant() {
 
     return (
         <div>
-            {/* {user === 'Admin' || user === 'Expert' ? <StaffHeader /> : <FarmerHeader />} */}
             <Layout style={{ display: 'block', marginBottom: '100px' }}>
                     <NewHeader></NewHeader>
             </Layout>

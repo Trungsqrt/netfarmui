@@ -343,36 +343,34 @@ function ExpertPage() {
                     <div className={styles.body} style={{paddingTop:120}}>
                         <div className={styles.left}>
                             <h3 className={styles.title}>Expert Page</h3>
-                            <ul className={styles.nav} style={{ paddingLeft: '0' }}>
-                                <li
+                                <div
                                     className={render === 1 ? styles.navItemSelected : styles.navItem}
                                     onClick={PostHandler}
                                 >
                                     <i class="menuIconItem fa-regular fa-newspaper"></i>
                                     Posts
-                                </li>
-                                <li
+                                </div>
+                                <div
                                     className={render === 2 ? styles.navItemSelected : styles.navItem}
                                     onClick={ScheduleHandler}
                                 >
                                     <i class="menuIconItem fa-solid fa-calendar-days"></i>
                                     Schedules
-                                </li>{' '}
-                                <li
+                                </div>{' '}
+                                <div
                                     className={render === 3 ? styles.navItemSelected : styles.navItem}
                                     onClick={StandardHandler}
                                 >
                                     <i class="menuIconItem fa-solid fa-seedling"></i>
                                     Standard
-                                </li>
-                                <li
+                                </div>
+                                <div
                                     className={render === 4 ? styles.navItemSelected : styles.navItem}
                                     onClick={StageDetailHandler}
                                 >
                                     <i class="menuIconItem fa-solid fa-leaf"></i>
                                     Standard Detail
-                                </li>
-                            </ul>
+                                </div>
                         </div>
                         <div className={styles.right}>
                             <section className={styles.bodyContainer}>

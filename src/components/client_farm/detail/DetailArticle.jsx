@@ -8,7 +8,7 @@ import { default as StaffHeader } from '../../admin_farm/share/header/Header';
 import { default as FarmerHeader } from '../share/header/Header';
 import styles from './DetailArticle.module.css';
 import './DetailArticle.css';
-import { Layout } from 'antd';
+import { Card, Col, Image, Layout, Row } from 'antd';
 import NewHeader from '../share/newheader/NewHeader';
 const parse = require('html-react-parser');
 
@@ -64,32 +64,49 @@ function DetailArticle(props) {
                             </div>
                             <div className={styles.left}>
                                 <div className={styles.relatedTitle}>Chuyên mục mới</div>
-                                <ul className={styles.related}>
-                                    {news
-                                        ? news.map((item) => (
-                                              <Link className="link_article" to={`/detail/${item.id}`}>
-                                                  <li className={styles.relatedItem}>
-                                                      <h4 className={styles.newsItemTitle}>{item.title}</h4>
-                                                      <div className={styles.newsItemLine}></div>
-                                                  </li>
-                                              </Link>
-                                          ))
-                                        : ''}
-                                </ul>
+                                {news
+                                    ? news.map((item) => (
+                                          <Link className="link_article" to={`/detail/${item.id}`}>
+                                              <Card style={{textAlign:'start',fontSize:18,fontWeight:'bold'}}>{item.title}</Card>
+                                          </Link>
+                                      ))
+                                    : ''}
+
+                                <div className={styles.newsItemLine}></div>
+
                                 <div className={styles.relatedTitle}> Được quan tâm</div>
-                                <ul className={styles.related}>
-                                    {relateds
-                                        ? relateds.map((item) => (
-                                              <Link className="link_article" to={`/detail/${item.id}`}>
-                                                  <li className={styles.relatedItem}>
-                                                      <img className={styles.relatedImg} src={item.imageURL} alt="" />
-                                                      <h4 className={styles.relatedItemTitle}>{item.title}</h4>
-                                                      <div className={styles.relatedItemLine}></div>
-                                                  </li>
-                                              </Link>
-                                          ))
-                                        : ''}
-                                </ul>
+                                {relateds
+                                    ? relateds.map((item) => (
+                                          <Link className="link_article" to={`/detail/${item.id}`}>
+                                              <Card style={{ padding: '0 0px' }}>
+                                                  <Row style={{ textAlign: 'start', alignItems: 'center' }}>
+                                                      <Col span={9} offset={1}>
+                                                          <Card
+                                                              hoverable
+                                                              bodyStyle={{ padding: '0px' }}
+                                                              type="inner"
+                                                              style={{
+                                                                  height: '100%',
+                                                                  boxSizing: 'border-box',
+                                                                  padding: '0',
+                                                                  width: '100%',
+                                                              }}
+                                                              cover={
+                                                                  <Image
+                                                                      src={item.imageURL}
+                                                                      style={{ height: '100%' }}
+                                                                  ></Image>
+                                                              }
+                                                          ></Card>
+                                                      </Col>
+                                                      <Col offset={1} span={13} style={{ textAlign: 'start' }}>
+                                                          <h4 style={{ fontSize: 16 }}>{item.title}</h4>
+                                                      </Col>
+                                                  </Row>
+                                              </Card>
+                                          </Link>
+                                      ))
+                                    : ''}
                             </div>
                         </div>
                         {showComment && <Comment idArticle={idArticle} />}
