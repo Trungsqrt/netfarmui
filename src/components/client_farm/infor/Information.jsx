@@ -40,7 +40,7 @@ const Information = () => {
                                 defaultSelectedKeys={['0']}
                                 onClick={changeTag}
                                 items={
-                                    user == 'Admin'
+                                    user !== 'Farmer'
                                         ? [
                                               {
                                                   key: '0',
